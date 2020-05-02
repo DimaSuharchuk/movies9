@@ -1,0 +1,14 @@
+uuid: 287774c8-b07f-4ae2-867d-22279f50ff57
+name: Movies
+mail: suharchuk.dima@gmail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /user/login
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI

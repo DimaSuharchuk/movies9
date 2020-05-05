@@ -1,0 +1,60 @@
+uuid: 1645f176-e162-4eb6-b26e-a491f825f536
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.movie.field_approved
+    - field.field.node.movie.field_genres
+    - field.field.node.movie.field_imdb_id
+    - field.field.node.movie.field_poster
+    - field.field.node.movie.field_tmdb_id
+    - node.type.movie
+  module:
+    - imdb
+    - user
+id: node.movie.teaser
+targetEntityType: node
+bundle: movie
+mode: teaser
+content:
+  extra_field_imdb_rating:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_original_title:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_title:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_poster:
+    type: tmdb_image_compact
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      width: 200
+    third_party_settings: {  }
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  extra_field_approved: true
+  extra_field_genres: true
+  extra_field_movie_release_date: true
+  extra_field_overview: true
+  extra_field_poster: true
+  extra_field_runtime: true
+  field_approved: true
+  field_genres: true
+  field_imdb_id: true
+  field_tmdb_id: true
+  langcode: true

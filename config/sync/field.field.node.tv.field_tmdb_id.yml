@@ -1,0 +1,23 @@
+uuid: 40f32f0e-04c0-4fbb-8f5b-f4b9e777a4f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tmdb_id
+    - node.type.tv
+id: node.tv.field_tmdb_id
+field_name: field_tmdb_id
+entity_type: node
+bundle: tv
+label: 'TMDb ID'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

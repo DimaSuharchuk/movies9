@@ -1,0 +1,23 @@
+uuid: 55a78e82-858e-4026-9fff-7f3561c17f9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_approved
+    - node.type.movie
+id: node.movie.field_approved
+field_name: field_approved
+entity_type: node
+bundle: movie
+label: Approved
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

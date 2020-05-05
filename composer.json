@@ -21,7 +21,9 @@
         "drupal/core-recommended": "^9",
         "drupal/extra_field": "^1.2",
         "drupal/module_filter": "^3.1",
-        "drush/drush": "^10.2"
+        "drush/drush": "^10.2",
+        "eloquent/enumeration": "^6.0",
+        "php-tmdb/api": "^3.0"
     },
     "require-dev": {
     },

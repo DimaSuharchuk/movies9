@@ -1,0 +1,19 @@
+uuid: 6ba29ab5-b52d-46bc-9137-e5958d898f34
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_imdb_id
+    - node.type.movie
+id: node.movie.field_imdb_id
+field_name: field_imdb_id
+entity_type: node
+bundle: movie
+label: 'IMDb ID'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

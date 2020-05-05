@@ -1,0 +1,27 @@
+uuid: af076d55-890a-4b4c-8fe0-5b1824016145
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - taxonomy
+id: taxonomy_term.field_used_in
+field_name: field_used_in
+entity_type: taxonomy_term
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: movie
+      label: Movie
+    -
+      value: tv
+      label: TV
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

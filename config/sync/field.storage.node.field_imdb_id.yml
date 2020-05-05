@@ -1,0 +1,21 @@
+uuid: 3cf5009d-7d9a-4ce6-b4a2-d9504ee1b933
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_imdb_id
+field_name: field_imdb_id
+entity_type: node
+type: string
+settings:
+  max_length: 10
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

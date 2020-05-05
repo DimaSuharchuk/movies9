@@ -15,6 +15,7 @@ module:
   field_ui: 0
   file: 0
   filter: 0
+  imdb: 0
   language: 0
   link: 0
   locale: 0
@@ -22,11 +23,13 @@ module:
   menu_ui: 0
   module_filter: 0
   node: 0
+  options: 0
   page_cache: 0
   path_alias: 0
   system: 0
   taxonomy: 0
   text: 0
+  tmdb: 0
   toolbar: 0
   update: 0
   user: 0

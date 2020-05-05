@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Module's main file. Provides work with different IMDB APIs.
+ */
+
+/**
+ * Implements hook_toolbar_alter().
+ *
+ * @param $items
+ *   Associative array of toolbar menu definitions returned from hook_toolbar().
+ */
+function imdb_toolbar_alter(&$items) {
+  $items['administration']['#attached']['library'][] = 'imdb/imdb.menu';
+}

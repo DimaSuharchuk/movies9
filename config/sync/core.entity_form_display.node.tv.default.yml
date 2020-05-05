@@ -1,0 +1,88 @@
+uuid: 33b513c6-e40d-4cb3-80e5-ceb53494fe77
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.tv.field_approved
+    - field.field.node.tv.field_genres
+    - field.field.node.tv.field_imdb_id
+    - field.field.node.tv.field_poster
+    - field.field.node.tv.field_tmdb_id
+    - node.type.tv
+  module:
+    - imdb
+id: node.tv.default
+targetEntityType: node
+bundle: tv
+mode: default
+content:
+  field_approved:
+    weight: 6
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_genres:
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_imdb_id:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_poster:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    type: tmdb_image_textfield
+    region: content
+  field_tmdb_id:
+    weight: 2
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  langcode:
+    type: language_select
+    weight: 1
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 7
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  promote: true
+  sticky: true
+  uid: true

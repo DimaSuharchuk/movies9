@@ -1,0 +1,8 @@
+uuid: 0369a005-8caf-49da-abb4-f42547427a42
+langcode: en
+status: true
+dependencies: {  }
+name: Genre
+vid: genre
+description: ''
+weight: 0

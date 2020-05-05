@@ -1,0 +1,16 @@
+uuid: 854d3342-904c-419d-88db-dededb023dd5
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.tv
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: node.tv
+target_entity_type_id: node
+target_bundle: tv
+default_langcode: en
+language_alterable: true

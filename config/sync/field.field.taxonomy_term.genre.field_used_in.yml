@@ -1,0 +1,21 @@
+uuid: 16195745-16c4-4cca-84d9-8750dc71762c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_used_in
+    - taxonomy.vocabulary.genre
+  module:
+    - options
+id: taxonomy_term.genre.field_used_in
+field_name: field_used_in
+entity_type: taxonomy_term
+bundle: genre
+label: 'Used in'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

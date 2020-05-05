@@ -1,0 +1,8 @@
+services:
+  tmdb.adapter:
+    class: Drupal\tmdb\TmdbAdapter
+    arguments:
+      ['@settings', '@messenger', '@tmdb.local_storage']
+  tmdb.local_storage:
+    class: Drupal\tmdb\TmdbLocalStorage
+    arguments: ['@serialization.json']

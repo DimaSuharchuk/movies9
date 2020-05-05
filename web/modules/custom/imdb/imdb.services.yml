@@ -1,0 +1,12 @@
+services:
+  imdb.helper:
+    class: Drupal\imdb\IMDbHelper
+  entity_finder:
+    class: Drupal\imdb\EntityFinder
+    arguments: ['@entity_type.manager']
+  entity_creator:
+    class: Drupal\imdb\EntityCreator
+    arguments: ['@entity_type.manager', '@entity_finder']
+  imdb.rating:
+    class: Drupal\imdb\ImdbRating
+    arguments: ['@settings','@serialization.json','@imdb.helper']

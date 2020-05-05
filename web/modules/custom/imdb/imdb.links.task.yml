@@ -1,0 +1,15 @@
+imdb.statistics_tab:
+  route_name: imdb.statistics
+  base_route: imdb.admin_imdb
+  title: Statistics
+  weight: 1
+imdb.imdb_add_tab:
+  route_name: imdb.imdb_add
+  base_route: imdb.admin_imdb
+  title: Add
+  weight: 2
+imdb.genres_tab:
+  route_name: imdb.update_genres
+  base_route: imdb.admin_imdb
+  title: Genres
+  weight: 3

@@ -1,0 +1,23 @@
+uuid: d843b234-e11a-4a26-8080-359b21702b2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_poster
+    - node.type.movie
+  module:
+    - imdb
+id: node.movie.field_poster
+field_name: field_poster
+entity_type: node
+bundle: movie
+label: Poster
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: ''
+default_value_callback: ''
+settings: {  }
+field_type: tmdb_image

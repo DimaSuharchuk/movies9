@@ -1,0 +1,23 @@
+uuid: 1d3c7f8d-96a8-4ea3-9160-0c4bf59e7258
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_poster
+    - node.type.tv
+  module:
+    - imdb
+id: node.tv.field_poster
+field_name: field_poster
+entity_type: node
+bundle: tv
+label: Poster
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: ''
+default_value_callback: ''
+settings: {  }
+field_type: tmdb_image

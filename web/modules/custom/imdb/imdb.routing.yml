@@ -1,0 +1,21 @@
+imdb.statistics:
+  path: '/admin/imdb/statistics'
+  defaults:
+    _form: '\Drupal\imdb\Form\StatisticsForm'
+    _title: 'Statistics'
+  requirements:
+    _permission: 'administer site configuration'
+imdb.imdb_add:
+  path: '/admin/imdb/add'
+  defaults:
+    _form: '\Drupal\imdb\Form\ImdbIdsAddForm'
+    _title: 'Add'
+  requirements:
+    _permission: 'administer site configuration'
+imdb.update_genres:
+  path: '/admin/imdb/genres'
+  defaults:
+    _form: '\Drupal\imdb\Form\UpdateGenres'
+    _title: 'Genres'
+  requirements:
+    _permission: 'administer site configuration'

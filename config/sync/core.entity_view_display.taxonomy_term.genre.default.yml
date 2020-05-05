@@ -1,0 +1,18 @@
+uuid: e68fd7ed-c191-4ad1-a082-ea9bc4b270b6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.genre.field_tmdb_id
+    - field.field.taxonomy_term.genre.field_used_in
+    - taxonomy.vocabulary.genre
+id: taxonomy_term.genre.default
+targetEntityType: taxonomy_term
+bundle: genre
+mode: default
+content: {  }
+hidden:
+  description: true
+  field_tmdb_id: true
+  field_used_in: true
+  langcode: true

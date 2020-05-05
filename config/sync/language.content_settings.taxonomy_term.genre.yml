@@ -1,0 +1,16 @@
+uuid: d9440781-a896-4967-9ecc-35461c940933
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.genre
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: taxonomy_term.genre
+target_entity_type_id: taxonomy_term
+target_bundle: genre
+default_langcode: en
+language_alterable: false

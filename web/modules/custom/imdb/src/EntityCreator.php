@@ -17,6 +17,15 @@ use Drupal\taxonomy\Entity\Term;
 
 class EntityCreator {
 
+  /**
+   * Placeholder used when need to create node without additional request to
+   * TMDb API.
+   *
+   * @var string
+   */
+  const NODE_TITLE_EMPTY_PLACEHOLDER = '---';
+
+
   private EntityTypeManager $entity_type_manager;
 
   private EntityFinder $finder;
@@ -175,6 +184,31 @@ class EntityCreator {
     ];
     /** @var Node $node */
     $node = $this->createEntityBasedOnTmdbField(EntityType::node(), $bundle, $lang, $tmdb_id, $fields_data);
+    return $node;
+  }
+
+  /**
+   * Update node with new values.
+   *
+   * @param Node $node
+   *   Drupal node.
+   * @param array $fields
+   *   Fields for update.
+   *   Example: ['field_machine_name' => 'field_value', ...]
+   *
+   * @return Node|null
+   *   Updated node.
+   */
+  public function updateNode(Node $node, array $fields): ?Node {
+    foreach ($fields as $field_name => $field_value) {
+      $node->$field_name = $field_value;
+    }
+    try {
+      $node->save();
+    } catch (EntityStorageException $e) {
+      return NULL;
+    }
+
     return $node;
   }
 

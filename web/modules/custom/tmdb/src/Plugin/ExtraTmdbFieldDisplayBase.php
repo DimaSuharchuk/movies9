@@ -16,7 +16,7 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
   /**
    * @var TmdbAdapter|object|null
    */
-  private $adapter;
+  protected $adapter;
 
 
   /**

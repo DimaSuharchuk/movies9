@@ -62,33 +62,9 @@ class TmdbAdapter {
     $file_path = new TmdbLocalStorageFilePath($bundle, $storage_type, $lang, $tmdb_id);
 
     if (!$data = $this->tmdb_storage->load($file_path)) {
-      switch ($bundle) {
-        case NodeBundle::movie():
-          $data = $this->connect()->getMoviesApi()->getMovie($tmdb_id, [
-            'language' => $lang->value(),
-            'append_to_response' => 'recommendations,similar,videos,credits',
-          ]);
-          break;
-
-        case NodeBundle::tv():
-          $data = $this->connect()->getTvApi()->getTvshow($tmdb_id, [
-            'language' => $lang->value(),
-            'append_to_response' => 'recommendations,similar,videos,credits,external_ids',
-          ]);
-          // Get average episode runtime.
-          if ($time_arr = $data['episode_run_time']) {
-            if (is_array($time_arr)) {
-              $data['episode_run_time'] = round(array_sum($time_arr) / count($time_arr));
-            }
-          }
-          // Move IMDb ID to common fields.
-          if (isset($data['external_ids']['imdb_id'])) {
-            $data['imdb_id'] = $data['external_ids']['imdb_id'];
-          }
-          break;
-      }
+      // Get data from TMDb API.
       // If data fetched successfully from TMDb API - save it in local storage.
-      if ($data) {
+      if ($data = $this->getInfoByTmdbId($bundle, $tmdb_id, $lang)) {
         $storage_type = TmdbLocalStorageType::recommendations();
         $file_path = new TmdbLocalStorageFilePath($bundle, $storage_type, $lang, $tmdb_id, 1);
         $this->tmdb_storage->save($file_path, $this->purge($storage_type, $data['recommendations']));
@@ -154,6 +130,29 @@ class TmdbAdapter {
           $lang
         )) {
           $nodes[] = $movie;
+
+          // Also we should create placeholder nodes for other languages
+          // without additional requests to TMDb API.
+          /**
+           * MOVIES SHOULD BE UPDATED later.
+           *
+           * @see TmdbAdapter::updateMovieOrTvPlaceholderFields()
+           */
+          foreach (Language::members() as $l) {
+            if ($l !== $lang) {
+              // Use placeholders for translatable fields only.
+              $this->creator->createNodeMovie(
+                $this->creator::NODE_TITLE_EMPTY_PLACEHOLDER,
+                $teaser['id'],
+                $imdb_ids[$teaser['id']],
+                $this->creator::NODE_TITLE_EMPTY_PLACEHOLDER,
+                $teaser['genre_ids'],
+                FALSE,
+                $l
+              );
+            }
+          }
+
         }
       }
 
@@ -164,6 +163,30 @@ class TmdbAdapter {
     }
 
     return NULL;
+  }
+
+  /**
+   * Update fields filled with placeholders before.
+   *
+   * @param Node $node
+   *
+   * @return Node|null
+   */
+  function updateMovieOrTvPlaceholderFields(Node $node): ?Node {
+    if ($node->getTitle() === $this->creator::NODE_TITLE_EMPTY_PLACEHOLDER) {
+      $bundle = NodeBundle::memberByValue($node->bundle());
+      $tmdb_id = $node->{'field_tmdb_id'}->value;
+      $lang = Language::memberByValue($node->language()->getId());
+      // Get fields from TMDb Local Storage.
+      $fields = [
+        'title' => $this->getFieldValue($bundle, $tmdb_id, $lang, 'title'),
+        'field_poster' => $this->getFieldValue($bundle, $tmdb_id, $lang, 'poster_path'),
+      ];
+      // Update fields in node.
+      $node = $this->creator->updateNode($node, $fields);
+    }
+
+    return $node;
   }
 
   /**
@@ -272,6 +295,52 @@ class TmdbAdapter {
     return NULL;
   }
 
+  /**
+   * Get all Movie or Tv info from TMDb API. Non-cached request.
+   *
+   * @param NodeBundle $bundle
+   * @param int $tmdb_id
+   * @param Language $lang
+   *
+   * @return array|null
+   */
+  private function getInfoByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang): ?array {
+    $response = NULL;
+
+    switch ($bundle) {
+      case NodeBundle::movie():
+        $response = $this->connect()->getMoviesApi()->getMovie($tmdb_id, [
+          'language' => $lang->value(),
+          'append_to_response' => 'recommendations,similar,videos,credits',
+        ]);
+        break;
+
+      case NodeBundle::tv():
+        $response = $this->connect()->getTvApi()->getTvshow($tmdb_id, [
+          'language' => $lang->value(),
+          'append_to_response' => 'recommendations,similar,videos,credits,external_ids',
+        ]);
+
+        // Edit something:
+        // Duplicate title for more simple fetching title value for movie and tv.
+        if ($title = $response['name']) {
+          $response['title'] = $title;
+        }
+        // Get average episode runtime.
+        if ($time_arr = $response['episode_run_time']) {
+          if (is_array($time_arr)) {
+            $response['episode_run_time'] = round(array_sum($time_arr) / count($time_arr));
+          }
+        }
+        // Move IMDb ID to common fields.
+        if (isset($response['external_ids']['imdb_id'])) {
+          $response['imdb_id'] = $response['external_ids']['imdb_id'];
+        }
+        break;
+    }
+
+    return $response;
+  }
 
   /**
    * Create connection to TMDb API.
@@ -362,8 +431,8 @@ class TmdbAdapter {
       case TmdbLocalStorageType::common():
         $fields = [
           // movie fields
-          'id',
-          'imdb_id',
+          'title',
+          'poster_path',
           'belongs_to_collection', // array
           'homepage',
           'overview',

@@ -23,11 +23,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  extra_field_original_title:
-    weight: 3
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   extra_field_title:
     weight: 2
     region: content
@@ -46,6 +41,7 @@ hidden:
   extra_field_belongs_to_collection: true
   extra_field_genres: true
   extra_field_movie_release_date: true
+  extra_field_original_title: true
   extra_field_overview: true
   extra_field_poster: true
   extra_field_runtime: true

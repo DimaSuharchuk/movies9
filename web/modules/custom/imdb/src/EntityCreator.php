@@ -76,7 +76,7 @@ class EntityCreator {
    *
    * @see EntityCreator::createNodeMovieOrTv()
    */
-  public function createNodeMovie(string $title, int $tmdb_id, string $imdb_id, string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
+  public function createNodeMovie(string $title, int $tmdb_id, string $imdb_id, ?string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
     return $this->createNodeMovieOrTv(NodeBundle::movie(), $title, $tmdb_id, $imdb_id, $poster, $genres_tmdb_ids, $approved, $lang);
   }
 
@@ -96,7 +96,7 @@ class EntityCreator {
    *
    * @see EntityCreator::createNodeMovieOrTv()
    */
-  public function createNodeTv(string $title, int $tmdb_id, string $imdb_id, string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
+  public function createNodeTv(string $title, int $tmdb_id, string $imdb_id, ?string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
     return $this->createNodeMovieOrTv(NodeBundle::tv(), $title, $tmdb_id, $imdb_id, $poster, $genres_tmdb_ids, $approved, $lang);
   }
 
@@ -123,7 +123,7 @@ class EntityCreator {
    *
    * @see TmdbImageItem
    */
-  private function createNodeMovieOrTv(NodeBundle $bundle, string $title, int $tmdb_id, string $imdb_id, string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
+  private function createNodeMovieOrTv(NodeBundle $bundle, string $title, int $tmdb_id, string $imdb_id, ?string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
     $genres_ids = $this->finder->findTermsGenres()
       ->byTmdbIds($genres_tmdb_ids)
       ->execute();

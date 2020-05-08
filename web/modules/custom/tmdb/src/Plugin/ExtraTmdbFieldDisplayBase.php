@@ -4,6 +4,7 @@ namespace Drupal\tmdb\Plugin;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\extra_field\Plugin\ExtraFieldDisplayBase;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
@@ -12,6 +13,8 @@ use Drupal\tmdb\TmdbAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implements ContainerFactoryPluginInterface {
+
+  use StringTranslationTrait;
 
   /**
    * @var TmdbAdapter|object|null

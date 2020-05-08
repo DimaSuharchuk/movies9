@@ -41,7 +41,11 @@ class ImdbRating extends ExtraTmdbFieldDisplayBase {
 
     $imdb_id = $entity->{'field_imdb_id'}->value;
     if ($rating = $this->rating->getRatingValue($imdb_id)) {
-      $build = ['#markup' => "imdb: $rating"];
+      $build = [
+        '#theme' => 'field_with_label',
+        '#label' => 'imdb',
+        '#content' => $rating,
+      ];
     }
 
     return $build;

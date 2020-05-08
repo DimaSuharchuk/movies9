@@ -3,7 +3,6 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 
 /**
@@ -23,7 +22,7 @@ class Approved extends ExtraTmdbFieldDisplayBase {
 
     if ($a = $entity->{'field_approved'}->value) {
       $build = [
-        '#markup' => new TranslatableMarkup('Approved'),
+        '#markup' => $this->t('approved'),
       ];
     }
 

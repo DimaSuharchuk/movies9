@@ -23,7 +23,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_belongs_to_collection:
-    weight: 12
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -52,6 +52,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  extra_field_site:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   extra_field_title:
     weight: 2
     region: content
@@ -66,7 +71,7 @@ content:
       link: true
     third_party_settings: {  }
   field_imdb_id:
-    weight: 11
+    weight: 12
     label: above
     settings:
       link_to_entity: false
@@ -82,7 +87,7 @@ content:
     type: tmdb_image_compact
     region: content
   field_tmdb_id:
-    weight: 10
+    weight: 11
     label: above
     settings:
       thousand_separator: ''

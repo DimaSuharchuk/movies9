@@ -31,7 +31,11 @@ class Runtime extends ExtraTmdbFieldDisplayBase {
       }
       $output .= $this->formatPlural($runtime % 60, '1 minute', '@count minutes');
 
-      $build = ['#markup' => $output];
+      $build = [
+        '#theme' => 'field_with_label',
+        '#label' => $this->t('duration'),
+        '#content' => $output,
+      ];
     }
 
     return $build;

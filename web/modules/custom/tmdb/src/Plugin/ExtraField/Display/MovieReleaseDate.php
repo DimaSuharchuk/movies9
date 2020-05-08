@@ -42,7 +42,11 @@ class MovieReleaseDate extends ExtraTmdbFieldDisplayBase {
         $obj = new DateTime($release_date);
         $output = $this->date_formatter->format($obj->getTimestamp(), 'custom', 'd F Y');
 
-        $build = ['#markup' => $output];
+        $build = [
+          '#theme' => 'field_with_label',
+          '#label' => $this->t('release date'),
+          '#content' => $output,
+        ];
       } catch (Exception $e) {
         return $build;
       }

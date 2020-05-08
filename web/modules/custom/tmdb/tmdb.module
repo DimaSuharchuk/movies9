@@ -16,5 +16,12 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'css_class' => NULL,
       ],
     ],
+    'collection' => [
+      'variables' => [
+        'title' => NULL,
+        'poster' => NULL,
+        'items' => NULL,
+      ],
+    ],
   ];
 }

@@ -7,6 +7,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\extra_field\Plugin\ExtraFieldDisplayBase;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
+use Drupal\node\Entity\Node;
 use Drupal\tmdb\TmdbAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -70,6 +71,17 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
     $lang = Language::memberByValue($this->entity->language()->getId());
 
     return $this->adapter->getFieldValue($bundle, $tmdb_id, $lang, $field_name);
+  }
+
+  /**
+   * @return Node[]|null
+   * @see TmdbAdapter::getMovieCollectionItems()
+   */
+  public function getMovieCollection() {
+    $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
+    $lang = Language::memberByValue($this->entity->language()->getId());
+
+    return $this->adapter->getMovieCollectionItems($tmdb_id, $lang);
   }
 
 }

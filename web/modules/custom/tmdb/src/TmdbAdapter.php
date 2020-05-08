@@ -4,8 +4,10 @@ namespace Drupal\tmdb;
 
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\imdb\EntityCreator;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
+use Drupal\node\Entity\Node;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
 use Tmdb\ApiToken;
 use Tmdb\Client;
@@ -18,11 +20,14 @@ class TmdbAdapter {
 
   private TmdbLocalStorage $tmdb_storage;
 
+  private EntityCreator $creator;
 
-  public function __construct(Settings $settings, MessengerInterface $messenger, TmdbLocalStorage $tmdb_storage) {
+
+  public function __construct(Settings $settings, MessengerInterface $messenger, TmdbLocalStorage $tmdb_storage, EntityCreator $creator) {
     $this->settings = $settings;
     $this->messenger = $messenger;
     $this->tmdb_storage = $tmdb_storage;
+    $this->creator = $creator;
   }
 
 
@@ -43,6 +48,15 @@ class TmdbAdapter {
    *   Field value.
    */
   public function getFieldValue(NodeBundle $bundle, int $tmdb_id, Language $lang, string $field_name) {
+    $black_list = [
+      'recommendations',
+      'similar',
+    ];
+    if (in_array($field_name, $black_list)) {
+      // Use special methods for these fields.
+      return FALSE;
+    }
+
     $storage_type = $this->getStorageTypeByFieldName($field_name);
 
     $file_path = new TmdbLocalStorageFilePath($bundle, $storage_type, $lang, $tmdb_id);
@@ -108,6 +122,51 @@ class TmdbAdapter {
   }
 
   /**
+   * Fetch from TMDb API movie collection and create nodes for them.
+   *
+   * @param int $movie_tmdb_id
+   * @param Language $lang
+   *
+   * @return Node[]|null
+   */
+  public function getMovieCollectionItems(int $movie_tmdb_id, Language $lang): ?array {
+    $bundle = NodeBundle::movie();
+    if ($collection = $this->getFieldValue($bundle, $movie_tmdb_id, $lang, 'belongs_to_collection')) {
+      // Get collection info from TMDb API.
+      $response = $this->connect()
+        ->getCollectionsApi()
+        ->getCollection($collection['id'], [
+          'language' => $lang->value(),
+        ]);
+      // Get IMDb IDs for collection items.
+      $tmdb_ids = array_column($response['parts'], 'id');
+      $imdb_ids = $this->getImdbIdsByTmdbIds($tmdb_ids, NodeBundle::movie());
+
+      $nodes = [];
+      foreach ($response['parts'] as $teaser) {
+        if ($movie = $this->creator->createNodeMovie(
+          $teaser['title'],
+          $teaser['id'],
+          $imdb_ids[$teaser['id']],
+          $teaser['poster_path'],
+          $teaser['genre_ids'],
+          FALSE,
+          $lang
+        )) {
+          $nodes[] = $movie;
+        }
+      }
+
+      return [
+        'collection_info' => $collection,
+        'nodes' => $nodes,
+      ];
+    }
+
+    return NULL;
+  }
+
+  /**
    * Get all genres for type "Movie" from TMDb API.
    *
    * @param Language $lang
@@ -133,6 +192,37 @@ class TmdbAdapter {
     return $this->connect()
       ->getGenresApi()
       ->getTvGenres(['language' => $lang->value()]);
+  }
+
+  /**
+   * Get IMDb IDs by TMDb IDs.
+   *
+   * @param int[] $tmdb_ids
+   * @param NodeBundle $bundle
+   *
+   * @return string[]
+   */
+  public function getImdbIdsByTmdbIds(array $tmdb_ids, NodeBundle $bundle): array {
+    $api = $this->connect();
+    $bundle_value = $bundle->value();
+    switch ($bundle) {
+      case NodeBundle::movie():
+        $api = $api->getMoviesApi();
+        break;
+
+      case NodeBundle::tv():
+        $api = $api->getTvApi();
+        break;
+    }
+
+    $imdb_ids = [];
+    foreach ($tmdb_ids as $tmdb_id) {
+      if ($res = $api->get("{$bundle_value}/{$tmdb_id}/external_ids")) {
+        $imdb_ids[$tmdb_id] = $res['imdb_id'];
+      }
+    }
+
+    return $imdb_ids;
   }
 
   /**

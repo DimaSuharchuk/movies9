@@ -250,6 +250,7 @@ class EntityCreator {
       }
       else {
         $entity = $entity->addTranslation($lang_value);
+        $entity->{'uid'} = 1;
 
         // Set translatable fields.
         $translatable_fields = array_keys($entity->getTranslatableFields());

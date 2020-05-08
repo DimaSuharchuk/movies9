@@ -213,6 +213,37 @@ class EntityCreator {
   }
 
   /**
+   * Find node by IMDb ID and set Approved status to TRUE.
+   *
+   * @param string $imdb_id
+   * @param Language $lang
+   *
+   * @return bool
+   */
+  public function updateNodeApprovedStatus(string $imdb_id, Language $lang): bool {
+    /** @var Node $node */
+    if ($node = $this->finder->findNodes()
+      ->byImdbId($imdb_id)
+      ->addCondition('langcode', $lang->value())
+      ->loadEntities()
+      ->execute()) {
+
+      // Node exists and status already TRUE.
+      if ($node->{'field_approved'}->value) {
+        return TRUE;
+      }
+
+      $node->{'field_approved'} = TRUE;
+      try {
+        return $node->save();
+      } catch (EntityStorageException $e) {
+        return FALSE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
    * Create abstract entity with required field "field_tmdb_id".
    *
    * @param EntityType $type

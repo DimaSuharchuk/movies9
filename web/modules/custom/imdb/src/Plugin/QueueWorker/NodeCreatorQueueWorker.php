@@ -66,6 +66,11 @@ class NodeCreatorQueueWorker extends QueueWorkerBase implements ContainerFactory
     /** @var Language $lang */
     $lang = $data['lang'];
 
+    // Update status if node already exists.
+    if ($this->creator->updateNodeApprovedStatus($imdb_id, $lang)) {
+      return;
+    }
+
     $tmdb_response = $this->adapter->findByImdbId($imdb_id, $lang);
     /** @var NodeBundle $node_type */
     $node_type = $tmdb_response['type'];

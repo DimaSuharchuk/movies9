@@ -143,6 +143,9 @@ class EntityFinder {
   /**
    * It's a condition, that means "search by one TMDb ID".
    *
+   * Attention: Search by TMDb ID with NodeBundle, because TMDb ID may be
+   * repeated.
+   *
    * @param int $tmdb_id
    *
    * @return $this
@@ -156,6 +159,9 @@ class EntityFinder {
   /**
    * It's a condition, that means "search by array of TMDb IDs".
    *
+   * Attention: Search by TMDb ID with NodeBundle, because TMDb ID may be
+   * repeated.
+   *
    * @param int[] $tmdb_ids
    *
    * @return $this
@@ -163,6 +169,31 @@ class EntityFinder {
    */
   public function byTmdbIds(array $tmdb_ids): self {
     return $this->addCondition('field_tmdb_id', $tmdb_ids);
+  }
+
+  /**
+   * It's a condition, that means "search by one IMDb ID".
+   *
+   * @param string $imdb_id
+   *
+   * @return $this
+   * @see EntityFinder::addCondition()
+   */
+  public function byImdbId(string $imdb_id): self {
+    $this->reduce();
+    return $this->byImdbIds([$imdb_id]);
+  }
+
+  /**
+   * It's a condition, that means "search by array of IMDb IDs".
+   *
+   * @param string[] $imdb_ids
+   *
+   * @return $this
+   * @see EntityFinder::addCondition()
+   */
+  public function byImdbIds(array $imdb_ids): self {
+    return $this->addCondition('field_imdb_id', $imdb_ids);
   }
 
   /**

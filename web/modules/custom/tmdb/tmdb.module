@@ -29,6 +29,15 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'items' => NULL,
       ],
     ],
+    'person' => [
+      'variables' => [
+        'avatar' => NULL,
+        'name' => NULL,
+        'role' => NULL,
+        'department' => NULL,
+        'job' => NULL,
+      ],
+    ],
   ];
 }
 

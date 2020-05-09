@@ -27,6 +27,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  extra_field_cast:
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   extra_field_imdb_rating:
     weight: 5
     region: content

@@ -1,19 +1,32 @@
+{% set collection_wrapper_classes, collection_item_classes = 'col-xs-12', 'col-lg-2' %}
 <div class="collection-wrapper">
-  <div class="collection-title">
-    {{ title }}
-  </div>
-  <div class="row">
-    <div class="col-lg-4">
-      {{ poster }}
+
+  {% if title %}
+    <div class="collection-title">
+      {{ title }}
     </div>
-    <div class="collection-items col-lg-8">
+  {% endif %}
+
+  <div class="row">
+
+    {% if poster %}
+      <div class="collection-poster col-lg-4">
+        {{ poster }}
+      </div>
+      {# rewrite classes if poster exists #}
+      {% set collection_wrapper_classes, collection_item_classes = 'col-lg-8', 'col-lg-3' %}
+    {% endif %}
+
+    <div class="collection-items {{ collection_wrapper_classes }}">
       <div class="row">
         {% for item in items %}
-          <div class="col-lg-3">
+          <div class="{{ collection_item_classes }}">
             {{ item }}
           </div>
         {% endfor %}
       </div>
     </div>
+
   </div>
+
 </div>

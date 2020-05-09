@@ -18,6 +18,16 @@ final class Constant {
 
   const TMDB_LOCAL_STORAGE_FILE_FORMAT = 'json';
 
+  const GENDER_WOMAN = 1;
+
+  const GENDER_MAN = 2;
+
+  const UNDEFINED_WOMAN_IMAGE = 'public://undefined-woman.png';
+
+  const UNDEFINED_MAN_IMAGE = 'public://undefined-man.png';
+
+  const UNDEFINED_PERSON_IMAGE = 'public://undefined-person.png';
+
 
   /**
    * Extra fields IDS:
@@ -31,6 +41,11 @@ final class Constant {
    * @see Approved
    */
   const BELONGS_TO_COLLECTION = 'belongs_to_collection';
+
+  /**
+   * @see Cast
+   */
+  const CAST = 'cast';
 
   /**
    * @see ImdbRating

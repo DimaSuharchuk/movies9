@@ -522,21 +522,17 @@ class TmdbAdapter {
         break;
 
       case 'cast':
+      case 'crew':
         $fields = [
+          // cast fields
           'character',
           'id',
           'name',
           'profile_path',
-        ];
-        break;
-
-      case 'crew':
-        $fields = [
+          'gender',
+          // crew fields
           'department',
-          'id',
-          'name',
           'job',
-          'profile_path',
         ];
         break;
 

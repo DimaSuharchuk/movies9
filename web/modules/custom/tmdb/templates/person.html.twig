@@ -1,0 +1,13 @@
+<div class="person">
+  <div class="avatar">{{ avatar }}</div>
+  <div class="name">{{ name }}</div>
+  {% if role %}
+    <div class="property role">{{ role }}</div>
+  {% endif %}
+  {% if department %}
+    <div class="property department">{{ department }}</div>
+  {% endif %}
+  {% if job %}
+    <div class="property job">{{ job }}</div>
+  {% endif %}
+</div>

@@ -69,6 +69,8 @@ content:
     type: tmdb_image_compact
     region: content
 hidden:
+  extra_field_cast: true
+  extra_field_crew: true
   extra_field_genres: true
   extra_field_poster: true
   field_approved: true

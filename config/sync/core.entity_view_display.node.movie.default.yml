@@ -22,16 +22,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  extra_field_belongs_to_collection:
-    weight: 11
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_cast:
-    weight: 12
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   extra_field_imdb_rating:
     weight: 5
     region: content
@@ -89,6 +79,9 @@ content:
     type: tmdb_image_compact
     region: content
 hidden:
+  extra_field_belongs_to_collection: true
+  extra_field_cast: true
+  extra_field_crew: true
   extra_field_genres: true
   extra_field_poster: true
   field_approved: true

@@ -48,6 +48,11 @@ final class Constant {
   const CAST = 'cast';
 
   /**
+   * @see Crew
+   */
+  const CREW = 'crew';
+
+  /**
    * @see ImdbRating
    */
   const IMDB_RATING = 'imdb_rating';

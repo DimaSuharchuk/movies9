@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\State\State;
+use Drupal\imdb\Constant;
 use Drupal\imdb\EntityFinder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -148,7 +149,7 @@ class StatisticsForm extends FormBase {
     $form['statistics']['node_save_queue'] = [
       '#type' => 'item',
       '#markup' => $this->t('Untreated Node saving queue items: %count.', [
-        '%count' => $this->queue->get(ImdbIdsAddForm::NODE_SAVE_WORKER_ID)
+        '%count' => $this->queue->get(Constant::NODE_SAVE_WORKER_ID)
           ->numberOfItems(),
       ]),
     ];
@@ -160,7 +161,7 @@ class StatisticsForm extends FormBase {
    * @inheritDoc
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->queue->get(ImdbIdsAddForm::NODE_SAVE_WORKER_ID)->deleteQueue();
+    $this->queue->get(Constant::NODE_SAVE_WORKER_ID)->deleteQueue();
   }
 
 }

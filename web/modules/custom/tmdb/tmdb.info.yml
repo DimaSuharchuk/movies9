@@ -4,6 +4,8 @@ core_version_requirement: ^8 || ^9
 core: 8.x
 type: module
 package: Custom
+dependencies:
+  - imdb
 
 "interface translation project": tmdb
 "interface translation server pattern": modules/custom/%project/translations/%language.po

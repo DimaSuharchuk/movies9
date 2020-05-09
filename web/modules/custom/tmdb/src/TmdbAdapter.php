@@ -4,6 +4,7 @@ namespace Drupal\tmdb;
 
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\imdb\Constant;
 use Drupal\imdb\EntityCreator;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
@@ -142,10 +143,10 @@ class TmdbAdapter {
             if ($l !== $lang) {
               // Use placeholders for translatable fields only.
               $this->creator->createNodeMovie(
-                $this->creator::NODE_TITLE_EMPTY_PLACEHOLDER,
+                Constant::NODE_TITLE_EMPTY_PLACEHOLDER,
                 $teaser['id'],
                 $imdb_ids[$teaser['id']],
-                $this->creator::NODE_TITLE_EMPTY_PLACEHOLDER,
+                Constant::NODE_TITLE_EMPTY_PLACEHOLDER,
                 $teaser['genre_ids'],
                 FALSE,
                 $l
@@ -173,7 +174,7 @@ class TmdbAdapter {
    * @return Node|null
    */
   function updateMovieOrTvPlaceholderFields(Node $node): ?Node {
-    if ($node->getTitle() === $this->creator::NODE_TITLE_EMPTY_PLACEHOLDER) {
+    if ($node->getTitle() === Constant::NODE_TITLE_EMPTY_PLACEHOLDER) {
       $bundle = NodeBundle::memberByValue($node->bundle());
       $tmdb_id = $node->{'field_tmdb_id'}->value;
       $lang = Language::memberByValue($node->language()->getId());

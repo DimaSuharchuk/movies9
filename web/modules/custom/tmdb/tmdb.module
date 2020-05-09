@@ -36,7 +36,7 @@ function tmdb_theme($existing, $type, $theme, $path) {
  * Implements hook_ENTITY_TYPE_view().
  */
 function tmdb_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
-  $p = \Drupal::service('entity_creator')::NODE_TITLE_EMPTY_PLACEHOLDER;
+  $p = \Drupal\imdb\Constant::NODE_TITLE_EMPTY_PLACEHOLDER;
   /** @var \Drupal\node\Entity\Node $entity */
   if ($entity->getTitle() === $p) {
     // Update placeholder fields if need.

@@ -4,7 +4,84 @@ namespace Drupal\imdb;
 
 final class Constant {
 
+  /**
+   * Placeholder used when need to create node without additional request to
+   * TMDb API.
+   *
+   * @var string
+   */
+  const NODE_TITLE_EMPTY_PLACEHOLDER = '---';
+
+  const IMDB_RATINGS_FILE_NAME = 'title.ratings.tsv';
+
   const TMDB_IMAGE_BASE_URL = '//image.tmdb.org/t/p/';
+
+  const TMDB_LOCAL_STORAGE_FILE_FORMAT = 'json';
+
+
+  /**
+   * Extra fields IDS:
+   */
+  /**
+   * @see BelongsToCollection
+   */
+  const APPROVED = 'approved';
+
+  /**
+   * @see Approved
+   */
+  const BELONGS_TO_COLLECTION = 'belongs_to_collection';
+
+  /**
+   * @see ImdbRating
+   */
+  const IMDB_RATING = 'imdb_rating';
+
+  /**
+   * @see MovieReleaseDate
+   */
+  const MOVIE_RELEASE_DATE = 'movie_release_date';
+
+  /**
+   * @see OriginalTitle
+   */
+  const ORIGINAL_TITLE = 'original_title';
+
+  /**
+   * @see Overview
+   */
+  const OVERVIEW = 'overview';
+
+  /**
+   * @see ProductionCompanies
+   */
+  const PRODUCTION_COMPANIES = 'production_companies';
+
+  /**
+   * @see Runtime
+   */
+  const RUNTIME = 'runtime';
+
+  /**
+   * @see Site
+   */
+  const SITE = 'site';
+
+  /**
+   * @see Title
+   */
+  const TITLE = 'title';
+
+
+  /**
+   * Queue Worker IDS:
+   */
+
+  /**
+   * @see NodeCreatorQueueWorker
+   */
+  const NODE_SAVE_WORKER_ID = 'create_node_by_imdb_id_worker';
+
 
   private function __construct() {
   }

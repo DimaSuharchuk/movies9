@@ -17,15 +17,6 @@ use Drupal\taxonomy\Entity\Term;
 
 class EntityCreator {
 
-  /**
-   * Placeholder used when need to create node without additional request to
-   * TMDb API.
-   *
-   * @var string
-   */
-  const NODE_TITLE_EMPTY_PLACEHOLDER = '---';
-
-
   private EntityTypeManager $entity_type_manager;
 
   private EntityFinder $finder;

@@ -7,8 +7,6 @@ use Drupal\Core\Site\Settings;
 
 class ImdbRating {
 
-  const RATINGS_FILE_NAME = 'title.ratings.tsv';
-
   private Settings $settings;
 
   private IMDbHelper $imdb_helper;
@@ -96,9 +94,8 @@ class ImdbRating {
    */
   private function getRatingFromFile(string $imdb_id): ?array {
     $private_dir = $this->settings::get('file_private_path');
-    $f = self::RATINGS_FILE_NAME;
     // Read file.
-    $content = file_get_contents("{$private_dir}/{$f}");
+    $content = file_get_contents($private_dir . '/' . Constant::IMDB_RATINGS_FILE_NAME);
     // Try to find line by IMDb ID.
     if ($pos_id = strpos($content, $imdb_id)) {
       $content_from_pos = substr($content, $pos_id);

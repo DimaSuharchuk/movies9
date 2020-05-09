@@ -18,22 +18,22 @@ bundle: movie
 mode: default
 content:
   extra_field_approved:
-    weight: 6
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   extra_field_belongs_to_collection:
-    weight: 13
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   extra_field_imdb_rating:
-    weight: 4
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   extra_field_movie_release_date:
-    weight: 8
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -43,65 +43,51 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_overview:
-    weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_runtime:
-    weight: 9
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_site:
     weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
+  extra_field_production_companies:
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_runtime:
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_site:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   extra_field_title:
-    weight: 2
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   field_genres:
     type: entity_reference_label
-    weight: 5
+    weight: 2
     region: content
     label: hidden
     settings:
       link: true
     third_party_settings: {  }
-  field_imdb_id:
-    weight: 12
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_poster:
-    weight: 1
+    weight: 0
     label: hidden
     settings:
       width: w400
     third_party_settings: {  }
     type: tmdb_image_compact
     region: content
-  field_tmdb_id:
-    weight: 11
-    label: above
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
-    third_party_settings: {  }
-    type: number_integer
-    region: content
-  links:
-    weight: 0
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   extra_field_genres: true
   extra_field_poster: true
   field_approved: true
+  field_imdb_id: true
+  field_tmdb_id: true
   langcode: true
+  links: true

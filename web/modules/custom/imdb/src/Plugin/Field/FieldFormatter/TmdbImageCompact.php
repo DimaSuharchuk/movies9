@@ -5,6 +5,7 @@ namespace Drupal\imdb\Plugin\Field\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\imdb\Constant;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 /**
@@ -24,9 +25,7 @@ class TmdbImageCompact extends FormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
 
-    // Prepare formats without "original" format.
-    $formats = TmdbImageFormat::members();
-    unset($formats[TmdbImageFormat::original]);
+    $formats = TmdbImageFormat::getCompactFormats();
     array_walk($formats, function (&$value) {
       // Get number from format values and attach "px" to number.
       $value = $this->numberToPx($value->value());
@@ -69,7 +68,7 @@ class TmdbImageCompact extends FormatterBase {
       if ($item->value) {
         $elements[$delta] = [
           '#theme' => 'image',
-          '#uri' => 'https://image.tmdb.org/t/p/' . $this->getSetting('width') . $item->value,
+          '#uri' => Constant::TMDB_IMAGE_BASE_URL . $this->getSetting('width') . $item->value,
           '#langcode' => $langcode,
         ];
       }

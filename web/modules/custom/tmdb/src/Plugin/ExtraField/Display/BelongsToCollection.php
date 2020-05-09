@@ -4,7 +4,9 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\imdb\Constant;
 use Drupal\node\NodeViewBuilder;
+use Drupal\tmdb\enum\TmdbImageFormat;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -35,6 +37,8 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
    * {@inheritDoc}
    */
   public function build(ContentEntityInterface $entity): array {
+    $poster_format = TmdbImageFormat::w400;
+
     $build = [];
 
     if ($collection = $this->getMovieCollection()) {
@@ -47,7 +51,7 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
       if ($poster = $collection['collection_info']['poster_path']) {
         $build['#poster'] = [
           '#theme' => 'image',
-          '#uri' => 'https://image.tmdb.org/t/p/w400' . $poster,
+          '#uri' => Constant::TMDB_IMAGE_BASE_URL . $poster_format . $poster,
         ];
       }
     }

@@ -5,7 +5,7 @@ namespace Drupal\tmdb\enum;
 use Eloquent\Enumeration\AbstractEnumeration;
 
 /**
- * @method static ORIGINAL()
+ * @method static original()
  * @method static w45()
  * @method static w92()
  * @method static w154()
@@ -40,5 +40,16 @@ class TmdbImageFormat extends AbstractEnumeration {
   const w500 = 'w500';
 
   const w780 = 'w780';
+
+  /**
+   * Returns only formats that start with "w" letter.
+   *
+   * @return array
+   */
+  public static function getCompactFormats(): array {
+    $formats = self::members();
+    unset($formats[self::original]);
+    return $formats;
+  }
 
 }

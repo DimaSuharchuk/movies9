@@ -3,6 +3,7 @@
 namespace Drupal\tmdb\Plugin;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\imdb\Constant;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 abstract class ExtraTmdbImageFieldDisplayBase extends ExtraTmdbFieldDisplayBase {
@@ -48,7 +49,8 @@ abstract class ExtraTmdbImageFieldDisplayBase extends ExtraTmdbFieldDisplayBase 
       $alt = $this->getImageAlt($entity);
       $build = [
         '#theme' => 'image',
-        '#uri' => "https://image.tmdb.org/t/p/{$this->getFormat($entity)->value()}{$image_name}",
+        '#uri' => Constant::TMDB_IMAGE_BASE_URL . $this->getFormat($entity)
+            ->value() . $image_name,
         '#title' => $alt,
         '#alt' => $alt,
       ];

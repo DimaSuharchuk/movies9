@@ -3,27 +3,23 @@
 namespace Drupal\tmdb;
 
 use Drupal\Component\PhpStorage\FileStorage;
-use Drupal\Component\Serialization\SerializationInterface;
 use Drupal\Core\Site\Settings;
 
 class TmdbLocalStorage {
 
   private FileStorage $tmdb_storage;
 
-  private SerializationInterface $json;
-
 
   /**
    * TmdbLocalStorage constructor.
    *
-   * @param SerializationInterface $json
+   * @param Settings $settings
    */
-  public function __construct(SerializationInterface $json) {
+  public function __construct(Settings $settings) {
     $this->tmdb_storage = new FileStorage([
-      'directory' => Settings::get('file_private_path'),
+      'directory' => $settings::get('file_private_path'),
       'bin' => 'tmdb_storage',
     ]);
-    $this->json = $json;
   }
 
 
@@ -48,7 +44,7 @@ class TmdbLocalStorage {
    */
   public function load(TmdbLocalStorageFilePath $file_path): ?array {
     if ($this->checkFile($file_path)) {
-      return $this->json->decode(
+      return igbinary_unserialize(
         file_get_contents($this->tmdb_storage->getFullPath($file_path))
       );
     }
@@ -64,7 +60,7 @@ class TmdbLocalStorage {
    *   Data for saving.
    */
   public function save(TmdbLocalStorageFilePath $file_path, array $data): void {
-    $this->tmdb_storage->save($file_path, $this->json->encode($data));
+    $this->tmdb_storage->save($file_path, igbinary_serialize($data));
   }
 
 }

@@ -5,4 +5,4 @@ services:
       ['@settings', '@messenger', '@tmdb.local_storage', '@entity_creator']
   tmdb.local_storage:
     class: Drupal\tmdb\TmdbLocalStorage
-    arguments: ['@serialization.json']
+    arguments: ['@settings']

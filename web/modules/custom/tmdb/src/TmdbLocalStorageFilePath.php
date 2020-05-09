@@ -2,7 +2,6 @@
 
 namespace Drupal\tmdb;
 
-use Drupal\imdb\Constant;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
@@ -30,7 +29,6 @@ class TmdbLocalStorageFilePath {
       $path .= "{$page}/";
     }
     $path .= $tmdb_id;
-    $path .= '.' . Constant::TMDB_LOCAL_STORAGE_FILE_FORMAT;
 
     $this->path = $path;
   }

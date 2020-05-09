@@ -16,8 +16,6 @@ final class Constant {
 
   const TMDB_IMAGE_BASE_URL = '//image.tmdb.org/t/p/';
 
-  const TMDB_LOCAL_STORAGE_FILE_FORMAT = 'json';
-
   const GENDER_WOMAN = 1;
 
   const GENDER_MAN = 2;

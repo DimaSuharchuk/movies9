@@ -38,6 +38,14 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'job' => NULL,
       ],
     ],
+    'video' => [
+      'variables' => [
+        'name' => NULL,
+        'size' => NULL,
+        'key' => NULL,
+        'language' => NULL,
+      ],
+    ],
   ];
 }
 

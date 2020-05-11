@@ -90,6 +90,11 @@ final class Constant {
    */
   const TITLE = 'title';
 
+  /**
+   * @see Videos
+   */
+  const VIDEOS = 'videos';
+
 
   /**
    * Queue Worker IDS:

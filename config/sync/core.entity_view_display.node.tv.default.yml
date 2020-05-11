@@ -73,6 +73,7 @@ hidden:
   extra_field_crew: true
   extra_field_genres: true
   extra_field_poster: true
+  extra_field_videos: true
   field_approved: true
   field_imdb_id: true
   field_tmdb_id: true

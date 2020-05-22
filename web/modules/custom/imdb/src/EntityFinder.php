@@ -276,13 +276,18 @@ class EntityFinder {
       $return = $ids ? $this->loadMultipleById($ids) : [];
     }
 
+    if ($this->reduce && is_array($return)) {
+      $return = reset($return);
+    }
+
     $this->storage = NULL;
     $this->search_values = [];
     $this->limit = 0;
+    $this->reduce = FALSE;
     $this->count = FALSE;
     $this->load = FALSE;
 
-    return $this->reduce && is_array($return) ? reset($return) : $return;
+    return $return;
   }
 
 

@@ -10,3 +10,9 @@ services:
   imdb.rating:
     class: Drupal\imdb\ImdbRating
     arguments: ['@settings','@serialization.json','@imdb.helper']
+  node_helper:
+    class: Drupal\imdb\NodeHelper
+    arguments:
+      - '@entity_finder'
+      - '@tmdb.adapter'
+      - '@entity_creator'

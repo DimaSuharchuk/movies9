@@ -6,3 +6,8 @@ services:
   tmdb.local_storage:
     class: Drupal\tmdb\TmdbLocalStorage
     arguments: ['@settings']
+  tmdb.tmdb_teaser:
+    class: Drupal\tmdb\TmdbTeaser
+    arguments:
+      - '@tmdb.adapter'
+      - '@imdb.rating'

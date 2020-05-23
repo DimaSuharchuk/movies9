@@ -19,3 +19,24 @@ imdb.update_genres:
     _title: 'Genres'
   requirements:
     _permission: 'administer site configuration'
+imdb.tmdb_node_redirect:
+  path: '/adapter/{bundle}/{tmdb_id}'
+  defaults:
+    _title: 'Redirect to real node'
+    _controller: '\Drupal\imdb\Controller\NodeController::redirect'
+  requirements:
+    _permission: 'access content'
+imdb.recommendations:
+  path: '/recommendations/{nid}/{page}'
+  defaults:
+    _title: 'Recommendations'
+    _controller: '\Drupal\imdb\Controller\NodeController::recommendations'
+  requirements:
+    _permission: 'access content'
+imdb.similar:
+  path: '/similar/{nid}/{page}'
+  defaults:
+    _title: 'Similar'
+    _controller: '\Drupal\imdb\Controller\NodeController::similar'
+  requirements:
+    _permission: 'access content'

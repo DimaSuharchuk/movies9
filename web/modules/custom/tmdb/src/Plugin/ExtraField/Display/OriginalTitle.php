@@ -3,7 +3,6 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\imdb\Constant;
 use Drupal\imdb\EntityCreator;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -17,10 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class OriginalTitle extends ExtraTmdbFieldDisplayBase {
 
-  /**
-   * @var EntityCreator|object|null
-   */
-  private $creator;
+  private ?EntityCreator $creator;
 
   /**
    * {@inheritDoc}
@@ -43,12 +39,8 @@ class OriginalTitle extends ExtraTmdbFieldDisplayBase {
     // Show original title only for non-english content.
     /** @var \Drupal\node\Entity\Node $node */
     if ($node->language()->getId() !== 'en') {
-      // Update node on English if title == placeholder.
-      $node = $node->getTranslation('en');
-      if ($node->getTitle() === Constant::NODE_TITLE_EMPTY_PLACEHOLDER) {
-        $this->adapter->updateMovieOrTvPlaceholderFields($node);
-      }
       // Get title from Eng node.
+      $node = $node->getTranslation('en');
       $build = [
         '#markup' => $node->getTitle(),
       ];

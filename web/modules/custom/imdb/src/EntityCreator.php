@@ -114,7 +114,7 @@ class EntityCreator {
    *
    * @see TmdbImageItem
    */
-  private function createNodeMovieOrTv(NodeBundle $bundle, string $title, int $tmdb_id, string $imdb_id, ?string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
+  public function createNodeMovieOrTv(NodeBundle $bundle, string $title, int $tmdb_id, string $imdb_id, ?string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
     $genres_ids = $this->finder->findTermsGenres()
       ->byTmdbIds($genres_tmdb_ids)
       ->execute();
@@ -175,31 +175,6 @@ class EntityCreator {
     ];
     /** @var Node $node */
     $node = $this->createEntityBasedOnTmdbField(EntityType::node(), $bundle, $lang, $tmdb_id, $fields_data);
-    return $node;
-  }
-
-  /**
-   * Update node with new values.
-   *
-   * @param Node $node
-   *   Drupal node.
-   * @param array $fields
-   *   Fields for update.
-   *   Example: ['field_machine_name' => 'field_value', ...]
-   *
-   * @return Node|null
-   *   Updated node.
-   */
-  public function updateNode(Node $node, array $fields): ?Node {
-    foreach ($fields as $field_name => $field_value) {
-      $node->$field_name = $field_value;
-    }
-    try {
-      $node->save();
-    } catch (EntityStorageException $e) {
-      return NULL;
-    }
-
     return $node;
   }
 

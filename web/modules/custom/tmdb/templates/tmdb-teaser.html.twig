@@ -1,0 +1,20 @@
+<a href="{{ path('imdb.tmdb_node_redirect', {'bundle': bundle, 'tmdb_id': tmdb_id}) }}" class="col-lg-2">
+
+  <article class="node-teaser">
+    <div class="field field-poster">
+      {% if poster %}
+        <img src="//image.tmdb.org/t/p/w185{{ poster }}" alt="{{ title }}" title="{{ title }}">
+      {% endif %}
+    </div>
+
+    <div class="field field-imdb-rating">
+      <div class="field-with-label">
+        <div class="label">imdb:</div>
+        <div class="content">{{ imdb_rating }}</div>
+      </div>
+    </div>
+
+    <div class="field field-title">{{ title }}</div>
+  </article>
+
+</a>

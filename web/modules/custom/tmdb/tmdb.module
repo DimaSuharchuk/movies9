@@ -29,6 +29,28 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'items' => NULL,
       ],
     ],
+    'tmdb_attachable_teasers_wrapper' => [
+      'variables' => [
+        'tmdb_attachable_teasers' => NULL,
+      ],
+    ],
+    'tmdb_attachable_teasers' => [
+      'variables' => [
+        'type' => NULL,
+        'items' => NULL,
+        'page' => NULL,
+        'more_button' => NULL,
+      ],
+    ],
+    'tmdb_teaser' => [
+      'variables' => [
+        'bundle' => NULL,
+        'tmdb_id' => NULL,
+        'poster' => NULL,
+        'imdb_rating' => NULL,
+        'title' => NULL,
+      ],
+    ],
     'person' => [
       'variables' => [
         'avatar' => NULL,
@@ -47,19 +69,4 @@ function tmdb_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
-}
-
-/**
- * Implements hook_ENTITY_TYPE_view().
- */
-function tmdb_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
-  $p = \Drupal\imdb\Constant::NODE_TITLE_EMPTY_PLACEHOLDER;
-  /** @var \Drupal\node\Entity\Node $entity */
-  if ($entity->getTitle() === $p) {
-    // Update placeholder fields if need.
-    \Drupal::service('tmdb.adapter')->updateMovieOrTvPlaceholderFields($entity);
-    // Update title and poster on page.
-    $build['title'] = $entity->{'title'}->view($view_mode);
-    $build['field_poster'] = $entity->{'field_poster'}->view($view_mode);
-  }
 }

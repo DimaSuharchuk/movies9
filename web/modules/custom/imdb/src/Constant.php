@@ -4,14 +4,6 @@ namespace Drupal\imdb;
 
 final class Constant {
 
-  /**
-   * Placeholder used when need to create node without additional request to
-   * TMDb API.
-   *
-   * @var string
-   */
-  const NODE_TITLE_EMPTY_PLACEHOLDER = '---';
-
   const IMDB_RATINGS_FILE_NAME = 'title.ratings.tsv';
 
   const TMDB_IMAGE_BASE_URL = '//image.tmdb.org/t/p/';
@@ -76,9 +68,19 @@ final class Constant {
   const PRODUCTION_COMPANIES = 'production_companies';
 
   /**
+   * @see Recommendations
+   */
+  const RECOMMENDATIONS = 'recommendations';
+
+  /**
    * @see Runtime
    */
   const RUNTIME = 'runtime';
+
+  /**
+   * @see Similar
+   */
+  const SIMILAR = 'similar';
 
   /**
    * @see Site

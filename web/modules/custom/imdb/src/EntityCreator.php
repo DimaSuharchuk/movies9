@@ -52,46 +52,6 @@ class EntityCreator {
 
 
   /**
-   * Delegate to method self::createNodeMovieOrTv(), because "Movie" and "TV"
-   * have same fields.
-   *
-   * @param string $title
-   * @param int $tmdb_id
-   * @param string $imdb_id
-   * @param string $poster
-   * @param array $genres_tmdb_ids
-   * @param bool $approved
-   * @param Language $lang
-   *
-   * @return Node|null
-   *
-   * @see EntityCreator::createNodeMovieOrTv()
-   */
-  public function createNodeMovie(string $title, int $tmdb_id, string $imdb_id, ?string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
-    return $this->createNodeMovieOrTv(NodeBundle::movie(), $title, $tmdb_id, $imdb_id, $poster, $genres_tmdb_ids, $approved, $lang);
-  }
-
-  /**
-   * Delegate to method self::createNodeMovieOrTv(), because "Movie" and "TV"
-   * have same fields.
-   *
-   * @param string $title
-   * @param int $tmdb_id
-   * @param string $imdb_id
-   * @param string $poster
-   * @param array $genres_tmdb_ids
-   * @param bool $approved
-   * @param Language $lang
-   *
-   * @return Node|null
-   *
-   * @see EntityCreator::createNodeMovieOrTv()
-   */
-  public function createNodeTv(string $title, int $tmdb_id, string $imdb_id, ?string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
-    return $this->createNodeMovieOrTv(NodeBundle::tv(), $title, $tmdb_id, $imdb_id, $poster, $genres_tmdb_ids, $approved, $lang);
-  }
-
-  /**
    * Save Node "Movie" or "TV" in DB.
    *
    * @param NodeBundle $bundle
@@ -182,15 +142,13 @@ class EntityCreator {
    * Find node by IMDb ID and set Approved status to TRUE.
    *
    * @param string $imdb_id
-   * @param Language $lang
    *
    * @return bool
    */
-  public function updateNodeApprovedStatus(string $imdb_id, Language $lang): bool {
+  public function updateNodeApprovedStatus(string $imdb_id): bool {
     /** @var Node $node */
     if ($node = $this->finder->findNodes()
       ->byImdbId($imdb_id)
-      ->addCondition('langcode', $lang->value())
       ->loadEntities()
       ->execute()) {
 

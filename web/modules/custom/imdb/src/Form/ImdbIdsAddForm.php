@@ -7,7 +7,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Site\Settings;
 use Drupal\imdb\Constant;
-use Drupal\imdb\enum\Language;
 use Drupal\imdb\IMDbHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -106,12 +105,7 @@ class ImdbIdsAddForm extends FormBase {
     if ($imdb_ids) {
       $q = $this->queue->get(Constant::NODE_SAVE_WORKER_ID);
       foreach ($imdb_ids as $imdb_id) {
-        foreach (Language::members() as $lang) {
-          $q->createItem([
-            'imdb_id' => $imdb_id,
-            'lang' => $lang,
-          ]);
-        }
+        $q->createItem(['imdb_id' => $imdb_id]);
       }
     }
   }

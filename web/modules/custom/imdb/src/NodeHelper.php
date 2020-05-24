@@ -27,11 +27,13 @@ class NodeHelper {
    *
    * @param NodeBundle $bundle
    * @param int $tmdb_id
+   * @param bool $approved_status
+   *   Field "Approved".
    *
    * @return int|null
    *   Node ID if node for all languages has been successfully created.
    */
-  public function prepareNodeOnAllLanguages(NodeBundle $bundle, int $tmdb_id): ?int {
+  public function prepareNodeOnAllLanguages(NodeBundle $bundle, int $tmdb_id, bool $approved_status = FALSE): ?int {
     $e_bundle = EntityBundle::memberByKey($bundle->key());
     if (!$node_id = $this->finder->findNodes()
       ->byBundle($e_bundle)
@@ -61,7 +63,7 @@ class NodeHelper {
             $node_data[$langcode]['imdb_id'],
             $node_data[$langcode]['poster_path'],
             $node_data[$langcode]['genres_ids'],
-            FALSE,
+            $approved_status,
             $lang
           );
         }

@@ -3,14 +3,13 @@
 namespace Drupal\imdb\Plugin\QueueWorker;
 
 use Drupal\Core\Annotation\QueueWorker;
-use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\Queue\RequeueException;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\imdb\EntityCreator;
-use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
+use Drupal\imdb\NodeHelper;
 use Drupal\tmdb\TmdbAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -25,91 +24,49 @@ class NodeCreatorQueueWorker extends QueueWorkerBase implements ContainerFactory
 
   use StringTranslationTrait;
 
-  /**
-   * @var Messenger|object|null
-   */
-  private $messenger;
+  private ?EntityCreator $creator;
 
-  /**
-   * @var TmdbAdapter|object|null
-   */
-  private $adapter;
+  private ?TmdbAdapter $adapter;
 
-  /**
-   * @var EntityCreator|object|null
-   */
-  private $creator;
+  private ?NodeHelper $node_helper;
 
   /**
    * {@inheritDoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    $instance = new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition
-    );
+    $instance = new static($configuration, $plugin_id, $plugin_definition);
 
-    $instance->messenger = $container->get('messenger');
-    $instance->adapter = $container->get('tmdb.adapter');
     $instance->creator = $container->get('entity_creator');
+    $instance->adapter = $container->get('tmdb.adapter');
+    $instance->node_helper = $container->get('node_helper');
 
     return $instance;
   }
+
 
   /**
    * {@inheritDoc}
    */
   public function processItem($data) {
-    // Search type and data.
     $imdb_id = $data['imdb_id'];
-    /** @var Language $lang */
-    $lang = $data['lang'];
 
-    // Update status if node already exists.
-    if ($this->creator->updateNodeApprovedStatus($imdb_id, $lang)) {
+    // Check and update "Approved" status if the node already exists.
+    if ($this->creator->updateNodeApprovedStatus($imdb_id)) {
       return;
     }
 
-    $tmdb_response = $this->adapter->findByImdbId($imdb_id, $lang);
-    /** @var NodeBundle $node_type */
-    $node_type = $tmdb_response['type'];
-    $node_data = $tmdb_response['data'];
+    // Get Node bundle and TMDb ID by IMDb ID.
+    $tmdb_response = $this->adapter->getTmdbIdByImdbId($imdb_id);
+    /** @var NodeBundle $bundle */
+    $bundle = $tmdb_response['type'];
+    /** @var int $tmdb_id */
+    $tmdb_id = $tmdb_response['tmdb_id'];
 
-    // Create movie or TV.
-    $node = NULL;
-    switch ($node_type) {
-      case NodeBundle::movie():
-        $node = $this->creator->createNodeMovie(
-          $node_data['title'],
-          $node_data['id'],
-          $imdb_id,
-          $node_data['poster_path'],
-          $node_data['genre_ids'],
-          TRUE,
-          $lang
-        );
-        break;
-
-      case NodeBundle::tv():
-        $node = $this->creator->createNodeTv(
-          $node_data['name'],
-          $node_data['id'],
-          $imdb_id,
-          $node_data['poster_path'],
-          $node_data['genre_ids'],
-          TRUE,
-          $lang
-        );
-        break;
-    }
-
-    if (!$node) {
-      $error = $this->t('%type has not been created with TMDb ID %tmdb_id, title %title, language %lang.', [
-        '%type' => $node_type->value(),
-        '%tmdb_id' => $node_data['id'],
-        '%title' => $node_data['title'] ?: $node_data['name'],
-        '%lang' => $lang->value(),
+    // Create movie or TV on all languages.
+    if (!$node_id = $this->node_helper->prepareNodeOnAllLanguages($bundle, $tmdb_id, TRUE)) {
+      $error = $this->t('%type has not been created with TMDb ID %tmdb_id.', [
+        '%type' => $bundle->value(),
+        '%tmdb_id' => $tmdb_id,
       ]);
       throw new RequeueException($error);
     }

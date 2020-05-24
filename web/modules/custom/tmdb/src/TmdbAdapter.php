@@ -201,19 +201,16 @@ class TmdbAdapter {
   }
 
   /**
-   * Search movie or TV show in TMDb API and return a little information as a
-   * "teaser".
+   * Search movie or TV show in TMDb API by IMDb ID.
    *
    * @param string $imdb_id
-   * @param Language $lang
    *
-   * @return array[NodeBundle, array]|null
+   * @return array[NodeBundle, int]|null
    */
-  public function findByImdbId(string $imdb_id, Language $lang): ?array {
+  public function getTmdbIdByImdbId(string $imdb_id): ?array {
     // Request to API.
     $response = $this->connect()->getFindApi()->findBy($imdb_id, [
         'external_source' => 'imdb_id',
-        'language' => $lang->value(),
       ]
     );
 
@@ -223,14 +220,14 @@ class TmdbAdapter {
           case 'movie_results':
             return [
               'type' => NodeBundle::movie(),
-              'data' => reset($v),
+              'tmdb_id' => $v[0]['id'],
             ];
             break;
 
           case 'tv_results':
             return [
               'type' => NodeBundle::tv(),
-              'data' => reset($v),
+              'tmdb_id' => $v[0]['id'],
             ];
             break;
 

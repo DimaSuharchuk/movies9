@@ -4,6 +4,7 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\imdb\Constant;
+use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\tmdb\enum\TmdbImageFormat;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
@@ -40,8 +41,11 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
       $build = [
         '#theme' => 'collection',
         '#title' => $collection['name'],
-        '#items' => $this->tmdb_teaser
-          ->buildTmdbTeasers($collection['parts'], NodeBundle::movie()),
+        '#items' => $this->tmdb_teaser->buildTmdbTeasers(
+          $collection['teasers'],
+          NodeBundle::movie(),
+          Language::memberByValue($entity->language()->getId())
+        ),
       ];
       // If collection has a poster.
       if ($poster = $collection['poster_path']) {
@@ -55,6 +59,17 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
     }
 
     return $build;
+  }
+
+
+  /**
+   * @see TmdbApiAdapter::getMovieCollection()
+   */
+  private function getMovieCollection(): ?array {
+    $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
+    $lang = Language::memberByValue($this->entity->language()->getId());
+
+    return $this->adapter->getMovieCollection($tmdb_id, $lang);
   }
 
 }

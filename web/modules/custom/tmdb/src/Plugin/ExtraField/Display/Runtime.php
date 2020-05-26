@@ -23,7 +23,7 @@ class Runtime extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($runtime = $this->getFieldValue('runtime')) {
+    if ($runtime = $this->getCommonFieldValue('runtime')) {
       $output = '';
       if ($runtime > 59) {
         $hours = intdiv($runtime, 60);

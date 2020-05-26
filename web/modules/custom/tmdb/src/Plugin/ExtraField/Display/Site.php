@@ -21,7 +21,7 @@ class Site extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($site = $this->getFieldValue('homepage')) {
+    if ($site = $this->getCommonFieldValue('site')) {
       $build = [
         '#theme' => 'field_with_label',
         '#label' => $this->t('site'),

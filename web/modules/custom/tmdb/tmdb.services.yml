@@ -1,8 +1,6 @@
 services:
   tmdb.adapter:
-    class: Drupal\tmdb\TmdbAdapter
-    arguments:
-      ['@settings', '@messenger', '@tmdb.local_storage', '@entity_creator']
+    class: Drupal\tmdb\TmdbApiAdapter
   tmdb.local_storage:
     class: Drupal\tmdb\TmdbLocalStorage
     arguments: ['@settings']

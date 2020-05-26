@@ -13,7 +13,7 @@ use Drupal\imdb\enum\NodeBundle;
 use Drupal\imdb\NodeHelper;
 use Drupal\node\Entity\Node;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
-use Drupal\tmdb\TmdbAdapter;
+use Drupal\tmdb\TmdbApiAdapter;
 use Drupal\tmdb\TmdbTeaser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,7 +22,7 @@ class NodeController implements ContainerInjectionInterface {
 
   private ?NodeHelper $node_helper;
 
-  private ?TmdbAdapter $adapter;
+  private ?TmdbApiAdapter $adapter;
 
   private ?LanguageManagerInterface $language_manager;
 
@@ -116,8 +116,9 @@ class NodeController implements ContainerInjectionInterface {
     $lang = Language::memberByValue($langcode);
 
     // Get recommendations or similar teasers from TMDb API or TMDbLocalStorage.
-    $r = $this->adapter
-      ->getRecommendationsOrSimilar($storage_type, $bundle, $tmdb_id, $lang, $page);
+    $r = TmdbLocalStorageType::recommendations() === $storage_type
+      ? $this->adapter->getRecommendations($bundle, $tmdb_id, $lang, $page)
+      : $this->adapter->getSimilar($bundle, $tmdb_id, $lang, $page);
 
     // Build attachable TMDb teasers for appending to previous page teasers.
     $attachable_teasers = $this->tmdb_teaser->buildAttachableTmdbTeasers(
@@ -125,6 +126,7 @@ class NodeController implements ContainerInjectionInterface {
       $node_id,
       $r['results'],
       $bundle,
+      $lang,
       $page,
       $r['total_pages'] > $page
     );

@@ -18,10 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class MovieReleaseDate extends ExtraTmdbFieldDisplayBase {
 
-  /**
-   * @var DateFormatter|object|null
-   */
-  private $date_formatter;
+  private ?DateFormatter $date_formatter;
 
   /**
    * {@inheritDoc}
@@ -40,7 +37,7 @@ class MovieReleaseDate extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($release_date = $this->getFieldValue('release_date')) {
+    if ($release_date = $this->getCommonFieldValue('release_date')) {
       try {
         $obj = new DateTime($release_date);
         $output = $this->date_formatter->format($obj->getTimestamp(), 'custom', 'd F Y');

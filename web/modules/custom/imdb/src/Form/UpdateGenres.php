@@ -8,25 +8,16 @@ use Drupal\imdb\EntityCreator;
 use Drupal\imdb\EntityFinder;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
-use Drupal\tmdb\TmdbAdapter;
+use Drupal\tmdb\TmdbApiAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UpdateGenres extends FormBase {
 
-  /**
-   * @var EntityFinder|object|null
-   */
-  private $finder;
+  private ?EntityFinder $finder;
 
-  /**
-   * @var TmdbAdapter|object|null
-   */
-  private $adapter;
+  private ?TmdbApiAdapter $adapter;
 
-  /**
-   * @var EntityCreator|object|null
-   */
-  private $creator;
+  private ?EntityCreator $creator;
 
   /**
    * {@inheritDoc}
@@ -104,7 +95,7 @@ class UpdateGenres extends FormBase {
    * @param NodeBundle $bundle
    */
   private function buildGenres(array &$genres, array $genres_of_type, NodeBundle $bundle) {
-    foreach ($genres_of_type['genres'] as $genre) {
+    foreach ($genres_of_type as $genre) {
       $n = $genre['name'];
       // 1-st letter to uppercase.
       $n = mb_convert_case(mb_substr($n, 0, 1), MB_CASE_UPPER) . mb_substr($n, 1, mb_strlen($n));

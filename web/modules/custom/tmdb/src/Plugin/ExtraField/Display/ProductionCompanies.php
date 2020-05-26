@@ -22,7 +22,7 @@ class ProductionCompanies extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($companies = $this->getFieldValue('production_companies')) {
+    if ($companies = $this->getCommonFieldValue('production_companies')) {
       if ($content = $this->buildProductionCompanies($companies)) {
         $build = [
           '#theme' => 'field_with_label',

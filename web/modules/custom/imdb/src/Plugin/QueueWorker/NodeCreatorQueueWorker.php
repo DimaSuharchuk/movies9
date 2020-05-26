@@ -10,7 +10,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\imdb\EntityCreator;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\imdb\NodeHelper;
-use Drupal\tmdb\TmdbAdapter;
+use Drupal\tmdb\TmdbApiAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -26,7 +26,7 @@ class NodeCreatorQueueWorker extends QueueWorkerBase implements ContainerFactory
 
   private ?EntityCreator $creator;
 
-  private ?TmdbAdapter $adapter;
+  private ?TmdbApiAdapter $adapter;
 
   private ?NodeHelper $node_helper;
 

@@ -45,10 +45,10 @@ class Crew extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($collection = $this->getFieldValue('crew')) {
+    if ($crew = $this->getCrew()) {
       $build = [
         '#theme' => 'collection',
-        '#items' => $this->buildItems($collection['crew']),
+        '#items' => $this->buildItems($crew),
       ];
       if ($entity->bundle() === NodeBundle::tv) {
         $build['#title'] = $this->t('Crew');
@@ -58,6 +58,16 @@ class Crew extends ExtraTmdbFieldDisplayBase {
     return $build;
   }
 
+
+  /**
+   * @see TmdbApiAdapter::getCrew()
+   */
+  private function getCrew(): array {
+    $bundle = NodeBundle::memberByValue($this->entity->bundle());
+    $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
+
+    return $this->adapter->getCrew($bundle, $tmdb_id);
+  }
 
   /**
    * @param array $persons

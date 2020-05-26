@@ -49,6 +49,7 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'poster' => NULL,
         'imdb_rating' => NULL,
         'title' => NULL,
+        'original_title' => NULL,
       ],
     ],
     'person' => [

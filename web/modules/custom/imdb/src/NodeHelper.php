@@ -5,17 +5,17 @@ namespace Drupal\imdb;
 use Drupal\imdb\enum\EntityBundle;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
-use Drupal\tmdb\TmdbAdapter;
+use Drupal\tmdb\TmdbApiAdapter;
 
 class NodeHelper {
 
   private EntityFinder $finder;
 
-  private TmdbAdapter $adapter;
+  private TmdbApiAdapter $adapter;
 
   private EntityCreator $creator;
 
-  public function __construct(EntityFinder $finder, TmdbAdapter $adapter, EntityCreator $creator) {
+  public function __construct(EntityFinder $finder, TmdbApiAdapter $adapter, EntityCreator $creator) {
     $this->finder = $finder;
     $this->adapter = $adapter;
     $this->creator = $creator;
@@ -44,7 +44,7 @@ class NodeHelper {
       $node_data = [];
       foreach (Language::members() as $lang) {
         // Fetch data from TMDb API.
-        $node_data[$lang->key()] = $this->adapter->getFullInfoByTmdbId($bundle, $tmdb_id, $lang);
+        $node_data[$lang->key()] = $this->adapter->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang);
         // Save data to node.
       }
 

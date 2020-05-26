@@ -23,77 +23,77 @@ final class Constant {
    * Extra fields IDS:
    */
   /**
-   * @see BelongsToCollection
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Approved
    */
   const APPROVED = 'approved';
 
   /**
-   * @see Approved
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\BelongsToCollection
    */
   const BELONGS_TO_COLLECTION = 'belongs_to_collection';
 
   /**
-   * @see Cast
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Cast
    */
   const CAST = 'cast';
 
   /**
-   * @see Crew
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Crew
    */
   const CREW = 'crew';
 
   /**
-   * @see ImdbRating
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\ImdbRating
    */
   const IMDB_RATING = 'imdb_rating';
 
   /**
-   * @see MovieReleaseDate
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\MovieReleaseDate
    */
   const MOVIE_RELEASE_DATE = 'movie_release_date';
 
   /**
-   * @see OriginalTitle
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\OriginalTitle
    */
   const ORIGINAL_TITLE = 'original_title';
 
   /**
-   * @see Overview
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Overview
    */
   const OVERVIEW = 'overview';
 
   /**
-   * @see ProductionCompanies
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\ProductionCompanies
    */
   const PRODUCTION_COMPANIES = 'production_companies';
 
   /**
-   * @see Recommendations
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Recommendations
    */
   const RECOMMENDATIONS = 'recommendations';
 
   /**
-   * @see Runtime
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Runtime
    */
   const RUNTIME = 'runtime';
 
   /**
-   * @see Similar
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Similar
    */
   const SIMILAR = 'similar';
 
   /**
-   * @see Site
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Site
    */
   const SITE = 'site';
 
   /**
-   * @see Title
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Title
    */
   const TITLE = 'title';
 
   /**
-   * @see Videos
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Videos
    */
   const VIDEOS = 'videos';
 
@@ -103,7 +103,7 @@ final class Constant {
    */
 
   /**
-   * @see NodeCreatorQueueWorker
+   * @see \Drupal\imdb\Plugin\QueueWorker\NodeCreatorQueueWorker
    */
   const NODE_SAVE_WORKER_ID = 'create_node_by_imdb_id_worker';
 

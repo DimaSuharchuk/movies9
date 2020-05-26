@@ -3,6 +3,7 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\imdb\enum\NodeBundle;
 use Drupal\tmdb\enum\TmdbImageFormat;
 use Drupal\tmdb\PersonAvatar;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
@@ -24,14 +25,25 @@ class Cast extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($collection = $this->getFieldValue('cast')) {
+    if ($cast = $this->getCast()) {
       $build = [
         '#theme' => 'collection',
-        '#items' => $this->buildItems($collection['cast']),
+        '#items' => $this->buildItems($cast),
       ];
     }
 
     return $build;
+  }
+
+
+  /**
+   * @see TmdbApiAdapter::getCast()
+   */
+  private function getCast(): array {
+    $bundle = NodeBundle::memberByValue($this->entity->bundle());
+    $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
+
+    return $this->adapter->getCast($bundle, $tmdb_id);
   }
 
   /**

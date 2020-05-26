@@ -3,6 +3,7 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
@@ -44,12 +45,25 @@ class Similar extends ExtraTmdbFieldDisplayBase {
         $entity->id(),
         $similar['results'],
         NodeBundle::memberByValue($entity->bundle()),
+        Language::memberByValue($entity->language()->getId()),
         1,
         $similar['total_pages'] > 1
       );
     }
 
     return $build;
+  }
+
+
+  /**
+   * @see TmdbApiAdapter::getSimilar()
+   */
+  private function getSimilarFirstPage(): ?array {
+    $bundle = NodeBundle::memberByValue($this->entity->bundle());
+    $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
+    $lang = Language::memberByValue($this->entity->language()->getId());
+
+    return $this->adapter->getSimilar($bundle, $tmdb_id, $lang, 1);
   }
 
 }

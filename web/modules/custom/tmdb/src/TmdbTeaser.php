@@ -4,6 +4,7 @@ namespace Drupal\tmdb;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\imdb\ImdbRating;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
@@ -12,11 +13,11 @@ class TmdbTeaser {
 
   use StringTranslationTrait;
 
-  private TmdbAdapter $adapter;
+  private TmdbApiAdapter $adapter;
 
   private ImdbRating $imdb_rating;
 
-  public function __construct(TmdbAdapter $adapter, ImdbRating $rating) {
+  public function __construct(TmdbApiAdapter $adapter, ImdbRating $rating) {
     $this->adapter = $adapter;
     $this->imdb_rating = $rating;
   }
@@ -31,12 +32,13 @@ class TmdbTeaser {
    * @param array $teasers
    *   Teasers are response from TMDb API.
    * @param NodeBundle $bundle
+   * @param Language $lang
    * @param int $page
    * @param bool $more_button
    *
    * @return array
    */
-  public function buildAttachableTmdbTeasersWithWrapper(TmdbLocalStorageType $storage_type, int $node_id, array $teasers, NodeBundle $bundle, int $page, $more_button = FALSE): array {
+  public function buildAttachableTmdbTeasersWithWrapper(TmdbLocalStorageType $storage_type, int $node_id, array $teasers, NodeBundle $bundle, Language $lang, int $page, $more_button = FALSE): array {
     return [
       '#theme' => 'tmdb_attachable_teasers_wrapper',
       '#tmdb_attachable_teasers' => $this->buildAttachableTmdbTeasers(
@@ -44,6 +46,7 @@ class TmdbTeaser {
         $node_id,
         $teasers,
         $bundle,
+        $lang,
         $page,
         $more_button
       ),
@@ -57,15 +60,16 @@ class TmdbTeaser {
    * @param int $node_id
    * @param array $teasers
    * @param NodeBundle $bundle
+   * @param Language $lang
    * @param int $page
    * @param bool $more_button
    *
    * @return array
    */
-  public function buildAttachableTmdbTeasers(TmdbLocalStorageType $storage_type, int $node_id, array $teasers, NodeBundle $bundle, int $page, $more_button = FALSE): array {
+  public function buildAttachableTmdbTeasers(TmdbLocalStorageType $storage_type, int $node_id, array $teasers, NodeBundle $bundle, Language $lang, int $page, $more_button = FALSE): array {
     $render = [
       '#theme' => 'tmdb_attachable_teasers',
-      '#items' => $this->buildTmdbTeasers($teasers, $bundle),
+      '#items' => $this->buildTmdbTeasers($teasers, $bundle, $lang),
       '#page' => $page,
     ];
 
@@ -92,14 +96,14 @@ class TmdbTeaser {
    *
    * @param array $teasers
    * @param NodeBundle $bundle
+   * @param Language $lang
    *
    * @return array
    */
-  public function buildTmdbTeasers(array $teasers, NodeBundle $bundle): array {
+  public function buildTmdbTeasers(array $teasers, NodeBundle $bundle, Language $lang): array {
     // Get IMDb IDs for collection items.
     $tmdb_ids = array_column($teasers, 'id');
-    // @todo Slowest thing is here.
-    $imdb_ids = $this->adapter->getImdbIdsByTmdbIds($tmdb_ids, $bundle);
+    $imdb_ids = $this->adapter->getImdbIdsByTmdbIds($bundle, $tmdb_ids);
 
     $render = [];
     foreach ($teasers as $teaser) {
@@ -108,8 +112,9 @@ class TmdbTeaser {
         '#bundle' => $bundle->value(),
         '#tmdb_id' => $teaser['id'],
         '#poster' => $teaser['poster_path'] ?: NULL,
-        '#imdb_rating' => $this->imdb_rating->getRatingValue($imdb_ids[$teaser['id']]),
-        '#title' => $teaser['title'] ?? $teaser['name'],
+        '#imdb_rating' => $imdb_ids[$teaser['id']] ? $this->imdb_rating->getRatingValue($imdb_ids[$teaser['id']]) : NULL,
+        '#title' => $teaser['title'],
+        '#original_title' => $lang !== Language::en() ? $teaser['original_title'] : NULL,
       ];
     }
 

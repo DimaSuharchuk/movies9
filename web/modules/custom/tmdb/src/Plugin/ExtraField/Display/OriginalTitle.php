@@ -3,9 +3,7 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\imdb\EntityCreator;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @ExtraFieldDisplay(
@@ -15,20 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class OriginalTitle extends ExtraTmdbFieldDisplayBase {
-
-  private ?EntityCreator $creator;
-
-  /**
-   * {@inheritDoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
-
-    $instance->creator = $container->get('entity_creator');
-
-    return $instance;
-  }
-
 
   /**
    * {@inheritDoc}

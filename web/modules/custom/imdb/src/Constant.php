@@ -58,6 +58,16 @@ final class Constant {
   const NONAME_CLUB = 'noname_club';
 
   /**
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\NumberOfEpisodes
+   */
+  const number_of_episodes = 'number_of_episodes';
+
+  /**
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\NumberOfSeasons
+   */
+  const number_of_seasons = 'number_of_seasons';
+
+  /**
    * @see \Drupal\tmdb\Plugin\ExtraField\Display\OriginalTitle
    */
   const ORIGINAL_TITLE = 'original_title';

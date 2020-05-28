@@ -28,7 +28,17 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_noname_club:
-    weight: 10
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_number_of_episodes:
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_number_of_seasons:
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -38,17 +48,17 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_overview:
-    weight: 9
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   extra_field_production_companies:
-    weight: 8
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   extra_field_site:
-    weight: 7
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -62,8 +72,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  extra_field_tv_release_years:
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   extra_field_videos:
-    weight: 11
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }

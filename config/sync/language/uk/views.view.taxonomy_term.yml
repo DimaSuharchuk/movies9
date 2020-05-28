@@ -26,6 +26,6 @@ display:
             title: Все
           title: '{{ arguments.tid }}'
   feed_1:
-    display_title: Потік
+    display_title: Канал
   page_1:
     display_title: Сторінка

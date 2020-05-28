@@ -28,6 +28,6 @@ display:
             last: 'Остання »'
     display_title: Головне
   feed_1:
-    display_title: Потік
+    display_title: Канал
   page_1:
     display_title: Сторінка

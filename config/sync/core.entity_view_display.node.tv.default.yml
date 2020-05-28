@@ -32,8 +32,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  extra_field_networks:
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   extra_field_noname_club:
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -53,12 +58,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_overview:
-    weight: 13
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   extra_field_production_companies:
-    weight: 12
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -83,7 +88,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_videos:
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }

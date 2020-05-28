@@ -8,12 +8,12 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 
 /**
  * @ExtraFieldDisplay(
- *   id = "production_companies",
- *   label = @Translation("Extra: Production companies"),
- *   bundles = {"node.movie", "node.tv"}
+ *   id = "networks",
+ *   label = @Translation("Extra: Networks"),
+ *   bundles = {"node.tv"}
  * )
  */
-class ProductionCompanies extends ExtraTmdbFieldDisplayBase {
+class Networks extends ExtraTmdbFieldDisplayBase {
 
   use NetworksAndCompanies;
 
@@ -23,11 +23,11 @@ class ProductionCompanies extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($companies = $this->getCommonFieldValue('production_companies')) {
-      if ($content = $this->buildItems($companies)) {
+    if ($networks = $this->getCommonFieldValue('networks')) {
+      if ($content = $this->buildItems($networks)) {
         $build = [
           '#theme' => 'field_with_label',
-          '#label' => $this->t('production companies', [], ['context' => 'Field label']),
+          '#label' => $this->t('networks', [], ['context' => 'Field label']),
           '#content' => $content,
         ];
       }

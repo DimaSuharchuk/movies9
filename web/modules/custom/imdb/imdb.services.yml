@@ -20,3 +20,5 @@ services:
     class: Drupal\imdb\DateHelper
     arguments:
       - '@date.formatter'
+  time_helper:
+    class: Drupal\imdb\TimeHelper

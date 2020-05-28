@@ -43,6 +43,11 @@ final class Constant {
   const CREW = 'crew';
 
   /**
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\EpisodeRuntime
+   */
+  const EPISODE_RUNTIME = 'episode_runtime';
+
+  /**
    * @see \Drupal\tmdb\Plugin\ExtraField\Display\ImdbRating
    */
   const IMDB_RATING = 'imdb_rating';

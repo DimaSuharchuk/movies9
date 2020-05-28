@@ -9,12 +9,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @ExtraFieldDisplay(
- *   id = "runtime",
- *   label = @Translation("Extra: Runtime"),
- *   bundles = {"node.movie"}
+ *   id = "episode_runtime",
+ *   label = @Translation("Extra: Episode runtime"),
+ *   bundles = {"node.tv"}
  * )
  */
-class Runtime extends ExtraTmdbFieldDisplayBase {
+class EpisodeRuntime extends ExtraTmdbFieldDisplayBase {
 
   private ?TimeHelper $time_helper;
 
@@ -36,11 +36,11 @@ class Runtime extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($runtime = $this->getCommonFieldValue('runtime')) {
+    if ($runtime = $this->getCommonFieldValue('episode_run_time')) {
       $build = [
         '#theme' => 'field_with_label',
-        '#label' => $this->t('duration', [], ['context' => 'Field label']),
-        '#content' => $this->time_helper->formatTimeFromMinutes($runtime),
+        '#label' => $this->t('episode runtime', [], ['context' => 'Field label']),
+        '#content' => '~' . $this->time_helper->formatTimeFromMinutes($runtime),
       ];
     }
 

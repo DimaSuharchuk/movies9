@@ -103,6 +103,11 @@ final class Constant {
   const TITLE = 'title';
 
   /**
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\TvReleaseYears
+   */
+  const TV_RELEASE_YEARS = 'tv_release_years';
+
+  /**
    * @see \Drupal\tmdb\Plugin\ExtraField\Display\Videos
    */
   const VIDEOS = 'videos';

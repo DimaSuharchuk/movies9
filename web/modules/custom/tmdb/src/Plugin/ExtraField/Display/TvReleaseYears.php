@@ -9,12 +9,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @ExtraFieldDisplay(
- *   id = "movie_release_date",
- *   label = @Translation("Extra: Movie release date"),
- *   bundles = {"node.movie"}
+ *   id = "tv_release_years",
+ *   label = @Translation("Extra: Tv release years"),
+ *   bundles = {"node.tv"}
  * )
  */
-class MovieReleaseDate extends ExtraTmdbFieldDisplayBase {
+class TvReleaseYears extends ExtraTmdbFieldDisplayBase {
 
   private ?DateHelper $date_helper;
 
@@ -35,11 +35,21 @@ class MovieReleaseDate extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($release_date = $this->getCommonFieldValue('release_date')) {
+    if ($start_date = $this->getCommonFieldValue('first_air_date')) {
+      // Prepare start and end years.
+      $start_year = $this->date_helper->dateStringToYear($start_date);
+
+      $end_year = '';
+      $in_production = $this->getCommonFieldValue('in_production');
+      if ($in_production === FALSE) {
+        $end_date = $this->getCommonFieldValue('last_air_date');
+        $end_year = $this->date_helper->dateStringToYear($end_date);
+      }
+
       $build = [
         '#theme' => 'field_with_label',
-        '#label' => $this->t('release date', [], ['context' => 'Field label']),
-        '#content' => $this->date_helper->dateStringToFormat($release_date, 'd F Y'),
+        '#label' => $this->t('release years', [], ['context' => 'Field label']),
+        '#content' => "{$start_year}–{$end_year}",
       ];
     }
 

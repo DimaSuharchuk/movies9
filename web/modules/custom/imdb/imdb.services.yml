@@ -16,3 +16,7 @@ services:
       - '@entity_finder'
       - '@tmdb.adapter'
       - '@entity_creator'
+  date_helper:
+    class: Drupal\imdb\DateHelper
+    arguments:
+      - '@date.formatter'

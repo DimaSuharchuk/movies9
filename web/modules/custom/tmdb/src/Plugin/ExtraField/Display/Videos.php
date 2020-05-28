@@ -11,7 +11,8 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "videos",
  *   label = @Translation("Extra: Videos"),
- *   bundles = {"node.movie", "node.tv"}
+ *   bundles = {"node.movie", "node.tv"},
+ *   replaceable = true
  * )
  */
 class Videos extends ExtraTmdbFieldDisplayBase {
@@ -20,14 +21,17 @@ class Videos extends ExtraTmdbFieldDisplayBase {
    * {@inheritDoc}
    */
   public function build(ContentEntityInterface $entity): array {
-    $build = [];
-
     $lang = Language::memberByValue($entity->language()->getId());
 
     if ($videos = $this->getVideos($lang)) {
       $build = [
         '#theme' => 'collection',
         '#items' => $this->buildItems($videos, $lang),
+      ];
+    }
+    else {
+      $build = [
+        '#markup' => $this->t('Unfortunately, there are no trailers.'),
       ];
     }
 

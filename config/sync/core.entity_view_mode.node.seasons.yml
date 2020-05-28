@@ -1,0 +1,10 @@
+uuid: 5d554cd8-56d8-4d8a-93f3-01bc6573f716
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.seasons
+label: Seasons
+targetEntityType: node
+cache: true

@@ -24,7 +24,7 @@ class Site extends ExtraTmdbFieldDisplayBase {
     if ($site = $this->getCommonFieldValue('site')) {
       $build = [
         '#theme' => 'field_with_label',
-        '#label' => $this->t('site'),
+        '#label' => $this->t('site', [], ['context' => 'Field label']),
         '#content' => [
           '#type' => 'link',
           '#title' => parse_url($site, PHP_URL_HOST),

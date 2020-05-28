@@ -1,0 +1,10 @@
+uuid: c29d88f8-4a80-46d8-965d-684c49b2d67c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.collection
+label: Collection
+targetEntityType: node
+cache: true

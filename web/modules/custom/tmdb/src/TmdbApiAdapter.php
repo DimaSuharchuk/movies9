@@ -26,10 +26,14 @@ class TmdbApiAdapter {
     // Fetch movie common fields first.
     if ($common = $this->getCommonFieldsByTmdbId(NodeBundle::movie(), $movie_tmdb_id, $lang)) {
       // Get collection info from TMDb API.
-      return (new MovieCollection())
-        ->setMovieTmdbId($common['collection_id'])
-        ->setLanguage($lang)
-        ->response();
+      if (isset($common['collection_id'])) {
+        return (new MovieCollection())
+          ->setMovieTmdbId($common['collection_id'])
+          ->setLanguage($lang)
+          ->response();
+      }
+
+      return NULL;
     }
 
     return NULL;

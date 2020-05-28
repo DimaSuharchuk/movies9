@@ -1,0 +1,10 @@
+uuid: c0c27812-709b-4c42-a891-fb72317c37fc
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.crew
+label: Crew
+targetEntityType: node
+cache: true

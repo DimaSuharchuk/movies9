@@ -1,9 +1,9 @@
-uuid: 5aa89587-4ae1-4807-86ff-7a6005a5734e
+uuid: 5caf3eb7-b48a-4639-93e2-a07ce1af369c
 langcode: en
-status: false
+status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
+    - core.entity_view_mode.node.related
     - field.field.node.tv.field_approved
     - field.field.node.tv.field_genres
     - field.field.node.tv.field_imdb_id
@@ -11,52 +11,36 @@ dependencies:
     - field.field.node.tv.field_tmdb_id
     - node.type.tv
   module:
-    - imdb
     - user
-id: node.tv.teaser
+id: node.tv.related
 targetEntityType: node
 bundle: tv
-mode: teaser
+mode: related
 content:
-  extra_field_imdb_rating:
-    weight: 1
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_original_title:
-    weight: 3
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_title:
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_poster:
-    type: tmdb_image_compact
+  extra_field_recommendations:
     weight: 0
     region: content
-    label: hidden
-    settings:
-      width: w185
+    settings: {  }
     third_party_settings: {  }
 hidden:
   extra_field_approved: true
   extra_field_cast: true
   extra_field_crew: true
   extra_field_genres: true
+  extra_field_imdb_rating: true
+  extra_field_original_title: true
   extra_field_overview: true
   extra_field_poster: true
   extra_field_production_companies: true
-  extra_field_recommendations: true
   extra_field_similar: true
   extra_field_site: true
   extra_field_tabs: true
+  extra_field_title: true
   extra_field_videos: true
   field_approved: true
   field_genres: true
   field_imdb_id: true
+  field_poster: true
   field_tmdb_id: true
   langcode: true
   links: true

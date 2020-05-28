@@ -1,0 +1,10 @@
+uuid: ddf8d191-5830-40c6-a72f-71f5924da736
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.similar
+label: Similar
+targetEntityType: node
+cache: true

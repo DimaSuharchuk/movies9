@@ -5,6 +5,7 @@ namespace Drupal\imdb\Controller;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AppendCommand;
 use Drupal\Core\Ajax\RemoveCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Url;
@@ -12,6 +13,7 @@ use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\imdb\NodeHelper;
 use Drupal\node\Entity\Node;
+use Drupal\node\NodeViewBuilder;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
 use Drupal\tmdb\TmdbApiAdapter;
 use Drupal\tmdb\TmdbTeaser;
@@ -28,6 +30,8 @@ class NodeController implements ContainerInjectionInterface {
 
   private ?TmdbTeaser $tmdb_teaser;
 
+  private NodeViewBuilder $node_builder;
+
   /**
    * {@inheritDoc}
    */
@@ -38,6 +42,8 @@ class NodeController implements ContainerInjectionInterface {
     $instance->adapter = $container->get('tmdb.adapter');
     $instance->tmdb_teaser = $container->get('tmdb.tmdb_teaser');
     $instance->language_manager = $container->get('language_manager');
+    $instance->node_builder = $container->get('entity_type.manager')
+      ->getViewBuilder('node');
 
     return $instance;
   }
@@ -67,6 +73,30 @@ class NodeController implements ContainerInjectionInterface {
     }
 
     return NULL;
+  }
+
+  /**
+   * Replace block "js-replaceable-block" with content of some tab context.
+   *
+   * @param $node_id
+   *   Node ID.
+   * @param $tab
+   *   Name of tab. It must be the same as existing node view mode.
+   *
+   * @return AjaxResponse
+   */
+  public function nodeTabsAjaxHandler($node_id, $tab): AjaxResponse {
+    $node = Node::load($node_id);
+
+    $response = new AjaxResponse();
+    $response->addCommand(
+      new ReplaceCommand(
+        '#js-replaceable-block',
+        $this->node_builder->view($node, $tab)
+      )
+    );
+
+    return $response;
   }
 
   /**

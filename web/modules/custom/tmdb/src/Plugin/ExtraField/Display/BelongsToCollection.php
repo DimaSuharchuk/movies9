@@ -15,7 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "belongs_to_collection",
  *   label = @Translation("Extra: Belongs to collection"),
- *   bundles = {"node.movie"}
+ *   bundles = {"node.movie"},
+ *   replaceable = true
  * )
  */
 class BelongsToCollection extends ExtraTmdbFieldDisplayBase {

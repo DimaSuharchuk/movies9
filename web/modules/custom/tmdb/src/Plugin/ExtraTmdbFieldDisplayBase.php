@@ -35,12 +35,25 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
    */
   public function view(ContentEntityInterface $entity) {
     if ($build = $this->build($entity)) {
-      return [
+      // Wrap every TMDb extra field with this wrapper.
+      $build = [
         '#theme' => 'tmdb_field',
         '#content' => $build,
         '#css_class' => $this->getPluginId(),
       ];
+
+      // Wrap some fields with theme "replaceable_field" for AJAX tabs.
+      $d = $this->getPluginDefinition();
+      if (isset($d['replaceable']) && $d['replaceable'] === TRUE) {
+        $build = [
+          '#theme' => 'replaceable_field',
+          '#content' => $build,
+        ];
+      }
+
+      return $build;
     }
+
     return NULL;
   }
 
@@ -73,7 +86,7 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
     $lang = Language::memberByValue($this->entity->language()->getId());
 
     if ($common = $this->adapter->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang)) {
-      return $common[$field_name];
+      return $common[$field_name] ?? NULL;
     }
     return NULL;
   }

@@ -12,7 +12,8 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "cast",
  *   label = @Translation("Extra: Cast"),
- *   bundles = {"node.movie", "node.tv"}
+ *   bundles = {"node.movie", "node.tv"},
+ *   replaceable = true
  * )
  */
 class Cast extends ExtraTmdbFieldDisplayBase {

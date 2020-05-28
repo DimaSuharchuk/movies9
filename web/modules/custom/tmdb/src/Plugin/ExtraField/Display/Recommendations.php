@@ -14,7 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "recommendations",
  *   label = @Translation("Extra: Recommendations"),
- *   bundles = {"node.movie", "node.tv"}
+ *   bundles = {"node.movie", "node.tv"},
+ *   replaceable = true
  * )
  */
 class Recommendations extends ExtraTmdbFieldDisplayBase {

@@ -15,7 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "crew",
  *   label = @Translation("Extra: Crew"),
- *   bundles = {"node.movie", "node.tv"}
+ *   bundles = {"node.movie", "node.tv"},
+ *   replaceable = true
  * )
  */
 class Crew extends ExtraTmdbFieldDisplayBase {
@@ -51,7 +52,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
         '#items' => $this->buildItems($crew),
       ];
       if ($entity->bundle() === NodeBundle::tv) {
-        $build['#title'] = $this->t('Crew');
+        $build['#title'] = $this->t('Crew', [], ['context' => 'Field label']);
       }
     }
 

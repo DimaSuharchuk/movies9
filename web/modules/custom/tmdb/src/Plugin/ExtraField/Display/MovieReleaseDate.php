@@ -44,7 +44,7 @@ class MovieReleaseDate extends ExtraTmdbFieldDisplayBase {
 
         $build = [
           '#theme' => 'field_with_label',
-          '#label' => $this->t('release date'),
+          '#label' => $this->t('release date', [], ['context' => 'Field label']),
           '#content' => $output,
         ];
       } catch (Exception $e) {

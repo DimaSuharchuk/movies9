@@ -22,7 +22,7 @@ class Approved extends ExtraTmdbFieldDisplayBase {
 
     if ($a = $entity->{'field_approved'}->value) {
       $build = [
-        '#markup' => $this->t('approved'),
+        '#markup' => $this->t('approved', [], ['context' => 'Field label']),
       ];
     }
 

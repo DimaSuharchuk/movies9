@@ -26,7 +26,7 @@ class ProductionCompanies extends ExtraTmdbFieldDisplayBase {
       if ($content = $this->buildProductionCompanies($companies)) {
         $build = [
           '#theme' => 'field_with_label',
-          '#label' => $this->t('production companies'),
+          '#label' => $this->t('production companies', [], ['context' => 'Field label']),
           '#content' => $content,
         ];
       }

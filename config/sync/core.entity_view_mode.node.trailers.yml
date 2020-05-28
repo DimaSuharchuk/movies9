@@ -1,0 +1,10 @@
+uuid: c3b15594-37cb-4c11-ab14-f4dd83759717
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.trailers
+label: Trailers
+targetEntityType: node
+cache: true

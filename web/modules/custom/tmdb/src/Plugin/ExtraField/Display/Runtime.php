@@ -33,7 +33,7 @@ class Runtime extends ExtraTmdbFieldDisplayBase {
 
       $build = [
         '#theme' => 'field_with_label',
-        '#label' => $this->t('duration'),
+        '#label' => $this->t('duration', [], ['context' => 'Field label']),
         '#content' => $output,
       ];
     }

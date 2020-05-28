@@ -22,6 +22,11 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'content' => NULL,
       ],
     ],
+    'replaceable_field' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
     'collection' => [
       'variables' => [
         'title' => NULL,

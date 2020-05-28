@@ -14,7 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "similar",
  *   label = @Translation("Extra: Similar"),
- *   bundles = {"node.movie", "node.tv"}
+ *   bundles = {"node.movie", "node.tv"},
+ *   replaceable = true
  * )
  */
 class Similar extends ExtraTmdbFieldDisplayBase {

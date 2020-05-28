@@ -23,37 +23,47 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_imdb_rating:
-    weight: 5
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_original_title:
-    weight: 3
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_overview:
-    weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_production_companies:
-    weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_site:
     weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
-  extra_field_title:
+  extra_field_original_title:
     weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_genres:
+  extra_field_overview:
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_production_companies:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_site:
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_tabs:
     weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_title:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_videos:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_genres:
+    weight: 3
     label: hidden
     settings:
       link: true
@@ -75,7 +85,6 @@ hidden:
   extra_field_poster: true
   extra_field_recommendations: true
   extra_field_similar: true
-  extra_field_videos: true
   field_approved: true
   field_imdb_id: true
   field_tmdb_id: true

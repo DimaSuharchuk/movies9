@@ -1,0 +1,10 @@
+uuid: c819cd51-fc81-4832-b8d9-7fca8e27b75c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.cast
+label: Cast
+targetEntityType: node
+cache: true

@@ -88,6 +88,11 @@ final class Constant {
   const SITE = 'site';
 
   /**
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Tabs
+   */
+  const TABS = 'tabs';
+
+  /**
    * @see \Drupal\tmdb\Plugin\ExtraField\Display\Title
    */
   const TITLE = 'title';

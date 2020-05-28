@@ -26,6 +26,13 @@ imdb.tmdb_node_redirect:
     _controller: '\Drupal\imdb\Controller\NodeController::redirect'
   requirements:
     _permission: 'access content'
+imdb.node_tabs_ajax_handler:
+  path: '/node/{node_id}/{tab}'
+  defaults:
+    _title: 'Tab with trailers'
+    _controller: '\Drupal\imdb\Controller\NodeController::nodeTabsAjaxHandler'
+  requirements:
+    _permission: 'access content'
 imdb.recommendations:
   path: '/recommendations/{nid}/{page}'
   defaults:

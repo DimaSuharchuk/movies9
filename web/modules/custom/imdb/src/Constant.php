@@ -53,6 +53,11 @@ final class Constant {
   const MOVIE_RELEASE_DATE = 'movie_release_date';
 
   /**
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\NonameClub
+   */
+  const NONAME_CLUB = 'noname_club';
+
+  /**
    * @see \Drupal\tmdb\Plugin\ExtraField\Display\OriginalTitle
    */
   const ORIGINAL_TITLE = 'original_title';

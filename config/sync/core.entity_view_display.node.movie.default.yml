@@ -32,6 +32,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  extra_field_noname_club:
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   extra_field_original_title:
     weight: 4
     region: content
@@ -68,7 +73,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_videos:
-    weight: 12
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }

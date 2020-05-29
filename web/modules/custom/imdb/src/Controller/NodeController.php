@@ -15,6 +15,7 @@ use Drupal\imdb\NodeHelper;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeViewBuilder;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
+use Drupal\tmdb\SeasonBuilder;
 use Drupal\tmdb\TmdbApiAdapter;
 use Drupal\tmdb\TmdbTeaser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -32,6 +33,8 @@ class NodeController implements ContainerInjectionInterface {
 
   private NodeViewBuilder $node_builder;
 
+  private ?SeasonBuilder $season_builder;
+
   /**
    * {@inheritDoc}
    */
@@ -44,6 +47,7 @@ class NodeController implements ContainerInjectionInterface {
     $instance->language_manager = $container->get('language_manager');
     $instance->node_builder = $container->get('entity_type.manager')
       ->getViewBuilder('node');
+    $instance->season_builder = $container->get('tmdb.season_builder');
 
     return $instance;
   }
@@ -93,6 +97,33 @@ class NodeController implements ContainerInjectionInterface {
       new ReplaceCommand(
         '#js-replaceable-block',
         $this->node_builder->view($node, $tab)
+      )
+    );
+
+    return $response;
+  }
+
+  /**
+   * Replace block "js-replaceable-block" with season + episodes.
+   *
+   * @param $node_id
+   *   Node bundle "tv" ID.
+   * @param $season
+   *   Season number.
+   *
+   * @return AjaxResponse
+   */
+  public function seasonTabsAjaxHandler($node_id, $season): AjaxResponse {
+    $node = Node::load($node_id);
+
+    $langcode = $this->language_manager->getCurrentLanguage()->getId();
+    $lang = Language::memberByValue($langcode);
+
+    $response = new AjaxResponse();
+    $response->addCommand(
+      new ReplaceCommand(
+        '#js-replaceable-block',
+        $this->season_builder->buildSeason($node, $season, $lang)
       )
     );
 

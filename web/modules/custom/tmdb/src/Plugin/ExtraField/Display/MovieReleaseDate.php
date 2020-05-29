@@ -39,7 +39,7 @@ class MovieReleaseDate extends ExtraTmdbFieldDisplayBase {
       $build = [
         '#theme' => 'field_with_label',
         '#label' => $this->t('release date', [], ['context' => 'Field label']),
-        '#content' => $this->date_helper->dateStringToFormat($release_date, 'd F Y'),
+        '#content' => $this->date_helper->dateStringToReleaseDateFormat($release_date),
       ];
     }
 

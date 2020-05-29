@@ -33,6 +33,13 @@ imdb.node_tabs_ajax_handler:
     _controller: '\Drupal\imdb\Controller\NodeController::nodeTabsAjaxHandler'
   requirements:
     _permission: 'access content'
+imdb.season_tabs_ajax_handler:
+  path: '/node/{node_id}/season/{season}'
+  defaults:
+    _title: 'Rebuild season block'
+    _controller: '\Drupal\imdb\Controller\NodeController::seasonTabsAjaxHandler'
+  requirements:
+    _permission: 'access content'
 imdb.recommendations:
   path: '/recommendations/{nid}/{page}'
   defaults:

@@ -29,6 +29,18 @@ class DateHelper {
   }
 
   /**
+   * Convert date string to format used in field "Release date" and same.
+   *
+   * @param string $s
+   *   Date string in any PHP correct format.
+   *
+   * @return string
+   */
+  public function dateStringToReleaseDateFormat(string $s): string {
+    return $this->dateStringToFormat($s, 'd F Y');
+  }
+
+  /**
    * Convert some date string into any PHP date format.
    *
    * @param string $s

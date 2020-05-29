@@ -28,6 +28,9 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
     $build = [];
 
     // Check if there is content for each tab and add tabs for them.
+    if ($entity->bundle() === 'tv') {
+      $build['seasons'] = $this->buildAjaxLink('seasons', 'Seasons');
+    }
     if ($this->adapter->getVideos($bundle, $tmdb_id, $lang)) {
       $build['trailers'] = $this->buildAjaxLink('trailers', 'Trailers');
     }

@@ -1,0 +1,25 @@
+<div id="js-replaceable-block">
+  <div class="field field-seasons">
+
+    <div class="season-wrapper">
+      <div class="seasons-block-title">{{ 'Seasons'|t }}</div>
+
+      <div>{{ tabs }}</div>
+
+      <div class="field field-poster">
+        {% if poster_path %}
+          <img src="//image.tmdb.org/t/p/w400{{ poster_path }}" alt="{{ title }}" title="{{ title }}">
+        {% endif %}
+      </div>
+      <div class="field field-original-title">{{ original_title }}</div>
+      <div class="field field-title">{{ title }}</div>
+      {{ episodes_count }}
+      <div class="field field-overview">{{ overview }}</div>
+
+      <div class="episodes-wrapper">
+        {{ episodes }}
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -67,6 +67,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  extra_field_seasons:
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   extra_field_site:
     weight: 11
     region: content
@@ -84,11 +89,6 @@ content:
     third_party_settings: {  }
   extra_field_tv_release_years:
     weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_videos:
-    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -115,6 +115,7 @@ hidden:
   extra_field_poster: true
   extra_field_recommendations: true
   extra_field_similar: true
+  extra_field_videos: true
   field_approved: true
   field_imdb_id: true
   field_tmdb_id: true

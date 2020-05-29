@@ -1,0 +1,31 @@
+<div class="episode-wrapper">
+
+  <div class="field field-episode-image">
+    {% if still_path %}
+      <img src="//image.tmdb.org/t/p/w400{{ still_path }}" alt="{{ title }}" title="{{ title }}">
+    {% endif %}
+  </div>
+
+  <div class="field field-original-title">{{ original_title }}</div>
+
+  <div class="field field-title">{{ title }}</div>
+
+  <div class="field field-episode-number">{{ episode_number }}</div>
+
+  <div class="field field-air-date">{{ air_date }}</div>
+
+  <div class="field field-imdb-rating">
+    <div class="field-with-label">
+      <div class="label">imdb:</div>
+      <div class="content">{{ imdb_rating }}</div>
+    </div>
+  </div>
+
+  <div class="field field-overview">{{ overview }}</div>
+
+  <div class="guest-stars-wrapper">
+    <div class="guest-stars-label">{{ "guest stars"|t }}</div>
+    <div class="guest-stars-content">{{ guest_stars }}</div>
+  </div>
+
+</div>

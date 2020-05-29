@@ -49,6 +49,9 @@ msgstr "Съёмочная группа"
 
 # Extra Tabs.
 msgctxt "Extra tabs"
+msgid "Seasons"
+msgstr "Сезоны"
+msgctxt "Extra tabs"
 msgid "Trailers"
 msgstr "Трейлеры"
 msgctxt "Extra tabs"
@@ -67,9 +70,24 @@ msgctxt "Extra tabs"
 msgid "Similar"
 msgstr "Может понравиться"
 
+msgctxt "Seasons tabs"
+msgid "@i season"
+msgstr "@i сезон"
+
+msgid "@i episode"
+msgstr "@i серия"
+
 msgctxt "Attachable teasers"
 msgid "Load more"
 msgstr "Загрузить ещё"
 
 msgid "Unfortunately, there are no trailers."
 msgstr "К сожалению, трейлеров нет."
+
+msgid "Seasons"
+msgstr "Сезоны"
+msgid "Episode list"
+msgstr "Список серий"
+
+msgid "guest stars"
+msgstr "приглашенные звёзды"

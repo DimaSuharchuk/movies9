@@ -9,3 +9,9 @@ services:
     arguments:
       - '@tmdb.adapter'
       - '@imdb.rating'
+  tmdb.season_builder:
+    class: Drupal\tmdb\SeasonBuilder
+    arguments:
+      - '@tmdb.adapter'
+      - '@date_helper'
+      - '@imdb.rating'

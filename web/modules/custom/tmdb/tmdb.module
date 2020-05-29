@@ -74,5 +74,33 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'language' => NULL,
       ],
     ],
+    'season' => [
+      'variables' => [
+        'tabs' => NULL,
+        'poster_path' => NULL,
+        'original_title' => NULL,
+        'title' => NULL,
+        'episodes_count' => NULL,
+        'overview' => NULL,
+        'episodes' => NULL,
+      ],
+    ],
+    'episodes' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+    'episode' => [
+      'variables' => [
+        'still_path' => NULL,
+        'original_title' => NULL,
+        'title' => NULL,
+        'episode_number' => NULL,
+        'air_date' => NULL,
+        'imdb_rating' => NULL,
+        'overview' => NULL,
+        'guest_stars' => NULL,
+      ],
+    ],
   ];
 }

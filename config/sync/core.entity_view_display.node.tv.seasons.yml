@@ -17,7 +17,7 @@ targetEntityType: node
 bundle: tv
 mode: seasons
 content:
-  extra_field_title:
+  extra_field_seasons:
     weight: 0
     region: content
     settings: {  }
@@ -26,8 +26,13 @@ hidden:
   extra_field_approved: true
   extra_field_cast: true
   extra_field_crew: true
+  extra_field_episode_runtime: true
   extra_field_genres: true
   extra_field_imdb_rating: true
+  extra_field_networks: true
+  extra_field_noname_club: true
+  extra_field_number_of_episodes: true
+  extra_field_number_of_seasons: true
   extra_field_original_title: true
   extra_field_overview: true
   extra_field_poster: true
@@ -36,6 +41,8 @@ hidden:
   extra_field_similar: true
   extra_field_site: true
   extra_field_tabs: true
+  extra_field_title: true
+  extra_field_tv_release_years: true
   extra_field_videos: true
   field_approved: true
   field_genres: true

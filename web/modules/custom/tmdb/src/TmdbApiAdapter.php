@@ -4,11 +4,13 @@ namespace Drupal\tmdb;
 
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
+use Drupal\tmdb\CacheableTmdbRequest\EpisodeImdbId;
 use Drupal\tmdb\CacheableTmdbRequest\FindByImdbId;
 use Drupal\tmdb\CacheableTmdbRequest\FullRequest;
 use Drupal\tmdb\CacheableTmdbRequest\Genres;
 use Drupal\tmdb\CacheableTmdbRequest\MovieCollection;
 use Drupal\tmdb\CacheableTmdbRequest\Recommendations;
+use Drupal\tmdb\CacheableTmdbRequest\Seasons;
 use Drupal\tmdb\CacheableTmdbRequest\Similar;
 
 class TmdbApiAdapter {
@@ -196,6 +198,40 @@ class TmdbApiAdapter {
       ->setBundle($bundle)
       ->setTmdbId($tmdb_id)
       ->setLanguage($lang)
+      ->response();
+  }
+
+  /**
+   * Get season and nested episodes info form TMDb API.
+   *
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   * @param Language $lang
+   *
+   * @return array|null
+   */
+  public function getSeason(int $tv_tmdb_id, int $season_number, Language $lang): ?array {
+    return (new Seasons())
+      ->setTvTmdbId($tv_tmdb_id)
+      ->setSeasonNumber($season_number)
+      ->setLanguage($lang)
+      ->response();
+  }
+
+  /**
+   * Get episode IMDb ID from TMDb API.
+   *
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   * @param int $episode_number
+   *
+   * @return array|null
+   */
+  public function getEpisodeImdbId(int $tv_tmdb_id, int $season_number, int $episode_number): ?array {
+    return (new EpisodeImdbId())
+      ->setTvTmdbId($tv_tmdb_id)
+      ->setSeasonNumber($season_number)
+      ->setEpisodeNumber($episode_number)
       ->response();
   }
 

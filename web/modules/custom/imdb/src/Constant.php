@@ -103,6 +103,11 @@ final class Constant {
   const RUNTIME = 'runtime';
 
   /**
+   * @see \Drupal\tmdb\Plugin\ExtraField\Display\Seasons
+   */
+  const SEASONS = 'seasons';
+
+  /**
    * @see \Drupal\tmdb\Plugin\ExtraField\Display\Similar
    */
   const SIMILAR = 'similar';

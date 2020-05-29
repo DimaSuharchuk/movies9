@@ -46,6 +46,9 @@ msgstr "студии производства"
 msgctxt "Field label"
 msgid "Crew"
 msgstr "Съёмочная группа"
+msgctxt "Field label"
+msgid "Created by"
+msgstr "Шоураннеры"
 
 # Extra Tabs.
 msgctxt "Extra tabs"

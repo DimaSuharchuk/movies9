@@ -44,21 +44,53 @@ class Crew extends ExtraTmdbFieldDisplayBase {
    * {@inheritDoc}
    */
   public function build(ContentEntityInterface $entity): array {
+    $is_tv = $entity->bundle() === NodeBundle::tv;
+
     $build = [];
+    $i = 0;
+    if ($is_tv && $created_by = $this->getCommonFieldValue('created_by')) {
+      $build[$i] = [
+        '#theme' => 'collection',
+        '#title' => $this->t('Created by', [], ['context' => 'Field label']),
+        '#items' => $this->buildCreatedByItems($created_by),
+      ];
+      $i++;
+    }
 
     if ($crew = $this->getCrew()) {
-      $build = [
+      $build[$i] = [
         '#theme' => 'collection',
-        '#items' => $this->buildItems($crew),
+        '#items' => $this->buildCrewItems($crew),
       ];
-      if ($entity->bundle() === NodeBundle::tv) {
-        $build['#title'] = $this->t('Crew', [], ['context' => 'Field label']);
+      if ($is_tv) {
+        $build[$i]['#title'] = $this->t('Crew', [], ['context' => 'Field label']);
       }
     }
 
     return $build;
   }
 
+
+  /**
+   * @param array $persons
+   *   TV's "Created by" persons from TMDb API for render.
+   *
+   * @return array
+   *   Renderable arrays of persons.
+   */
+  private function buildCreatedByItems(array $persons): array {
+    $build = [];
+
+    foreach ($persons as $person) {
+      $build[] = [
+        '#theme' => 'person',
+        '#avatar' => $this->getThemedAvatar($person, TmdbImageFormat::w185()),
+        '#name' => $person['name'],
+      ];
+    }
+
+    return $build;
+  }
 
   /**
    * @see TmdbApiAdapter::getCrew()
@@ -77,7 +109,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
    * @return array
    *   Renderable arrays of crew persons.
    */
-  private function buildItems(array $persons) {
+  private function buildCrewItems(array $persons) {
     $build = [];
 
     // Sort persons at first.

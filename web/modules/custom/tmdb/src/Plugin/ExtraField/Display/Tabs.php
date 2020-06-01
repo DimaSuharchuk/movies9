@@ -25,7 +25,13 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
     $tmdb_id = $entity->{'field_tmdb_id'}->value;
     $lang = Language::memberByValue($entity->language()->getId());
 
-    $build = [];
+    $build = [
+      '#attached' => [
+        'library' => [
+          'core/drupal.ajax',
+        ],
+      ],
+    ];
 
     // Check if there is content for each tab and add tabs for them.
     if ($entity->bundle() === 'tv') {

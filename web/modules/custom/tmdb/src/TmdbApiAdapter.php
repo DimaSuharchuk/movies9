@@ -148,24 +148,21 @@ class TmdbApiAdapter {
   }
 
   /**
-   * Get IMDb IDs by TMDb IDs.
+   * Get IMDb ID by TMDb ID.
    *
    * @param NodeBundle $bundle
-   * @param int[] $tmdb_ids
+   * @param int $tmdb_id
+   * @param bool $only_cached
+   *   If TRUE the method will return only cached result if exists and doesn't
+   *   send request to TMDb API.
    *
-   * @return string[]
+   * @return string|null
    */
-  public function getImdbIdsByTmdbIds(NodeBundle $bundle, array $tmdb_ids): array {
-    $lang = Language::en(); // Define dummy lang for this task.
-
-    $imdb_ids = [];
-    foreach ($tmdb_ids as $tmdb_id) {
-      if ($common = $this->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang)) {
-        $imdb_ids[$tmdb_id] = $common['imdb_id'];
-      }
+  public function getImdbId(NodeBundle $bundle, int $tmdb_id, bool $only_cached = FALSE): ?string {
+    if ($common = $this->getCommonFieldsByTmdbId($bundle, $tmdb_id, Language::en(), $only_cached)) {
+      return $common['imdb_id'];
     }
-
-    return $imdb_ids;
+    return NULL;
   }
 
   /**
@@ -174,11 +171,14 @@ class TmdbApiAdapter {
    * @param NodeBundle $bundle
    * @param int $tmdb_id
    * @param Language $lang
+   * @param bool $only_cached
+   *   If TRUE the method will return only cached result if exists and doesn't
+   *   send request to TMDb API.
    *
    * @return array|null
    */
-  public function getCommonFieldsByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang): ?array {
-    if ($response = $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang)) {
+  public function getCommonFieldsByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang, bool $only_cached = FALSE): ?array {
+    if ($response = $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang, $only_cached)) {
       return $response['common'];
     }
     return NULL;
@@ -190,15 +190,23 @@ class TmdbApiAdapter {
    * @param NodeBundle $bundle
    * @param int $tmdb_id
    * @param Language $lang
+   * @param bool $only_cached
+   *   If TRUE the method will return only cached result if exists and doesn't
+   *   send request to TMDb API.
    *
    * @return array|null
    */
-  public function getFullInfoByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang): ?array {
-    return (new FullRequest())
+  public function getFullInfoByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang, bool $only_cached = FALSE): ?array {
+    $query = (new FullRequest())
       ->setBundle($bundle)
       ->setTmdbId($tmdb_id)
-      ->setLanguage($lang)
-      ->response();
+      ->setLanguage($lang);
+
+    if (!$only_cached || $only_cached && $query->hasCache()) {
+      return $query->response();
+    }
+
+    return NULL;
   }
 
   /**
@@ -207,15 +215,23 @@ class TmdbApiAdapter {
    * @param int $tv_tmdb_id
    * @param int $season_number
    * @param Language $lang
+   * @param bool $only_cached
+   *   If TRUE the method will return only cached result if exists and doesn't
+   *   send request to TMDb API.
    *
    * @return array|null
    */
-  public function getSeason(int $tv_tmdb_id, int $season_number, Language $lang): ?array {
-    return (new Seasons())
+  public function getSeason(int $tv_tmdb_id, int $season_number, Language $lang, bool $only_cached = FALSE): ?array {
+    $query = (new Seasons())
       ->setTvTmdbId($tv_tmdb_id)
       ->setSeasonNumber($season_number)
-      ->setLanguage($lang)
-      ->response();
+      ->setLanguage($lang);
+
+    if (!$only_cached || $only_cached && $query->hasCache()) {
+      return $query->response();
+    }
+
+    return NULL;
   }
 
   /**
@@ -224,15 +240,23 @@ class TmdbApiAdapter {
    * @param int $tv_tmdb_id
    * @param int $season_number
    * @param int $episode_number
+   * @param bool $only_cached
+   *   If TRUE the method will return only cached result if exists and doesn't
+   *   send request to TMDb API.
    *
-   * @return array|null
+   * @return string|null
    */
-  public function getEpisodeImdbId(int $tv_tmdb_id, int $season_number, int $episode_number): ?array {
-    return (new EpisodeImdbId())
+  public function getEpisodeImdbId(int $tv_tmdb_id, int $season_number, int $episode_number, bool $only_cached = FALSE): ?string {
+    $query = (new EpisodeImdbId())
       ->setTvTmdbId($tv_tmdb_id)
       ->setSeasonNumber($season_number)
-      ->setEpisodeNumber($episode_number)
-      ->response();
+      ->setEpisodeNumber($episode_number);
+
+    if (!$only_cached || $only_cached && $query->hasCache()) {
+      return $query->response()['imdb_id'];
+    }
+
+    return NULL;
   }
 
   /**

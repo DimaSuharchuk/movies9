@@ -7,14 +7,7 @@
       {% endif %}
     </div>
 
-    {% if imdb_rating %}
-      <div class="field field-imdb-rating">
-        <div class="field-with-label">
-          <div class="label">imdb:</div>
-          <div class="content">{{ imdb_rating }}</div>
-        </div>
-      </div>
-    {% endif %}
+    {{ imdb_rating }}
 
     <div class="field field-title">{{ title }}</div>
 

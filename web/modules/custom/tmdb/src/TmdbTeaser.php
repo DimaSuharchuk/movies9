@@ -6,7 +6,6 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
-use Drupal\imdb\ImdbRating;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
 
 class TmdbTeaser {
@@ -15,11 +14,11 @@ class TmdbTeaser {
 
   private TmdbApiAdapter $adapter;
 
-  private ImdbRating $imdb_rating;
+  private TmdbFieldLazyBuilder $tmdb_lazy;
 
-  public function __construct(TmdbApiAdapter $adapter, ImdbRating $rating) {
+  public function __construct(TmdbApiAdapter $adapter, TmdbFieldLazyBuilder $tmdb_lazy) {
     $this->adapter = $adapter;
-    $this->imdb_rating = $rating;
+    $this->tmdb_lazy = $tmdb_lazy;
   }
 
 
@@ -101,10 +100,6 @@ class TmdbTeaser {
    * @return array
    */
   public function buildTmdbTeasers(array $teasers, NodeBundle $bundle, Language $lang): array {
-    // Get IMDb IDs for collection items.
-    $tmdb_ids = array_column($teasers, 'id');
-    $imdb_ids = $this->adapter->getImdbIdsByTmdbIds($bundle, $tmdb_ids);
-
     $render = [];
     foreach ($teasers as $teaser) {
       $render[] = [
@@ -112,9 +107,9 @@ class TmdbTeaser {
         '#bundle' => $bundle->value(),
         '#tmdb_id' => $teaser['id'],
         '#poster' => $teaser['poster_path'] ?: NULL,
-        '#imdb_rating' => $imdb_ids[$teaser['id']] ? $this->imdb_rating->getRatingValue($imdb_ids[$teaser['id']]) : NULL,
+        '#imdb_rating' => $this->tmdb_lazy->generateNodeImdbRatingPlaceholder($bundle, $teaser['id']),
         '#title' => $teaser['title'],
-        '#original_title' => $lang !== Language::en() ? $teaser['original_title'] : NULL,
+        '#original_title' => $lang !== Language::en() ? $this->tmdb_lazy->generateNodeOriginalTitlePlaceholder($bundle, $teaser['id']) : NULL,
       ];
     }
 

@@ -14,18 +14,16 @@
 
   <div class="field field-air-date">{{ air_date }}</div>
 
-  <div class="field field-imdb-rating">
-    <div class="field-with-label">
-      <div class="label">imdb:</div>
-      <div class="content">{{ imdb_rating }}</div>
-    </div>
-  </div>
+  {{ imdb_rating }}
 
   <div class="field field-overview">{{ overview }}</div>
 
-  <div class="guest-stars-wrapper">
-    <div class="guest-stars-label">{{ "guest stars"|t }}</div>
-    <div class="guest-stars-content">{{ guest_stars }}</div>
-  </div>
+  {% if guest_stars %}
+    <div class="guest-stars-wrapper">
+      <div class="guest-stars-label">{{ "guest stars"|t }}</div>
+      <div class="guest-stars-content">{{ guest_stars }}</div>
+    </div>
+    {{ attach_library('tmdb/guest_stars') }}
+  {% endif %}
 
 </div>

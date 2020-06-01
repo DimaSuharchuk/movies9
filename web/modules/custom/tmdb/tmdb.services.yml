@@ -8,10 +8,15 @@ services:
     class: Drupal\tmdb\TmdbTeaser
     arguments:
       - '@tmdb.adapter'
-      - '@imdb.rating'
+      - '@tmdb.tmdb_field_lazy_builder'
   tmdb.season_builder:
     class: Drupal\tmdb\SeasonBuilder
     arguments:
       - '@tmdb.adapter'
       - '@date_helper'
+      - '@tmdb.tmdb_field_lazy_builder'
+  tmdb.tmdb_field_lazy_builder:
+    class: Drupal\tmdb\TmdbFieldLazyBuilder
+    arguments:
+      - '@tmdb.adapter'
       - '@imdb.rating'

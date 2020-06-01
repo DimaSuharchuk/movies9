@@ -12,8 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "seasons",
  *   label = @Translation("Extra: Seasons"),
- *   bundles = {"node.tv"},
- *   replaceable = true
+ *   bundles = {"node.tv"}
  * )
  */
 class Seasons extends ExtraTmdbFieldDisplayBase {

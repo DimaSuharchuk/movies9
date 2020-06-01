@@ -11,6 +11,7 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Url;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
+use Drupal\imdb\ImdbRating;
 use Drupal\imdb\NodeHelper;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeViewBuilder;
@@ -35,6 +36,8 @@ class NodeController implements ContainerInjectionInterface {
 
   private ?SeasonBuilder $season_builder;
 
+  private ?ImdbRating $imdb_rating;
+
   /**
    * {@inheritDoc}
    */
@@ -48,6 +51,7 @@ class NodeController implements ContainerInjectionInterface {
     $instance->node_builder = $container->get('entity_type.manager')
       ->getViewBuilder('node');
     $instance->season_builder = $container->get('tmdb.season_builder');
+    $instance->imdb_rating = $container->get('imdb.rating');
 
     return $instance;
   }
@@ -199,6 +203,107 @@ class NodeController implements ContainerInjectionInterface {
     $response->addCommand(new AppendCommand('.append-place', $attachable_teasers));
 
     return $response;
+  }
+
+  /**
+   * Returns IMDb rating of the node "movie" or "tv".
+   *
+   * @param string $bundle
+   * @param int $tmdb_id
+   *
+   * @return AjaxResponse
+   */
+  public function nodeImdbRating(string $bundle, int $tmdb_id): AjaxResponse {
+    if ($imdb_id = $this->adapter->getImdbId(NodeBundle::memberByValue($bundle), $tmdb_id)) {
+      return new AjaxResponse($this->imdb_rating->getRatingValue($imdb_id));
+    }
+    return new AjaxResponse();
+  }
+
+  /**
+   * Returns "movie" or "tv" title on English.
+   *
+   * @param string $bundle
+   * @param int $tmdb_id
+   *
+   * @return AjaxResponse
+   */
+  public function nodeOriginalTitle(string $bundle, int $tmdb_id): AjaxResponse {
+    if ($common = $this->adapter
+      ->getCommonFieldsByTmdbId(
+        NodeBundle::memberByValue($bundle),
+        $tmdb_id,
+        Language::en()
+      )
+    ) {
+      return new AjaxResponse($common['title']);
+    }
+    return new AjaxResponse();
+  }
+
+  /**
+   * Returns the TV's season title on English.
+   *
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   *
+   * @return AjaxResponse
+   */
+  public function seasonOriginalTitle(int $tv_tmdb_id, int $season_number): AjaxResponse {
+    if ($season = $this->adapter
+      ->getSeason(
+        $tv_tmdb_id,
+        $season_number,
+        Language::en()
+      )
+    ) {
+      return new AjaxResponse($season['title']);
+    }
+    return new AjaxResponse();
+  }
+
+  /**
+   * Returns IMDb rating of the episode.
+   *
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   * @param int $episode_number
+   *
+   * @return AjaxResponse
+   */
+  public function episodeImdbRating(int $tv_tmdb_id, int $season_number, int $episode_number): AjaxResponse {
+    if ($imdb_id = $this->adapter->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode_number)) {
+      return new AjaxResponse($this->imdb_rating->getRatingValue($imdb_id));
+    }
+    return new AjaxResponse();
+  }
+
+  /**
+   * Returns the episode title on English.
+   *
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   * @param int $episode_number
+   *
+   * @return AjaxResponse
+   */
+  public function episodeOriginalTitle(int $tv_tmdb_id, int $season_number, int $episode_number): AjaxResponse {
+    if ($season = $this->adapter
+      ->getSeason(
+        $tv_tmdb_id,
+        $season_number,
+        Language::en()
+      )
+    ) {
+      // Search for episode.
+      foreach ($season['episodes'] as $episode) {
+        if ($episode['episode_number'] == $episode_number) {
+          return new AjaxResponse($episode['name']);
+        }
+      }
+      return new AjaxResponse();
+    }
+    return new AjaxResponse();
   }
 
 }

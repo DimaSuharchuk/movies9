@@ -7,7 +7,6 @@ use Drupal\Core\Url;
 use Drupal\imdb\DateHelper;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
-use Drupal\imdb\ImdbRating;
 use Drupal\node\Entity\Node;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
@@ -20,12 +19,12 @@ class SeasonBuilder {
 
   private DateHelper $date_helper;
 
-  private ImdbRating $imdb_rating;
+  private TmdbFieldLazyBuilder $tmdb_lazy;
 
-  public function __construct(TmdbApiAdapter $adapter, DateHelper $date_helper, ImdbRating $rating) {
+  public function __construct(TmdbApiAdapter $adapter, DateHelper $date_helper, TmdbFieldLazyBuilder $tmdb_lazy) {
     $this->adapter = $adapter;
     $this->date_helper = $date_helper;
-    $this->imdb_rating = $rating;
+    $this->tmdb_lazy = $tmdb_lazy;
   }
 
 
@@ -52,7 +51,7 @@ class SeasonBuilder {
       '#theme' => 'season',
       '#tabs' => $this->buildTabs($node->id(), $seasons_count),
       '#poster_path' => $season['poster_path'],
-      '#original_title' => 'test',
+      '#original_title' => $this->tmdb_lazy->generateSeasonOriginalTitlePlaceholder($tmdb_id, $season_number),
       '#title' => $season['title'],
       '#episodes_count' => [
         '#theme' => 'field_with_label',
@@ -160,25 +159,23 @@ class SeasonBuilder {
       ];
     }
 
-    // Get episode IMDb ID and get IMDb rating.
-    $rating = NULL;
-    if ($imdb_id = $this->adapter->getEpisodeImdbId(
-      $tv_tmdb_id,
-      $season_number,
-      $episode['episode_number']
-    )) {
-      $rating = $this->imdb_rating->getRatingValue($imdb_id['imdb_id']);
-    }
-
     // Build episode.
     return [
       '#theme' => 'episode',
       '#still_path' => $episode['still_path'],
-      '#original_title' => '~~~placeholder~~~', // @todo
+      '#original_title' => $this->tmdb_lazy->generateEpisodeOriginalTitlePlaceholder(
+        $tv_tmdb_id,
+        $season_number,
+        $episode['episode_number']
+      ),
       '#title' => $episode['name'],
       '#episode_number' => $this->t('@i episode', ['@i' => $episode['episode_number']]),
       '#air_date' => $this->date_helper->dateStringToReleaseDateFormat($episode['air_date']),
-      '#imdb_rating' => $rating,
+      '#imdb_rating' => $this->tmdb_lazy->generateEpisodeImdbRatingPlaceholder(
+        $tv_tmdb_id,
+        $season_number,
+        $episode['episode_number']
+      ),
       '#overview' => $episode['overview'],
       '#guest_stars' => $stars,
     ];

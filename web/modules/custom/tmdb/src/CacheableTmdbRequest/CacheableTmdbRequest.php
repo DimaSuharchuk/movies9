@@ -55,6 +55,19 @@ abstract class CacheableTmdbRequest {
   }
 
   /**
+   * Only check is the "static" request cached.
+   *
+   * @return bool
+   *   Local file exists.
+   */
+  public function hasCache(): bool {
+    $this->local_storage = Drupal::service('tmdb.local_storage');
+    $file_path = $this->getStorageFilePath();
+
+    return $this->local_storage->checkFile($file_path);
+  }
+
+  /**
    * Make non-cached request to TMDb API.
    *
    * @throws TmdbApiException

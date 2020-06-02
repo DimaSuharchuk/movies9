@@ -11,4 +11,3 @@ guest_stars:
     js/guest-stars.js: {}
   dependencies:
     - core/drupal
-    - core/jquery

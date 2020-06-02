@@ -18,6 +18,7 @@
         "ext-igbinary": "^3.1",
         "composer/installers": "^1.2",
         "drupal/adminimal_admin_toolbar": "^1.11",
+        "drupal/bootstrap4": "^2.0",
         "drupal/core-composer-scaffold": "^9",
         "drupal/core-recommended": "^9",
         "drupal/extra_field": "^1.2",

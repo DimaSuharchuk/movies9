@@ -1,4 +1,4 @@
-uuid: 2e36ed24-43fd-4ec5-80e6-33f00a947757
+uuid: 8914a3fa-3655-4190-9a96-25ae60424aae
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - language
   theme:
     - bartik
-id: languageswitcher
+id: bartik_languageswitcher
 theme: bartik
 region: header
 weight: 0

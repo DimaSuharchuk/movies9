@@ -1,22 +1,22 @@
-uuid: fc58e0dd-53e3-43cc-9617-2685108b5af3
+uuid: 3d1f4042-d872-4682-bc04-7c7e283c7c5d
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bartik
+    - movies
 _core:
-  default_config_hash: 5MNdk3fpMKx_xxBTcz2T11DL4XEU1H5SgHl8BsYdFsA
-id: bartik_messages
-theme: bartik
-region: header
-weight: 0
+  default_config_hash: tZtWC6EKIYALVtpV4mPz79GsLZD6IFWb7Wk1B7Rd8Go
+id: movies_messages
+theme: movies
+region: content
+weight: -4
 provider: null
 plugin: system_messages_block
 settings:
   id: system_messages_block
-  label: 'Status messages'
+  label: Messages
   provider: system
   label_display: '0'
 visibility: {  }

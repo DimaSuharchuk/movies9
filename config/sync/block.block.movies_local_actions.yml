@@ -1,15 +1,15 @@
-uuid: bdce3db7-e78e-47f9-8136-fefd9bef679f
+uuid: 4c476637-2085-4cee-88c3-a8a5845ad745
 langcode: en
 status: true
 dependencies:
   theme:
-    - bartik
+    - movies
 _core:
-  default_config_hash: PffmQ-ABSz5tFjWmVsR7NesunDnEivvopnJnBjl8KNE
-id: bartik_local_actions
-theme: bartik
-region: content
-weight: -10
+  default_config_hash: rKurRLaH08AjwE5wsNzeL2fa77rF5pXKSR9WopsFYyI
+id: movies_local_actions
+theme: movies
+region: footer
+weight: -1
 provider: null
 plugin: local_actions_block
 settings:

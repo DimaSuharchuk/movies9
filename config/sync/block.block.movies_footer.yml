@@ -1,0 +1,27 @@
+uuid: 83edb17f-2a51-4b3f-943f-27af2c7eefba
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.footer
+  module:
+    - system
+  theme:
+    - movies
+_core:
+  default_config_hash: aFKksJmiEhSztWNw-j-SbfzO88axvjNIZsjFBcNtI6o
+id: movies_footer
+theme: movies
+region: footer
+weight: -3
+provider: null
+plugin: 'system_menu_block:footer'
+settings:
+  id: 'system_menu_block:footer'
+  label: Footer
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

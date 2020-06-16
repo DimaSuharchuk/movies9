@@ -23,17 +23,17 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_imdb_rating:
-    weight: 6
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  extra_field_movie_release_date:
     weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
+  extra_field_movie_release_date:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   extra_field_noname_club:
-    weight: 12
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -43,22 +43,22 @@ content:
     settings: {  }
     third_party_settings: {  }
   extra_field_overview:
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   extra_field_production_companies:
-    weight: 10
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   extra_field_runtime:
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   extra_field_site:
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }

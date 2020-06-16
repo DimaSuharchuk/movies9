@@ -4,6 +4,7 @@ namespace Drupal\imdb\Controller;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AppendCommand;
+use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -125,7 +126,7 @@ class NodeController implements ContainerInjectionInterface {
 
     $response = new AjaxResponse();
     $response->addCommand(
-      new ReplaceCommand(
+      new HtmlCommand(
         '#js-replaceable-block',
         $this->season_builder->buildSeason($node, $season, $lang)
       )

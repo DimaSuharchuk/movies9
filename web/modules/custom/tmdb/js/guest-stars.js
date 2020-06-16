@@ -1,9 +1,10 @@
 (Drupal => {
   Drupal.behaviors.guestStarsAccordion = {
-    attach: () => {
-      document.querySelectorAll(".guest-stars-label").forEach(star => {
-        star.addEventListener("click", function () {
+    attach: context => {
+      context.querySelectorAll(".guest-stars-label").forEach(star => {
+        star.addEventListener("click", () => {
           slideToggle(star.nextElementSibling, 500);
+          star.classList.toggle("open");
         });
       });
     }
@@ -39,7 +40,7 @@
     let display = window.getComputedStyle(target).display;
 
     if (display === "none") {
-      display = "flex";
+      display = "block";
     }
 
     target.style.display = display;

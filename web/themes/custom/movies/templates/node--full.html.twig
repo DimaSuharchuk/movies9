@@ -1,0 +1,53 @@
+{% set classes = [
+  'node',
+  'node--type-' ~ node.bundle|clean_class,
+  node.isPromoted() ? 'node--promoted',
+  node.isSticky() ? 'node--sticky',
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  'clearfix',
+] %}
+{{ attach_library('bartik/classy.node') }}
+<article{{ attributes.addClass(classes) }}>
+  <div class="node-content clearfix">
+    <section class="bg-white">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="poster-wrapper">
+              {{ content.field_poster }}
+              {{ content.extra_field_approved }}
+            </div>
+          </div>
+          <div class="col-md-8">
+            {{ content.extra_field_tabs }}
+            {{ content.field_genres }}
+            {{ content.extra_field_original_title }}
+            {{ content.extra_field_title }}
+
+            <div class="properties">
+              {{ content|without(
+                'field_poster',
+                'extra_field_approved',
+                'extra_field_tabs',
+                'field_genres',
+                'extra_field_original_title',
+                'extra_field_title',
+                'extra_field_overview',
+                'extra_field_seasons',
+                'extra_field_videos'
+              ) }}
+            </div>
+
+            {{ content.extra_field_overview }}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-light-gray">
+      {{ content.extra_field_seasons }}
+      {{ content.extra_field_videos }}
+    </section>
+  </div>
+</article>

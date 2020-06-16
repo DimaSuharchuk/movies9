@@ -1,0 +1,17 @@
+<div class="items-list-wrapper">
+
+  {% if title %}
+    <div class="items-list-title">
+      {{ title }}
+    </div>
+  {% endif %}
+
+  <div class="items-list-content">
+    {% for item in items %}
+      <div>
+        {{ item }}
+      </div>
+    {% endfor %}
+  </div>
+
+</div>

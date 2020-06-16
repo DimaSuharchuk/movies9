@@ -1,0 +1,126 @@
+/**
+ * Seasons.
+ */
+.season-wrapper {
+  line-height: 1;
+  padding-bottom: 50px;
+
+  .seasons-block-title {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-bottom: 25px;
+  }
+
+  /* Season tabs in _extra-tabs.scss file. */
+
+  .field-poster {
+    @include media-breakpoint-down(md) {
+      margin-bottom: 25px;
+    }
+
+    img {
+      border-radius: $movies-border-radius-big;
+      margin-bottom: 0;
+    }
+  }
+
+  .episodes-count {
+    margin-bottom: 20px;
+
+    .field-with-label {
+      display: flex;
+
+      .label {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+
+/**
+ * All episodes of season.
+ */
+.episodes-wrapper {
+  .episodes-block-title {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-bottom: 25px;
+  }
+
+  /* One episode. */
+  .episode-wrapper {
+    &:not(:last-child) {
+      margin-bottom: 50px;
+    }
+
+    .field-episode-image {
+      @include media-breakpoint-down(md) {
+        margin-bottom: 25px;
+      }
+
+      img {
+        border-radius: $movies-border-radius-default;
+      }
+    }
+
+
+    .field-title {
+      display: inline;
+      margin-bottom: 5px;
+      margin-top: 0;
+    }
+
+    .field-episode-number {
+      display: inline;
+      margin-left: 50px;
+      font-size: .8em;
+      font-weight: bold;
+      letter-spacing: .5px;
+    }
+
+    .imdb-rating-wrapper {
+      .field-with-label {
+        display: flex;
+
+        .label {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .field-overview {
+      margin-bottom: 25px;
+    }
+
+    /* Guest stars. */
+    .guest-stars-wrapper {
+      .guest-stars-label {
+        color: $movies-blue;
+        margin-left: calc(33.33333% + 10px);
+        margin-bottom: 25px;
+        cursor: pointer;
+
+        &:after {
+          content: "";
+          display: inline-block;
+          width: 11px;
+          height: 8px;
+          background: url(../assets/arrows.svg) no-repeat;
+          background-size: cover;
+          margin-left: 10px;
+        }
+
+        &.open {
+          &:after {
+            background-position: right;
+          }
+        }
+      }
+
+      .guest-stars-content {
+        display: none;
+      }
+    }
+  }
+}

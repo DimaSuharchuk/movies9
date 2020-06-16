@@ -1,4 +1,16 @@
 global-styling:
   css:
     theme:
-      css/style.css: {}
+      css/style.min.css: { minified: true }
+
+more-button:
+  js:
+    js/more-button.js: { }
+  dependencies:
+    - core/drupal
+
+videos:
+  js:
+    js/videos.js: { }
+  dependencies:
+    - core/drupal

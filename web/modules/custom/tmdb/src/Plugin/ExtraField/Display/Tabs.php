@@ -29,6 +29,7 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
       '#attached' => [
         'library' => [
           'core/drupal.ajax',
+          'tmdb/extra-tabs',
         ],
       ],
     ];
@@ -37,7 +38,7 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
     if ($entity->bundle() === 'tv') {
       $build['seasons'] = $this->buildAjaxLink('seasons', 'Seasons');
     }
-    if ($this->adapter->getVideos($bundle, $tmdb_id, $lang)) {
+    if ($entity->bundle() === 'movie' || $this->adapter->getVideos($bundle, $tmdb_id, $lang)) {
       $build['trailers'] = $this->buildAjaxLink('trailers', 'Trailers');
     }
     if ($this->adapter->getCast($bundle, $tmdb_id)) {

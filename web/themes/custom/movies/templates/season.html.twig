@@ -1,0 +1,32 @@
+<div class="season-wrapper container">
+
+  <div class="seasons-block-title">{{ 'Seasons'|t }}</div>
+
+  <div class="seasons-tabs">{{ tabs }}</div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="field field-poster">
+        {% if poster_path %}
+          <img src="//image.tmdb.org/t/p/w400{{ poster_path }}" alt="{{ title }}" title="{{ title }}">
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      {{ original_title }}
+      <div class="field field-title">{{ title }}</div>
+      <div class="episodes-count">
+        {{ episodes_count }}
+      </div>
+      <div class="field field-overview">{{ overview }}</div>
+    </div>
+  </div>
+
+</div>
+
+<section class="episodes-wrapper bg-white">
+  <div class="container">
+    {{ episodes }}
+  </div>
+</section>

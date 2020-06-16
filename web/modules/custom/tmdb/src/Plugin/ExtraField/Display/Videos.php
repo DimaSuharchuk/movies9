@@ -25,13 +25,16 @@ class Videos extends ExtraTmdbFieldDisplayBase {
 
     if ($videos = $this->getVideos($lang)) {
       $build = [
-        '#theme' => 'collection',
+        '#theme' => 'videos',
         '#items' => $this->buildItems($videos, $lang),
       ];
     }
     else {
       $build = [
-        '#markup' => $this->t('Unfortunately, there are no trailers.'),
+        '#theme' => 'container_wrapper',
+        '#content' => [
+          '#markup' => $this->t('Unfortunately, there are no trailers.'),
+        ],
       ];
     }
 

@@ -1,7 +1,7 @@
 (Drupal => {
   Drupal.behaviors.nodeImdbRatingUpdate = {
-    attach: () => {
-      document.querySelectorAll(".js--node-imdb-rating-placeholder").forEach(placeholder => {
+    attach: context => {
+      context.querySelectorAll(".js--node-imdb-rating-placeholder").forEach(placeholder => {
         const bundle = placeholder.getAttribute("data-bundle");
         const tmdb_id = placeholder.getAttribute("data-id");
 
@@ -12,8 +12,8 @@
     }
   };
   Drupal.behaviors.nodeOriginalTitleUpdate = {
-    attach: () => {
-      document.querySelectorAll(".js--node-original-title-placeholder").forEach(placeholder => {
+    attach: context => {
+      context.querySelectorAll(".js--node-original-title-placeholder").forEach(placeholder => {
         const bundle = placeholder.getAttribute("data-bundle");
         const tmdb_id = placeholder.getAttribute("data-id");
 
@@ -25,21 +25,33 @@
   };
 
   Drupal.behaviors.seasonOriginalTitleUpdate = {
-    attach: () => {
-      document.querySelectorAll(".js--season-original-title-placeholder").forEach(placeholder => {
+    attach: context => {
+      const prepareAndReplace = placeholder => {
         const tv_tmdb_id = placeholder.getAttribute("data-tmdb_id");
         const season = placeholder.getAttribute("data-season");
 
         const url = `/field/original-title/season/${tv_tmdb_id}/${season}`;
         // AJAX replace.
         ajaxReplaceOriginalTitlePlaceholder(placeholder, url);
-      });
+      };
+
+      const placeholderClass = "js--season-original-title-placeholder";
+      // If context = element.
+      if (context.classList && context.classList.contains(placeholderClass)) {
+        prepareAndReplace(context);
+      }
+      // If context = array of elements (after AJAX call).
+      else {
+        context.querySelectorAll(`.${placeholderClass}`).forEach(
+          placeholder => prepareAndReplace(placeholder)
+        );
+      }
     }
   };
 
   Drupal.behaviors.episodeImdbRatingUpdate = {
-    attach: () => {
-      document.querySelectorAll(".js--episode-imdb-rating-placeholder").forEach(placeholder => {
+    attach: context => {
+      const prepareAndReplace = placeholder => {
         const tv_tmdb_id = placeholder.getAttribute("data-tmdb_id");
         const season = placeholder.getAttribute("data-season");
         const episode = placeholder.getAttribute("data-episode");
@@ -47,12 +59,24 @@
         const url = `/field/imdb-rating/episode/${tv_tmdb_id}/${season}/${episode}`;
         // AJAX replace.
         ajaxReplaceImdbRatingPlaceholder(placeholder, url);
-      });
+      };
+
+      const placeholderClass = "js--episode-imdb-rating-placeholder";
+      // If context = element.
+      if (context.classList && context.classList.contains(placeholderClass)) {
+        prepareAndReplace(context);
+      }
+      // If context = array of elements (after AJAX call).
+      else {
+        context.querySelectorAll(`.${placeholderClass}`).forEach(
+          placeholder => prepareAndReplace(placeholder)
+        );
+      }
     }
   };
   Drupal.behaviors.episodeOriginalTitleUpdate = {
-    attach: () => {
-      document.querySelectorAll(".js--episode-original-title-placeholder").forEach(placeholder => {
+    attach: context => {
+      const prepareAndReplace = placeholder => {
         const tv_tmdb_id = placeholder.getAttribute("data-tmdb_id");
         const season = placeholder.getAttribute("data-season");
         const episode = placeholder.getAttribute("data-episode");
@@ -60,7 +84,19 @@
         const url = `/field/original-title/episode/${tv_tmdb_id}/${season}/${episode}`;
         // AJAX replace.
         ajaxReplaceOriginalTitlePlaceholder(placeholder, url);
-      });
+      };
+
+      const placeholderClass = "js--episode-original-title-placeholder";
+      // If context = element.
+      if (context.classList && context.classList.contains(placeholderClass)) {
+        prepareAndReplace(context);
+      }
+      // If context = array of elements (after AJAX call).
+      else {
+        context.querySelectorAll(`.${placeholderClass}`).forEach(
+          placeholder => prepareAndReplace(placeholder)
+        );
+      }
     }
   };
 

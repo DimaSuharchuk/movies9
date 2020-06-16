@@ -1,0 +1,173 @@
+.field {
+  line-height: 1;
+  margin-bottom: 0;
+
+  & + .field {
+    margin-top: 15px;
+  }
+}
+
+.field-with-label {
+  .label,
+  .content {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+  }
+}
+
+.properties {
+  position: relative;
+  margin-bottom: 20px;
+
+  .field-with-label {
+    display: flex;
+
+    .label {
+      width: 33%;
+      @include media-breakpoint-down(md) {
+        width: 50%;
+      }
+    }
+
+    .content {
+      width: 66%;
+      flex-wrap: wrap;
+      @include media-breakpoint-down(md) {
+        width: 50%;
+      }
+    }
+  }
+
+  .field:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+/**
+ * Field "title".
+ */
+.field-title {
+  font-size: 1.5em;
+  color: $movies-blue;
+  margin-bottom: 20px;
+}
+
+/**
+ * Field "overview".
+ */
+.field-overview {
+  opacity: .7;
+  line-height: 1.5em;
+}
+
+/**
+ * Poster + approved.
+ */
+.poster-wrapper {
+  position: relative;
+  @include media-breakpoint-down(md) {
+    margin-bottom: 50px;
+  }
+
+  .field--name-field-poster {
+    margin-bottom: 0;
+
+    img {
+      border-top-left-radius: $movies-border-radius-big;
+      border-top-right-radius: $movies-border-radius-big;
+    }
+  }
+
+  .field-approved {
+    position: absolute;
+    top: 50px;
+    padding-left: 10px;
+    padding-right: 50px;
+    line-height: 2;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-weight: bold;
+    background: #fff;
+    color: #90A0B7;
+  }
+}
+
+/**
+ * Logo-based fields.
+ * Production companies, networks.
+ */
+.field-production-companies,
+.field-networks {
+  .content {
+    img {
+      max-height: 30px;
+      width: auto;
+      filter: grayscale(1);
+      opacity: .5;
+
+      &:not(:last-child) {
+        margin-right: 25px;
+      }
+    }
+  }
+}
+
+/**
+ * Field "genres".
+ */
+.field--name-field-genres {
+  margin-bottom: 20px;
+  @include media-breakpoint-down(md) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+  }
+
+  .field__item {
+    display: inline-block;
+
+    &:not(:last-child) {
+      margin-right: 25px;
+    }
+
+    @include media-breakpoint-down(md) {
+      margin-right: 0 !important;
+    }
+
+    a {
+      display: block;
+      background: $white;
+      color: $movies-gray;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.07);
+      border-radius: $movies-border-radius-default;
+      padding: 6px 43px;
+    }
+  }
+}
+
+/**
+ * Field "original title".
+ */
+.field-original-title {
+  font-size: .8em;
+  margin-bottom: 10px;
+  font-family: Poppins, sans-serif;
+}
+
+/**
+ * Field "torrent".
+ */
+.field-noname-club {
+  a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: url(../assets/torrent.svg) no-repeat;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+  }
+}

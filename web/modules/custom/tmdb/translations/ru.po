@@ -77,8 +77,8 @@ msgctxt "Seasons tabs"
 msgid "@i season"
 msgstr "@i сезон"
 
-msgid "@i episode"
-msgstr "@i серия"
+msgid "episode @i"
+msgstr "серия @i"
 
 msgctxt "Attachable teasers"
 msgid "Load more"

@@ -1,3 +1,9 @@
+extra-tabs:
+  js:
+    js/extra-tabs.js: {}
+  dependencies:
+    - core/drupal
+
 tmdb_field_post_update:
   version: 1.0
   js:

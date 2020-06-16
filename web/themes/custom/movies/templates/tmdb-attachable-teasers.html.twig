@@ -1,0 +1,12 @@
+{% for item in items %}
+  <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+    {{ item }}
+  </div>
+{% endfor %}
+
+{% if more_button %}
+  <div class="more-button-wrapper">
+    {{ more_button }}
+  </div>
+  {{ attach_library('movies/more-button') }}
+{% endif %}

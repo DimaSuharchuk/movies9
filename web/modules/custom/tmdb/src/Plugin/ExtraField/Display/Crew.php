@@ -50,7 +50,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
     $i = 0;
     if ($is_tv && $created_by = $this->getCommonFieldValue('created_by')) {
       $build[$i] = [
-        '#theme' => 'collection',
+        '#theme' => 'tmdb_items_list',
         '#title' => $this->t('Created by', [], ['context' => 'Field label']),
         '#items' => $this->buildCreatedByItems($created_by),
       ];
@@ -59,7 +59,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
 
     if ($crew = $this->getCrew()) {
       $build[$i] = [
-        '#theme' => 'collection',
+        '#theme' => 'tmdb_items_list',
         '#items' => $this->buildCrewItems($crew),
       ];
       if ($is_tv) {

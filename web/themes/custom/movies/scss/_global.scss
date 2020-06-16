@@ -1,0 +1,33 @@
+html [lang|=en] * {
+  font-family: Poppins, sans-serif;
+}
+
+html [lang|=ru] *,
+html [lang|=uk] * {
+  font-family: OpenSans, sans-serif;
+}
+
+body {
+  font-size: 15px;
+  color: $movies-gray;
+}
+
+img {
+  width: 100%;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.bg-white {
+  background-color: $white;
+}
+
+.bg-light-gray {
+  background-color: $movies-bg-light-gray;
+}
+
+.ajax-progress-throbber {
+  display: none;
+}

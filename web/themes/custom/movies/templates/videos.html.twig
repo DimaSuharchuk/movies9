@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="videos-wrapper row">
+    {% for item in items %}
+      <div class="col-lg-4 col-md-6">
+        {{ item }}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{{ attach_library('movies/videos') }}

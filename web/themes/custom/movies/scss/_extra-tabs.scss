@@ -1,0 +1,46 @@
+/**
+ * Node field "extra-tabs".
+ */
+.field-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 50px;
+
+  a {
+    color: $movies-gray;
+    padding-bottom: 5px;
+    border-bottom: 1px solid transparent;
+    user-select: none;
+
+    &.active {
+      pointer-events: none;
+      border-bottom: 1px solid $movies-blue;
+    }
+  }
+}
+
+/**
+ * TV seasons tabs.
+ */
+.seasons-tabs {
+  display: grid;
+  row-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 12.5%);
+  align-items: start;
+  margin-top: 35px;
+  margin-bottom: 35px;
+
+  a {
+    color: $movies-gray;
+    padding-bottom: 5px;
+    border-bottom: 1px solid transparent;
+    user-select: none;
+
+    &.active {
+      width: fit-content;
+      pointer-events: none;
+      border-bottom: 1px solid $movies-blue;
+    }
+  }
+}

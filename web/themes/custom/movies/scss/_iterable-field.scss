@@ -1,0 +1,132 @@
+/**
+ * TMDb iterable extra fields.
+ * Belongs to collection (movie).
+ */
+.field-belongs-to-collection,
+.items-list-wrapper {
+  .collection-title,
+  .items-list-title {
+    color: $movies-dark-gray;
+    margin-bottom: 25px;
+    font-family: Poppins, sans-serif;
+    font-size: 1.2em;
+  }
+}
+
+/**
+ * TMDb iterable extra fields.
+ */
+.items-list-wrapper {
+  .person {
+    margin-bottom: 25px;
+
+    .avatar {
+      margin-bottom: 15px;
+      @include media-breakpoint-up(md) {
+        height: 225px;
+      }
+      @include media-breakpoint-up(lg) {
+        height: 200px;
+      }
+      @include media-breakpoint-up(xl) {
+        height: 240px;
+      }
+
+      img {
+        border-radius: $movies-border-radius-default;
+      }
+    }
+
+    .name {
+      margin-bottom: 0;
+      font-size: 1em;
+      color: $movies-gray;
+    }
+
+    .property {
+      font-size: 0.8em;
+      opacity: .5;
+      margin-top: 10px;
+      margin-bottom: 0;
+      color: $movies-gray;
+    }
+  }
+}
+
+/**
+ * Videos.
+ */
+.videos-wrapper {
+  .video {
+    .video-player-wrapper {
+      margin-bottom: 5px;
+
+      iframe {
+        width: 100%;
+        border: none;
+        border-radius: $movies-border-radius-big;
+      }
+    }
+
+    .name {
+      margin-bottom: 5px;
+    }
+
+    .size {
+      font-size: .67em;
+
+      &:after {
+        content: "p";
+      }
+    }
+  }
+
+  /* Add correct margins. */
+  @include media-breakpoint-up(lg) {
+    [class^="col-"]:nth-child(n+4) {
+      margin-top: 25px;
+    }
+  }
+  @include media-breakpoint-only(md) {
+    [class^="col-"]:nth-child(n+3) {
+      margin-top: 25px;
+    }
+  }
+  @include media-breakpoint-down(md) {
+    [class^="col-"]:nth-child(n+2) {
+      margin-top: 25px;
+    }
+  }
+}
+
+/**
+ * Belongs to collection (movie).
+ */
+.field-belongs-to-collection {
+  .collection-poster {
+    @include media-breakpoint-down(md) {
+      margin-bottom: 50px;
+    }
+
+    img {
+      border-radius: $movies-border-radius-default;
+    }
+  }
+
+  .collection-items {
+    .field-poster {
+      @include media-breakpoint-only(md) {
+        height: 135px;
+      }
+    }
+  }
+}
+
+/**
+ * Field crew.
+ */
+.field-crew {
+  .items-list-wrapper + .items-list-wrapper {
+    margin-top: 25px;
+  }
+}

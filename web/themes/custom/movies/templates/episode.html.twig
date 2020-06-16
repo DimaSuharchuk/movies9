@@ -1,0 +1,39 @@
+<div class="episode-wrapper">
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="field field-episode-image">
+        {% if still_path %}
+          <img src="//image.tmdb.org/t/p/w400{{ still_path }}" alt="{{ title }}" title="{{ title }}">
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      {% if original_title %}
+        {{ original_title }}
+      {% endif %}
+
+      <div class="field field-title">{{ title }}</div>
+
+      <div class="field field-episode-number">{{ episode_number }}</div>
+
+      <div class="field field-air-date">{{ air_date }}</div>
+
+      <div class="field imdb-rating-wrapper">
+        {{ imdb_rating }}
+      </div>
+
+      <div class="field field-overview">{{ overview }}</div>
+    </div>
+  </div>
+
+  {% if guest_stars %}
+    <div class="guest-stars-wrapper">
+      <div class="guest-stars-label">{{ "guest stars"|t }}</div>
+      <div class="guest-stars-content">{{ guest_stars }}</div>
+    </div>
+    {{ attach_library('tmdb/guest_stars') }}
+  {% endif %}
+
+</div>

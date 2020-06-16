@@ -1,0 +1,31 @@
+// Open Sans|400
+@font-face {
+  font-family: OpenSans;
+  src: url(../fonts/OpenSans-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+// Open Sans|600
+@font-face {
+  font-family: OpenSans;
+  src: url(../fonts/OpenSans-SemiBold.ttf) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+// Poppins|400
+@font-face {
+  font-family: Poppins;
+  src: url(../fonts/Poppins-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+// Poppins|500
+@font-face {
+  font-family: Poppins;
+  src: url(../fonts/Poppins-Medium.ttf) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}

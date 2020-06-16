@@ -1,0 +1,72 @@
+/*
+ * Full node.
+ */
+.node-content {
+  section {
+    padding-bottom: 50px;
+
+    &:not(:first-child) {
+      padding-top: 50px;
+    }
+  }
+}
+
+
+/*
+ * Node teaser.
+ */
+.node-teaser {
+  margin-bottom: 25px;
+
+  .poster-wrapper {
+    position: relative;
+    margin-bottom: 15px;
+
+    .field-poster {
+      @include media-breakpoint-up(md) {
+        height: 225px;
+      }
+      @include media-breakpoint-up(lg) {
+        height: 200px;
+      }
+      @include media-breakpoint-up(xl) {
+        height: 240px;
+      }
+
+      img {
+        border-radius: $movies-border-radius-default;
+      }
+    }
+
+    .imdb-rating-wrapper {
+      position: absolute;
+      top: 15px;
+
+      .field-with-label {
+        display: flex;
+        background-color: $white;
+        padding: 5px 15px 5px 5px;
+        font-size: .7em;
+        color: $movies-gray;
+        border-top-right-radius: $movies-border-radius-default;
+        border-bottom-right-radius: $movies-border-radius-default;
+
+        .label {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  .field-title {
+    margin-bottom: 0;
+    font-size: 1em;
+    color: $movies-gray;
+  }
+
+  .field-original-title {
+    margin-top: 10px;
+    margin-bottom: 0;
+    color: $movies-gray;
+  }
+}

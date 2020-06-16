@@ -34,6 +34,12 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'items' => NULL,
       ],
     ],
+    'tmdb_items_list' => [
+      'variables' => [
+        'title' => NULL,
+        'items' => NULL,
+      ],
+    ],
     'tmdb_attachable_teasers_wrapper' => [
       'variables' => [
         'tmdb_attachable_teasers' => NULL,
@@ -64,6 +70,11 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'role' => NULL,
         'department' => NULL,
         'job' => NULL,
+      ],
+    ],
+    'videos' => [
+      'variables' => [
+        'items' => NULL,
       ],
     ],
     'video' => [
@@ -100,6 +111,11 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'imdb_rating' => NULL,
         'overview' => NULL,
         'guest_stars' => NULL,
+      ],
+    ],
+    'container_wrapper' => [
+      'variables' => [
+        'content' => NULL,
       ],
     ],
   ];

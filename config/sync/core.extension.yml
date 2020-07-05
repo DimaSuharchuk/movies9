@@ -3,6 +3,7 @@ module:
   admin_toolbar_tools: 0
   adminimal_admin_toolbar: 0
   automated_cron: 0
+  better_exposed_filters: 0
   big_pipe: 0
   block: 0
   breakpoint: 0
@@ -33,6 +34,7 @@ module:
   toolbar: 0
   update: 0
   user: 0
+  views_infinite_scroll: 0
   views_ui: 0
   content_translation: 10
   views: 10

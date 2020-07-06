@@ -1,6 +1,6 @@
 uuid: 1645f176-e162-4eb6-b26e-a491f825f536
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
@@ -20,6 +20,11 @@ mode: teaser
 content:
   extra_field_imdb_rating:
     weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  extra_field_original_title:
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -43,7 +48,7 @@ hidden:
   extra_field_crew: true
   extra_field_genres: true
   extra_field_movie_release_date: true
-  extra_field_original_title: true
+  extra_field_noname_club: true
   extra_field_overview: true
   extra_field_poster: true
   extra_field_production_companies: true

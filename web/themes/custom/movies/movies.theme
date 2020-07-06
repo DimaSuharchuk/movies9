@@ -5,3 +5,17 @@
  * Movies theme file.
  */
 
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function movies_preprocess_node(&$variables) {
+  switch ($variables['view_mode']) {
+    case 'teaser':
+      /** @var \Drupal\node\NodeInterface $node */
+      $node = $variables['node'];
+      $variables['bundle'] = $node->getType();
+      $variables['tmdb_id'] = $node->{'field_tmdb_id'}->value;
+      break;
+
+  }
+}

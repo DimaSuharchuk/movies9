@@ -1,0 +1,8 @@
+{% if items.next %}
+  <ul{{ attributes.addClass('more-button-wrapper') }}>
+    <li class="pager__item">
+      <a href="{{ items.next.href }}" rel="next">{{ options.button_text }}</a>
+    </li>
+  </ul>
+  {{ attach_library('movies/more-button') }}
+{% endif %}

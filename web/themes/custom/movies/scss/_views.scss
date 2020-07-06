@@ -1,0 +1,92 @@
+/**
+ * Views: Home, Movies, TV Shows, Animations.
+ */
+.view-id-movies {
+  section {
+    padding-bottom: 50px;
+
+    &:not(:first-child) {
+      padding-top: 50px;
+    }
+  }
+
+  .view-filters {
+    padding-bottom: 40px;
+
+    .form-item {
+      margin: 0;
+    }
+
+    .form-checkboxes {
+      > .form-checkboxes {
+        // Bootstrap row.
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+
+        > .form-type-checkbox {
+          // Bootstrap column.
+          position: relative;
+          width: 100%;
+          padding-right: 15px;
+          padding-left: 15px;
+
+          // Custom styles.
+          margin-bottom: 10px;
+
+          // Bootstrap column width.
+          flex: 0 0 50%;
+          max-width: 50%;
+          @include media-breakpoint-up(sm) {
+            flex: 0 0 33.3333333333%;
+            max-width: 33.3333333333%;
+          }
+          @include media-breakpoint-up(md) {
+            flex: 0 0 25%;
+            max-width: 25%;
+          }
+          @include media-breakpoint-up(lg) {
+            flex: 0 0 16.6666666667%;
+            max-width: 16.6666666667%;
+          }
+
+          label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
+            line-height: 1;
+            background-color: $white;
+            color: $movies-gray;
+            box-shadow: 0 0 15px rgba(0, 0, 0, .07);
+            border-radius: 6px;
+            cursor: pointer;
+          }
+
+          input[type=checkbox] {
+            display: none;
+
+            &:checked {
+              + label {
+                background-color: $movies-bg-filter-checkbox;
+                color: $white;
+
+                &:after {
+                  content: "";
+                  background: url(../assets/x.svg) no-repeat;
+                  background-size: contain;
+                  width: 9px;
+                  height: 8px;
+                  margin-left: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

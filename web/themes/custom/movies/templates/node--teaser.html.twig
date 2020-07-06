@@ -1,0 +1,20 @@
+<article class="node-teaser">
+
+  <a href="{{ path('imdb.tmdb_node_redirect', {'bundle': bundle, 'tmdb_id': tmdb_id}) }}">
+
+    <div class="poster-wrapper">
+      <div class="field field-poster">
+        {{ content.field_poster }}
+      </div>
+      <div class="imdb-rating-wrapper">
+        {{ content.extra_field_imdb_rating }}
+      </div>
+    </div>
+
+    {{ content.extra_field_title }}
+
+    {{ content.extra_field_original_title }}
+
+  </a>
+
+</article>

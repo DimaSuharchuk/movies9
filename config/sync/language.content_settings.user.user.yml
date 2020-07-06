@@ -1,18 +1,17 @@
-uuid: d9440781-a896-4967-9ecc-35461c940933
+uuid: 2a945ac7-531f-4603-9bd0-3aba4bb53346
 langcode: en
 status: true
 dependencies:
-  config:
-    - taxonomy.vocabulary.genre
   module:
     - content_translation
+    - user
 third_party_settings:
   content_translation:
-    enabled: true
+    enabled: false
     bundle_settings:
       untranslatable_fields_hide: '0'
-id: taxonomy_term.genre
-target_entity_type_id: taxonomy_term
-target_bundle: genre
-default_langcode: en
+id: user.user
+target_entity_type_id: user
+target_bundle: user
+default_langcode: site_default
 language_alterable: false

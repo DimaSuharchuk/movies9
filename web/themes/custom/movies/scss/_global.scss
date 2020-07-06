@@ -1,9 +1,9 @@
-html [lang|=en] * {
+html[lang|=en] * {
   font-family: Poppins, sans-serif;
 }
 
-html [lang|=ru] *,
-html [lang|=uk] * {
+html[lang|=ru] *,
+html[lang|=uk] * {
   font-family: OpenSans, sans-serif;
 }
 
@@ -29,5 +29,8 @@ a:hover {
 }
 
 .ajax-progress-throbber {
+  display: none;
+}
+.ajax-progress-fullscreen {
   display: none;
 }

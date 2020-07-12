@@ -1,3 +1,6 @@
+#
+# Admin panel.
+#
 imdb.statistics:
   path: '/admin/imdb/statistics'
   defaults:
@@ -19,11 +22,22 @@ imdb.update_genres:
     _title: 'Genres'
   requirements:
     _permission: 'administer site configuration'
+
+
+#
+# Node handlers.
+#
 imdb.tmdb_node_redirect:
   path: '/adapter/{bundle}/{tmdb_id}'
   defaults:
     _title: 'Redirect to real node'
     _controller: '\Drupal\imdb\Controller\NodeController::redirect'
+  requirements:
+    _permission: 'access content'
+imdb.random:
+  path: '/random'
+  defaults:
+    _controller: '\Drupal\imdb\Controller\NodeController::random'
   requirements:
     _permission: 'access content'
 imdb.node_tabs_ajax_handler:

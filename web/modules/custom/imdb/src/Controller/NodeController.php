@@ -10,6 +10,7 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Url;
+use Drupal\imdb\EntityFinder;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\imdb\ImdbRating;
@@ -29,6 +30,8 @@ class NodeController implements ContainerInjectionInterface {
 
   private ?TmdbApiAdapter $adapter;
 
+  private ?EntityFinder $finder;
+
   private ?LanguageManagerInterface $language_manager;
 
   private ?TmdbTeaser $tmdb_teaser;
@@ -47,6 +50,7 @@ class NodeController implements ContainerInjectionInterface {
 
     $instance->node_helper = $container->get('node_helper');
     $instance->adapter = $container->get('tmdb.adapter');
+    $instance->finder = $container->get('entity_finder');
     $instance->tmdb_teaser = $container->get('tmdb.tmdb_teaser');
     $instance->language_manager = $container->get('language_manager');
     $instance->node_builder = $container->get('entity_type.manager')
@@ -82,6 +86,25 @@ class NodeController implements ContainerInjectionInterface {
     }
 
     return NULL;
+  }
+
+  /**
+   * Find approved random node and redirects to it.
+   *
+   * @return RedirectResponse
+   */
+  public function random() {
+    // Get all approved nodes.
+    $node_ids = $this->finder
+      ->findNodes()
+      ->addCondition('field_approved', TRUE)
+      ->execute();
+    // Get one random node.
+    $random = array_rand($node_ids);
+    // Redirect to it.
+    return new RedirectResponse(
+      Url::fromRoute('entity.node.canonical', ['node' => $random])->toString()
+    );
   }
 
   /**

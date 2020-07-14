@@ -14,14 +14,16 @@
         {{ original_title }}
       {% endif %}
 
-      <div class="field field-title">{{ title }}</div>
+      <div class="title-wrapper">
+        <div class="field field-title">{{ title }}</div>
+        <div class="field field-episode-number">{{ episode_number }}</div>
+      </div>
 
-      <div class="field field-episode-number">{{ episode_number }}</div>
-
-      <div class="field field-air-date">{{ air_date }}</div>
-
-      <div class="field imdb-rating-wrapper">
-        {{ imdb_rating }}
+      <div class="properties">
+        <div class="field field-air-date">{{ air_date }}</div>
+        <div class="field imdb-rating-wrapper">
+          {{ imdb_rating }}
+        </div>
       </div>
 
       <div class="field field-overview">{{ overview }}</div>

@@ -4,10 +4,11 @@
 .field-tabs {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 
   a {
+    flex: 0 1 auto;
+    margin: 5px 10px;
     color: $movies-gray;
     padding-bottom: 5px;
     border-bottom: 1px solid transparent;
@@ -25,9 +26,8 @@
  */
 .seasons-tabs {
   display: grid;
-  row-gap: 10px;
-  grid-template-columns: repeat(auto-fill, 12.5%);
-  align-items: start;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(8ch, auto));
   margin-top: 35px;
   margin-bottom: 35px;
 

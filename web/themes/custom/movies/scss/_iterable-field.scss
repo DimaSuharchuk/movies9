@@ -57,6 +57,16 @@
  * Videos.
  */
 .videos-wrapper {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 25px 30px;
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .video {
     .video-player-wrapper {
       margin-bottom: 5px;
@@ -78,23 +88,6 @@
       &:after {
         content: "p";
       }
-    }
-  }
-
-  /* Add correct margins. */
-  @include media-breakpoint-up(lg) {
-    [class^="col-"]:nth-child(n+4) {
-      margin-top: 25px;
-    }
-  }
-  @include media-breakpoint-only(md) {
-    [class^="col-"]:nth-child(n+3) {
-      margin-top: 25px;
-    }
-  }
-  @include media-breakpoint-down(md) {
-    [class^="col-"]:nth-child(n+2) {
-      margin-top: 25px;
     }
   }
 }
@@ -128,5 +121,24 @@
 .field-crew {
   .items-list-wrapper + .items-list-wrapper {
     margin-top: 25px;
+  }
+}
+
+/**
+ * Field "Similar", "Recommended" and Views using "infinite scroll".
+ */
+.append-place,
+.views-infinite-scroll-content-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 25px 30px;
+  @include media-breakpoint-up(sm) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: repeat(6, 1fr);
   }
 }

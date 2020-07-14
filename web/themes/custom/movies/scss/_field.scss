@@ -1,41 +1,27 @@
 .field {
   line-height: 1;
   margin-bottom: 0;
-
-  & + .field {
-    margin-top: 15px;
-  }
-}
-
-.field-with-label {
-  .label,
-  .content {
-    display: flex;
-    align-items: center;
-    font-weight: normal;
-  }
 }
 
 .properties {
   position: relative;
+  display: grid;
+  row-gap: 15px;
   margin-bottom: 20px;
 
   .field-with-label {
-    display: flex;
+    display: grid;
+    grid-template-columns: clamp(15ch, 25ch, 50%) 1fr;
+    align-items: center;
 
     .label {
-      width: 33%;
-      @include media-breakpoint-down(md) {
-        width: 50%;
-      }
+      word-break: break-word;
     }
 
     .content {
-      width: 66%;
+      display: flex;
       flex-wrap: wrap;
-      @include media-breakpoint-down(md) {
-        width: 50%;
-      }
+      align-items: center;
     }
   }
 
@@ -101,11 +87,16 @@
 .field-production-companies,
 .field-networks {
   .content {
+    margin-bottom: -10px;
+
     img {
+      height: min-content;
       max-height: 30px;
       width: auto;
+      max-width: 100%;
       filter: grayscale(1);
       opacity: .5;
+      margin-bottom: 10px;
 
       &:not(:last-child) {
         margin-right: 25px;
@@ -119,30 +110,23 @@
  */
 .field--name-field-genres {
   margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, auto));
+  grid-gap: 10px 20px;
+  justify-content: start;
   @include media-breakpoint-down(md) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 20px;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .field__item {
-    display: inline-block;
-
-    &:not(:last-child) {
-      margin-right: 25px;
-    }
-
-    @include media-breakpoint-down(md) {
-      margin-right: 0 !important;
-    }
-
     a {
-      display: block;
+      display: grid;
+      place-content: center;
       background: $white;
       color: $movies-gray;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.07);
       border-radius: $movies-border-radius-default;
-      padding: 6px 43px;
+      padding: 6px 0;
     }
   }
 }
@@ -154,6 +138,20 @@
   font-size: .8em;
   margin-bottom: 10px;
   font-family: Poppins, sans-serif;
+}
+
+/**
+ * Field "site".
+ */
+.field-site {
+  .field-with-label {
+    .content {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 /**

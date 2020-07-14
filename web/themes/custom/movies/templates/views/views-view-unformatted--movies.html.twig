@@ -1,7 +1,3 @@
-<div class="row">
-  {% for row in rows %}
-    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
-      {{- row.content -}}
-    </div>
-  {% endfor %}
-</div>
+{% for row in rows %}
+  {{- row.content -}}
+{% endfor %}

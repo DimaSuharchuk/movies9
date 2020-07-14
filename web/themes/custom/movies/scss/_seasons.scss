@@ -64,19 +64,22 @@
       }
     }
 
+    .title-wrapper {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      column-gap: 10px;
+      align-items: baseline;
+      margin-bottom: 25px;
 
-    .field-title {
-      display: inline;
-      margin-bottom: 5px;
-      margin-top: 0;
-    }
+      .field-title {
+        margin: 0;
+      }
 
-    .field-episode-number {
-      display: inline;
-      margin-left: 50px;
-      font-size: .8em;
-      font-weight: bold;
-      letter-spacing: .5px;
+      .field-episode-number {
+        font-size: .8em;
+        font-weight: bold;
+        letter-spacing: .5px;
+      }
     }
 
     .imdb-rating-wrapper {

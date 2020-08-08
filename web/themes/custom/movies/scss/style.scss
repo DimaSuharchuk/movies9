@@ -1,3 +1,8 @@
+/**
+ * Compile command:
+ * sass scss/style.scss:css/style.min.css --style=compressed --watch
+ */
+
 // Include bootstrap variables definitions overrides.
 @import 'overrides/variables';
 

@@ -8,9 +8,3 @@ more-button:
     js/more-button.js: { }
   dependencies:
     - core/drupal
-
-videos:
-  js:
-    js/videos.js: { }
-  dependencies:
-    - core/drupal

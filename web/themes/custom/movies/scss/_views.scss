@@ -33,7 +33,7 @@
           grid-template-columns: repeat(6, 1fr);
         }
 
-        > .form-type-checkbox {
+        > div {
           label {
             display: grid;
             text-align: center;
@@ -69,10 +69,6 @@
           }
         }
       }
-    }
-
-    .form-actions {
-      margin: 0;
     }
   }
 }

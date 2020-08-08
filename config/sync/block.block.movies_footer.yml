@@ -1,6 +1,6 @@
 uuid: 83edb17f-2a51-4b3f-943f-27af2c7eefba
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.footer
@@ -12,8 +12,8 @@ _core:
   default_config_hash: aFKksJmiEhSztWNw-j-SbfzO88axvjNIZsjFBcNtI6o
 id: movies_footer
 theme: movies
-region: footer
-weight: -3
+region: content
+weight: 3
 provider: null
 plugin: 'system_menu_block:footer'
 settings:

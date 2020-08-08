@@ -8,8 +8,8 @@ _core:
   default_config_hash: rKurRLaH08AjwE5wsNzeL2fa77rF5pXKSR9WopsFYyI
 id: movies_local_actions
 theme: movies
-region: footer
-weight: -1
+region: content
+weight: 2
 provider: null
 plugin: local_actions_block
 settings:

@@ -1,6 +1,6 @@
 uuid: 87f9101f-994a-4757-9f41-6d37c663ed0c
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.account
@@ -12,8 +12,8 @@ _core:
   default_config_hash: bSenKfxHQ1-_DHnPlsMsap_D6fif7bbe3kh9k31LkdU
 id: movies_account_menu
 theme: movies
-region: nav_additional
-weight: -7
+region: content
+weight: -2
 provider: null
 plugin: 'system_menu_block:account'
 settings:

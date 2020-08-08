@@ -8,8 +8,8 @@ _core:
   default_config_hash: IzSbK3zk-Gon9y7WLEWop15Wn__7LeKzBJIXqajlb00
 id: movies_local_tasks
 theme: movies
-region: footer
-weight: -2
+region: content
+weight: 1
 provider: null
 plugin: local_tasks_block
 settings:

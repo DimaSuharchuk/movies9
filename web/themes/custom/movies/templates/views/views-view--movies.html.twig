@@ -35,7 +35,11 @@
         {{ rows }}
 
         {% if pager %}
-          {{ pager }}
+          <div class="row">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+              {{ pager }}
+            </div>
+          </div>
         {% endif %}
       </div>
     </section>

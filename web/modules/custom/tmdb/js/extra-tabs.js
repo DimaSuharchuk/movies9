@@ -21,7 +21,7 @@
           tab.classList.add("active");
 
           // Scroll to node block.
-          const staticSections = context.querySelectorAll(".node-content section");
+          const staticSections = context.querySelectorAll(".node section");
           const bottom = staticSections[0].offsetHeight + 54;
 
           // Set 100vh min height to second section for successfully scrolling,

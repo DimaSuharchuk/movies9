@@ -1,13 +1,35 @@
-/*
- * Full node.
+/**
+ * Node.
  */
-.node-content {
+article {
   section {
     padding-bottom: 50px;
 
-    &:not(:first-child) {
+    & + section {
       padding-top: 50px;
     }
+  }
+}
+
+
+/*
+ * Full node.
+ */
+.node-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  @include media-breakpoint-up(md) {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "poster content content";
+    grid-column-gap: 30px;
+  }
+
+  .poster-wrapper {
+    grid-area: poster;
+  }
+
+  .content-wrapper {
+    grid-area: content;
   }
 }
 
@@ -16,21 +38,16 @@
  * Node teaser.
  */
 .node-teaser {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-row-gap: 10px;
+
   .poster-wrapper {
-    position: relative;
-    margin-bottom: 15px;
+    height: 0;
+    padding-bottom: 150%;
+    margin-bottom: 5px;
 
     .field-poster {
-      @include media-breakpoint-up(md) {
-        height: 225px;
-      }
-      @include media-breakpoint-up(lg) {
-        height: 200px;
-      }
-      @include media-breakpoint-up(xl) {
-        height: 240px;
-      }
-
       img {
         border-radius: $movies-border-radius-default;
       }
@@ -56,15 +73,20 @@
     }
   }
 
-  .field-title {
-    margin-bottom: 0;
-    font-size: 1em;
-    color: $movies-gray;
-  }
+  .title-wrapper {
+    display: grid;
+    grid-row-gap: 10px;
+    place-content: start;
 
-  .field-original-title {
-    margin-top: 10px;
-    margin-bottom: 0;
-    color: $movies-gray;
+    .field-title {
+      margin-bottom: 0;
+      font-size: 1em;
+      color: $movies-gray;
+    }
+
+    .field-original-title {
+      margin-bottom: 0;
+      color: $movies-gray;
+    }
   }
 }

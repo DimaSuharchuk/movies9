@@ -2,30 +2,47 @@
  * Seasons.
  */
 .season-wrapper {
-  line-height: 1;
-  padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "title"
+    "tabs"
+    "poster"
+    "season-info";
+  grid-gap: 30px;
+  @include media-breakpoint-up(sm) {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+    "title title title"
+    "tabs tabs tabs"
+    "poster season-info season-info";
+  }
 
   .seasons-block-title {
+    grid-area: title;
     font-size: 1.2em;
-    font-weight: 500;
-    margin-bottom: 25px;
+    font-weight: bold;
   }
 
   /* Season tabs in _extra-tabs.scss file. */
+  .seasons-tabs {
+    grid-area: tabs;
+  }
 
-  .field-poster {
-    @include media-breakpoint-down(md) {
-      margin-bottom: 25px;
-    }
+  .season-poster {
+    grid-area: poster;
 
     img {
       border-radius: $movies-border-radius-big;
-      margin-bottom: 0;
     }
   }
 
+  .season-info {
+    grid-area: season-info;
+  }
+
   .episodes-count {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 
     .field-with-label {
       display: flex;
@@ -44,85 +61,111 @@
 .episodes-wrapper {
   .episodes-block-title {
     font-size: 1.2em;
-    font-weight: 500;
-    margin-bottom: 25px;
+    font-weight: bold;
+    margin-bottom: 50px;
   }
 
-  /* One episode. */
-  .episode-wrapper {
-    &:not(:last-child) {
-      margin-bottom: 50px;
-    }
+  .episodes-items {
+    display: grid;
+    grid-row-gap: 50px;
 
-    .field-episode-image {
-      @include media-breakpoint-down(md) {
-        margin-bottom: 25px;
-      }
-
-      img {
-        border-radius: $movies-border-radius-default;
-      }
-    }
-
-    .title-wrapper {
+    /* One episode. */
+    .episode-wrapper {
       display: grid;
-      grid-template-columns: 1fr auto;
-      column-gap: 10px;
-      align-items: baseline;
-      margin-bottom: 25px;
-
-      .field-title {
-        margin: 0;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "image"
+        "info"
+        "stars-wrapper";
+      grid-gap: 30px;
+      @include media-breakpoint-up(md) {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+          "image info info"
+          "stars-wrapper stars-wrapper stars-wrapper";
       }
 
-      .field-episode-number {
-        font-size: .8em;
-        font-weight: bold;
-        letter-spacing: .5px;
-      }
-    }
+      .episode-image {
+        grid-area: image;
 
-    .imdb-rating-wrapper {
-      .field-with-label {
-        display: flex;
-
-        .label {
-          margin-right: 5px;
+        img {
+          border-radius: $movies-border-radius-default;
         }
       }
-    }
 
-    .field-overview {
-      margin-bottom: 25px;
-    }
+      .episode-info {
+        grid-area: info;
 
-    /* Guest stars. */
-    .guest-stars-wrapper {
-      .guest-stars-label {
-        color: $movies-blue;
-        margin-left: calc(33.33333% + 10px);
-        margin-bottom: 25px;
-        cursor: pointer;
+        .title-wrapper {
+          display: grid;
+          grid-template-columns: 1fr auto;
+          grid-column-gap: 10px;
+          align-items: baseline;
 
-        &:after {
-          content: "";
-          display: inline-block;
-          width: 11px;
-          height: 8px;
-          background: url(../assets/arrows.svg) no-repeat;
-          background-size: cover;
-          margin-left: 10px;
+          .field-episode-number {
+            font-size: .8em;
+            font-weight: bold;
+            letter-spacing: .5px;
+          }
         }
 
-        &.open {
-          &:after {
-            background-position: right;
+        .imdb-rating-wrapper {
+          .field-with-label {
+            display: flex;
+
+            .label {
+              margin-right: 5px;
+            }
           }
         }
       }
 
-      .guest-stars-content {
-        display: none;
+
+      /* Guest stars. */
+      .guest-stars-wrapper {
+        grid-area: stars-wrapper;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "action-label"
+            "stars";
+        grid-column-gap: 30px;
+        @include media-breakpoint-up(md) {
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-areas:
+            ". action-label action-label"
+            "stars stars stars";
+        }
+
+        .guest-stars-label {
+          grid-area: action-label;
+          color: $movies-blue;
+          cursor: pointer;
+
+          &:after {
+            content: "";
+            display: inline-block;
+            width: 11px;
+            height: 8px;
+            background: url(../assets/arrows.svg) no-repeat;
+            background-size: cover;
+            margin-left: 10px;
+          }
+
+          &.open,
+          &.processing {
+            margin-bottom: 30px;
+
+            &:after {
+              background-position: right;
+            }
+          }
+        }
+
+        .guest-stars-content {
+          grid-area: stars;
+          display: none;
+        }
       }
     }
   }

@@ -38,6 +38,7 @@ function tmdb_theme($existing, $type, $theme, $path) {
       'variables' => [
         'title' => NULL,
         'items' => NULL,
+        'use_container' => TRUE,
       ],
     ],
     'tmdb_attachable_teasers_wrapper' => [

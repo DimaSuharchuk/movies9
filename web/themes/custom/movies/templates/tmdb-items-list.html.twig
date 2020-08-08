@@ -1,19 +1,19 @@
-<div class="items-list-wrapper">
-  <div class="container">
+{% set classes = create_attribute({'class': ['items-list-wrapper']}) %}
 
-    {% if title %}
-      <div class="items-list-title">
-        {{ title }}
-      </div>
-    {% endif %}
+{% if use_container %}
+  {% set classes = classes.addClass('container') %}
+{% endif %}
 
-    <div class="items-list-content row">
-      {% for item in items %}
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6">
-          {{ item }}
-        </div>
-      {% endfor %}
+<div{{ classes }}>
+  {% if title %}
+    <div class="items-list-title">
+      {{ title }}
     </div>
+  {% endif %}
 
+  <div class="items-list-content responsive-grid">
+    {% for item in items %}
+      {{ item }}
+    {% endfor %}
   </div>
 </div>

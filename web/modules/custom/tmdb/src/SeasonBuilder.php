@@ -170,6 +170,7 @@ class SeasonBuilder {
       $stars_wrapper = [
         '#theme' => 'tmdb_items_list',
         '#items' => $stars,
+        '#use_container' => FALSE,
       ];
     }
 

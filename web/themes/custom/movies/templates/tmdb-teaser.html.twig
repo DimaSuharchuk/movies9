@@ -1,22 +1,19 @@
-<article class="node-teaser">
+<a href="{{ path('imdb.tmdb_node_redirect', {'bundle': bundle, 'tmdb_id': tmdb_id}) }}" class="node-teaser">
 
-  <a href="{{ path('imdb.tmdb_node_redirect', {'bundle': bundle, 'tmdb_id': tmdb_id}) }}">
-
-    <div class="poster-wrapper">
-      <div class="field field-poster">
-        {% if poster %}
-          <img src="//image.tmdb.org/t/p/w185{{ poster }}" alt="{{ title }}" title="{{ title }}">
-        {% endif %}
-      </div>
-      <div class="imdb-rating-wrapper">
-        {{ imdb_rating }}
-      </div>
+  <div class="poster-wrapper">
+    <div class="field field-poster">
+      {% if poster %}
+        <img src="//image.tmdb.org/t/p/w185{{ poster }}" alt="{{ title }}" title="{{ title }}">
+      {% endif %}
     </div>
+    <div class="imdb-rating-wrapper">
+      {{ imdb_rating }}
+    </div>
+  </div>
 
+  <div class="title-wrapper">
     <div class="field field-title">{{ title }}</div>
-
     {{ original_title }}
+  </div>
 
-  </a>
-
-</article>
+</a>

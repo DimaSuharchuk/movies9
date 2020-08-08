@@ -1,16 +1,23 @@
 (Drupal => {
   Drupal.behaviors.guestStarsAccordion = {
     attach: context => {
+      const slideDuration = 500; // .5s
+
       context.querySelectorAll(".guest-stars-label").forEach(star => {
         star.addEventListener("click", () => {
-          slideToggle(star.nextElementSibling, 500);
+          slideToggle(star.nextElementSibling, slideDuration);
           star.classList.toggle("open");
+          // Slide up processing class.
+          if (!star.classList.contains("open")) {
+            star.classList.add("processing");
+            setTimeout(() => star.classList.remove("processing"), slideDuration);
+          }
         });
       });
     }
   };
 
-  const slideUp = (target, duration = 500) => {
+  const slideUp = (target, duration) => {
     target.style.transitionProperty = "height, margin, padding";
     target.style.transitionDuration = duration + "ms";
     target.style.boxSizing = "border-box";
@@ -35,7 +42,7 @@
     }, duration);
   }
 
-  const slideDown = (target, duration = 500) => {
+  const slideDown = (target, duration) => {
     target.style.removeProperty("display");
     let display = window.getComputedStyle(target).display;
 
@@ -68,7 +75,7 @@
     }, duration);
   }
 
-  const slideToggle = (target, duration = 500) => {
+  const slideToggle = (target, duration) => {
     if (window.getComputedStyle(target).display === "none") {
       return slideDown(target, duration);
     }

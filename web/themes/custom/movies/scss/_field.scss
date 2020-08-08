@@ -1,13 +1,8 @@
-.field {
-  line-height: 1;
-  margin-bottom: 0;
-}
-
 .properties {
   position: relative;
   display: grid;
-  row-gap: 15px;
-  margin-bottom: 20px;
+  grid-row-gap: 10px;
+  margin-bottom: 15px;
 
   .field-with-label {
     display: grid;
@@ -24,10 +19,6 @@
       align-items: center;
     }
   }
-
-  .field:last-child {
-    margin-bottom: 0;
-  }
 }
 
 
@@ -37,7 +28,7 @@
 .field-title {
   font-size: 1.5em;
   color: $movies-blue;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 /**
@@ -99,7 +90,7 @@
       margin-bottom: 10px;
 
       &:not(:last-child) {
-        margin-right: 25px;
+        margin-right: 30px;
       }
     }
   }
@@ -109,16 +100,24 @@
  * Field "genres".
  */
 .field--name-field-genres {
-  margin-bottom: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, auto));
-  grid-gap: 10px 20px;
-  justify-content: start;
-  @include media-breakpoint-down(md) {
-    grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px 30px;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 30px;
+  @include media-breakpoint-up(lg) {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 0;
+    margin-bottom: 20px;
   }
 
   .field__item {
+    text-align: center;
+    @include media-breakpoint-up(lg) {
+      margin-right: 30px;
+      margin-bottom: 10px;
+    }
+
     a {
       display: grid;
       place-content: center;
@@ -127,6 +126,9 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.07);
       border-radius: $movies-border-radius-default;
       padding: 6px 0;
+      @include media-breakpoint-up(lg) {
+        padding: 6px 30px;
+      }
     }
   }
 }

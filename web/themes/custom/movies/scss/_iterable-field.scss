@@ -2,14 +2,64 @@
  * TMDb iterable extra fields.
  * Belongs to collection (movie).
  */
-.field-belongs-to-collection,
+.collection-wrapper,
 .items-list-wrapper {
+  display: grid;
+
   .collection-title,
   .items-list-title {
+    grid-area: title;
     color: $movies-dark-gray;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     font-family: Poppins, sans-serif;
     font-size: 1.2em;
+  }
+
+  .collection-items,
+  .items-list-content {
+    grid-area: items;
+  }
+}
+
+/**
+ * Belongs to collection (movie).
+ */
+.collection-wrapper {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+        "title"
+        "collection-poster"
+        "items";
+  grid-column-gap: 30px;
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+        "title title title"
+        "collection-poster items items";
+  }
+
+  .collection-poster {
+    grid-area: collection-poster;
+    margin-bottom: 50px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 0;
+    }
+
+    img {
+      border-radius: $movies-border-radius-default;
+    }
+  }
+
+  .collection-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    @include media-breakpoint-up(sm) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 }
 
@@ -17,28 +67,22 @@
  * TMDb iterable extra fields.
  */
 .items-list-wrapper {
+  grid-template-areas:
+        "title"
+        "items";
+
   .person {
-    margin-bottom: 25px;
+    display: grid;
+    grid-row-gap: 10px;
+    grid-template-rows: 1fr auto;
 
     .avatar {
-      margin-bottom: 15px;
-      @include media-breakpoint-up(md) {
-        height: 225px;
-      }
-      @include media-breakpoint-up(lg) {
-        height: 200px;
-      }
-      @include media-breakpoint-up(xl) {
-        height: 240px;
-      }
-
       img {
         border-radius: $movies-border-radius-default;
       }
     }
 
     .name {
-      margin-bottom: 0;
       font-size: 1em;
       color: $movies-gray;
     }
@@ -46,8 +90,6 @@
     .property {
       font-size: 0.8em;
       opacity: .5;
-      margin-top: 10px;
-      margin-bottom: 0;
       color: $movies-gray;
     }
   }
@@ -59,7 +101,7 @@
 .videos-wrapper {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  grid-gap: 25px 30px;
+  grid-gap: 30px;
   @include media-breakpoint-up(md) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -68,10 +110,12 @@
   }
 
   .video {
+    display: grid;
+    grid-row-gap: 10px;
+
     .video-player-wrapper {
       position: relative;
       padding-top: 56.25%;
-      margin-bottom: 5px;
 
       iframe {
         position: absolute;
@@ -81,10 +125,6 @@
         border: none;
         border-radius: $movies-border-radius-big;
       }
-    }
-
-    .name {
-      margin-bottom: 5px;
     }
 
     .size {
@@ -98,52 +138,17 @@
 }
 
 /**
- * Belongs to collection (movie).
- */
-.field-belongs-to-collection {
-  .collection-poster {
-    @include media-breakpoint-down(md) {
-      margin-bottom: 50px;
-    }
-
-    img {
-      border-radius: $movies-border-radius-default;
-    }
-  }
-
-  .collection-items {
-    .field-poster {
-      @include media-breakpoint-only(md) {
-        height: 135px;
-      }
-    }
-  }
-}
-
-/**
  * Field crew.
  */
 .field-crew {
   .items-list-wrapper + .items-list-wrapper {
-    margin-top: 25px;
+    margin-top: 50px;
   }
 }
 
 /**
- * Field "Similar", "Recommended" and Views using "infinite scroll".
+ * Views using "infinite scroll".
  */
-.append-place,
 .views-infinite-scroll-content-wrapper {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 25px 30px;
-  @include media-breakpoint-up(sm) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @include media-breakpoint-up(md) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @include media-breakpoint-up(lg) {
-    grid-template-columns: repeat(6, 1fr);
-  }
+  @extend .responsive-grid;
 }

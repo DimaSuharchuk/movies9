@@ -11,7 +11,7 @@
   }
 
   .view-filters {
-    padding-bottom: 40px;
+    padding-bottom: 50px;
 
     .form-item {
       margin: 0;
@@ -69,6 +69,10 @@
           }
         }
       }
+    }
+
+    .form-actions {
+      margin: 0;
     }
   }
 }

@@ -18,6 +18,9 @@ article {
 .node-wrapper {
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-areas:
+    "poster"
+    "content";
   @include media-breakpoint-up(md) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: "poster content content";

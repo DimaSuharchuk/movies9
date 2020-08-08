@@ -1,0 +1,33 @@
+/**
+ * Bootstrap.
+ */
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+$grid-gutter-width: 30px !default;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px
+) !default;
+
+
+/**
+ * Custom.
+ */
+$white: #fff;
+$movies-gray: #90a0b7;
+$movies-dark-gray: #818e9b;
+$movies-blue: #109cf1;
+
+$movies-bg-light-gray: #f2f2f2;
+
+$movies-border-radius-default: 6px;
+$movies-border-radius-big: 10px;
+
+$movies-bg-filter-checkbox: #4abbff;

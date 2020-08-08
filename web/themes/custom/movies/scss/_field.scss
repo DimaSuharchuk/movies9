@@ -152,6 +152,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      height: calc(1rem + 1px);
     }
   }
 }

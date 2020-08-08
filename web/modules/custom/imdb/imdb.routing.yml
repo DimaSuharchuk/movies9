@@ -40,6 +40,8 @@ imdb.random:
     _controller: '\Drupal\imdb\Controller\NodeController::random'
   requirements:
     _permission: 'access content'
+  options:
+    no_cache: TRUE
 imdb.node_tabs_ajax_handler:
   path: '/node/{node_id}/{tab}'
   defaults:

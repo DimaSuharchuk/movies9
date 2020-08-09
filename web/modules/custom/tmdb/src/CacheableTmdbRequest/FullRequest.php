@@ -80,8 +80,8 @@ class FullRequest extends CacheableTmdbRequest {
     $cast = $this->purgeCastFields($data);
     $crew = $this->purgeCrewFields($data);
     $videos = $this->purgeVideosFields($data);
-    $recommendations = $this->purgeRecommendationsFields($data['recommendations']);
-    $similar = $this->purgeRecommendationsFields($data['similar']);
+    $recommendations = $data['recommendations'] ? $this->purgeRecommendationsFields($data['recommendations']) : ['results' => []];
+    $similar = $data['similar'] ? $this->purgeRecommendationsFields($data['similar']) : ['results' => []];
 
     return [
       'common' => $common,

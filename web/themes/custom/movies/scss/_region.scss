@@ -9,6 +9,21 @@
 #page > header {
   padding-top: 25px;
   padding-bottom: 50px;
+  @media (orientation: landscape) {
+    @include media-breakpoint-down(md) {
+      padding-top: 20px;
+      padding-bottom: 30px;
+    }
+  }
+
+  [hreflang=en] {
+    font-family: $lat-font;
+  }
+
+  [hreflang=ru],
+  [hreflang=uk] {
+    font-family: $cyr-font;
+  }
 }
 
 /**
@@ -16,85 +31,160 @@
  */
 .header-inner-wrapper {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "logo mobile-nav";
   grid-column-gap: 50px;
+  @include media-breakpoint-up(lg) {
+    grid-template-areas: "logo desktop-nav";
+  }
 
   #block-logo {
+    grid-area: logo;
+    place-self: start;
+
     img {
       height: 40px;
     }
   }
 
-  .main-menu {
-    display: flex;
-    align-items: center;
+  .desktop-nav {
+    grid-area: desktop-nav;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "desktop-menu language-switcher";
 
-    ul {
-      display: grid;
-      grid-auto-flow: column;
-      grid-column-gap: 40px;
+    .main-menu {
+      grid-area: desktop-menu;
+      display: flex;
+      align-items: center;
 
-      li {
-        list-style: none;
+      ul {
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: 40px;
 
-        a {
-          color: $movies-gray;
-          border-bottom: 2px solid transparent;
-          padding: 6px 0;
-          user-select: none;
+        li {
+          list-style: none;
 
-          &.is-active {
-            border-bottom: 2px solid $movies-blue;
-            pointer-events: none;
+          a {
+            color: $movies-gray;
+            border-bottom: 2px solid transparent;
+            padding: 6px 0;
+            user-select: none;
+
+            &.is-active {
+              border-bottom: 2px solid $movies-blue;
+              pointer-events: none;
+            }
+
+            &:hover {
+              border-bottom: 1px solid $movies-blue;
+            }
+          }
+        }
+      }
+    }
+
+    #block-language-switcher {
+      grid-area: language-switcher;
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .active-language {
+        border-bottom: 2px solid $movies-blue;
+        padding: 6px 0;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .links {
+        position: absolute;
+        top: 42px;
+        left: -6px;
+        z-index: 9;
+        padding: 0 6px;
+        border-bottom-left-radius: $movies-border-radius-default;
+        border-bottom-right-radius: $movies-border-radius-default;
+        background: $white;
+        box-shadow: 5px 5px 18px -8px rgba(0, 0, 0, .2);
+        height: 0;
+        overflow: hidden;
+        transition: height .2s ease-in-out;
+
+        &.open {
+          height: 60px;
+        }
+
+        li {
+          list-style: none;
+
+          + li {
+            margin-top: 1rem;
           }
 
-          &:hover {
-            border-bottom: 1px solid $movies-blue;
+          a {
+            color: $movies-gray;
+            user-select: none;
           }
         }
       }
     }
   }
 
-  #block-language-switcher {
-    position: relative;
-    display: flex;
-    align-items: center;
 
-    .active-language {
-      border-bottom: 2px solid $movies-blue;
-      padding: 6px 0;
-      cursor: pointer;
-      user-select: none;
-    }
+  .mobile-nav {
+    grid-area: mobile-nav;
+    place-self: center end;
+    user-select: none;
 
-    .links {
-      position: absolute;
-      top: 42px;
-      left: -6px;
-      z-index: 9;
-      padding: 0 6px;
-      border-bottom-left-radius: $movies-border-radius-default;
-      border-bottom-right-radius: $movies-border-radius-default;
-      background: $white;
-      box-shadow: 5px 5px 18px -8px rgba(0, 0, 0, .2);
-      height: 0;
-      overflow: hidden;
-      transition: height .2s ease-in-out;
+    .menus-wrapper {
+      display: none;
 
       &.open {
-        height: 60px;
+        display: block;
+        position: absolute;
+        top: 90px;
+        left: 0;
+        right: 0;
+        background: $white;
+        z-index: 10;
+        @media (orientation: landscape) {
+          @include media-breakpoint-down(md) {
+            top: 80px;
+          }
+        }
       }
 
-      li {
-        list-style: none;
+      .main-menu {
+        border-bottom: 1px solid $movies-gray;
 
-        + li {
-          margin-top: 1rem;
+        ul {
+          li {
+            display: grid;
+            text-align: center;
+
+            a {
+              padding: 15px;
+            }
+          }
         }
+      }
 
-        a {
-          color: $movies-gray;
+      #block-language-switcher-mobile {
+        .language-switcher {
+          display: grid;
+          text-align: center;
+
+          .active-language {
+            padding: 15px;
+          }
+
+          .links {
+            li {
+              padding: 15px;
+            }
+          }
         }
       }
     }

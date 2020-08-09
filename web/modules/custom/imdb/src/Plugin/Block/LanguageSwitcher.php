@@ -3,6 +3,7 @@
 namespace Drupal\imdb\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Path\PathMatcher;
@@ -46,14 +47,22 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
 
     $current_language = $this->language_manager->getCurrentLanguage();
     $lang_code = $current_language->getId();
-    $lang_name = $this->language_manager->getNativeLanguages()[$lang_code]->getName();
+    $current_lang_name = $this->language_manager->getNativeLanguages()[$lang_code]->getName();
 
     // Remove active language from list.
     unset($links[$lang_code]);
 
-    // Get only first 3 letters of language name.
-    foreach ($links as &$link) {
-      $link['title'] = mb_substr($link['title'], 0, 3);
+    // Trim language name if need.
+    $conf = $this->getConfiguration();
+    if ($conf['trim_links']) {
+      $length = $conf['trim_length'];
+
+      // Trim links.
+      foreach ($links as &$link) {
+        $link['title'] = mb_substr($link['title'], 0, $length);
+      }
+      // Trim static label.
+      $current_lang_name = mb_substr($current_lang_name, 0, $length);
     }
 
     $links_themed = [
@@ -63,10 +72,68 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
 
     return [
       '#theme' => 'movies_language_switcher',
-      '#active_label' => mb_substr($lang_name, 0, 3),
+      '#active_label' => $current_lang_name,
       '#links' => $links_themed,
     ];
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function defaultConfiguration() {
+    return [
+      'trim_links' => FALSE,
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockForm($form, FormStateInterface $form_state) {
+    $conf = $this->getConfiguration();
+
+    $form['trim_links'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Trim links'),
+      '#default_value' => $conf['trim_links'],
+    ];
+
+    $form['trim_length'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Trim length'),
+      '#default_value' => $conf['trim_links'] ? $conf['length'] : '',
+      '#min' => 1,
+      '#states' => [
+        'invisible' => [
+          ':input[name="settings[trim_links]"]' => ['checked' => FALSE],
+        ],
+      ],
+    ];
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockValidate($form, FormStateInterface $form_state) {
+    $is_trim = $form_state->getValue('trim_links');
+    if ($is_trim && $form_state->getValue('trim_length') < 1) {
+      $form_state->setErrorByName('trim_length', $this->t('Minimum 1 character.'));
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockSubmit($form, FormStateInterface $form_state) {
+    $is_trim = $form_state->getValue('trim_links');
+    $this->configuration['trim_links'] = $is_trim;
+    if ($is_trim) {
+      $this->configuration['trim_length'] = $form_state->getValue('trim_length');
+    }
+  }
+
 
   /**
    * {@inheritdoc}

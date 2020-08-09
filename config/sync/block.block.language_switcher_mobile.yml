@@ -1,4 +1,4 @@
-uuid: 1082833c-b547-4b47-8f8e-75d5bf805fcb
+uuid: 5c9a781a-fa29-4673-b67f-ba82ba6ea7fc
 langcode: en
 status: true
 dependencies:
@@ -6,17 +6,16 @@ dependencies:
     - imdb
   theme:
     - movies
-id: language_switcher
+id: language_switcher_mobile
 theme: movies
 region: header
-weight: -2
+weight: -1
 provider: null
 plugin: movies_language_switcher
 settings:
   id: movies_language_switcher
-  label: 'Language switcher'
+  label: 'Language switcher mobile'
   provider: imdb
   label_display: '0'
-  trim_links: 1
-  trim_length: '3'
+  trim_links: 0
 visibility: {  }

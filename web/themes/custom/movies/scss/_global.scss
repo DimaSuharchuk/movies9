@@ -6,12 +6,12 @@
 }
 
 html[lang|=en] * {
-  font-family: Poppins, sans-serif;
+  font-family: $lat-font;
 }
 
 html[lang|=ru] *,
 html[lang|=uk] * {
-  font-family: OpenSans, sans-serif;
+  font-family: $cyr-font;
 }
 
 body {
@@ -48,4 +48,16 @@ a:hover {
 
 .ajax-progress-fullscreen {
   display: none;
+}
+
+.desktop-hide {
+  @include media-breakpoint-up(lg) {
+    display: none !important;
+  }
+}
+
+.mobile-hide {
+  @include media-breakpoint-down(md) {
+    display: none !important;
+  }
 }

@@ -51,10 +51,29 @@
     <div class="container">
       <div class="header-inner-wrapper">
         {{ page.header.logo }}
-        <nav class="main-menu" role="navigation">
-          {{ page.header.movies_main_navigation }}
-        </nav>
-        {{ page.header.language_switcher }}
+
+        <div class="desktop-nav mobile-hide">
+          <nav class="main-menu" role="navigation">
+            {{ page.header.movies_main_navigation }}
+          </nav>
+          {{ page.header.language_switcher }}
+        </div>
+
+        <div class="mobile-nav desktop-hide">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="menus-wrapper">
+            <nav class="main-menu" role="navigation">
+              {{ page.header.movies_main_navigation }}
+            </nav>
+            {{ page.header.language_switcher_mobile }}
+          </div>
+        </div>
+
       </div>
     </div>
   </header>

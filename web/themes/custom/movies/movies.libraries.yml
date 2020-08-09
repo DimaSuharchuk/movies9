@@ -4,3 +4,5 @@ global-styling:
       css/style.min.css: { minified: true }
   js:
     js/global.js: {}
+  dependencies:
+    - core/drupal

@@ -2,3 +2,5 @@ global-styling:
   css:
     theme:
       css/style.min.css: { minified: true }
+  js:
+    js/global.js: {}

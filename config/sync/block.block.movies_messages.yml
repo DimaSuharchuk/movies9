@@ -11,7 +11,7 @@ _core:
 id: movies_messages
 theme: movies
 region: content
-weight: -1
+weight: -3
 provider: null
 plugin: system_messages_block
 settings:

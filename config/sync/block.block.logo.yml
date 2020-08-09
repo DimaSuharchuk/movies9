@@ -1,0 +1,23 @@
+uuid: a51423ec-972d-4451-a0bb-c94df582d03d
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - movies
+id: logo
+theme: movies
+region: header
+weight: -4
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: Logo
+  provider: system
+  label_display: '0'
+  use_site_logo: true
+  use_site_name: false
+  use_site_slogan: false
+visibility: {  }

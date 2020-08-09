@@ -11,4 +11,5 @@ libraries:
 
 # Regions.
 regions:
+  header: 'Header'
   content: 'Main content'

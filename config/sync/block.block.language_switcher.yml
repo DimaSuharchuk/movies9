@@ -1,0 +1,20 @@
+uuid: 1082833c-b547-4b47-8f8e-75d5bf805fcb
+langcode: en
+status: true
+dependencies:
+  module:
+    - imdb
+  theme:
+    - movies
+id: language_switcher
+theme: movies
+region: header
+weight: -2
+provider: null
+plugin: movies_language_switcher
+settings:
+  id: movies_language_switcher
+  label: 'Language switcher'
+  provider: imdb
+  label_display: '0'
+visibility: {  }

@@ -6,6 +6,20 @@
  */
 
 /**
+ * Implements hook_theme().
+ */
+function imdb_theme($existing, $type, $theme, $path) {
+  return [
+    'movies_language_switcher' => [
+      'variables' => [
+        'active_label' => NULL,
+        'links' => [],
+      ],
+    ],
+  ];
+}
+
+/**
  * Implements hook_form_BASE_FORM_ID_alter().
  */
 function imdb_form_views_exposed_form_alter(&$form) {

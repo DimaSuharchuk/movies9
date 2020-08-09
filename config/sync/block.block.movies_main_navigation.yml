@@ -12,7 +12,7 @@ _core:
   default_config_hash: 35BFwuaW_wb2mnnYk1tNg7T9Ro9RaewrCqOTtyQ7VJE
 id: movies_main_navigation
 theme: movies
-region: content
+region: header
 weight: -3
 provider: null
 plugin: 'system_menu_block:main'

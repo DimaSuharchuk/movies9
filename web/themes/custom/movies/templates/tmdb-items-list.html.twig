@@ -5,6 +5,15 @@
 {% endif %}
 
 <div{{ classes }}>
+
+  <div class="actions">
+    <div class="with-photo">
+      <label for="with-photo">{{ 'with photo only'|t }}</label>
+      <input type="checkbox" id="with-photo" checked>
+      {{ attach_library('movies/person-with-photo') }}
+    </div>
+  </div>
+
   {% if title %}
     <div class="items-list-title">
       {{ title }}

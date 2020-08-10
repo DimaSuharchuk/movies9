@@ -1,4 +1,10 @@
-<div class="person">
+{% set person_classes = create_attribute({'class': ['person']}) %}
+
+{% if photo == false %}
+  {% set person_classes = person_classes.addClass('no-photo') %}
+{% endif %}
+
+<div{{ person_classes }}>
   <div class="avatar">{{ avatar }}</div>
   <div class="name">{{ name }}</div>
   {% if role %}

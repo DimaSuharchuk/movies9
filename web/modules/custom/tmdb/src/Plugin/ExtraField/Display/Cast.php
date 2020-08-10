@@ -63,6 +63,7 @@ class Cast extends ExtraTmdbFieldDisplayBase {
         '#avatar' => $this->getThemedAvatar($person, TmdbImageFormat::w185()),
         '#name' => $person['name'],
         '#role' => $person['character'],
+        '#photo' => (bool) $person['profile_path'],
       ];
     }
 

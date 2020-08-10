@@ -6,3 +6,7 @@ global-styling:
     js/global.js: {}
   dependencies:
     - core/drupal
+
+person-with-photo:
+  js:
+    js/person-with-photo.js: {}

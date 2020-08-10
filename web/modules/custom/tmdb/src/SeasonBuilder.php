@@ -161,6 +161,7 @@ class SeasonBuilder {
       $stars[] = [
         '#theme' => 'person',
         '#avatar' => $this->getThemedAvatar($star, TmdbImageFormat::w185()),
+        '#photo' => (bool) $star['profile_path'],
         '#name' => $star['name'],
         '#role' => $star['character'],
       ];

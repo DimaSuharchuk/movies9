@@ -85,6 +85,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
       $build[] = [
         '#theme' => 'person',
         '#avatar' => $this->getThemedAvatar($person, TmdbImageFormat::w185()),
+        '#photo' => (bool) $person['profile_path'],
         '#name' => $person['name'],
       ];
     }
@@ -119,6 +120,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
       $build[] = [
         '#theme' => 'person',
         '#avatar' => $this->getThemedAvatar($person, TmdbImageFormat::w185()),
+        '#photo' => (bool) $person['profile_path'],
         '#name' => $person['name'],
         '#department' => $person['department'],
         '#job' => $person['job'],

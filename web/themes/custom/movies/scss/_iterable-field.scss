@@ -68,13 +68,73 @@
  */
 .items-list-wrapper {
   grid-template-areas:
-        "title"
-        "items";
+    "actions"
+    "title"
+    "items";
+
+  .actions {
+    grid-area: actions;
+    justify-self: end;
+
+    .with-photo {
+      display: grid;
+      grid-auto-flow: column;
+      grid-column-gap: 15px;
+      align-items: center;
+      height: 30px;
+      margin-bottom: 30px;
+
+      input {
+        align-self: start;
+        width: 50px;
+        height: 0;
+        position: relative;
+        cursor: pointer;
+
+        &:before {
+          content: "";
+          position: absolute;
+          width: 50px;
+          height: 30px;
+          background: $white;
+          border-radius: 15px;
+          border: 1px solid $movies-gray;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          width: 26px;
+          height: 26px;
+          top: 2px;
+          left: 2px;
+          border-radius: 100%;
+          background-color: $movies-gray;
+          transition: left .5s, background-color 1s;
+        }
+
+        &:checked {
+          &:after {
+            left: 22px;
+            background-color: $movies-blue;
+          }
+        }
+      }
+    }
+  }
 
   .person {
     display: grid;
     grid-row-gap: 10px;
     grid-template-rows: 1fr auto;
+
+    &.no-photo {
+      display: none;
+
+      &.show {
+        display: grid;
+      }
+    }
 
     .avatar {
       img {

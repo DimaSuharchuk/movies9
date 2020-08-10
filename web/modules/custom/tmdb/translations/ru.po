@@ -94,3 +94,6 @@ msgstr "Список серий"
 
 msgid "guest stars"
 msgstr "приглашенные звёзды"
+
+msgid "with photo only"
+msgstr "только с фото"

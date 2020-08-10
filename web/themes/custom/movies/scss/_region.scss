@@ -69,7 +69,7 @@
           a {
             color: $movies-gray;
             border-bottom: 2px solid transparent;
-            padding: 6px 0;
+            padding: 3px 0;
             user-select: none;
 
             &.is-active {
@@ -166,6 +166,11 @@
 
             a {
               padding: 15px;
+
+              &.is-active {
+                color: $movies-gray;
+                pointer-events: none;
+              }
             }
           }
         }

@@ -52,7 +52,7 @@
 
             &:checked {
               + label {
-                grid-template-columns: 1fr 20px;
+                grid-template-columns: 1fr 30px;
                 place-items: center;
                 background-color: $movies-bg-filter-checkbox;
                 color: $white;

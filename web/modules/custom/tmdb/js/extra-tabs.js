@@ -1,12 +1,6 @@
 (Drupal => {
   Drupal.behaviors.extraTabs = {
     attach: context => {
-      const header = context.querySelector("#page header");
-      const headerHeight = header && header.offsetHeight;
-      const staticSections = context.querySelectorAll(".node section");
-      const scrollTo = staticSections.length && staticSections[0].offsetHeight + headerHeight;
-
-
       // Define tabs once.
       const tabs = context.querySelectorAll(".field-tabs a");
 
@@ -29,6 +23,9 @@
           /**
            * Scroll to node block.
            */
+          const headerHeight = context.querySelector("#page header").offsetHeight;
+          const staticSections = context.querySelectorAll(".node section");
+          const scrollTo = staticSections[0].offsetHeight + headerHeight;
           // Set 100vh min height to second section for successfully scrolling,
           // even the height of section less than 100vh.
           staticSections[1].style.minHeight = "100vh";
@@ -43,7 +40,7 @@
           }, 300);
         });
       });
-    }
-  }
+    },
+  };
 
 })(Drupal);

@@ -141,6 +141,7 @@
           grid-area: action-label;
           color: $movies-blue;
           cursor: pointer;
+          user-select: none;
 
           &:after {
             content: "";
@@ -165,6 +166,7 @@
         .guest-stars-content {
           grid-area: stars;
           display: none;
+          transition-timing-function: ease-in-out;
         }
       }
     }

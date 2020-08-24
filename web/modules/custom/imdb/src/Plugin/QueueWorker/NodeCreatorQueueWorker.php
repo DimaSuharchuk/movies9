@@ -57,6 +57,9 @@ class NodeCreatorQueueWorker extends QueueWorkerBase implements ContainerFactory
 
     // Get Node bundle and TMDb ID by IMDb ID.
     $tmdb_response = $this->adapter->getTmdbIdByImdbId($imdb_id);
+    if (!$tmdb_response) {
+      return;
+    }
     /** @var NodeBundle $bundle */
     $bundle = $tmdb_response['type'];
     /** @var int $tmdb_id */

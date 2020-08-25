@@ -19,3 +19,11 @@ function movies_preprocess_node(&$variables) {
 
   }
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function movies_preprocess_image(&$variables) {
+  $variables['attributes']['loading'] = 'lazy';
+  $variables['attributes']['decoding'] = 'async';
+}

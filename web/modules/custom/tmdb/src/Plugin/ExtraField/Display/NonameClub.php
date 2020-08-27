@@ -37,7 +37,8 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($this->current_user->isAuthenticated()) {
+    // @todo Temporarily commented until there are no authorized users. Uncomment later.
+//    if ($this->current_user->isAuthenticated()) {
       /** @var \Drupal\node\NodeInterface $node */
       $node = $entity->getTranslation('en');
 
@@ -63,7 +64,7 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
           'target' => '_blank',
         ],
       ];
-    }
+//    }
 
     return $build;
   }

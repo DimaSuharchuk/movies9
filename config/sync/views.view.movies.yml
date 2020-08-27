@@ -34,7 +34,7 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: tag
+        type: none
         options: {  }
       query:
         type: views_query
@@ -259,7 +259,19 @@ display:
           hierarchy: false
           error_message: true
           plugin_id: taxonomy_index_tid
-      sorts: {  }
+      sorts:
+        random:
+          id: random
+          table: views
+          field: random
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          plugin_id: random
       title: ''
       header: {  }
       footer: {  }
@@ -269,7 +281,7 @@ display:
       display_extenders: {  }
       use_ajax: true
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -453,7 +465,7 @@ display:
         groups:
           1: AND
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -473,7 +485,7 @@ display:
       path: home
       display_description: ''
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -699,7 +711,7 @@ display:
         groups:
           1: AND
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -925,7 +937,7 @@ display:
         groups:
           1: AND
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'

@@ -5,6 +5,8 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
+use Drupal\imdb\DateHelper;
+use Drupal\imdb\enum\NodeBundle;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -19,6 +21,8 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
 
   private ?AccountProxyInterface $current_user;
 
+  private ?DateHelper $date_helper;
+
   /**
    * {@inheritDoc}
    */
@@ -26,6 +30,7 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
     $instance->current_user = $container->get('current_user');
+    $instance->date_helper = $container->get('date_helper');
 
     return $instance;
   }
@@ -42,6 +47,22 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
       /** @var \Drupal\node\NodeInterface $node */
       $node = $entity->getTranslation('en');
 
+      $year = '';
+      switch ($entity->bundle()) {
+        case NodeBundle::movie:
+          if ($release_date = $this->getCommonFieldValue('release_date')) {
+            $year = ' ' . $this->date_helper->dateStringToYear($release_date);
+          }
+          break;
+
+        case NodeBundle::tv:
+          if ($start_date = $this->getCommonFieldValue('first_air_date')) {
+            $year = ' ' . $this->date_helper->dateStringToYear($start_date);
+          }
+          break;
+
+      }
+
       $build = [
         '#type' => 'link',
         '#title' => 'torrent',
@@ -49,7 +70,7 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
           '//nnmclub.to/forum/tracker.php',
           [
             'query' => [
-              'nm' => $node->getTitle(), // better to search using eng title.
+              'nm' => $node->getTitle() . $year, // better to search using eng title.
               'o' => 10, // sort by Seeders
               's' => 2, // sorting DESC
               'sha' => 0, // disable Author column

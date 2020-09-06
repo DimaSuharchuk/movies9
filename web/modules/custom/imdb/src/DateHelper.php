@@ -18,32 +18,32 @@ class DateHelper {
   /**
    * Get year from date string.
    *
-   * @param string $s
+   * @param string|null $s
    *   Date string in any PHP correct format.
    *
-   * @return string
+   * @return string|null
    *   4-digit year.
    */
-  public function dateStringToYear(string $s): string {
-    return $this->dateStringToFormat($s, 'Y');
+  public function dateStringToYear(?string $s): ?string {
+    return $s ? $this->dateStringToFormat($s, 'Y') : NULL;
   }
 
   /**
    * Convert date string to format used in field "Release date" and same.
    *
-   * @param string $s
+   * @param string|null $s
    *   Date string in any PHP correct format.
    *
-   * @return string
+   * @return string|null
    */
-  public function dateStringToReleaseDateFormat(string $s): string {
-    return $this->dateStringToFormat($s, 'd F Y');
+  public function dateStringToReleaseDateFormat(?string $s): ?string {
+    return $s ? $this->dateStringToFormat($s, 'd F Y') : NULL;
   }
 
   /**
    * Convert some date string into any PHP date format.
    *
-   * @param string $s
+   * @param string|null $s
    *   Date string in any PHP correct format.
    * @param string $format
    *   PHP Date format. https://www.php.net/manual/ru/function.date.php

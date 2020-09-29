@@ -21,7 +21,7 @@ trait PersonAvatar {
     if ($person['profile_path']) {
       $uri = Constant::TMDB_IMAGE_BASE_URL . $format->value() . $person['profile_path'];
     }
-    else {
+    elseif (isset($person['gender'])) {
       switch ($person['gender']) {
         case Constant::GENDER_MAN:
           $uri = Constant::UNDEFINED_MAN_IMAGE;
@@ -34,6 +34,9 @@ trait PersonAvatar {
         default:
           $uri = Constant::UNDEFINED_PERSON_IMAGE;
       }
+    }
+    else {
+      $uri = Constant::UNDEFINED_PERSON_IMAGE;
     }
 
     return [

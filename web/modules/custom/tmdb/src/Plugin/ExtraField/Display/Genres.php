@@ -5,8 +5,10 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Url;
+use Drupal\imdb\EntityFinder;
 use Drupal\taxonomy\TermInterface;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @ExtraFieldDisplay(
@@ -17,14 +19,30 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  */
 class Genres extends ExtraTmdbFieldDisplayBase {
 
+  private ?EntityFinder $finder;
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+
+    $instance->finder = $container->get('entity_finder');
+
+    return $instance;
+  }
+
+
+  /**
+   * {@inheritDoc}
+   */
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
     if ($genres_raw_ids = $entity->{'field_genres'}->getValue()) {
       $genres_ids = array_column($genres_raw_ids, 'target_id');
-      $finder = \Drupal::service('entity_finder');
       /** @var TermInterface[] $genres */
-      $genres = $finder->findTermsGenres()->loadMultipleById($genres_ids);
+      $genres = $this->finder->findTermsGenres()->loadMultipleById($genres_ids);
 
       $build = $this->buildGenres($genres, $entity->language());
     }

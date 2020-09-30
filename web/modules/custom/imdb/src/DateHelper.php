@@ -52,14 +52,27 @@ class DateHelper {
    *   Converted date.
    */
   public function dateStringToFormat(string $s, string $format): string {
+    return $this->date_formatter->format(
+      $this->dateStringToTimestamp($s),
+      'custom',
+      $format
+    );
+  }
+
+  /**
+   * Convert some date string into UNIX timestamp.
+   *
+   * @param string $s
+   *   Date string in any PHP correct format.
+   *
+   * @return int|null
+   *   Converted date.
+   */
+  public function dateStringToTimestamp(string $s): ?int {
     try {
-      return $this->date_formatter->format(
-        (new DateTime($s))->getTimestamp(),
-        'custom',
-        $format
-      );
+      return (new DateTime($s))->getTimestamp();
     } catch (Exception $e) {
-      return '';
+      return NULL;
     }
   }
 

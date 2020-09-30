@@ -202,7 +202,7 @@ class TmdbApiAdapter {
       ->setTmdbId($tmdb_id)
       ->setLanguage($lang);
 
-    if (!$only_cached || $only_cached && $query->hasCache()) {
+    if (!$only_cached || $query->hasCache()) {
       return $query->response();
     }
 
@@ -227,7 +227,7 @@ class TmdbApiAdapter {
       ->setSeasonNumber($season_number)
       ->setLanguage($lang);
 
-    if (!$only_cached || $only_cached && $query->hasCache()) {
+    if (!$only_cached || $query->hasCache()) {
       return $query->response();
     }
 
@@ -252,7 +252,7 @@ class TmdbApiAdapter {
       ->setSeasonNumber($season_number)
       ->setEpisodeNumber($episode_number);
 
-    if (!$only_cached || $only_cached && $query->hasCache()) {
+    if (!$only_cached || $query->hasCache()) {
       return $query->response()['imdb_id'];
     }
 

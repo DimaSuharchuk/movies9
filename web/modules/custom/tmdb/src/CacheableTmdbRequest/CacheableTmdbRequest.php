@@ -120,7 +120,7 @@ abstract class CacheableTmdbRequest {
     $purged = [];
     foreach ($raw as $i => $item) {
       foreach ($allowed_fields as $field) {
-        $purged[$i][$field] = $item[$field];
+        $purged[$i][$field] = $item[$field] ?? NULL;
       }
     }
     return $purged;

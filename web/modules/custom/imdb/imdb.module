@@ -5,6 +5,9 @@
  * Module's main file. Provides work with different IMDB APIs.
  */
 
+use Drupal\Core\Site\Settings;
+use Drupal\imdb\Constant;
+
 /**
  * Implements hook_theme().
  */
@@ -17,6 +20,28 @@ function imdb_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_cron().
+ */
+function imdb_cron() {
+  // Update "IMDB ratings" file in private directory.
+  if ($zipped = @file_get_contents('https://datasets.imdbws.com/title.ratings.tsv.gz')) {
+    if ($unzipped = @gzdecode($zipped)) {
+      $private_dir = Settings::get('file_private_path');
+      $filename = Constant::IMDB_RATINGS_FILE_NAME;
+      file_put_contents("{$private_dir}/{$filename}", $unzipped);
+    }
+    else {
+      // If means that file exists, but it's not gzip.
+      Drupal::logger('imdb_ratings')->error($zipped);
+    }
+  }
+  else {
+    Drupal::logger('imdb_ratings')
+      ->error('IMDB ratings have not been updated.');
+  }
 }
 
 /**

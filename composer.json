@@ -16,6 +16,7 @@
     ],
     "require": {
         "ext-igbinary": "^3.1",
+        "ext-zlib": "^7.4",
         "composer/installers": "^1.2",
         "drupal/adminimal_admin_toolbar": "^1.11",
         "drupal/better_exposed_filters": "^5",
@@ -27,8 +28,6 @@
         "drush/drush": "^10.2",
         "eloquent/enumeration": "^6.0",
         "php-tmdb/api": "^3.0"
-    },
-    "require-dev": {
     },
     "conflict": {
         "drupal/drupal": "*"

@@ -62,10 +62,10 @@ article {
 
       .field-with-label {
         display: flex;
-        background-color: $white;
+        background-color: $bg-color-white;
         padding: 5px 15px 5px 5px;
         font-size: .7em;
-        color: $movies-gray;
+        color: $text-color-main;
         border-top-right-radius: $movies-border-radius-default;
         border-bottom-right-radius: $movies-border-radius-default;
 
@@ -85,13 +85,34 @@ article {
       margin-bottom: 0;
       font-size: 1em;
       line-height: 1.2;
-      color: $movies-gray;
+      color: $text-color-main;
     }
 
     .field-original-title {
       margin-bottom: 0;
       line-height: 1.2;
-      color: $movies-gray;
+    }
+  }
+}
+
+
+/**
+ * DARK THEME.
+ */
+[data-theme=dark] {
+  /*
+   * Node teaser.
+   */
+  .node-teaser {
+    .imdb-rating-wrapper {
+      .field-with-label {
+        background-color: $dk_bg-color-white;
+        color: $dk_text-color-main;
+      }
+    }
+
+    .field-title {
+      color: $dk_text-color-main;
     }
   }
 }

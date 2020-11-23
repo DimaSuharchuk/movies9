@@ -10,7 +10,7 @@
   a {
     margin-right: 30px;
     margin-bottom: 10px;
-    color: $movies-gray;
+    color: $text-color-main;
     padding-bottom: 6px;
     border-bottom: 1px solid transparent;
     user-select: none;
@@ -20,13 +20,13 @@
     }
 
     &:hover {
-      border-bottom: 1px solid $movies-blue;
+      border-bottom: 1px solid $text-color-second;
     }
 
     &.active {
       pointer-events: none;
-      border-bottom: 1px solid $movies-blue;
-      font-weight: bold;
+      border-bottom: 1px solid $text-color-second;
+      font-weight: $font-weight-bold;
     }
   }
 }
@@ -52,5 +52,25 @@
   a {
     margin: 0;
     place-self: start;
+  }
+}
+
+/**
+ * DARK THEME.
+ */
+[data-theme=dark] {
+  /**
+   * Node field "extra-tabs".
+   */
+  .field-tabs,
+  .seasons-tabs {
+    a {
+      color: $dk_text-color-main;
+
+      &:hover,
+      &.active {
+        border-bottom: 1px solid $dk_text-color-second;
+      }
+    }
   }
 }

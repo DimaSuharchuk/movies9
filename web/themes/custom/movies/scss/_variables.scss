@@ -20,17 +20,28 @@ $container-max-widths: (
 /**
  * Custom.
  */
-$white: #fff;
-$movies-gray: #90a0b7;
-$movies-dark-gray: #818e9b;
-$movies-blue: #109cf1;
+// Light theme.
+$text-color-main: #818e9b;
+$text-color-second: #109cf1;
+$text-color-3d: rgba(#576478, 50%);
+$bg-color-white: #ffffff;
+$bg-color-light-gray: #f2f2f2;
+// Dark theme.
+$dk_text-color-main: #f2f2f2;
+$dk_text-color-second: #109cf1; // same
+$dk_text-color-3d: rgba(#eee, 50%);
+$dk_bg-color-white: #212936;
+$dk_bg-color-light-gray: #2b3648;
+$dk_text-option: #eee;
+$dk_bg-option: #1976d2;
+// Other.
+$bg-color-filter-checkbox: #4abbff;
 
-$movies-bg-light-gray: #f2f2f2;
-
+// Border radius.
 $movies-border-radius-default: 6px;
 $movies-border-radius-big: 10px;
 
-$movies-bg-filter-checkbox: #4abbff;
-
-$lat-font: Poppins, sans-serif;
-$cyr-font: OpenSans, sans-serif;
+// Fonts.
+$font-family: Inter, sans-serif;
+$font-weight-normal: 300;
+$font-weight-bold: 500;

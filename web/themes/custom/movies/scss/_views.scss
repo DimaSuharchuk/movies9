@@ -10,74 +10,86 @@
     }
   }
 
+  .form-item {
+    margin: 0;
+    float: none;
+  }
+
   .view-filters {
     padding-bottom: 50px;
+  }
 
-    .form-item {
-      margin: 0;
-      float: none;
+  .form-checkboxes > .form-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 15px 30px;
+    @include media-breakpoint-up(sm) {
+      grid-template-columns: repeat(3, 1fr);
     }
+    @include media-breakpoint-up(md) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
 
-    .form-checkboxes {
-      > .form-checkboxes {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 15px 30px;
-        @include media-breakpoint-up(sm) {
-          grid-template-columns: repeat(3, 1fr);
-        }
-        @include media-breakpoint-up(md) {
-          grid-template-columns: repeat(4, 1fr);
-        }
-        @include media-breakpoint-up(lg) {
-          grid-template-columns: repeat(6, 1fr);
-        }
+  input[type=checkbox] {
+    display: none;
 
-        > div {
-          label {
-            display: grid;
-            text-align: center;
-            background-color: #fff;
-            color: $movies-gray;
-            box-shadow: 0 0 15px rgba(0, 0, 0, .07);
-            border-radius: 6px;
-            line-height: 1;
-            padding: 10px 0;
-            margin: 0;
-            cursor: pointer;
-          }
+    &:checked {
+      + label {
+        grid-template-columns: 1fr 30px;
+        place-items: center;
+        background-color: $bg-color-filter-checkbox;
+        color: #fff;
 
-          input[type=checkbox] {
-            display: none;
-
-            &:checked {
-              + label {
-                grid-template-columns: 1fr 30px;
-                place-items: center;
-                background-color: $movies-bg-filter-checkbox;
-                color: $white;
-
-                &:after {
-                  content: "";
-                  background: url(../assets/x.svg) no-repeat;
-                  background-size: contain;
-                  width: 9px;
-                  height: 8px;
-                }
-              }
-            }
-          }
+        &:after {
+          content: "";
+          background: url(../assets/x.svg) no-repeat;
+          background-size: contain;
+          width: 9px;
+          height: 8px;
         }
       }
     }
+  }
 
-    input[type=submit] {
-      display: none;
-    }
+  .option {
+    display: grid;
+    text-align: center;
+    background-color: $bg-color-white;
+    color: $text-color-main;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .07);
+    border-radius: 6px;
+    line-height: 1;
+    padding: 10px 0;
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  input[type=submit] {
+    display: none;
   }
 
   .pager__item {
     list-style: none;
   }
+}
 
+
+/**
+ * DARK THEME.
+ */
+[data-theme=dark] {
+  /**
+   * Views: Home, Movies, TV Shows, Animations.
+   */
+  .view-id-movies {
+    .option {
+      background-color: $dk_bg-option;
+      color: $dk_text-option;
+    }
+  }
 }

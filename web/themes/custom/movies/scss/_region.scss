@@ -15,15 +15,6 @@
       padding-bottom: 30px;
     }
   }
-
-  [hreflang=en] {
-    font-family: $lat-font;
-  }
-
-  [hreflang=ru],
-  [hreflang=uk] {
-    font-family: $cyr-font;
-  }
 }
 
 /**
@@ -50,8 +41,9 @@
   .desktop-nav {
     grid-area: desktop-nav;
     display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas: "desktop-menu language-switcher";
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas: "desktop-menu language-switcher theme-switcher";
+    grid-column-gap: 50px;
 
     .main-menu {
       grid-area: desktop-menu;
@@ -67,18 +59,18 @@
           list-style: none;
 
           a {
-            color: $movies-gray;
+            color: $text-color-main;
             border-bottom: 2px solid transparent;
             padding: 3px 0;
             user-select: none;
 
             &.is-active {
-              border-bottom: 2px solid $movies-blue;
+              border-bottom: 2px solid $text-color-second;
               pointer-events: none;
             }
 
             &:hover {
-              border-bottom: 1px solid $movies-blue;
+              border-bottom: 1px solid $text-color-second;
             }
           }
         }
@@ -92,7 +84,7 @@
       align-items: center;
 
       .active-language {
-        border-bottom: 2px solid $movies-blue;
+        border-bottom: 2px solid $text-color-second;
         padding: 6px 0;
         cursor: pointer;
         user-select: none;
@@ -106,7 +98,7 @@
         padding: 0 6px;
         border-bottom-left-radius: $movies-border-radius-default;
         border-bottom-right-radius: $movies-border-radius-default;
-        background: $white;
+        background-color: $bg-color-white;
         box-shadow: 5px 5px 18px -8px rgba(0, 0, 0, .2);
         height: 0;
         overflow: hidden;
@@ -124,7 +116,7 @@
           }
 
           a {
-            color: $movies-gray;
+            color: $text-color-main;
             user-select: none;
           }
         }
@@ -146,8 +138,9 @@
         position: absolute;
         top: 90px;
         left: 0;
+        bottom: 0;
         right: 0;
-        background: $white;
+        background-color: $bg-color-white;
         z-index: 10;
         @media (orientation: landscape) {
           @include media-breakpoint-down(md) {
@@ -157,7 +150,7 @@
       }
 
       .main-menu {
-        border-bottom: 1px solid $movies-gray;
+        border-bottom: 1px solid $text-color-main;
 
         ul {
           li {
@@ -168,7 +161,7 @@
               padding: 15px;
 
               &.is-active {
-                color: $movies-gray;
+                color: $text-color-main;
                 pointer-events: none;
               }
             }
@@ -193,5 +186,145 @@
         }
       }
     }
+  }
+}
+
+/**
+ * Theme switcher.
+ */
+.theme-switcher {
+  grid-area: theme-switcher;
+  position: relative;
+  width: 100px;
+  height: 40px;
+  display: grid;
+  grid-template-columns: 62px 32px 62px;
+  place-items: center;
+  border: 2px solid $bg-color-light-gray;
+  border-radius: 20px;
+  background: {
+    color: $bg-color-light-gray;
+  };
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+
+  .text {
+    height: 36px;
+    display: grid;
+    place-content: center;
+    font: {
+      size: 9px;
+      weight: 900;
+    };
+    color: $text-color-main;
+    transition: transform .3s;
+  }
+
+  .icon {
+    width: 32px;
+    height: 32px;
+    background: {
+      image: url("../assets/sun.svg");
+      color: #fff;
+      repeat: no-repeat;
+      position: center;
+    };
+    border-radius: 100%;
+    transition: transform .3s;
+  }
+}
+
+#theme-switcher-mobile {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid $text-color-main;
+  padding: 15px;
+}
+
+
+/**
+ * DARK THEME.
+ */
+[data-theme=dark] {
+  /**
+   * Header inner.
+   */
+  .header-inner-wrapper {
+    .desktop-nav {
+      .main-menu {
+        a {
+          color: $dk_text-color-main;
+
+          &.is-active {
+            border-bottom: 2px solid $dk_text-color-second;
+          }
+
+          &:hover {
+            border-bottom: 1px solid $dk_text-color-second;
+          }
+        }
+      }
+
+      #block-language-switcher {
+        .active-language {
+          border-bottom: 2px solid $dk_text-color-second;
+        }
+
+        .links {
+          background-color: $dk_bg-color-white;
+
+          li {
+            a {
+              color: $dk_text-color-main;
+            }
+          }
+        }
+      }
+    }
+
+    .mobile-nav {
+      // .menus-wrapper
+      .open {
+        background-color: $dk_bg-color-white;
+      }
+
+      .main-menu {
+        border-bottom: 1px solid $dk_text-color-main;
+
+        // a
+        .is-active {
+          color: $dk_text-color-main;
+        }
+      }
+    }
+  }
+
+
+  /**
+   * Theme switcher.
+   */
+  .theme-switcher {
+    background-color: $dk_bg-color-white;
+
+    .text,
+    .icon {
+      transform: translateX(-60px);
+    }
+
+    .text {
+      color: $bg-color-light-gray;
+    }
+
+    .icon {
+      background: {
+        image: url("../assets/moon.svg");
+        color: $bg-color-light-gray;
+      };
+    }
+  }
+
+  #theme-switcher-mobile {
+    border-top: 1px solid $dk_text-color-main;
   }
 }

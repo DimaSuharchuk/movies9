@@ -7,18 +7,13 @@
   padding: 0;
 }
 
-html[lang|=en] * {
-  font-family: $lat-font;
-}
-
-html[lang|=ru] *,
-html[lang|=uk] * {
-  font-family: $cyr-font;
-}
-
 body {
-  font-size: 15px;
-  color: $movies-gray;
+  font: {
+    family: $font-family;
+    size: 15px;
+    weight: $font-weight-normal;
+  };
+  color: $text-color-main;
 }
 
 img {
@@ -28,20 +23,20 @@ img {
 
 a,
 a:hover {
-  color: $movies-blue;
+  color: $text-color-second;
   text-decoration: none;
 }
 
 .label {
-  font-weight: bold;
+  font-weight: $font-weight-bold;
 }
 
 .bg-white {
-  background-color: $white;
+  background-color: $bg-color-white;
 }
 
 .bg-light-gray {
-  background-color: $movies-bg-light-gray;
+  background-color: $bg-color-light-gray;
 }
 
 .ajax-progress-throbber {
@@ -61,5 +56,27 @@ a:hover {
 .mobile-hide {
   @include media-breakpoint-down(md) {
     display: none !important;
+  }
+}
+
+
+/**
+ * DARK THEME.
+ */
+[data-theme=dark] {
+  background-color: $dk_bg-color-white;
+  color: $dk_text-color-main;
+
+  a,
+  a:hover {
+    color: $dk_text-color-second;
+  }
+
+  .bg-white {
+    background-color: $dk_bg-color-white;
+  }
+
+  .bg-light-gray {
+    background-color: $dk_bg-color-light-gray;
   }
 }

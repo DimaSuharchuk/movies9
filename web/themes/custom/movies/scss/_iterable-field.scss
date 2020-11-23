@@ -9,9 +9,7 @@
   .collection-title,
   .items-list-title {
     grid-area: title;
-    color: $movies-dark-gray;
     margin-bottom: 30px;
-    font-family: $lat-font;
     font-size: 1.2em;
   }
 
@@ -96,9 +94,9 @@
           position: absolute;
           width: 50px;
           height: 30px;
-          background: $white;
+          background-color: $bg-color-white;
           border-radius: 15px;
-          border: 1px solid $movies-gray;
+          border: 1px solid $text-color-main;
         }
 
         &:after {
@@ -109,14 +107,14 @@
           top: 2px;
           left: 2px;
           border-radius: 100%;
-          background-color: $movies-gray;
+          background-color: $text-color-main;
           transition: left .5s, background-color 1s;
         }
 
         &:checked {
           &:after {
             left: 22px;
-            background-color: $movies-blue;
+            background-color: $text-color-second;
           }
         }
       }
@@ -144,13 +142,11 @@
 
     .name {
       font-size: 1em;
-      color: $movies-gray;
     }
 
     .property {
       font-size: 0.8em;
-      opacity: .5;
-      color: $movies-gray;
+      color: $text-color-3d;
     }
   }
 }
@@ -188,6 +184,7 @@
     }
 
     .size {
+      color: $text-color-3d;
       font-size: .67em;
 
       &:after {
@@ -211,4 +208,49 @@
  */
 .views-infinite-scroll-content-wrapper {
   @extend .responsive-grid;
+}
+
+
+/**
+ * DARK THEME.
+ */
+[data-theme=dark] {
+  /**
+   * TMDb iterable extra fields.
+   */
+  .items-list-wrapper {
+    .with-photo {
+      input {
+        &:before {
+          background-color: $dk_bg-color-white;
+          border: 1px solid $dk_text-color-main;
+        }
+
+        &:after {
+          background-color: $dk_text-color-main;
+        }
+
+        &:checked {
+          &:after {
+            background-color: $dk_text-color-second;
+          }
+        }
+      }
+    }
+
+    .person {
+      .property {
+        color: $dk_text-color-3d;
+      }
+    }
+  }
+
+  /**
+   * Videos.
+   */
+  .videos-wrapper {
+    .size {
+      color: $dk_text-color-3d;
+    }
+  }
 }

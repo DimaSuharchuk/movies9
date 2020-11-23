@@ -27,7 +27,7 @@
  */
 .field-title {
   font-size: 1.5em;
-  color: $movies-blue;
+  color: $text-color-second;
   margin-bottom: 30px;
 }
 
@@ -35,7 +35,6 @@
  * Field "overview".
  */
 .field-overview {
-  opacity: .7;
   line-height: 1.5em;
 }
 
@@ -65,9 +64,9 @@
     line-height: 2;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    font-weight: bold;
-    background: #fff;
-    color: #90A0B7;
+    font-weight: $font-weight-bold;
+    background: $bg-color-white;
+    color: $text-color-main;
   }
 }
 
@@ -114,15 +113,17 @@
   a {
     display: grid;
     place-content: center;
-    background: $white;
-    color: $movies-gray;
+    background-color: $bg-color-white;
+    color: $text-color-main;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.07);
     border-radius: $movies-border-radius-default;
     padding: 6px 0;
     @include media-breakpoint-up(lg) {
       padding: 6px 30px;
-      margin-right: 30px;
-      margin-bottom: 10px;
+      margin: {
+        right: 30px;
+        bottom: 10px;
+      };
     }
   }
 }
@@ -131,9 +132,11 @@
  * Field "original title".
  */
 .field-original-title {
-  font-size: .8em;
+  font: {
+    size: .8em;
+  };
   margin-bottom: 10px;
-  font-family: $lat-font;
+  color: $text-color-3d;
 }
 
 /**
@@ -164,5 +167,45 @@
     width: 30px;
     height: 30px;
     font-size: 0;
+  }
+}
+
+
+/**
+ * DARK THEME.
+ */
+[data-theme=dark] {
+  /**
+   * Field "title".
+   */
+  .field-title {
+    color: $dk_text-color-second;
+  }
+
+  /**
+   * Poster + approved.
+   */
+  .poster-wrapper {
+    .field-approved {
+      background: $dk_bg-color-white;
+      color: $dk_text-color-main;
+    }
+  }
+
+  /**
+   * Field "genres".
+   */
+  .field-genres {
+    a {
+      background-color: $dk_bg-option;
+      color: $dk_text-option;
+    }
+  }
+
+  /**
+   * Field "original title".
+   */
+  .field-original-title {
+    color: $dk_text-color-3d;
   }
 }

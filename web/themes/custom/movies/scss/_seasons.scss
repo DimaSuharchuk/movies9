@@ -21,7 +21,7 @@
   .seasons-block-title {
     grid-area: title;
     font-size: 1.2em;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
   }
 
   /* Season tabs in _extra-tabs.scss file. */
@@ -58,117 +58,126 @@
 /**
  * All episodes of season.
  */
-.episodes-wrapper {
-  .episodes-block-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 50px;
-  }
+.episodes-block-title {
+  font: {
+    size: 1.2em;
+    weight: $font-weight-bold;
+  };
+  margin-bottom: 50px;
+}
 
-  .episodes-items {
-    display: grid;
-    grid-row-gap: 50px;
+.episodes-items {
+  display: grid;
+  grid-row-gap: 50px;
+}
 
-    /* One episode. */
-    .episode-wrapper {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-areas:
+/* One episode. */
+.episode-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
         "image"
         "info"
         "stars-wrapper";
-      grid-gap: 30px;
-      @include media-breakpoint-up(md) {
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-areas:
+  grid-gap: 30px;
+  @include media-breakpoint-up(md) {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
           "image info info"
           "stars-wrapper stars-wrapper stars-wrapper";
-      }
+  }
+}
 
-      .episode-image {
-        grid-area: image;
+.episode-image {
+  grid-area: image;
 
-        img {
-          border-radius: $movies-border-radius-default;
-        }
-      }
+  img {
+    border-radius: $movies-border-radius-default;
+  }
+}
 
-      .episode-info {
-        grid-area: info;
+.episode-info {
+  grid-area: info;
 
-        .title-wrapper {
-          display: grid;
-          grid-template-columns: 1fr auto;
-          grid-column-gap: 10px;
-          align-items: baseline;
+  .title-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-column-gap: 10px;
+    align-items: baseline;
 
-          .field-episode-number {
-            font-size: .8em;
-            font-weight: bold;
-            letter-spacing: .5px;
-          }
-        }
+    .field-episode-number {
+      font-size: .8em;
+      font-weight: bold;
+      letter-spacing: .5px;
+    }
+  }
 
-        .imdb-rating-wrapper {
-          .field-with-label {
-            display: flex;
+  .imdb-rating-wrapper {
+    .field-with-label {
+      display: flex;
 
-            .label {
-              margin-right: 5px;
-            }
-          }
-        }
-      }
-
-
-      /* Guest stars. */
-      .guest-stars-wrapper {
-        grid-area: stars-wrapper;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "action-label"
-            "stars";
-        grid-column-gap: 30px;
-        @include media-breakpoint-up(md) {
-          grid-template-columns: 1fr 1fr 1fr;
-          grid-template-areas:
-            ". action-label action-label"
-            "stars stars stars";
-        }
-
-        .guest-stars-label {
-          grid-area: action-label;
-          color: $movies-blue;
-          cursor: pointer;
-          user-select: none;
-
-          &:after {
-            content: "";
-            display: inline-block;
-            width: 11px;
-            height: 8px;
-            background: url(../assets/arrows.svg) no-repeat;
-            background-size: cover;
-            margin-left: 10px;
-          }
-
-          &.open,
-          &.processing {
-            margin-bottom: 30px;
-
-            &:after {
-              background-position: right;
-            }
-          }
-        }
-
-        .guest-stars-content {
-          grid-area: stars;
-          display: none;
-          transition-timing-function: ease-in-out;
-        }
+      .label {
+        margin-right: 5px;
       }
     }
+  }
+}
+
+/* Guest stars. */
+.guest-stars-wrapper {
+  grid-area: stars-wrapper;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+            "action-label"
+            "stars";
+  grid-column-gap: 30px;
+  @include media-breakpoint-up(md) {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+            ". action-label action-label"
+            "stars stars stars";
+  }
+}
+
+.guest-stars-label {
+  grid-area: action-label;
+  color: $text-color-second;
+  cursor: pointer;
+  user-select: none;
+
+  &:after {
+    content: "";
+    display: inline-block;
+    width: 11px;
+    height: 8px;
+    background: url(../assets/arrows.svg) no-repeat;
+    background-size: cover;
+    margin-left: 10px;
+  }
+
+  &.open,
+  &.processing {
+    margin-bottom: 30px;
+
+    &:after {
+      background-position: right;
+    }
+  }
+}
+
+.guest-stars-content {
+  grid-area: stars;
+  display: none;
+  transition-timing-function: ease-in-out;
+}
+
+
+/**
+ * DARK THEME.
+ */
+[data-theme=dark] {
+  .guest-stars-label {
+    color: $dk_text-color-second;
   }
 }

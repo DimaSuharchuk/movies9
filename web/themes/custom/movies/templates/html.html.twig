@@ -36,7 +36,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;900&display=swap" rel="stylesheet">
 </head>
 <body{{ attributes }}>
-<script>function getCookie(a){let b=document.cookie.match(new RegExp("(?:^|; )"+a.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g,"\\$1")+"=([^;]*)"));return b?decodeURIComponent(b[1]):void 0}"dark"===getCookie("theme-mode")&&(document.body.dataset.theme="dark");</script>
+<script>"1"===localStorage.getItem("dark-theme")&&(document.body.dataset.theme="dark")</script>
 {#
 Keyboard navigation/accessibility link to main content section in
 page.html.twig.

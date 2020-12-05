@@ -32,8 +32,8 @@
 
         document.querySelectorAll(".theme-switcher").forEach(wrapper => {
           wrapper.addEventListener("click", () => {
-            if (Cookies.get("theme-mode") !== "dark") {
-              Drupal.behaviors.themeSwitcher.setDark(true);
+            if (localStorage.getItem("dark-theme") !== "1") {
+              Drupal.behaviors.themeSwitcher.setDark();
             }
             else {
               Drupal.behaviors.themeSwitcher.setLight();
@@ -42,15 +42,13 @@
         });
       }
     },
-    setDark: (updateCookie) => {
+    setDark: () => {
       document.body.dataset.theme = "dark";
-      if (updateCookie) {
-        Cookies.set("theme-mode", "dark", {expires: 365});
-      }
+      localStorage.setItem("dark-theme", "1");
     },
     setLight: () => {
-      Cookies.set("theme-mode", "");
       document.body.dataset.theme = "";
+      localStorage.removeItem("dark-theme");
     },
   };
 

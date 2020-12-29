@@ -49,7 +49,7 @@ class Videos extends ExtraTmdbFieldDisplayBase {
    *
    * @see TmdbApiAdapter::getVideos()
    */
-  private function getVideos(Language $lang) {
+  private function getVideos(Language $lang): array {
     $bundle = NodeBundle::memberByValue($this->entity->bundle());
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
 

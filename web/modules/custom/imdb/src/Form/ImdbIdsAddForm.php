@@ -31,7 +31,7 @@ class ImdbIdsAddForm extends FormBase {
   /**
    * {@inheritDoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): ImdbIdsAddForm {
     $instance = parent::create($container);
 
     $instance->settings = $container->get('settings');
@@ -46,14 +46,14 @@ class ImdbIdsAddForm extends FormBase {
   /**
    * {@inheritDoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'imdb.ids_add_form';
   }
 
   /**
    * {@inheritDoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     // Check API keys.
     $disabled = FALSE;
     if (!$this->settings::get('tmdb_api_key')) {
@@ -89,7 +89,7 @@ class ImdbIdsAddForm extends FormBase {
   /**
    * {@inheritDoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     // Get IMDb IDs from form.
     $input_ids = $form_state->getValue('imdb_ids');
     $input_ids = explode("\r\n", $input_ids);

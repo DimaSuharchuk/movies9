@@ -45,7 +45,7 @@ class NodeController implements ContainerInjectionInterface {
   /**
    * {@inheritDoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): NodeController {
     $instance = new static();
 
     $instance->node_helper = $container->get('node_helper');
@@ -68,7 +68,7 @@ class NodeController implements ContainerInjectionInterface {
    *
    * @param $bundle
    *   NodeBundle type in string format.
-   * @param int $tmdb_id
+   * @param int|string $tmdb_id
    *   TMDb ID.
    *
    * @return RedirectResponse
@@ -93,7 +93,7 @@ class NodeController implements ContainerInjectionInterface {
    *
    * @return RedirectResponse
    */
-  public function random() {
+  public function random(): RedirectResponse {
     // Get all approved nodes.
     $node_ids = $this->finder
       ->findNodes()

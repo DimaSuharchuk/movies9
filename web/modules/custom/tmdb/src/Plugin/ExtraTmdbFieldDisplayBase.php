@@ -33,7 +33,7 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
   /**
    * @inheritDoc
    */
-  public function view(ContentEntityInterface $entity) {
+  public function view(ContentEntityInterface $entity): ?array {
     if ($build = $this->build($entity)) {
       // Wrap every TMDb extra field with this wrapper.
       $build = [

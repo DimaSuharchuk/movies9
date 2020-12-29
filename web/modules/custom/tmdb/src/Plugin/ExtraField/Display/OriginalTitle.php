@@ -17,20 +17,16 @@ class OriginalTitle extends ExtraTmdbFieldDisplayBase {
   /**
    * {@inheritDoc}
    */
-  public function build(ContentEntityInterface $node): array {
-    $build = [];
-
+  public function build(ContentEntityInterface $entity): array {
     // Show original title only for non-english content.
-    /** @var \Drupal\node\Entity\Node $node */
-    if ($node->language()->getId() !== 'en') {
-      // Get title from Eng node.
-      $node = $node->getTranslation('en');
-      $build = [
-        '#markup' => $node->getTitle(),
-      ];
+    /** @var \Drupal\node\Entity\Node $entity */
+    if ($entity->language()->getId() === 'en') {
+      return [];
     }
 
-    return $build;
+    // Get title from Eng node.
+    $entity = $entity->getTranslation('en');
+    return ['#markup' => $entity->getTitle()];
   }
 
 }

@@ -22,7 +22,7 @@ class UpdateGenres extends FormBase {
   /**
    * {@inheritDoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): UpdateGenres {
     $instance = parent::create($container);
 
     $instance->finder = $container->get('entity_finder');
@@ -35,14 +35,14 @@ class UpdateGenres extends FormBase {
   /**
    * {@inheritDoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'imdb.check_genres';
   }
 
   /**
    * {@inheritDoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['actions'] = [
       '#type' => 'actions',
       '#weight' => 0,
@@ -69,7 +69,7 @@ class UpdateGenres extends FormBase {
   /**
    * {@inheritDoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     foreach (Language::members() as $lang) {
       // Get movie and TV genres.
       $movie_genres = $this->adapter->getMovieGenres($lang);
@@ -94,7 +94,7 @@ class UpdateGenres extends FormBase {
    * @param array $genres_of_type
    * @param NodeBundle $bundle
    */
-  private function buildGenres(array &$genres, array $genres_of_type, NodeBundle $bundle) {
+  private function buildGenres(array &$genres, array $genres_of_type, NodeBundle $bundle): void {
     foreach ($genres_of_type as $genre) {
       $n = $genre['name'];
       // 1-st letter to uppercase.

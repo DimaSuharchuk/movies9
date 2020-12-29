@@ -66,7 +66,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
    * @return array
    * @see TmdbFieldLazyBuilder::renderSeasonOriginalTitleField()
    */
-  public function generateSeasonOriginalTitlePlaceholder(int $tv_tmdb_id, int $season_number) {
+  public function generateSeasonOriginalTitlePlaceholder(int $tv_tmdb_id, int $season_number): array {
     return [
       '#lazy_builder' => [
         'tmdb.tmdb_field_lazy_builder:renderSeasonOriginalTitleField',
@@ -200,7 +200,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
    *
    * @return array
    */
-  public function renderSeasonOriginalTitleField(int $tv_tmdb_id, int $season_number) {
+  public function renderSeasonOriginalTitleField(int $tv_tmdb_id, int $season_number): array {
     // Render field if cache exists.
     if ($season = $this->tmdb_adapter
       ->getSeason($tv_tmdb_id, $season_number, Language::en(), TRUE)
@@ -238,7 +238,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
    *
    * @return array
    */
-  public function renderEpisodeImdbRatingField(int $tv_tmdb_id, int $season_number, int $episode_number) {
+  public function renderEpisodeImdbRatingField(int $tv_tmdb_id, int $season_number, int $episode_number): array {
     // Print only cached IMDb ratings.
     if ($imdb_id = $this->tmdb_adapter
       ->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode_number, TRUE)
@@ -277,7 +277,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
    *
    * @return array|null
    */
-  public function renderEpisodeOriginalTitleField(int $tv_tmdb_id, int $season_number, int $episode_number) {
+  public function renderEpisodeOriginalTitleField(int $tv_tmdb_id, int $season_number, int $episode_number): ?array {
     // Render field if cache exists.
     if ($season = $this->tmdb_adapter
       ->getSeason($tv_tmdb_id, $season_number, Language::en(), TRUE)
@@ -316,7 +316,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
   /**
    * {@inheritDoc}
    */
-  public static function trustedCallbacks() {
+  public static function trustedCallbacks(): array {
     return [
       'renderNodeImdbRatingField',
       'renderNodeOriginalTitleField',

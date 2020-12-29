@@ -21,7 +21,7 @@ class TmdbImageItem extends FieldItemBase {
   /**
    * {@inheritDoc}
    */
-  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
+  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition): array {
     return [
       'value' => DataDefinition::create('string')->setLabel(t('Text')),
     ];
@@ -30,7 +30,7 @@ class TmdbImageItem extends FieldItemBase {
   /**
    * {@inheritDoc}
    */
-  public static function schema(FieldStorageDefinitionInterface $field_definition) {
+  public static function schema(FieldStorageDefinitionInterface $field_definition): array {
     return [
       'columns' => [
         'value' => [

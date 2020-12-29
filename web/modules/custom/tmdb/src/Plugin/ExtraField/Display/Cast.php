@@ -54,7 +54,7 @@ class Cast extends ExtraTmdbFieldDisplayBase {
    * @return array
    *   Renderable arrays of cast persons.
    */
-  private function buildItems(array $persons) {
+  private function buildItems(array $persons): array {
     $build = [];
 
     foreach ($persons as $person) {

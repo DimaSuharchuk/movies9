@@ -19,7 +19,7 @@ class TimeHelper {
    * @see TimeHelper::separateMinutes()
    * @see TimeHelper::formatTime()
    */
-  public function formatTimeFromMinutes(int $minutes) {
+  public function formatTimeFromMinutes(int $minutes): string {
     $x = $this->separateMinutes($minutes);
     return $this->formatTime($x['h'], $x['m']);
   }

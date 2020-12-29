@@ -40,7 +40,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * @inheritDoc
    */
-  public function build() {
+  public function build(): array {
     $route = $this->path_matcher->isFrontPage() ? '<front>' : '<current>';
     $links = $this->language_manager->getLanguageSwitchLinks(LanguageInterface::TYPE_INTERFACE, Url::fromRoute($route));
     $links = $links->{'links'};
@@ -80,7 +80,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritDoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array {
     return [
       'trim_links' => FALSE,
     ];
@@ -89,7 +89,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
-  public function blockForm($form, FormStateInterface $form_state) {
+  public function blockForm($form, FormStateInterface $form_state): array {
     $conf = $this->getConfiguration();
 
     $form['trim_links'] = [
@@ -138,7 +138,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
-  public function getCacheMaxAge() {
+  public function getCacheMaxAge(): int {
     return 0;
   }
 

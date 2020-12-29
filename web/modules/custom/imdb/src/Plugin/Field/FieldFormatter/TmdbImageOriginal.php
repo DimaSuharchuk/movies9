@@ -20,7 +20,7 @@ class TmdbImageOriginal extends FormatterBase {
   /**
    * {@inheritDoc}
    */
-  public function settingsSummary() {
+  public function settingsSummary(): array {
     return [
       $this->t('Rendered <em>Original</em> image.'),
     ];
@@ -29,7 +29,7 @@ class TmdbImageOriginal extends FormatterBase {
   /**
    * {@inheritDoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
+  public function viewElements(FieldItemListInterface $items, $langcode): array {
     $elements = [];
 
     foreach ($items as $delta => $item) {

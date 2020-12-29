@@ -48,7 +48,7 @@ class StatisticsForm extends FormBase {
   /**
    * {@inheritDoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): StatisticsForm {
     $instance = parent::create($container);
 
     $instance->file_system = $container->get('file_system');
@@ -64,14 +64,14 @@ class StatisticsForm extends FormBase {
   /**
    * @inheritDoc
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'imdb.statistics_form';
   }
 
   /**
    * @inheritDoc
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['actions'] = [
       '#type' => 'actions',
       '#weight' => 0,
@@ -160,7 +160,7 @@ class StatisticsForm extends FormBase {
   /**
    * @inheritDoc
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->queue->get(Constant::NODE_SAVE_WORKER_ID)->deleteQueue();
   }
 

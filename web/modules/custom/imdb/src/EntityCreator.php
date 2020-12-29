@@ -62,7 +62,7 @@ class EntityCreator {
    *   Node field.
    * @param string $imdb_id
    *   Node field.
-   * @param string $poster
+   * @param string|null $poster
    *   Poster in TMDb API format. See TmdbImageItem.
    * @param array $genres_tmdb_ids
    *   Array of TMDb IDs of TMDb genres.
@@ -212,8 +212,7 @@ class EntityCreator {
     $storage = NULL;
     try {
       $storage = $this->entity_type_manager->getStorage($type_value);
-    } catch (InvalidPluginDefinitionException $e) {
-    } catch (PluginNotFoundException $e) {
+    } catch (InvalidPluginDefinitionException | PluginNotFoundException $e) {
     }
 
     $bundle_key = NULL;

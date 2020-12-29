@@ -116,7 +116,7 @@ abstract class CacheableTmdbRequest {
    * @return array[]
    *   Filtered data.
    */
-  protected function allowedFieldsFilter(array $raw, array $allowed_fields) {
+  protected function allowedFieldsFilter(array $raw, array $allowed_fields): array {
     $purged = [];
     foreach ($raw as $i => $item) {
       foreach ($allowed_fields as $field) {

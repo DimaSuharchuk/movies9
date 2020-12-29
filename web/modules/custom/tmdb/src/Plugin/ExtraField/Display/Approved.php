@@ -18,15 +18,11 @@ class Approved extends ExtraTmdbFieldDisplayBase {
    * {@inheritDoc}
    */
   public function build(ContentEntityInterface $entity): array {
-    $build = [];
-
-    if ($a = $entity->{'field_approved'}->value) {
-      $build = [
-        '#markup' => $this->t('approved', [], ['context' => 'Field label']),
-      ];
+    if (!$entity->{'field_approved'}->value) {
+      return [];
     }
 
-    return $build;
+    return ['#markup' => $this->t('approved', [], ['context' => 'Field label'])];
   }
 
 }

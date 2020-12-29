@@ -110,7 +110,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
    * @return array
    *   Renderable arrays of crew persons.
    */
-  private function buildCrewItems(array $persons) {
+  private function buildCrewItems(array $persons): array {
     $build = [];
 
     // Sort persons at first.
@@ -155,7 +155,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
    *
    * @return array
    */
-  private function sortedJobsList() {
+  private function sortedJobsList(): array {
     $module = $this->module_handler->getModule('tmdb')->getPath();
     $yml = file_get_contents("{$module}/files/departments.yaml");
     $departments = Yaml::decode($yml);

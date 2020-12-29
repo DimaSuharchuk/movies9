@@ -22,7 +22,7 @@ class TmdbImageCompact extends FormatterBase {
   /**
    * {@inheritDoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  public function settingsForm(array $form, FormStateInterface $form_state): array {
     $elements = parent::settingsForm($form, $form_state);
 
     $formats = TmdbImageFormat::getCompactFormats();
@@ -43,7 +43,7 @@ class TmdbImageCompact extends FormatterBase {
   /**
    * {@inheritDoc}
    */
-  public function settingsSummary() {
+  public function settingsSummary(): array {
     return [
       $this->t('Rendered with width: %w', [
         '%w' => $this->numberToPx($this->getSetting('width')),
@@ -54,14 +54,14 @@ class TmdbImageCompact extends FormatterBase {
   /**
    * {@inheritDoc}
    */
-  public static function defaultSettings() {
+  public static function defaultSettings(): array {
     return ['width' => TmdbImageFormat::w200] + parent::defaultSettings();
   }
 
   /**
    * {@inheritDoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
+  public function viewElements(FieldItemListInterface $items, $langcode): array {
     $elements = [];
 
     foreach ($items as $delta => $item) {

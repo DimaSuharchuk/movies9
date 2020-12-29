@@ -17,9 +17,9 @@ class Title extends ExtraTmdbFieldDisplayBase {
   /**
    * {@inheritDoc}
    */
-  public function build(ContentEntityInterface $node): array {
-    /** @var \Drupal\node\NodeInterface $node */
-    return ['#markup' => $node->getTitle()];
+  public function build(ContentEntityInterface $entity): array {
+    /** @var \Drupal\node\NodeInterface $entity */
+    return ['#markup' => $entity->getTitle()];
   }
 
 }

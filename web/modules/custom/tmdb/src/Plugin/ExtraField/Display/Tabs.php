@@ -71,7 +71,7 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
    * @return array
    *   Renderable array of ajax link.
    */
-  private function buildAjaxLink(string $tab, string $link_title) {
+  private function buildAjaxLink(string $tab, string $link_title): array {
     return [
       '#type' => 'link',
       '#title' => $this->t($link_title, [], ['context' => 'Extra tabs']),

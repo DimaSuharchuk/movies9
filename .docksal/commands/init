@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+fin project rm -f
+fin project start
+
+mkdir -m=777 -p private
+cp .docksal/init/departments.yaml private/
+mkdir -m=777 -p tmp

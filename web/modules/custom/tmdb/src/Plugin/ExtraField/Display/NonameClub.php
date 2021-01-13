@@ -44,8 +44,11 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
 
     // @todo Temporarily commented until there are no authorized users. Uncomment later.
 //    if ($this->current_user->isAuthenticated()) {
+      // Search on "nnm" in English if English is currently active, or Russian
+      // for others.
+      $lang = $entity->language()->getId() === 'en' ? 'en' : 'ru';
       /** @var \Drupal\node\NodeInterface $node */
-      $node = $entity->getTranslation('en');
+      $node = $entity->getTranslation($lang);
 
       $year = '';
       switch ($entity->bundle()) {

@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
-fin project rm -f
-fin project start
-
 mkdir -m=777 -p private
 cp .docksal/init/departments.yaml private/
 mkdir -m=777 -p tmp
+
+fin db dump tmp/dump.sql
+
+fin project rm -f
+fin project start
+
+fin db import tmp/dump.sql

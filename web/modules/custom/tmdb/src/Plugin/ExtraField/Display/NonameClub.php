@@ -50,6 +50,8 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
       /** @var \Drupal\node\NodeInterface $node */
       $node = $entity->getTranslation($lang);
 
+      $clear_title = preg_replace('/[^a-zа-я\d\s-]/iu', '', $node->getTitle());
+
       $year = '';
       switch ($entity->bundle()) {
         case NodeBundle::movie:
@@ -73,7 +75,7 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
           '//nnmclub.to/forum/tracker.php',
           [
             'query' => [
-              'nm' => $node->getTitle() . $year, // better to search using eng title.
+              'nm' => "{$clear_title} {$year}", // search string: "title + year"
               'o' => 10, // sort by Seeders
               's' => 2, // sorting DESC
               'sha' => 0, // disable Author column

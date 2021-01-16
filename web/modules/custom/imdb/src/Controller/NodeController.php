@@ -253,13 +253,7 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function nodeOriginalTitle(string $bundle, int $tmdb_id): AjaxResponse {
-    if ($common = $this->adapter
-      ->getCommonFieldsByTmdbId(
-        NodeBundle::memberByValue($bundle),
-        $tmdb_id,
-        Language::en()
-      )
-    ) {
+    if ($common = $this->adapter->getCommonFieldsByTmdbId(NodeBundle::memberByValue($bundle), $tmdb_id, Language::en())) {
       return new AjaxResponse($common['title']);
     }
     return new AjaxResponse();
@@ -274,13 +268,7 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function seasonOriginalTitle(int $tv_tmdb_id, int $season_number): AjaxResponse {
-    if ($season = $this->adapter
-      ->getSeason(
-        $tv_tmdb_id,
-        $season_number,
-        Language::en()
-      )
-    ) {
+    if ($season = $this->adapter->getSeason($tv_tmdb_id, $season_number, Language::en())) {
       return new AjaxResponse($season['title']);
     }
     return new AjaxResponse();
@@ -312,20 +300,13 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function episodeOriginalTitle(int $tv_tmdb_id, int $season_number, int $episode_number): AjaxResponse {
-    if ($season = $this->adapter
-      ->getSeason(
-        $tv_tmdb_id,
-        $season_number,
-        Language::en()
-      )
-    ) {
+    if ($season = $this->adapter->getSeason($tv_tmdb_id, $season_number, Language::en())) {
       // Search for episode.
       foreach ($season['episodes'] as $episode) {
         if ($episode['episode_number'] == $episode_number) {
           return new AjaxResponse($episode['name']);
         }
       }
-      return new AjaxResponse();
     }
     return new AjaxResponse();
   }

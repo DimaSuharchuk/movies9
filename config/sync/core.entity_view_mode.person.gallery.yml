@@ -1,0 +1,10 @@
+uuid: 88c67a3d-4fea-4567-a05c-2468d00347f8
+langcode: en
+status: true
+dependencies:
+  module:
+    - person
+id: person.gallery
+label: Gallery
+targetEntityType: person
+cache: true

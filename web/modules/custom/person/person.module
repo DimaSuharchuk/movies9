@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Contains person.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function person_theme($existing, $type, $theme, $path): array {
+  return [
+    'person' => [
+      'template' => 'person',
+      'file' => 'person.page.inc',
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function person_theme_suggestions_person(array $variables) {
+  return [
+    "person__{$variables['elements']['#view_mode']}",
+  ];
+}

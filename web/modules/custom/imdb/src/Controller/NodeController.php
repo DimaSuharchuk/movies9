@@ -21,6 +21,7 @@ use Drupal\tmdb\enum\TmdbLocalStorageType;
 use Drupal\tmdb\SeasonBuilder;
 use Drupal\tmdb\TmdbApiAdapter;
 use Drupal\tmdb\TmdbTeaser;
+use Eloquent\Enumeration\Exception\AbstractUndefinedMemberException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -76,16 +77,22 @@ class NodeController implements ContainerInjectionInterface {
    * @see NodeBundle
    */
   public function redirect($bundle, $tmdb_id): ?RedirectResponse {
-    if ($node_id = $this
-      ->node_helper
-      ->prepareNodeOnAllLanguages(NodeBundle::memberByValue($bundle), $tmdb_id)) {
+    $node_bundle = FALSE;
+    try {
+      $node_bundle = NodeBundle::memberByValue($bundle);
+    } catch (AbstractUndefinedMemberException $e) {
+    }
+
+    if ($node_bundle && is_numeric($tmdb_id) && $node_id = $this
+        ->node_helper
+        ->prepareNodeOnAllLanguages($node_bundle, $tmdb_id)) {
       return new RedirectResponse(
         Url::fromRoute('entity.node.canonical', ['node' => $node_id])
           ->toString()
       );
     }
 
-    return NULL;
+    return new RedirectResponse(Url::fromRoute('<front>')->toString());
   }
 
   /**

@@ -1,0 +1,17 @@
+uuid: f67934de-d92b-45ba-8c81-ba97a9640f82
+langcode: en
+status: true
+dependencies:
+  module:
+    - content_translation
+    - person
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: person.person
+target_entity_type_id: person
+target_bundle: person
+default_langcode: en
+language_alterable: true

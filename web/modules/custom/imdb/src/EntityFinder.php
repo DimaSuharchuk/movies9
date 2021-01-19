@@ -84,6 +84,16 @@ class EntityFinder {
   }
 
   /**
+   * Find Person content entities.
+   * 1-st *required* query step.
+   *
+   * @return $this
+   */
+  public function findPersons(): self {
+    return $this->findEntities(EntityType::person());
+  }
+
+  /**
    * Find entities of some type.
    * 1-st *required* query step.
    *

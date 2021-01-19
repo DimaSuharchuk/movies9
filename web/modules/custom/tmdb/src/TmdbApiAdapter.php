@@ -9,6 +9,7 @@ use Drupal\tmdb\CacheableTmdbRequest\FindByImdbId;
 use Drupal\tmdb\CacheableTmdbRequest\FullRequest;
 use Drupal\tmdb\CacheableTmdbRequest\Genres;
 use Drupal\tmdb\CacheableTmdbRequest\MovieCollection;
+use Drupal\tmdb\CacheableTmdbRequest\Person;
 use Drupal\tmdb\CacheableTmdbRequest\Recommendations;
 use Drupal\tmdb\CacheableTmdbRequest\Seasons;
 use Drupal\tmdb\CacheableTmdbRequest\Similar;
@@ -285,6 +286,22 @@ class TmdbApiAdapter {
   public function getTvGenres(Language $lang): array {
     return (new Genres())
       ->setBundle(NodeBundle::tv())
+      ->setLanguage($lang)
+      ->response();
+  }
+
+  /**
+   * Get person info.
+   *
+   * @param int $tmdb_id
+   *   Person TMDb ID.
+   * @param Language $lang
+   *
+   * @return array|null
+   */
+  public function getPerson(int $tmdb_id, Language $lang): ?array {
+    return (new Person())
+      ->setTmdbId($tmdb_id)
       ->setLanguage($lang)
       ->response();
   }

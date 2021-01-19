@@ -1,0 +1,22 @@
+uuid: 0fd3d547-c848-4c56-bc4d-6a05b6349567
+langcode: en
+status: true
+dependencies:
+  module:
+    - person
+id: person.person.status
+field_name: status
+entity_type: person
+bundle: person
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

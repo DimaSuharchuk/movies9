@@ -9,7 +9,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "original_title",
  *   label = @Translation("Extra: Original title"),
- *   bundles = {"node.movie", "node.tv"}
+ *   bundles = {"node.movie", "node.tv", "person.person"}
  * )
  */
 class OriginalTitle extends ExtraTmdbFieldDisplayBase {
@@ -19,14 +19,13 @@ class OriginalTitle extends ExtraTmdbFieldDisplayBase {
    */
   public function build(ContentEntityInterface $entity): array {
     // Show original title only for non-english content.
-    /** @var \Drupal\node\Entity\Node $entity */
     if ($entity->language()->getId() === 'en') {
       return [];
     }
 
     // Get title from Eng node.
     $entity = $entity->getTranslation('en');
-    return ['#markup' => $entity->getTitle()];
+    return ['#markup' => $entity->label()];
   }
 
 }

@@ -1,0 +1,33 @@
+uuid: a1c8d509-f824-45f3-8ad5-ea4342976649
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.person.gallery
+    - field.field.person.person.field_avatar
+  module:
+    - person
+id: person.person.gallery
+targetEntityType: person
+bundle: person
+mode: gallery
+content:
+  extra_field_gallery:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  extra_field_biography: true
+  extra_field_birthday: true
+  extra_field_deathday: true
+  extra_field_filmography: true
+  extra_field_known_for_department: true
+  extra_field_original_title: true
+  extra_field_person_tabs: true
+  extra_field_place_of_birth: true
+  extra_field_title: true
+  field_avatar: true
+  langcode: true
+  name: true
+  tmdb_id: true

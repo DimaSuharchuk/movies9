@@ -13,6 +13,7 @@ use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\imdb\enum\TermBundle;
 use Drupal\node\Entity\Node;
+use Drupal\person\Entity\PersonEntity;
 use Drupal\taxonomy\Entity\Term;
 
 class EntityCreator {
@@ -88,6 +89,35 @@ class EntityCreator {
     return $this->createNode($bundle, $lang, $title, $tmdb_id, $imdb_id, $fields_data);
   }
 
+  /**
+   * Save Person content entity in DB.
+   *
+   * @param Language $lang
+   * @param int $tmdb_id
+   *   Person ID from TMDb.
+   * @param string $full_name
+   *   Person full name.
+   * @param string|null $avatar
+   *   Person avatar in TMDb API format. See TmdbImageItem.
+   *
+   * @return PersonEntity|null
+   */
+  public function createPerson(Language $lang, int $tmdb_id, string $full_name, string $avatar = NULL): ?PersonEntity {
+    /** @var PersonEntity $person */
+    $person = $this->createEntity(
+      EntityType::person(),
+      $lang,
+      NULL,
+      [
+        'tmdb_id' => $tmdb_id,
+        'name' => $full_name,
+      ],
+      ['field_avatar' => $avatar],
+      'tmdb_id',
+      $tmdb_id,
+    );
+    return $person;
+  }
 
   /**
    * Save Taxonomy Term in DB.
@@ -182,7 +212,7 @@ class EntityCreator {
    */
   private function createEntityBasedOnTmdbField(EntityType $type, EntityBundle $bundle, Language $lang, int $tmdb_id, array $fields_data = []): ?ContentEntityInterface {
     $fields_data += ['field_tmdb_id' => $tmdb_id];
-    return $this->createEntity($type, $bundle, $lang, $fields_data, 'field_tmdb_id', $tmdb_id);
+    return $this->createEntity($type, $lang, $bundle, [], $fields_data, 'field_tmdb_id', $tmdb_id);
   }
 
   /**
@@ -192,9 +222,11 @@ class EntityCreator {
    *
    * @param EntityType $type
    *   Entity type, like "node", "taxonomy_term" etc.
-   * @param EntityBundle $bundle
-   *   Entity bundle, taxonomy vocabulary ID or something like that.
    * @param Language $lang
+   * @param EntityBundle|null $bundle
+   *   Entity bundle, taxonomy vocabulary ID or something like that.
+   * @param array $properties_data
+   *   Some entity properties, not fields.
    * @param array $fields_data
    *   Fields data should be save in entity fields.
    * @param string $unique_field_name
@@ -204,10 +236,19 @@ class EntityCreator {
    *
    * @return ContentEntityInterface
    */
-  private function createEntity(EntityType $type, EntityBundle $bundle, Language $lang, array $fields_data = [], string $unique_field_name = '', string $unique_field_value = ''): ?ContentEntityInterface {
+  private function createEntity(
+    EntityType $type,
+    Language $lang,
+    EntityBundle $bundle = NULL,
+    array $properties_data = [],
+    array $fields_data = [],
+    string $unique_field_name = '',
+    string $unique_field_value = ''
+  ): ?ContentEntityInterface {
+
     $type_value = $type->value();
-    $bundle_value = $bundle->value();
     $lang_value = $lang->value();
+    $bundle_value = $bundle ? $bundle->value() : NULL;
 
     $storage = NULL;
     try {
@@ -216,18 +257,23 @@ class EntityCreator {
     }
 
     $bundle_key = NULL;
-    try {
-      $bundle_key = $this->entity_type_manager->getDefinition($type_value, FALSE)
-        ->getKey('bundle');
-    } catch (PluginNotFoundException $e) {
+    if ($bundle) {
+      try {
+        $bundle_key = $this->entity_type_manager->getDefinition($type_value, FALSE)
+          ->getKey('bundle');
+      } catch (PluginNotFoundException $e) {
+      }
     }
 
     $entities = NULL;
     if ($unique_field_name && $unique_field_value) {
-      $entities = $storage->loadByProperties([
-        $bundle_key => $bundle_value,
+      $search_properties = [
         $unique_field_name => $unique_field_value,
-      ]);
+      ];
+      if ($bundle) {
+        $search_properties[$bundle_key] = $bundle_value;
+      }
+      $entities = $storage->loadByProperties($search_properties);
     }
 
     if ($entities) {
@@ -242,7 +288,7 @@ class EntityCreator {
 
         // Set translatable fields.
         $translatable_fields = array_keys($entity->getTranslatableFields());
-        foreach ($fields_data as $field => $value) {
+        foreach ($fields_data + $properties_data as $field => $value) {
           if (in_array($field, $translatable_fields)) {
             $entity->set($field, $value);
           }
@@ -250,11 +296,16 @@ class EntityCreator {
       }
     }
     else {
-      $entity = $storage->create([
-        $bundle_key => $bundle_value,
+      $create_properties = [
         'uid' => 1,
         'langcode' => $lang_value,
-      ]);
+      ];
+      if ($bundle) {
+        $create_properties[$bundle_key] = $bundle_value;
+      }
+      $create_properties += $properties_data;
+
+      $entity = $storage->create($create_properties);
       // Set other fields.
       foreach ($fields_data as $field => $value) {
         if (is_array($value)) {

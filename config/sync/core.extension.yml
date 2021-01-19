@@ -27,6 +27,7 @@ module:
   options: 0
   page_cache: 0
   path_alias: 0
+  person: 0
   system: 0
   taxonomy: 0
   text: 0
@@ -47,3 +48,4 @@ theme:
 profile: minimal
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
+langcode: ru

@@ -105,3 +105,22 @@ imdb.episode_original_title_field:
     _controller: '\Drupal\imdb\Controller\NodeController::episodeOriginalTitle'
   requirements:
     _permission: 'access content'
+
+
+#
+# Person handlers.
+#
+imdb.tmdb_person_redirect:
+  path: '/adapter/person/{tmdb_id}'
+  defaults:
+    _title: 'Redirect to person entity view page'
+    _controller: '\Drupal\imdb\Controller\PersonController::redirect'
+  requirements:
+    _permission: 'access content'
+imdb.person_tabs_ajax_handler:
+  path: '/person/{person_id}/{tab}'
+  defaults:
+    _title: 'Tab with filmography'
+    _controller: '\Drupal\imdb\Controller\PersonController::personTabsAjaxHandler'
+  requirements:
+    _permission: 'access content'

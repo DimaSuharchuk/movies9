@@ -66,6 +66,7 @@ function tmdb_theme($existing, $type, $theme, $path) {
     ],
     'person_teaser' => [
       'variables' => [
+        'tmdb_id' => NULL,
         'avatar' => NULL,
         'photo' => FALSE,
         'name' => NULL,

@@ -160,6 +160,7 @@ class SeasonBuilder {
     foreach ($episode['guest_stars'] as $star) {
       $stars[] = [
         '#theme' => 'person_teaser',
+        '#tmdb_id' => $star['id'],
         '#avatar' => $this->getThemedAvatar($star, TmdbImageFormat::w185()),
         '#photo' => (bool) $star['profile_path'],
         '#name' => $star['name'],

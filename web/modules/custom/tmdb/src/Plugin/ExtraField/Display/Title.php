@@ -9,7 +9,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "title",
  *   label = @Translation("Extra: Title"),
- *   bundles = {"node.movie", "node.tv"}
+ *   bundles = {"node.movie", "node.tv", "person.person"}
  * )
  */
 class Title extends ExtraTmdbFieldDisplayBase {
@@ -18,8 +18,7 @@ class Title extends ExtraTmdbFieldDisplayBase {
    * {@inheritDoc}
    */
   public function build(ContentEntityInterface $entity): array {
-    /** @var \Drupal\node\NodeInterface $entity */
-    return ['#markup' => $entity->getTitle()];
+    return ['#markup' => $entity->label()];
   }
 
 }

@@ -35,15 +35,16 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
    */
   public function view(ContentEntityInterface $entity): ?array {
     if ($build = $this->build($entity)) {
+      $d = $this->getPluginDefinition();
+
       // Wrap every TMDb extra field with this wrapper.
       $build = [
         '#theme' => 'tmdb_field',
         '#content' => $build,
-        '#css_class' => $this->getPluginId(),
+        '#css_class' => $d['css_class'] ?? $this->getPluginId(),
       ];
 
       // Wrap some fields with theme "replaceable_field" for AJAX tabs.
-      $d = $this->getPluginDefinition();
       if (isset($d['replaceable']) && $d['replaceable'] === TRUE) {
         $build = [
           '#theme' => 'replaceable_field',
@@ -87,6 +88,28 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
 
     if ($common = $this->adapter->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang)) {
       return $common[$field_name] ?? NULL;
+    }
+    return NULL;
+  }
+
+  /**
+   * Get value of some common TMDb Person's field.
+   *
+   * @param string $field
+   *   Name of common field in TMDbLocalStorage (some fields key rewrote with
+   *   more logical name).
+   * @param bool $language_required
+   *
+   * @return mixed|null
+   *   Field value.
+   */
+  protected function getPersonCommonField(string $field, bool $language_required = FALSE) {
+    $tmdb_id = $this->entity->{'tmdb_id'}->value;
+    $lang = $language_required ? Language::memberByValue($this->entity->language()
+      ->getId()) : Language::en();
+
+    if ($person = $this->adapter->getPerson($tmdb_id, $lang)) {
+      return $person[$field] ?? NULL;
     }
     return NULL;
   }

@@ -10,10 +10,12 @@ use Eloquent\Enumeration\AbstractEnumeration;
  * @method static movie()
  * @method static tv()
  * @method static genre()
+ * @method static person()
  *
  * @see \Drupal\imdb\enum\EntityType
  * @see \Drupal\imdb\enum\NodeBundle
  * @see \Drupal\imdb\enum\TermBundle
+ * @see \Drupal\imdb\enum\PersonBundle
  */
 class EntityBundle extends AbstractEnumeration {
 
@@ -24,5 +26,8 @@ class EntityBundle extends AbstractEnumeration {
 
   // Term vocabulary IDs:
   const genre = 'genre';
+
+  // Person bundle.
+  const person = 'person';
 
 }

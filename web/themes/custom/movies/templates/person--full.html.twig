@@ -1,0 +1,36 @@
+<article{{ attributes.addClass('node', 'person-full') }}>
+  <section class="bg-white">
+    <div class="container">
+
+      <div class="node-wrapper">
+        <div class="poster-wrapper">
+          {{ content.field_avatar }}
+        </div>
+
+        <div class="content-wrapper">
+          {{ content.extra_field_person_tabs }}
+          {{ content.extra_field_original_title }}
+          {{ content.extra_field_title }}
+
+          <div class="properties">
+            {{ content|without(
+              'field_avatar',
+              'extra_field_person_tabs',
+              'extra_field_original_title',
+              'extra_field_title',
+              'extra_field_biography',
+              'extra_field_filmography',
+            ) }}
+          </div>
+
+          {{ content.extra_field_biography }}
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="bg-light-gray">
+    {{ content.extra_field_filmography }}
+  </section>
+</article>

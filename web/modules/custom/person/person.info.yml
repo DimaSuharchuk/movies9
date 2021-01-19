@@ -1,0 +1,6 @@
+name: Person content entity
+type: module
+description: Defines Drupal content entity for persons from TMDb.
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: Custom

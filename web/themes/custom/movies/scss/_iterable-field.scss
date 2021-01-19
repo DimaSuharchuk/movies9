@@ -142,6 +142,7 @@
 
     .name {
       font-size: 1em;
+      color: $text-color-main;
     }
 
     .property {
@@ -239,6 +240,10 @@
     }
 
     .person {
+      .name {
+        color: $dk_text-color-main;
+      }
+
       .property {
         color: $dk_text-color-3d;
       }

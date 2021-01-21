@@ -66,6 +66,7 @@ content:
     type: tmdb_image_compact
     region: content
 hidden:
+  extra_field_gallery: true
   langcode: true
   name: true
   tmdb_id: true

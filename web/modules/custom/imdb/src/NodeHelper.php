@@ -53,7 +53,7 @@ class NodeHelper {
       }
 
       // Check if all data is received.
-      if (count($node_data) === count($all_langs)) {
+      if (count(array_filter($node_data)) === count($all_langs)) {
         $node = NULL;
 
         // Create node for every language.
@@ -110,7 +110,7 @@ class NodeHelper {
       }
 
       // Check if all data is received.
-      if (count($person_data) === count($all_langs)) {
+      if (count(array_filter($person_data)) === count($all_langs)) {
         $person = NULL;
 
         // Create Person for every language.

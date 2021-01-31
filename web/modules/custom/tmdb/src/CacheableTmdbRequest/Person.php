@@ -51,8 +51,11 @@ class Person extends CacheableTmdbRequest {
     // Filter nested teasers.
     $allowed_teaser_fields = [
       'id',
+      'media_type',
       'title',
       'original_title',
+      'name',
+      'original_name',
       'poster_path',
     ];
 
@@ -68,8 +71,8 @@ class Person extends CacheableTmdbRequest {
       'known_for_department' => $data['known_for_department'],
       'place_of_birth' => $data['place_of_birth'],
       'combined_credits' => [
-        'cast' => $this->allowedFieldsFilter($data['combined_credits']['cast'], $allowed_teaser_fields),
-        'crew' => $this->allowedFieldsFilter($data['combined_credits']['crew'], $allowed_teaser_fields),
+        'cast' => $this->massageTeasers($this->allowedFieldsFilter($data['combined_credits']['cast'], $allowed_teaser_fields)),
+        'crew' => $this->massageTeasers($this->allowedFieldsFilter($data['combined_credits']['crew'], $allowed_teaser_fields)),
       ],
     ];
 
@@ -78,6 +81,44 @@ class Person extends CacheableTmdbRequest {
     }
 
     return $filtered;
+  }
+
+
+  /**
+   * A wrapper for the "$this->massageTeaserFields()" method, which processes 1
+   * teaser, but here we process an array of teasers.
+   *
+   * @param array $a
+   *   Array of Movies/TVs teasers.
+   *
+   * @return array
+   *   Processed array.
+   *
+   * @see Person::massageTeaserFields()
+   */
+  private function massageTeasers(array $a): array {
+    foreach ($a as &$teaser) {
+      $this->massageTeaserFields($teaser);
+    }
+    return $a;
+  }
+
+  /**
+   * Let's set the TV keys to the same form as Movie uses. Also rename field
+   * "media_type" to "bundle".
+   *
+   * @param array $teaser
+   *   Array of Movie/TV fields raw data from TMDb API.
+   */
+  private function massageTeaserFields(array &$teaser): void {
+    // Replace key "media_type" with "bundle".
+    $teaser['bundle'] = $teaser['media_type'];
+    unset($teaser['media_type']);
+    // Bundle "TV" use keys "name". We reduce everything to one form, i.e. "title".
+    $teaser['title'] = $teaser['title'] ?: $teaser['name'];
+    unset($teaser['name']);
+    $teaser['original_title'] = $teaser['original_title'] ?: $teaser['original_name'];
+    unset($teaser['original_name']);
   }
 
 }

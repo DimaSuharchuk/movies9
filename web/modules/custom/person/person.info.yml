@@ -4,3 +4,6 @@ description: Defines Drupal content entity for persons from TMDb.
 core: 8.x
 core_version_requirement: ^8 || ^9
 package: Custom
+
+"interface translation project": person
+"interface translation server pattern": modules/custom/%project/translations/%language.po

@@ -3,20 +3,29 @@
  * Belongs to collection (movie).
  */
 .collection-wrapper,
-.items-list-wrapper {
+.items-list-wrapper,
+.items-avatars-wrapper {
   display: grid;
 
   .collection-title,
-  .items-list-title {
+  .items-list-title,
+  .items-avatars-title {
     grid-area: title;
     margin-bottom: 30px;
     font-size: 1.2em;
   }
 
   .collection-items,
-  .items-list-content {
+  .items-list-content,
+  .items-avatars-content {
     grid-area: items;
   }
+}
+
+.items-list-wrapper + .items-list-wrapper,
+.items-avatars-wrapper + .items-avatars-wrapper,
+.filmography-wrapper + .filmography-wrapper {
+  margin-top: 50px;
 }
 
 /**
@@ -65,6 +74,12 @@
  * TMDb iterable extra fields.
  */
 .items-list-wrapper {
+  grid-template-areas:
+    "title"
+    "items";
+}
+
+.items-avatars-wrapper {
   grid-template-areas:
     "actions"
     "title"
@@ -195,14 +210,6 @@
   }
 }
 
-/**
- * Field crew.
- */
-.field-crew {
-  .items-list-wrapper + .items-list-wrapper {
-    margin-top: 50px;
-  }
-}
 
 /**
  * Views using "infinite scroll".
@@ -219,7 +226,7 @@
   /**
    * TMDb iterable extra fields.
    */
-  .items-list-wrapper {
+  .items-avatars-wrapper {
     .with-photo {
       input {
         &:before {

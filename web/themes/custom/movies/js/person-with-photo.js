@@ -2,7 +2,7 @@
   D.behaviors.personWithPhoto = {
     attach: context => {
       context.querySelectorAll("#with-photo").forEach(checkbox => {
-        const personsWithoutPhoto = checkbox.closest(".items-list-wrapper").querySelectorAll(".person.no-photo");
+        const personsWithoutPhoto = checkbox.closest(".items-avatars-wrapper").querySelectorAll(".person.no-photo");
 
         checkbox.addEventListener("change", function () {
           if (!checkbox.checked) {

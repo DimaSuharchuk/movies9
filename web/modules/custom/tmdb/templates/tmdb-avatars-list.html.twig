@@ -1,4 +1,4 @@
-{% set classes = create_attribute({'class': ['items-list-wrapper']}) %}
+{% set classes = create_attribute({'class': ['items-avatars-wrapper']}) %}
 
 {% if use_container %}
   {% set classes = classes.addClass('container') %}
@@ -7,14 +7,16 @@
 <div{{ classes }}>
 
   {% if title %}
-    <div class="items-list-title">
-      {{- title -}}
+    <div class="items-avatars-title">
+      {{ title }}
     </div>
   {% endif %}
 
-  <div class="items-list-content responsive-grid">
+  <div class="items-avatars-content">
     {% for item in items %}
-      {{ item }}
+      <div>
+        {{ item }}
+      </div>
     {% endfor %}
   </div>
 

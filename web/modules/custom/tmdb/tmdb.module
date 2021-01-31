@@ -41,6 +41,13 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'use_container' => TRUE,
       ],
     ],
+    'tmdb_avatars_list' => [
+      'variables' => [
+        'title' => NULL,
+        'items' => NULL,
+        'use_container' => TRUE,
+      ],
+    ],
     'tmdb_attachable_teasers_wrapper' => [
       'variables' => [
         'tmdb_attachable_teasers' => NULL,

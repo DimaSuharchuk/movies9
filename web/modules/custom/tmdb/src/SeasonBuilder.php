@@ -170,7 +170,7 @@ class SeasonBuilder {
     $stars_wrapper = NULL;
     if ($stars) {
       $stars_wrapper = [
-        '#theme' => 'tmdb_items_list',
+        '#theme' => 'tmdb_avatars_list',
         '#items' => $stars,
         '#use_container' => FALSE,
       ];

@@ -28,7 +28,7 @@ class Cast extends ExtraTmdbFieldDisplayBase {
 
     if ($cast = $this->getCast()) {
       $build = [
-        '#theme' => 'tmdb_items_list',
+        '#theme' => 'tmdb_avatars_list',
         '#items' => $this->buildItems($cast),
       ];
     }

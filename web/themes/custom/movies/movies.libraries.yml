@@ -3,10 +3,17 @@ global-styling:
     theme:
       css/style.min.css: { minified: true }
   js:
-    js/global.js: {}
+    js/global.js: { }
   dependencies:
     - core/drupal
 
 person-with-photo:
   js:
-    js/person-with-photo.js: {}
+    js/person-with-photo.js: { }
+
+custom-colorbox:
+  css:
+    theme:
+      css/custom-colorbox.css: { }
+  js:
+    js/custom-colorbox.js: { }

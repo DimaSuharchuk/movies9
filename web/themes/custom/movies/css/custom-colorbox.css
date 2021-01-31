@@ -1,0 +1,18 @@
+#image-box-popup-outer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000000ee;
+  cursor: zoom-out;
+}
+#image-box-popup-inner {
+  max-height: 100vh;
+  display: grid;
+  place-content: center;
+}
+#image-box-popup-inner img {
+  max-height: inherit;
+  width: auto;
+}

@@ -27,6 +27,11 @@ class Gallery extends ExtraTmdbFieldDisplayBase {
       $build = [
         '#theme' => 'tmdb_items_list',
         '#items' => $this->buildAvatars($avatars, TmdbImageFormat::w185()),
+        '#attached' => [
+          'library' => [
+            'person/avatar-full-popup',
+          ],
+        ],
       ];
     }
 

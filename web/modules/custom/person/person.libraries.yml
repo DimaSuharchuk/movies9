@@ -1,0 +1,6 @@
+avatar-full-popup:
+  js:
+    js/avatar-full-popup.js: { }
+  dependencies:
+    - core/drupal
+    - movies/custom-colorbox

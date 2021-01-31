@@ -1,0 +1,3 @@
+services:
+  person.avatar:
+    class: Drupal\person\Avatar

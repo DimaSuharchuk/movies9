@@ -6,8 +6,8 @@ use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\imdb\enum\NodeBundle;
+use Drupal\person\Avatar;
 use Drupal\tmdb\enum\TmdbImageFormat;
-use Drupal\tmdb\PersonAvatar;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -21,12 +21,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class Crew extends ExtraTmdbFieldDisplayBase {
 
-  use PersonAvatar;
+  private ?ModuleHandler $module_handler;
 
-  /**
-   * @var ModuleHandler|object|null
-   */
-  private $module_handler;
+  private ?Avatar $person_avatar;
 
   /**
    * {@inheritDoc}
@@ -35,6 +32,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
     $instance->module_handler = $container->get('module_handler');
+    $instance->person_avatar = $container->get('person.avatar');
 
     return $instance;
   }
@@ -85,7 +83,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
       $build[] = [
         '#theme' => 'person_teaser',
         '#tmdb_id' => $person['id'],
-        '#avatar' => $this->getThemedAvatar($person, TmdbImageFormat::w185()),
+        '#avatar' => $this->person_avatar->build($person, TmdbImageFormat::w185()),
         '#photo' => (bool) $person['profile_path'],
         '#name' => $person['name'],
       ];
@@ -121,7 +119,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
       $build[] = [
         '#theme' => 'person_teaser',
         '#tmdb_id' => $person['id'],
-        '#avatar' => $this->getThemedAvatar($person, TmdbImageFormat::w185()),
+        '#avatar' => $this->person_avatar->build($person, TmdbImageFormat::w185()),
         '#photo' => (bool) $person['profile_path'],
         '#name' => $person['name'],
         '#department' => $person['department'],

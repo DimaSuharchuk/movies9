@@ -4,9 +4,10 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\imdb\enum\NodeBundle;
+use Drupal\person\Avatar;
 use Drupal\tmdb\enum\TmdbImageFormat;
-use Drupal\tmdb\PersonAvatar;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @ExtraFieldDisplay(
@@ -18,7 +19,19 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  */
 class Cast extends ExtraTmdbFieldDisplayBase {
 
-  use PersonAvatar;
+  private ?Avatar $person_avatar;
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+
+    $instance->person_avatar = $container->get('person.avatar');
+
+    return $instance;
+  }
+
 
   /**
    * {@inheritDoc}
@@ -61,7 +74,7 @@ class Cast extends ExtraTmdbFieldDisplayBase {
       $build[] = [
         '#theme' => 'person_teaser',
         '#tmdb_id' => $person['id'],
-        '#avatar' => $this->getThemedAvatar($person, TmdbImageFormat::w185()),
+        '#avatar' => $this->person_avatar->build($person, TmdbImageFormat::w185()),
         '#name' => $person['name'],
         '#role' => $person['character'],
         '#photo' => (bool) $person['profile_path'],

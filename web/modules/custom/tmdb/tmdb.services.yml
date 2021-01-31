@@ -15,6 +15,7 @@ services:
       - '@tmdb.adapter'
       - '@date_helper'
       - '@tmdb.tmdb_field_lazy_builder'
+      - '@person.avatar'
   tmdb.tmdb_field_lazy_builder:
     class: Drupal\tmdb\TmdbFieldLazyBuilder
     arguments:

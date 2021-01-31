@@ -8,12 +8,12 @@ use Drupal\imdb\DateHelper;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\node\Entity\Node;
+use Drupal\person\Avatar;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 class SeasonBuilder {
 
   use StringTranslationTrait;
-  use PersonAvatar;
 
   private TmdbApiAdapter $adapter;
 
@@ -21,10 +21,13 @@ class SeasonBuilder {
 
   private TmdbFieldLazyBuilder $tmdb_lazy;
 
-  public function __construct(TmdbApiAdapter $adapter, DateHelper $date_helper, TmdbFieldLazyBuilder $tmdb_lazy) {
+  private Avatar $person_avatar;
+
+  public function __construct(TmdbApiAdapter $adapter, DateHelper $date_helper, TmdbFieldLazyBuilder $tmdb_lazy, Avatar $avatar) {
     $this->adapter = $adapter;
     $this->date_helper = $date_helper;
     $this->tmdb_lazy = $tmdb_lazy;
+    $this->person_avatar = $avatar;
   }
 
 
@@ -161,7 +164,7 @@ class SeasonBuilder {
       $stars[] = [
         '#theme' => 'person_teaser',
         '#tmdb_id' => $star['id'],
-        '#avatar' => $this->getThemedAvatar($star, TmdbImageFormat::w185()),
+        '#avatar' => $this->person_avatar->build($star, TmdbImageFormat::w185()),
         '#photo' => (bool) $star['profile_path'],
         '#name' => $star['name'],
         '#role' => $star['character'],

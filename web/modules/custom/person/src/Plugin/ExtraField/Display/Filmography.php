@@ -70,8 +70,8 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
    */
   private function buildTeasersBlock(Language $lang, array $teasers, string $id, string $title): array {
     $separated_teasers = $this->separateTeasersByBundle($teasers);
-    $movies = $separated_teasers['movie'] ?? NULL;
-    $tvs = $separated_teasers['tv'] ?? NULL;
+    $movies = isset($separated_teasers['movie']) ? $this->uniqueTeasers($separated_teasers['movie']) : NULL;
+    $tvs = isset($separated_teasers['tv']) ? $this->uniqueTeasers($separated_teasers['tv']) : NULL;
 
     $build = [
       '#type' => 'container',
@@ -124,6 +124,21 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
       $separated[$teaser['bundle']][] = $teaser;
     }
     return $separated;
+  }
+
+  /**
+   * Remove duplicates by Movie/TV TMDb ID.
+   *
+   * @param array $teasers
+   *
+   * @return array
+   */
+  private function uniqueTeasers(array $teasers): array {
+    $unique = [];
+    foreach ($teasers as $teaser) {
+      $unique[$teaser['id']] = $teaser;
+    }
+    return $unique;
   }
 
 }

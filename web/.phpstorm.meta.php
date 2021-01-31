@@ -418,7 +418,7 @@ namespace PHPSTORM_META {
       'entity_finder' => '\Drupal\imdb\EntityFinder',
       'entity_creator' => '\Drupal\imdb\EntityCreator',
       'imdb.rating' => '\Drupal\imdb\ImdbRating',
-      'node_helper' => '\Drupal\imdb\NodeHelper',
+      'entity_helper' => '\Drupal\imdb\EntityHelper',
       'plugin.manager.language_negotiation_method' => '\Drupal\language\LanguageNegotiationMethodManager',
       'language_negotiator' => '\Drupal\language\LanguageNegotiator',
       'language.config_subscriber' => '\Drupal\language\EventSubscriber\ConfigSubscriber',

@@ -11,10 +11,10 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Url;
 use Drupal\imdb\EntityFinder;
+use Drupal\imdb\EntityHelper;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\imdb\ImdbRating;
-use Drupal\imdb\NodeHelper;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeViewBuilder;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class NodeController implements ContainerInjectionInterface {
 
-  private ?NodeHelper $node_helper;
+  private ?EntityHelper $entity_helper;
 
   private ?TmdbApiAdapter $adapter;
 
@@ -49,7 +49,7 @@ class NodeController implements ContainerInjectionInterface {
   public static function create(ContainerInterface $container): NodeController {
     $instance = new static();
 
-    $instance->node_helper = $container->get('node_helper');
+    $instance->entity_helper = $container->get('entity_helper');
     $instance->adapter = $container->get('tmdb.adapter');
     $instance->finder = $container->get('entity_finder');
     $instance->tmdb_teaser = $container->get('tmdb.tmdb_teaser');
@@ -84,8 +84,8 @@ class NodeController implements ContainerInjectionInterface {
     }
 
     if ($node_bundle && is_numeric($tmdb_id) && $node_id = $this
-        ->node_helper
-        ->prepareNodeOnAllLanguages($node_bundle, $tmdb_id)) {
+        ->entity_helper
+        ->prepareNode($node_bundle, $tmdb_id)) {
       return new RedirectResponse(
         Url::fromRoute('entity.node.canonical', ['node' => $node_id])
           ->toString()

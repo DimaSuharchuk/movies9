@@ -3,15 +3,15 @@ services:
     class: Drupal\imdb\IMDbHelper
   entity_finder:
     class: Drupal\imdb\EntityFinder
-    arguments: ['@entity_type.manager']
+    arguments: [ '@entity_type.manager' ]
   entity_creator:
     class: Drupal\imdb\EntityCreator
-    arguments: ['@entity_type.manager', '@entity_finder']
+    arguments: [ '@entity_type.manager', '@entity_finder' ]
   imdb.rating:
     class: Drupal\imdb\ImdbRating
-    arguments: ['@settings','@serialization.json','@imdb.helper']
-  node_helper:
-    class: Drupal\imdb\NodeHelper
+    arguments: [ '@settings','@serialization.json','@imdb.helper' ]
+  entity_helper:
+    class: Drupal\imdb\EntityHelper
     arguments:
       - '@entity_finder'
       - '@tmdb.adapter'

@@ -7,14 +7,14 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityViewBuilderInterface;
 use Drupal\Core\Url;
-use Drupal\imdb\NodeHelper;
+use Drupal\imdb\EntityHelper;
 use Drupal\person\Entity\PersonEntity;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PersonController implements ContainerInjectionInterface {
 
-  private ?NodeHelper $node_helper;
+  private ?EntityHelper $entity_helper;
 
   private EntityViewBuilderInterface $builder;
 
@@ -24,7 +24,7 @@ class PersonController implements ContainerInjectionInterface {
   public static function create(ContainerInterface $container): PersonController {
     $instance = new static();
 
-    $instance->node_helper = $container->get('node_helper');
+    $instance->entity_helper = $container->get('entity_helper');
     $instance->builder = $container
       ->get('entity_type.manager')
       ->getViewBuilder('person');
@@ -43,7 +43,7 @@ class PersonController implements ContainerInjectionInterface {
    */
   public function redirect($tmdb_id): RedirectResponse {
     if (is_numeric($tmdb_id) && $entity_id = $this
-        ->node_helper
+        ->entity_helper
         ->preparePerson($tmdb_id)) {
       return new RedirectResponse(
         Url::fromRoute('entity.person.canonical', ['person' => $entity_id])

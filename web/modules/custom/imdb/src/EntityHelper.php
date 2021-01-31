@@ -7,7 +7,7 @@ use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\tmdb\TmdbApiAdapter;
 
-class NodeHelper {
+class EntityHelper {
 
   private EntityFinder $finder;
 
@@ -33,7 +33,7 @@ class NodeHelper {
    * @return int|null
    *   Node ID if node for all languages has been successfully created.
    */
-  public function prepareNodeOnAllLanguages(NodeBundle $bundle, int $tmdb_id, bool $approved_status = FALSE): ?int {
+  public function prepareNode(NodeBundle $bundle, int $tmdb_id, bool $approved_status = FALSE): ?int {
     $e_bundle = EntityBundle::memberByKey($bundle->key());
     if (!$node_id = $this->finder->findNodes()
       ->byBundle($e_bundle)

@@ -121,7 +121,7 @@ class ImdbRating {
    */
   private function getOmdbRating(string $imdb_id): ?array {
     $omdb_api_key = $this->settings::get('omdb_api_key');
-    if ($omdb_response = file_get_contents("http://www.omdbapi.com/?apikey={$omdb_api_key}&i={$imdb_id}")) {
+    if ($omdb_response = @file_get_contents("http://www.omdbapi.com/?apikey={$omdb_api_key}&i={$imdb_id}")) {
       if ($array = $this->json::decode($omdb_response)) {
         if (isset($array['imdbRating'])) {
           return $this->buildResultArray(

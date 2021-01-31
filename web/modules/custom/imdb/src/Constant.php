@@ -12,11 +12,11 @@ final class Constant {
 
   const GENDER_MAN = 2;
 
-  const UNDEFINED_WOMAN_IMAGE = 'public://undefined-woman.png';
+  const UNDEFINED_WOMAN_IMAGE = '/themes/custom/movies/assets/undefined-woman.svg';
 
-  const UNDEFINED_MAN_IMAGE = 'public://undefined-man.png';
+  const UNDEFINED_MAN_IMAGE = '/themes/custom/movies/assets/undefined-man.svg';
 
-  const UNDEFINED_PERSON_IMAGE = 'public://undefined-person.png';
+  const UNDEFINED_PERSON_IMAGE = '/themes/custom/movies/assets/undefined-person.svg';
 
 
   /**

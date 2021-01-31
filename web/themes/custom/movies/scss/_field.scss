@@ -48,7 +48,7 @@
     margin-bottom: 50px;
   }
 
-  .field--name-field-poster {
+  .field--type-tmdb-image {
     margin-bottom: 0;
 
     img {
@@ -177,6 +177,7 @@
 .field-gallery {
   img {
     cursor: zoom-in;
+    border-radius: $movies-border-radius-default;
   }
 }
 

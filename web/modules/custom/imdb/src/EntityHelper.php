@@ -6,6 +6,7 @@ use Drupal\imdb\enum\EntityBundle;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\tmdb\TmdbApiAdapter;
+use TypeError;
 
 class EntityHelper {
 
@@ -60,16 +61,22 @@ class EntityHelper {
         foreach ($all_langs as $lang) {
           $langcode = $lang->key();
 
-          $node = $this->creator->createNodeMovieOrTv(
-            $bundle,
-            $node_data[$langcode]['title'],
-            $tmdb_id,
-            $node_data[$langcode]['imdb_id'],
-            $node_data[$langcode]['poster_path'],
-            $node_data[$langcode]['genres_ids'],
-            $approved_status,
-            $lang
-          );
+          try {
+            $node = $this->creator->createNodeMovieOrTv(
+              $bundle,
+              $node_data[$langcode]['title'],
+              $tmdb_id,
+              $node_data[$langcode]['imdb_id'],
+              $node_data[$langcode]['poster_path'],
+              $node_data[$langcode]['genres_ids'],
+              $approved_status,
+              $lang
+            );
+          } catch (TypeError $e) {
+            // This means that only part of necessary data comes from the
+            // TMDb API. Therefore such node cannot be saved.
+            return NULL;
+          }
         }
 
         // Get node ID from any (last) translation.

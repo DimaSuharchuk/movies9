@@ -58,12 +58,25 @@ class Seasons extends CacheableTmdbRequest {
       'name',
       'overview',
       'still_path',
-      'guest_stars',
     ];
     $season['episodes'] = $this->allowedFieldsFilter(
       $data['episodes'],
       $allowed_episode_fields
     );
+
+    $allowed_star_fields = [
+      'character',
+      'gender',
+      'id',
+      'name',
+      'profile_path',
+    ];
+    foreach ($season['episodes'] as $key => &$episode) {
+      $episode['guest_stars'] = $this->allowedFieldsFilter(
+        $data['episodes'][$key]['guest_stars'],
+        $allowed_star_fields,
+      );
+    }
 
     // @todo Purge guest stars - save only TMDb IDs.
 

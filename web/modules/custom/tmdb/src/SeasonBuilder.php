@@ -161,6 +161,11 @@ class SeasonBuilder {
     // Prepare guest stars.
     $stars = [];
     foreach ($episode['guest_stars'] as $star) {
+      if (!$star['id']) {
+        // Skip the person without ID (because it sometimes comes from the API),
+        // because it's impossible to create a link to this entity.
+        continue;
+      }
       $stars[] = [
         '#theme' => 'person_teaser',
         '#tmdb_id' => $star['id'],

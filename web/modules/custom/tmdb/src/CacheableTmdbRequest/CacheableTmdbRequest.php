@@ -39,7 +39,7 @@ abstract class CacheableTmdbRequest {
         $data = $this->request();
       } catch (TmdbApiException $e) {
         Drupal::logger(static::class)
-          ->error($e->getMessage() . "<br><br>\n\n" . $e->getTraceAsString());
+          ->info($e->getMessage() . "<br><br>\n\n" . $e->getTraceAsString());
 
         return NULL;
       }

@@ -50,6 +50,12 @@ class SeasonBuilder {
 
     $season = $this->adapter->getSeason($tmdb_id, $season_number, $lang);
 
+    // If the seasons are out of order, then it could be some kind of custom
+    // show, don't output anything.
+    if (!$season) {
+      return [];
+    }
+
     return [
       '#theme' => 'season',
       '#tabs' => $this->buildTabs($node->id(), $seasons_count, $season_number),

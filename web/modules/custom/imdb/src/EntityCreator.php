@@ -12,6 +12,9 @@ use Drupal\imdb\enum\EntityType;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
 use Drupal\imdb\enum\TermBundle;
+use Drupal\imdb\exception\EmptyValueException;
+use Drupal\imdb\exception\ImdbIdException;
+use Drupal\imdb\exception\TmdbIdException;
 use Drupal\node\Entity\Node;
 use Drupal\person\Entity\PersonEntity;
 use Drupal\taxonomy\Entity\Term;
@@ -22,16 +25,20 @@ class EntityCreator {
 
   private EntityFinder $finder;
 
+  private IMDbHelper $imdb;
+
 
   /**
    * EntityCreator constructor.
    *
    * @param EntityTypeManager $manager
    * @param EntityFinder $finder
+   * @param IMDbHelper $imdb
    */
-  public function __construct(EntityTypeManager $manager, EntityFinder $finder) {
+  public function __construct(EntityTypeManager $manager, EntityFinder $finder, IMDbHelper $imdb) {
     $this->entity_type_manager = $manager;
     $this->finder = $finder;
+    $this->imdb = $imdb;
   }
 
 
@@ -76,6 +83,10 @@ class EntityCreator {
    * @see TmdbImageItem
    */
   public function createNodeMovieOrTv(NodeBundle $bundle, string $title, int $tmdb_id, string $imdb_id, ?string $poster, array $genres_tmdb_ids, bool $approved, Language $lang): ?Node {
+    if (!$genres_tmdb_ids) {
+      throw new EmptyValueException('Genres array cannot be empty.');
+    }
+
     $genres_ids = $this->finder->findTermsGenres()
       ->byTmdbIds($genres_tmdb_ids)
       ->execute();
@@ -102,7 +113,14 @@ class EntityCreator {
    *
    * @return PersonEntity|null
    */
-  public function createPerson(Language $lang, int $tmdb_id, string $full_name, string $avatar = NULL): ?PersonEntity {
+  public function createPerson(Language $lang, int $tmdb_id, string $full_name, ?string $avatar = NULL): ?PersonEntity {
+    if ($tmdb_id < 1) {
+      throw new TmdbIdException('TMDb ID should be greater than zero.');
+    }
+    if (!$full_name) {
+      throw new EmptyValueException('Person full name cannot be empty.');
+    }
+
     /** @var PersonEntity $person */
     $person = $this->createEntity(
       EntityType::person(),
@@ -134,7 +152,11 @@ class EntityCreator {
    *
    * @return Term
    */
-  private function createTerm(TermBundle $bundle, Language $lang, string $name, int $tmdb_id, array $fields_data = []): Term {
+  private function createTerm(TermBundle $bundle, Language $lang, string $name, int $tmdb_id, array $fields_data = []): ?Term {
+    if (!$name) {
+      throw new EmptyValueException('Genre name cannot be empty.');
+    }
+
     $bundle = EntityBundle::memberByValue($bundle->value());
     $fields_data += [
       'name' => $name,
@@ -158,6 +180,13 @@ class EntityCreator {
    * @return Node
    */
   private function createNode(NodeBundle $bundle, Language $lang, string $title, int $tmdb_id, string $imdb_id, array $fields_data = []): ?Node {
+    if (!$title) {
+      throw new EmptyValueException('Title cannot be empty.');
+    }
+    if (!$this->imdb->isImdbId($imdb_id)) {
+      throw new ImdbIdException('Invalid IMDb ID.');
+    }
+
     $bundle = EntityBundle::memberByValue($bundle->value());
     $fields_data += [
       'title' => $title,
@@ -211,6 +240,10 @@ class EntityCreator {
    * @return ContentEntityInterface
    */
   private function createEntityBasedOnTmdbField(EntityType $type, EntityBundle $bundle, Language $lang, int $tmdb_id, array $fields_data = []): ?ContentEntityInterface {
+    if ($tmdb_id < 1) {
+      throw new TmdbIdException('TMDb ID should be greater than zero.');
+    }
+
     $fields_data += ['field_tmdb_id' => $tmdb_id];
     return $this->createEntity($type, $lang, $bundle, [], $fields_data, 'field_tmdb_id', $tmdb_id);
   }

@@ -6,7 +6,10 @@ services:
     arguments: [ '@entity_type.manager' ]
   entity_creator:
     class: Drupal\imdb\EntityCreator
-    arguments: [ '@entity_type.manager', '@entity_finder' ]
+    arguments:
+      - '@entity_type.manager'
+      - '@entity_finder'
+      - '@imdb.helper'
   imdb.rating:
     class: Drupal\imdb\ImdbRating
     arguments: [ '@settings','@serialization.json','@imdb.helper' ]

@@ -5,6 +5,7 @@ namespace Drupal\imdb;
 use Drupal\imdb\enum\EntityBundle;
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
+use Drupal\imdb\exception\ImdbException;
 use Drupal\tmdb\TmdbApiAdapter;
 use TypeError;
 
@@ -72,7 +73,7 @@ class EntityHelper {
               $approved_status,
               $lang
             );
-          } catch (TypeError $e) {
+          } catch (ImdbException | TypeError $e) {
             // This means that only part of necessary data comes from the
             // TMDb API. Therefore such node cannot be saved.
             return NULL;
@@ -124,12 +125,18 @@ class EntityHelper {
         foreach ($all_langs as $lang) {
           $lang_code = $lang->key();
 
-          $person = $this->creator->createPerson(
-            $lang,
-            $tmdb_id,
-            $person_data[$lang_code]['name'],
-            $person_data[$lang_code]['profile_path'],
-          );
+          try {
+            $person = $this->creator->createPerson(
+              $lang,
+              $tmdb_id,
+              $person_data[$lang_code]['name'],
+              $person_data[$lang_code]['profile_path'],
+            );
+          } catch (ImdbException | TypeError $e) {
+            // This means that only part of necessary data comes from the
+            // TMDb API. Therefore such node cannot be saved.
+            return NULL;
+          }
         }
 
         // Get Person ID from any (last) translation.

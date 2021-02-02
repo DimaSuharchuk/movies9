@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "deathday",
  *   label = @Translation("Extra: Deathday"),
+ *   description = "",
  *   bundles = {"person.person"}
  * )
  */

@@ -411,6 +411,7 @@ namespace PHPSTORM_META {
       'dynamic_page_cache_request_policy' => '\Drupal\dynamic_page_cache\PageCache\RequestPolicy\DefaultRequestPolicy',
       'dynamic_page_cache_response_policy' => '\Drupal\Core\ProxyClass\PageCache\ChainResponsePolicy',
       'plugin.manager.extra_field_display' => '\Drupal\extra_field\Plugin\ExtraFieldDisplayManager',
+      'plugin.manager.extra_field_form' => '\Drupal\extra_field\Plugin\ExtraFieldFormManager',
       'field.uninstall_validator' => '\Drupal\field\ProxyClass\FieldUninstallValidator',
       'field_ui.subscriber' => '\Drupal\field_ui\Routing\RouteSubscriber',
       'field_ui.route_enhancer' => '\Drupal\field_ui\Routing\FieldUiRouteEnhancer',

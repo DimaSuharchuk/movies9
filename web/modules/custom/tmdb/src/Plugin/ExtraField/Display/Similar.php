@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "similar",
  *   label = @Translation("Extra: Similar"),
+ *   description = "",
  *   bundles = {"node.movie", "node.tv"},
  *   replaceable = true
  * )

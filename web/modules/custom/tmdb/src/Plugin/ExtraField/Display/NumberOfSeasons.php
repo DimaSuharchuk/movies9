@@ -9,6 +9,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "number_of_seasons",
  *   label = @Translation("Extra: Number of seasons"),
+ *   description = "",
  *   bundles = {"node.tv"}
  * )
  */

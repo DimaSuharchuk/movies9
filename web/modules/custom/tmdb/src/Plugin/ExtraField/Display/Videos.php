@@ -11,6 +11,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "videos",
  *   label = @Translation("Extra: Videos"),
+ *   description = "",
  *   bundles = {"node.movie", "node.tv"},
  *   replaceable = true
  * )

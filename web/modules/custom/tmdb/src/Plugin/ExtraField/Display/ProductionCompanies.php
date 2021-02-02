@@ -10,6 +10,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "production_companies",
  *   label = @Translation("Extra: Production companies"),
+ *   description = "",
  *   bundles = {"node.movie", "node.tv"}
  * )
  */

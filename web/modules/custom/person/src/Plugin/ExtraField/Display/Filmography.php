@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "filmography",
  *   label = @Translation("Extra: Filmography"),
+ *   description = "",
  *   bundles = {"person.person"},
  *   replaceable = true
  * )

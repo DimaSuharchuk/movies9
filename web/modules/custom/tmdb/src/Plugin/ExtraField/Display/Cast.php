@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "cast",
  *   label = @Translation("Extra: Cast"),
+ *   description = "",
  *   bundles = {"node.movie", "node.tv"},
  *   replaceable = true
  * )

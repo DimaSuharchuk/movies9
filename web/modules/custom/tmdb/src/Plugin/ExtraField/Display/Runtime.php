@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "runtime",
  *   label = @Translation("Extra: Runtime"),
+ *   description = "",
  *   bundles = {"node.movie"}
  * )
  */

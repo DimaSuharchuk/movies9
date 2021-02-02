@@ -11,6 +11,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "gallery",
  *   label = @Translation("Extra: Gallery"),
+ *   description = "",
  *   bundles = {"person.person"},
  *   replaceable = true
  * )

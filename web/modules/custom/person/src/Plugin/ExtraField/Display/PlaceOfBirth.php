@@ -9,6 +9,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "place_of_birth",
  *   label = @Translation("Extra: Place of birth"),
+ *   description = "",
  *   bundles = {"person.person"}
  * )
  */

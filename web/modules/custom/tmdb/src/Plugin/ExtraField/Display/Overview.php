@@ -9,6 +9,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "overview",
  *   label = @Translation("Extra: Overview"),
+ *   description = "",
  *   bundles = {"node.movie", "node.tv"}
  * )
  */

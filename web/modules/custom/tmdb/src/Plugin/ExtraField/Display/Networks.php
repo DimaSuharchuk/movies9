@@ -10,6 +10,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "networks",
  *   label = @Translation("Extra: Networks"),
+ *   description = "",
  *   bundles = {"node.tv"}
  * )
  */

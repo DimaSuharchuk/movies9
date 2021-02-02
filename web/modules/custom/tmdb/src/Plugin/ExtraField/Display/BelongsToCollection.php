@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "belongs_to_collection",
  *   label = @Translation("Extra: Belongs to collection"),
+ *   description = "",
  *   bundles = {"node.movie"},
  *   replaceable = true
  * )

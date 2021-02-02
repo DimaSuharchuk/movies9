@@ -12,6 +12,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "tabs",
  *   label = @Translation("Extra: Tabs"),
+ *   description = "",
  *   bundles = {"node.movie", "node.tv"}
  * )
  */

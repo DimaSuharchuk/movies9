@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "recommendations",
  *   label = @Translation("Extra: Recommendations"),
+ *   description = "",
  *   bundles = {"node.movie", "node.tv"},
  *   replaceable = true
  * )

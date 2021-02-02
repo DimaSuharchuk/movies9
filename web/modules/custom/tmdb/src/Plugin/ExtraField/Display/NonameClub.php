@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "noname_club",
  *   label = @Translation("Extra: Noname Club"),
+ *   description = "",
  *   bundles = {"node.movie", "node.tv"}
  * )
  */

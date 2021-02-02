@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ExtraFieldDisplay(
  *   id = "episode_runtime",
  *   label = @Translation("Extra: Episode runtime"),
+ *   description = "",
  *   bundles = {"node.tv"}
  * )
  */

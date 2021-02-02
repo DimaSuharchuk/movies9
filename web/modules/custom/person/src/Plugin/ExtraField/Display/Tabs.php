@@ -10,6 +10,7 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * @ExtraFieldDisplay(
  *   id = "person_tabs",
  *   label = @Translation("Extra: Tabs"),
+ *   description = "",
  *   bundles = {"person.person"},
  *   css_class = "tabs"
  * )

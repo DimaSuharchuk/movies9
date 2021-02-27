@@ -18,6 +18,12 @@ final class Constant {
 
   const UNDEFINED_PERSON_IMAGE = '/themes/custom/movies/assets/undefined-person.svg';
 
+  const EXCLUDED_GENRES_TMDB_IDS = [
+    10763, // News
+    10764, // Reality
+    10767, // Talk
+  ];
+
 
   /**
    * Extra fields IDS:

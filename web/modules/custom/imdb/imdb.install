@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Site updates.
+ */
+
+use Drupal\imdb\Constant;
+
+/**
+ * Delete terms: "News", "Reality", "Talk" and nodes using the terms.
+ */
+function imdb_update_9101() {
+  // Get nodes IDs using excluded terms.
+  $q = Drupal::database()->select('taxonomy_index', 'i');
+  $q->innerJoin('taxonomy_term__field_tmdb_id', 'tid', 'tid.entity_id=i.tid');
+  $q->condition('tid.field_tmdb_id_value', Constant::EXCLUDED_GENRES_TMDB_IDS, 'IN');
+  $q->condition('tid.bundle', 'genre');
+  $q->fields('i', ['nid']);
+  $q->orderBy('i.nid');
+  $q->distinct();
+  if ($node_ids = $q->execute()->fetchCol()) {
+    // Delete nodes.
+    $ns = Drupal::entityTypeManager()->getStorage('node');
+    $nodes = $ns->loadMultiple($node_ids);
+    $ns->delete($nodes);
+  }
+
+  if ($terms = Drupal::service('entity_finder')
+    ->findTermsGenres()
+    ->byTmdbIds(Constant::EXCLUDED_GENRES_TMDB_IDS)
+    ->loadEntities()
+    ->execute()) {
+    // Delete terms.
+    $ts = Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    $ts->delete($terms);
+  }
+}

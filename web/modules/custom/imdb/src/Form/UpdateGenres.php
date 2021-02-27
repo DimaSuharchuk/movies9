@@ -4,6 +4,7 @@ namespace Drupal\imdb\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\imdb\Constant;
 use Drupal\imdb\EntityCreator;
 use Drupal\imdb\EntityFinder;
 use Drupal\imdb\enum\Language;
@@ -79,6 +80,8 @@ class UpdateGenres extends FormBase {
       $genres = [];
       $this->buildGenres($genres, $movie_genres, NodeBundle::movie());
       $this->buildGenres($genres, $tv_genres, NodeBundle::tv());
+
+      $genres = array_diff_key($genres, array_flip(Constant::EXCLUDED_GENRES_TMDB_IDS));
 
       // Save genres in DB.
       foreach ($genres as $tmdb_id => $genre) {

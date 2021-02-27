@@ -1,0 +1,19 @@
+.maintenance-page {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+  // Dark theme styles look better in this situation.
+  background-color: $dk_bg-color-white;
+  color: $dk_text-color-main;
+
+  header {
+    img {
+      height: 40px;
+      margin-bottom: 50px;
+    }
+  }
+
+  h1 {
+    display: none;
+  }
+}

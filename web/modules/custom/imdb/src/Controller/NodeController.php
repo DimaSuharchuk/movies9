@@ -80,7 +80,8 @@ class NodeController implements ContainerInjectionInterface {
     $node_bundle = FALSE;
     try {
       $node_bundle = NodeBundle::memberByValue($bundle);
-    } catch (AbstractUndefinedMemberException $e) {
+    }
+    catch (AbstractUndefinedMemberException $e) {
     }
 
     if ($node_bundle && is_numeric($tmdb_id) && $node_id = $this
@@ -125,15 +126,19 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function nodeTabsAjaxHandler($node_id, $tab): AjaxResponse {
-    $node = Node::load($node_id);
-
     $response = new AjaxResponse();
-    $response->addCommand(
-      new ReplaceCommand(
-        '#js-replaceable-block',
-        $this->node_builder->view($node, $tab)
-      )
-    );
+
+    if ($node = Node::load($node_id)) {
+      $response->addCommand(
+        new ReplaceCommand(
+          '#js-replaceable-block',
+          $this->node_builder->view($node, $tab)
+        )
+      );
+    }
+    else {
+      $response->setStatusCode(404);
+    }
 
     return $response;
   }
@@ -149,18 +154,22 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function seasonTabsAjaxHandler($node_id, $season): AjaxResponse {
-    $node = Node::load($node_id);
-
-    $langcode = $this->language_manager->getCurrentLanguage()->getId();
-    $lang = Language::memberByValue($langcode);
-
     $response = new AjaxResponse();
-    $response->addCommand(
-      new HtmlCommand(
-        '#js-replaceable-block',
-        $this->season_builder->buildSeason($node, $season, $lang)
-      )
-    );
+
+    if ($node = Node::load($node_id)) {
+      $langcode = $this->language_manager->getCurrentLanguage()->getId();
+      $lang = Language::memberByValue($langcode);
+
+      $response->addCommand(
+        new HtmlCommand(
+          '#js-replaceable-block',
+          $this->season_builder->buildSeason($node, $season, $lang)
+        )
+      );
+    }
+    else {
+      $response->setStatusCode(404);
+    }
 
     return $response;
   }

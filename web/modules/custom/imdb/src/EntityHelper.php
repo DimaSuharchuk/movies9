@@ -51,7 +51,17 @@ class EntityHelper {
       $node_data = [];
       foreach ($all_langs as $lang) {
         // Fetch data from TMDb API.
-        $node_data[$lang->key()] = $this->adapter->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang);
+        if (!$fetch = $this->adapter->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang)) {
+          return NULL;
+        }
+        // Check if the node belongs to the excluded genres.
+        if (array_intersect(Constant::EXCLUDED_GENRES_TMDB_IDS, $fetch['genres_ids'])) {
+          // We can't create nodes related to certain genres, so we'll finish
+          // the work here.
+          return NULL;
+        }
+
+        $node_data[$lang->key()] = $fetch;
       }
 
       // Check if all data is received.
@@ -73,7 +83,8 @@ class EntityHelper {
               $approved_status,
               $lang
             );
-          } catch (ImdbException | TypeError $e) {
+          }
+          catch (ImdbException | TypeError $e) {
             // This means that only part of necessary data comes from the
             // TMDb API. Therefore such node cannot be saved.
             return NULL;
@@ -132,7 +143,8 @@ class EntityHelper {
               $person_data[$lang_code]['name'],
               $person_data[$lang_code]['profile_path'],
             );
-          } catch (ImdbException | TypeError $e) {
+          }
+          catch (ImdbException | TypeError $e) {
             // This means that only part of necessary data comes from the
             // TMDb API. Therefore such node cannot be saved.
             return NULL;

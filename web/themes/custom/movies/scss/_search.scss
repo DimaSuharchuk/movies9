@@ -3,13 +3,16 @@
   border-radius: 20px;
 
   input {
-    max-width: 300px;
+    max-width: 270px;
     height: 40px;
     border: none;
     border-radius: 20px;
     padding: 0 100px 0 10px;
     background-color: transparent;
     color: $text-color-main;
+    @include media-breakpoint-up(xl) {
+      max-width: 330px;
+    }
 
     &:disabled {
       background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);

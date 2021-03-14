@@ -24,9 +24,12 @@
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas: "logo mobile-nav";
-  grid-column-gap: 50px;
+  grid-column-gap: 20px;
   @include media-breakpoint-up(lg) {
     grid-template-areas: "logo desktop-nav";
+  }
+  @include media-breakpoint-up(xl) {
+    grid-column-gap: 50px;
   }
 
   #block-logo {
@@ -43,7 +46,10 @@
     display: grid;
     grid-template-columns: 1fr auto auto;
     grid-template-areas: "desktop-menu search language-switcher theme-switcher";
-    grid-column-gap: 50px;
+    grid-column-gap: 20px;
+    @include media-breakpoint-up(xl) {
+      grid-column-gap: 50px;
+    }
 
     .main-menu {
       grid-area: desktop-menu;

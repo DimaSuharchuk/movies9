@@ -5,6 +5,7 @@
   }
 
   const input = searchWrapper.querySelector("input");
+  const reset = searchWrapper.querySelector("#reset-search-input");
   const searchTypeSelect = searchWrapper.querySelector("select");
   const searchResults = searchWrapper.querySelector("#search-results");
 
@@ -22,6 +23,9 @@
           input.blur();
           localStorage.ajaxSubmit = null;
         }, 1500);
+
+        // Animations.
+        showResetButton();
         break;
     }
   });
@@ -34,6 +38,9 @@
     if (e.key === "Escape") {
       hideSearchResults();
       input.blur();
+    }
+    if (e.key === "Backspace" && input.value.length === 1) {
+      hideResetButton();
     }
   });
 
@@ -50,6 +57,17 @@
   });
 
   /*
+   * Reset button events.
+   */
+  reset.addEventListener("click", () => {
+    input.value = "";
+    input.blur();
+    searchTypeSelect.value = "multi";
+    searchResults.innerHTML = "";
+    hideResetButton();
+  });
+
+  /*
    * Document events.
    */
   document.body.addEventListener("click", e => {
@@ -57,7 +75,7 @@
       return;
     }
 
-    if (searchResults.innerHTML.length > 0 && input.value.length > 0) {
+    if (searchResults.innerHTML.length > 0) {
       hideSearchResults();
     }
   });
@@ -72,5 +90,15 @@
 
   function showSearchResults() {
     searchResults.style.display = "block";
+  }
+
+  function showResetButton() {
+    searchTypeSelect.classList.add("active");
+    reset.classList.add("active");
+  }
+
+  function hideResetButton() {
+    reset.classList.remove("active");
+    searchTypeSelect.classList.remove("active");
   }
 })();

@@ -30,6 +30,12 @@
     right: 10px;
     background-color: transparent;
     color: $text-color-main;
+    border: none;
+    transition-duration: 500ms;
+
+    &.active {
+      right: 40px;
+    }
 
     option {
       background-color: $bg_color-white;
@@ -46,6 +52,25 @@
   }
   100% {
     background-position: 0 50%;
+  }
+}
+
+/**
+ * Reset button.
+ */
+#reset-search-input {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  font-size: 1.5em;
+  cursor: pointer;
+  user-select: none;
+  opacity: 0;
+  transition-duration: 500ms;
+
+  &.active {
+    opacity: 1;
   }
 }
 
@@ -167,8 +192,6 @@
     }
 
     select {
-      color: $dk_text-color-main;
-
       option {
         background-color: $dk_bg-color-white;
       }

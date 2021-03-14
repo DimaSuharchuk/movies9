@@ -62,6 +62,15 @@ class Search extends FormBase {
         'method' => 'html',
       ],
     ];
+    $form['clear_input'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'id' => 'reset-search-input',
+      ],
+      'content' => [
+        '#markup' => '&times;',
+      ],
+    ];
     $form['search_type'] = [
       '#type' => 'select',
       '#options' => [

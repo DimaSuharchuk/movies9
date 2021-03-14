@@ -1,0 +1,25 @@
+<a href="{{ path('imdb.tmdb_person_redirect', {'tmdb_id': tmdb_id}) }}"
+   class="search-mini-teaser person-mini-teaser">
+
+  <div class="left">
+    <div class="avatar">
+      {{ avatar }}
+    </div>
+  </div>
+
+  <div class="center">
+    <div class="name">
+      {{- name -}}
+    </div>
+    <div class="department">
+      {{- department -}}
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="type">
+      {{- 'Person'|t({}, {'context': 'Search'}) -}}
+    </div>
+  </div>
+
+</a>

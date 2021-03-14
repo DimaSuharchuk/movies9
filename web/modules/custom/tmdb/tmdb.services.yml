@@ -21,3 +21,7 @@ services:
     arguments:
       - '@tmdb.adapter'
       - '@imdb.rating'
+  tmdb.builder.search_mini_teaser:
+    class: Drupal\tmdb\builder\SearchMiniTeaserBuilder
+    arguments:
+      - '@person.avatar'

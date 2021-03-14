@@ -11,8 +11,10 @@ use Drupal\tmdb\CacheableTmdbRequest\Genres;
 use Drupal\tmdb\CacheableTmdbRequest\MovieCollection;
 use Drupal\tmdb\CacheableTmdbRequest\Person;
 use Drupal\tmdb\CacheableTmdbRequest\Recommendations;
+use Drupal\tmdb\CacheableTmdbRequest\Search;
 use Drupal\tmdb\CacheableTmdbRequest\Seasons;
 use Drupal\tmdb\CacheableTmdbRequest\Similar;
+use Drupal\tmdb\enum\TmdbSearchType;
 
 class TmdbApiAdapter {
 
@@ -303,6 +305,26 @@ class TmdbApiAdapter {
     return (new Person())
       ->setTmdbId($tmdb_id)
       ->setLanguage($lang)
+      ->response();
+  }
+
+  /**
+   * Perform a search.
+   *
+   * @param string $search_string
+   *   A string to search in movies, TV series, or persons.
+   * @param TmdbSearchType $search_type
+   * @param Language $lang
+   * @param int $page
+   *
+   * @return array|null
+   */
+  public function search(string $search_string, TmdbSearchType $search_type, Language $lang, int $page = 1): ?array {
+    return (new Search())
+      ->setSearchQuery($search_string)
+      ->setSearchType($search_type)
+      ->setLanguage($lang)
+      ->setPage($page)
       ->response();
   }
 

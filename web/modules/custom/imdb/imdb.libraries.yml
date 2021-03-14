@@ -2,3 +2,7 @@ imdb.menu:
   css:
     theme:
       css/imdb.menu.css: {}
+
+search:
+  js:
+    js/search.js: { }

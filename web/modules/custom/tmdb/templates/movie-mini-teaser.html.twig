@@ -1,0 +1,27 @@
+<a href="{{ path('imdb.tmdb_node_redirect', {'bundle': 'movie', 'tmdb_id': tmdb_id}) }}"
+   class="search-mini-teaser movie-mini-teaser">
+
+  <div class="left">
+    <div class="poster">
+      {% if poster %}
+        <img src="//image.tmdb.org/t/p/w92{{ poster }}" alt="{{ title }}" title="{{ title }}">
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="center">
+    <div class="title">
+      {{- title -}}
+    </div>
+    <div class="year">
+      {{- year -}}
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="type">
+      {{- 'Movie'|t({}, {'context': 'Search'}) -}}
+    </div>
+  </div>
+
+</a>

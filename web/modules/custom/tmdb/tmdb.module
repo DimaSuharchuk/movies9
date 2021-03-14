@@ -128,5 +128,29 @@ function tmdb_theme($existing, $type, $theme, $path) {
         'content' => NULL,
       ],
     ],
+    'movie_mini_teaser' => [
+      'variables' => [
+        'tmdb_id' => NULL,
+        'title' => NULL,
+        'poster' => NULL,
+        'year' => NULL,
+      ],
+    ],
+    'tv_mini_teaser' => [
+      'variables' => [
+        'tmdb_id' => NULL,
+        'title' => NULL,
+        'poster' => NULL,
+        'year' => NULL,
+      ],
+    ],
+    'person_mini_teaser' => [
+      'variables' => [
+        'tmdb_id' => NULL,
+        'name' => NULL,
+        'avatar' => NULL,
+        'department' => NULL,
+      ],
+    ],
   ];
 }

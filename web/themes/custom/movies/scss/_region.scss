@@ -42,7 +42,7 @@
     grid-area: desktop-nav;
     display: grid;
     grid-template-columns: 1fr auto auto;
-    grid-template-areas: "desktop-menu language-switcher theme-switcher";
+    grid-template-areas: "desktop-menu search language-switcher theme-switcher";
     grid-column-gap: 50px;
 
     .main-menu {
@@ -75,6 +75,13 @@
           }
         }
       }
+    }
+
+    #search-desktop-wrapper {
+      grid-area: search;
+      display: flex;
+      align-items: center;
+      position: relative;
     }
 
     #block-language-switcher {

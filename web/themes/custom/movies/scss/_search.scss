@@ -1,0 +1,181 @@
+#search-desktop-wrapper {
+  background-color: $bg-search;
+  border-radius: 20px;
+
+  input {
+    max-width: 300px;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    padding: 0 100px 0 10px;
+    background-color: transparent;
+    color: $text-color-main;
+
+    &:disabled {
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradient 5s ease infinite;
+    }
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+  }
+
+  select {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    background-color: transparent;
+    color: $text-color-main;
+
+    option {
+      background-color: $bg_color-white;
+    }
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+/**
+ * Search results.
+ */
+#search-results:not(:empty) {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  top: 45px;
+  padding-right: 5px;
+  background-color: $bg-search;
+  border-radius: $movies-border-radius-big;
+
+  .teasers-list {
+    max-height: 440px;
+    overflow-y: scroll;
+    display: grid;
+    grid-row-gap: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      margin-top: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $dk_bg-color-white;
+    }
+  }
+
+  .total-results,
+  .all-results-link {
+    height: 40px;
+    display: grid;
+    place-content: center;
+    font: {
+      weight: $font-weight-bold;
+    };
+    border-top: 1px solid $dk_bg-color-white;
+    margin-right: -5px;
+    user-select: none;
+  }
+
+  .total-results {
+    cursor: help;
+  }
+
+  .all-results-link {
+    cursor: pointer;
+    display: none; // @todo Delete after adding a search page.
+  }
+}
+
+/**
+ * Single mini teaser.
+ */
+.search-mini-teaser {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  grid-column-gap: 15px;
+  align-items: start;
+  transition: all 100ms ease-out;
+
+  &:hover {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+
+  .left {
+    img {
+      border-radius: $movies-border-radius-default;
+    }
+  }
+
+  .center {
+    display: grid;
+    grid-row-gap: 10px;
+    padding: 5px 0;
+  }
+
+  .right {
+    padding: 5px 0;
+  }
+
+  .title,
+  .name {
+    font: {
+      weight: $font-weight-bold;
+    };
+    word-break: break-word;
+  }
+
+  .department,
+  .type,
+  .year {
+    font: {
+      size: .8em;
+    }
+    color: $text-color-main;
+  }
+}
+
+
+/**
+ * DARK THEME.
+ */
+[data-theme="dark"] {
+  #search-desktop-wrapper {
+    background-color: $dk_bg-search;
+
+    input {
+      color: $dk_text-color-main;
+    }
+
+    select {
+      color: $dk_text-color-main;
+
+      option {
+        background-color: $dk_bg-color-white;
+      }
+    }
+  }
+
+  #search-results {
+    background-color: $dk_bg-search;
+  }
+}

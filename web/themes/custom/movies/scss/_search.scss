@@ -11,7 +11,7 @@
     background-color: transparent;
     color: $text-color-main;
     @include media-breakpoint-up(xl) {
-      max-width: 330px;
+      max-width: 310px;
     }
 
     &:disabled {

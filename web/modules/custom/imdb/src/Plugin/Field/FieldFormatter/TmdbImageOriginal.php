@@ -2,8 +2,10 @@
 
 namespace Drupal\imdb\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\Annotation\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\imdb\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 /**
@@ -16,6 +18,8 @@ use Drupal\tmdb\enum\TmdbImageFormat;
  * )
  */
 class TmdbImageOriginal extends FormatterBase {
+
+  use ImageBuilder;
 
   /**
    * {@inheritDoc}
@@ -30,15 +34,19 @@ class TmdbImageOriginal extends FormatterBase {
    * {@inheritDoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode): array {
+    /** @var \Drupal\Core\Entity\Plugin\DataType\EntityAdapter $adapter */
+    $adapter = $items->getParent();
+    $parent_entity = $adapter->getEntity();
+
     $elements = [];
 
     foreach ($items as $delta => $item) {
       if ($item->value) {
-        $elements[$delta] = [
-          '#theme' => 'image',
-          '#uri' => 'https://image.tmdb.org/t/p/' . TmdbImageFormat::original . $item->value,
-          '#langcode' => $langcode,
-        ];
+        $elements[$delta] = $this->buildTmdbImageRenderableArray(
+          TmdbImageFormat::original(),
+          $item->value,
+          $parent_entity->label(),
+        );
       }
     }
 

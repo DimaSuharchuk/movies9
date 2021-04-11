@@ -2,10 +2,11 @@
 
 namespace Drupal\imdb\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\Annotation\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\imdb\Constant;
+use Drupal\imdb\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 /**
@@ -19,6 +20,8 @@ use Drupal\tmdb\enum\TmdbImageFormat;
  */
 class TmdbImageCompact extends FormatterBase {
 
+  use ImageBuilder;
+
   /**
    * {@inheritDoc}
    */
@@ -26,9 +29,9 @@ class TmdbImageCompact extends FormatterBase {
     $elements = parent::settingsForm($form, $form_state);
 
     $formats = TmdbImageFormat::getCompactFormats();
-    array_walk($formats, function (&$value) {
+    array_walk($formats, function (&$format) {
       // Get number from format values and attach "px" to number.
-      $value = $this->numberToPx($value->value());
+      $format = $this->formatToPx($format);
     });
 
     $elements['width'] = [
@@ -44,9 +47,11 @@ class TmdbImageCompact extends FormatterBase {
    * {@inheritDoc}
    */
   public function settingsSummary(): array {
+    $format = TmdbImageFormat::memberByKey($this->getSetting('width'));
+
     return [
       $this->t('Rendered with width: %w', [
-        '%w' => $this->numberToPx($this->getSetting('width')),
+        '%w' => $this->formatToPx($format),
       ]),
     ];
   }
@@ -55,22 +60,27 @@ class TmdbImageCompact extends FormatterBase {
    * {@inheritDoc}
    */
   public static function defaultSettings(): array {
-    return ['width' => TmdbImageFormat::w200] + parent::defaultSettings();
+    return
+      ['width' => TmdbImageFormat::w200()->key()] + parent::defaultSettings();
   }
 
   /**
    * {@inheritDoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode): array {
-    $elements = [];
+    /** @var \Drupal\Core\Entity\Plugin\DataType\EntityAdapter $adapter */
+    $adapter = $items->getParent();
+    $parent_entity = $adapter->getEntity();
+    $tmdb_width = $this->getSetting('width');
 
+    $elements = [];
     foreach ($items as $delta => $item) {
       if ($item->value) {
-        $elements[$delta] = [
-          '#theme' => 'image',
-          '#uri' => Constant::TMDB_IMAGE_BASE_URL . $this->getSetting('width') . $item->value,
-          '#langcode' => $langcode,
-        ];
+        $elements[$delta] = $this->buildTmdbImageRenderableArray(
+          TmdbImageFormat::memberByKey($tmdb_width),
+          $item->value,
+          $parent_entity->label(),
+        );
       }
     }
 
@@ -79,16 +89,14 @@ class TmdbImageCompact extends FormatterBase {
 
 
   /**
-   * Helper method.
-   * Filter string leaving numbers, add 'px'.
+   * Build formatted string that adds "px" to number from Tmdb image format.
    *
-   * @param string $s
-   *   String to sanitize.
+   * @param \Drupal\tmdb\enum\TmdbImageFormat $format
    *
    * @return string
    */
-  private function numberToPx(string $s): string {
-    return filter_var($s, FILTER_SANITIZE_NUMBER_INT) . 'px';
+  private function formatToPx(TmdbImageFormat $format): string {
+    return "{$format->value()}px";
   }
 
 }

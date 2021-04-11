@@ -2,10 +2,12 @@
 
 namespace Drupal\tmdb;
 
-use Drupal\imdb\Constant;
+use Drupal\imdb\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 trait NetworksAndCompanies {
+
+  use ImageBuilder;
 
   /**
    * Build array of "Production companies" or "Networks" from TMDb API.
@@ -17,18 +19,15 @@ trait NetworksAndCompanies {
    *   Renderable array of logos.
    */
   private function buildItems(array $items): array {
-    $format = TmdbImageFormat::w200();
-
     $build = [];
 
     foreach ($items as $item) {
       if ($item['logo_path']) {
-        $build[] = [
-          '#theme' => 'image',
-          '#uri' => Constant::TMDB_IMAGE_BASE_URL . $format->key() . $item['logo_path'],
-          '#title' => $item['name'],
-          '#alt' => $item['name'],
-        ];
+        $build[] = $this->buildTmdbImageRenderableArray(
+          TmdbImageFormat::w92(),
+          $item['logo_path'],
+          $item['name'],
+        );
       }
     }
 

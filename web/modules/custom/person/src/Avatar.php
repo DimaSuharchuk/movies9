@@ -3,9 +3,12 @@
 namespace Drupal\person;
 
 use Drupal\imdb\Constant;
+use Drupal\imdb\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 class Avatar {
+
+  use ImageBuilder;
 
   /**
    * Wrap with theme "Image" person's avatar or find defined avatar by gender.
@@ -19,18 +22,15 @@ class Avatar {
    */
   public function build(array $person, TmdbImageFormat $format): array {
     if ($person['profile_path']) {
-      $uri = Constant::TMDB_IMAGE_BASE_URL . $format->key() . $person['profile_path'];
-    }
-    else {
-      $uri = $this->getAvatarUriByGender($person['gender']);
+      return $this->buildTmdbImageRenderableArray(
+        $format,
+        $person['profile_path'],
+        $person['name'],
+      );
     }
 
-    return [
-      '#theme' => 'image',
-      '#uri' => $uri,
-      '#title' => $person['name'],
-      '#alt' => $person['name'],
-    ];
+    $uri = $this->getAvatarUriByGender($person['gender']);
+    return $this->buildImageRenderableArray($uri, $person['name'], $format);
   }
 
   /**

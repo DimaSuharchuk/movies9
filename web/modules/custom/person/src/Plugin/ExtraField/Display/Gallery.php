@@ -3,7 +3,9 @@
 namespace Drupal\person\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\extra_field\Annotation\ExtraFieldDisplay;
 use Drupal\imdb\Constant;
+use Drupal\imdb\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 
@@ -17,6 +19,8 @@ use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
  * )
  */
 class Gallery extends ExtraTmdbFieldDisplayBase {
+
+  use ImageBuilder;
 
   /**
    * {@inheritDoc}
@@ -67,14 +71,21 @@ class Gallery extends ExtraTmdbFieldDisplayBase {
    * @return array
    */
   private function buildThemedAvatar(string $path, TmdbImageFormat $format): array {
-    return [
-      '#theme' => 'image',
-      '#uri' => Constant::TMDB_IMAGE_BASE_URL . $format->key() . $path,
-      '#title' => $this->t('Click to enlarge the image'),
+    $build = $this->buildTmdbImageRenderableArray(
+      $format,
+      $path,
+      $this->t('Click to enlarge the image'),
+    );
+
+    $big_format = TmdbImageFormat::w780();
+    $big_image_uri = Constant::TMDB_IMAGE_BASE_URL . $big_format->key() . $path;
+    $build += [
       '#attributes' => [
-        'data-full_image' => Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w780() . $path,
+        'data-full_image' => $big_image_uri,
       ],
     ];
+
+    return $build;
   }
 
 }

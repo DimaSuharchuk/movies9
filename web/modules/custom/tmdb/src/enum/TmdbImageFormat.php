@@ -21,25 +21,25 @@ class TmdbImageFormat extends AbstractEnumeration {
 
   const original = 'original';
 
-  const w45 = 'w45';
+  const w45 = '45';
 
-  const w92 = 'w92';
+  const w92 = '92';
 
-  const w154 = 'w154';
+  const w154 = '154';
 
-  const w185 = 'w185';
+  const w185 = '185';
 
-  const w200 = 'w200';
+  const w200 = '200';
 
-  const w300 = 'w300';
+  const w300 = '300';
 
-  const w342 = 'w342';
+  const w342 = '342';
 
-  const w400 = 'w400';
+  const w400 = '400';
 
-  const w500 = 'w500';
+  const w500 = '500';
 
-  const w780 = 'w780';
+  const w780 = '780';
 
   /**
    * Returns only formats that start with "w" letter.

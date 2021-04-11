@@ -69,7 +69,7 @@ class Gallery extends ExtraTmdbFieldDisplayBase {
   private function buildThemedAvatar(string $path, TmdbImageFormat $format): array {
     return [
       '#theme' => 'image',
-      '#uri' => Constant::TMDB_IMAGE_BASE_URL . $format->value() . $path,
+      '#uri' => Constant::TMDB_IMAGE_BASE_URL . $format->key() . $path,
       '#title' => $this->t('Click to enlarge the image'),
       '#attributes' => [
         'data-full_image' => Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w780() . $path,

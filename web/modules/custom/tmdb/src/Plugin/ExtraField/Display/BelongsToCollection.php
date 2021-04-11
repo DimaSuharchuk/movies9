@@ -64,11 +64,11 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
       ];
       // If collection has a poster.
       if ($poster = $collection['poster_path']) {
-        $collection_poster_format = TmdbImageFormat::w400;
+        $collection_poster_format = TmdbImageFormat::w400();
 
         $build['#poster'] = [
           '#theme' => 'image',
-          '#uri' => Constant::TMDB_IMAGE_BASE_URL . $collection_poster_format . $poster,
+          '#uri' => Constant::TMDB_IMAGE_BASE_URL . $collection_poster_format->key() . $poster,
         ];
       }
     }

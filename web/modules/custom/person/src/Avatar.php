@@ -19,7 +19,7 @@ class Avatar {
    */
   public function build(array $person, TmdbImageFormat $format): array {
     if ($person['profile_path']) {
-      $uri = Constant::TMDB_IMAGE_BASE_URL . $format->value() . $person['profile_path'];
+      $uri = Constant::TMDB_IMAGE_BASE_URL . $format->key() . $person['profile_path'];
     }
     else {
       $uri = $this->getAvatarUriByGender($person['gender']);

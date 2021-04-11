@@ -17,7 +17,7 @@ trait NetworksAndCompanies {
    *   Renderable array of logos.
    */
   private function buildItems(array $items): array {
-    $format = TmdbImageFormat::w200;
+    $format = TmdbImageFormat::w200();
 
     $build = [];
 
@@ -25,7 +25,7 @@ trait NetworksAndCompanies {
       if ($item['logo_path']) {
         $build[] = [
           '#theme' => 'image',
-          '#uri' => Constant::TMDB_IMAGE_BASE_URL . $format . $item['logo_path'],
+          '#uri' => Constant::TMDB_IMAGE_BASE_URL . $format->key() . $item['logo_path'],
           '#title' => $item['name'],
           '#alt' => $item['name'],
         ];

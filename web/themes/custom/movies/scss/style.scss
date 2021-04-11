@@ -3,7 +3,8 @@
  * sass scss/style.scss:css/style.min.css --style=compressed --watch
  */
 
-@import 'variables';
+@import "fonts";
+@import "variables";
 @import "mixins";
 @import "bootstrap";
 @import "global";

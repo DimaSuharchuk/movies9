@@ -45,6 +45,16 @@ function imdb_cron() {
 }
 
 /**
+ * Implements hook_element_info_alter().
+ */
+function imdb_element_info_alter(array &$info) {
+  $info['view']['#pre_render'][] = [
+    Drupal\imdb\Element\View::class,
+    'preRenderViewElement',
+  ];
+}
+
+/**
  * Implements hook_form_BASE_FORM_ID_alter().
  */
 function imdb_form_views_exposed_form_alter(&$form) {

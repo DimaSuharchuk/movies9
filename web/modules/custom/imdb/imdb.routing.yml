@@ -28,7 +28,7 @@ imdb.update_genres:
 # Node handlers.
 #
 imdb.tmdb_node_redirect:
-  path: '/adapter/{bundle}/{tmdb_id}'
+  path: '/redirect-handler/{bundle}/{tmdb_id}'
   defaults:
     _title: 'Redirect to real node'
     _controller: '\Drupal\imdb\Controller\NodeController::redirect'
@@ -111,7 +111,7 @@ imdb.episode_original_title_field:
 # Person handlers.
 #
 imdb.tmdb_person_redirect:
-  path: '/adapter/person/{tmdb_id}'
+  path: '/redirect-handler/person/{tmdb_id}'
   defaults:
     _title: 'Redirect to person entity view page'
     _controller: '\Drupal\imdb\Controller\PersonController::redirect'

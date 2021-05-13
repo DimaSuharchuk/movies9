@@ -140,6 +140,7 @@
     display: grid;
     grid-row-gap: 10px;
     grid-template-rows: 1fr auto;
+    cursor: pointer;
 
     &.no-photo {
       display: none;

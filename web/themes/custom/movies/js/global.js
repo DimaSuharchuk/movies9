@@ -52,4 +52,15 @@
     },
   };
 
+  D.behaviors.redirects = {
+    attach: () => {
+      document.querySelectorAll("[data-redirect]:not(.processed)").forEach(article => {
+        article.classList.add("processed");
+        article.addEventListener("click", () => {
+          location.href = article.dataset.redirect;
+        });
+      });
+    }
+  };
+
 })(Drupal);

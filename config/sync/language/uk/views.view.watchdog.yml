@@ -2,7 +2,7 @@ label: Вартовий
 description: 'Останні записи журналу'
 display:
   default:
-    display_title: Головне
+    display_title: Базово
     display_options:
       exposed_form:
         options:

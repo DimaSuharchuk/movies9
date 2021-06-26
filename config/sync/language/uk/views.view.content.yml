@@ -58,7 +58,7 @@ display:
       empty:
         area_text_custom:
           content: 'Матеріали відсутні.'
-    display_title: Головне
+    display_title: Базово
   page_1:
     display_options:
       menu:

@@ -160,7 +160,7 @@ display:
           id: title
           table: node_field_data
           field: title
-          label: Title
+          label: Заголовок
           exclude: false
           alter:
             alter_text: false
@@ -246,7 +246,7 @@ display:
           table: users_field_data
           field: name
           relationship: uid
-          label: Author
+          label: Автор
           exclude: false
           alter:
             alter_text: false
@@ -368,7 +368,7 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: Title
+            label: Заголовок
             description: ''
             use_operator: false
             operator: title_op

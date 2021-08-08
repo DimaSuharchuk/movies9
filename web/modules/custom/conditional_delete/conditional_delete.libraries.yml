@@ -1,0 +1,6 @@
+form:
+  css:
+    theme:
+      css/conditional_delete.css: { }
+  js:
+    js/conditional_delete.js: { }

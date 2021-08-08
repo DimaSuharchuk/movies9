@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * This module provides an interface to select different entities by some
+ *   values of their fields and then mass delete them.
+ */
+
+//use Drupal\Core\Render\Element;
+//
+///**
+// * Implements hook_theme().
+// */
+//function conditional_delete_theme($existing, $type, $theme, $path): array {
+//  return [
+//    'conditional_delete_filters_table' => [
+//      '#render element' => 'form',
+//    ],
+//  ];
+//}
+//
+//function theme_conditional_delete_filters_table($variables) {
+//  // Note: $form will be $form['table_container'] from your
+//  // form definition, as that is the element that #theme was
+//  // applied to.
+//  $form = $variables['form'];
+//
+//  // Define our $header and $rows variables
+//  $header = [t('Column 1'), t('Column 2'), t('Column 3'), t('Delete')];
+//  $rows = [];
+//
+//  $renderer = \Drupal::service('renderer');
+//  // We need to loop through each of the renderable elements
+//  // in the $form array. Renderable elements are those that are
+//  // not prefixed with the # symbol. For example, one of the elements
+//  // of the $form element will be #theme, but we don't want to loop
+//  // through that. The function element_children() gives us the renderable
+//  // elements of an array
+//  foreach (Element::children($form) as $index) {
+//    // Declare a new row
+//    $row = [];
+//    // Populate the row
+//    $row[] = $renderer->render($form[$index]['column1']);
+//    $row[] = $renderer->render($form[$index]['column2']);
+//    $row[] = $renderer->render($form[$index]['column3']);
+//    $row[] = $renderer->render($form[$index]['delete']);
+//
+//    // Add our $row to the $rows array
+//    $rows[] = $row;
+//  }
+//
+//  // Return the themed table:
+//  return [
+//    '#theme'  => 'table',
+//    '#header' => $header,
+//    '#rows' => $rows
+//  ];
+//  return theme('table', ['header' => $header, 'rows' => $rows]);
+//}

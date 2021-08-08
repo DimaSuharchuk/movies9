@@ -1,0 +1,6 @@
+conditional_delete.entities_select_form:
+  title: 'Conditional deletion'
+  parent: system.admin_structure
+  description: 'Delete entities selected by some conditions.'
+  route_name: conditional_delete.entities_select_form
+  weight: 20

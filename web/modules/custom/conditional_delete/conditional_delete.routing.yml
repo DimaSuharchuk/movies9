@@ -1,0 +1,7 @@
+conditional_delete.entities_select_form:
+  path: '/admin/structure/conditional-deletion'
+  defaults:
+    _form: '\Drupal\conditional_delete\Form\EntitiesSelectForm'
+    _title: 'Select entities using conditions'
+  requirements:
+    _permission: 'access conditional delete'

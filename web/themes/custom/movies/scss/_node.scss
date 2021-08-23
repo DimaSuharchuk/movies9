@@ -43,13 +43,15 @@ article {
 .node-teaser {
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-row-gap: 10px;
+  grid-row-gap: 15px;
   cursor: pointer;
 
   .poster-wrapper {
     height: 0;
     padding-bottom: 150%;
-    margin-bottom: 5px;
+    margin-bottom: 0;
+    overflow-y: hidden;
+    border-radius: $movies-border-radius-default;
 
     .field-poster {
       img {

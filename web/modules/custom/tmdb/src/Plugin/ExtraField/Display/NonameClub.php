@@ -43,8 +43,7 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    // @todo Temporarily commented until there are no authorized users. Uncomment later.
-//    if ($this->current_user->isAuthenticated()) {
+    if ($this->current_user->isAuthenticated()) {
       // Search on "nnm" in English if English is currently active, or Russian
       // for others.
       $lang = $entity->language()->getId() === 'en' ? 'en' : 'ru';
@@ -91,7 +90,7 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
           'target' => '_blank',
         ],
       ];
-//    }
+    }
 
     return $build;
   }

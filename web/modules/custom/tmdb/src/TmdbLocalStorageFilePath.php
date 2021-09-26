@@ -6,9 +6,8 @@ class TmdbLocalStorageFilePath {
 
   private string $path;
 
-
   /**
-   * Create path to file in TMDb Local Storage.
+   * Create path to file in Local Storage.
    *
    * @param string $bin_directory
    *   Most parent directory for some request type.
@@ -19,13 +18,10 @@ class TmdbLocalStorageFilePath {
    *   is a child of previous element of array.
    */
   public function __construct(string $bin_directory, string $unique_name, array $nested_directories = []) {
-    $nested = '';
-    if ($nested_directories) {
-      $nested = implode('/', $nested_directories) . '/';
-    }
-
-    // Build path.
-    $this->path = "{$bin_directory}/{$nested}{$unique_name}.bin";
+    $path_components = [];
+    array_push($path_components, $bin_directory, ...$nested_directories, ...[$unique_name]);
+    // Build path to a cache file.
+    $this->path = implode('/', $path_components) . '.bin';
   }
 
   public function __toString(): string {

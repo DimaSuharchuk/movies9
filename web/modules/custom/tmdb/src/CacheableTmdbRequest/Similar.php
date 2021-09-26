@@ -54,7 +54,7 @@ class Similar extends CacheableTmdbRequest {
       }
 
       throw new TmdbApiException(
-        TmdbApiException::STATUS_FAILED,
+        TmdbApiException::STATUS_RESOURCE_NOT_FOUND,
         sprintf(
           'Similar does not work for bundle %s TMDb ID %d.',
           $this->bundle->key(),

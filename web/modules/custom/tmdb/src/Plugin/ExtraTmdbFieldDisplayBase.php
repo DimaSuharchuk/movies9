@@ -34,28 +34,26 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
    * @inheritDoc
    */
   public function view(ContentEntityInterface $entity): ?array {
-    if ($build = $this->build($entity)) {
-      $d = $this->getPluginDefinition();
+    $build = $this->build($entity);
 
-      // Wrap every TMDb extra field with this wrapper.
+    $d = $this->getPluginDefinition();
+
+    // Wrap every TMDb extra field with this wrapper.
+    $build = [
+      '#theme' => 'tmdb_field',
+      '#content' => $build,
+      '#css_class' => $d['css_class'] ?? $this->getPluginId(),
+    ];
+
+    // Wrap some fields with theme "replaceable_field" for AJAX tabs.
+    if (isset($d['replaceable']) && $d['replaceable'] === TRUE) {
       $build = [
-        '#theme' => 'tmdb_field',
+        '#theme' => 'replaceable_field',
         '#content' => $build,
-        '#css_class' => $d['css_class'] ?? $this->getPluginId(),
       ];
-
-      // Wrap some fields with theme "replaceable_field" for AJAX tabs.
-      if (isset($d['replaceable']) && $d['replaceable'] === TRUE) {
-        $build = [
-          '#theme' => 'replaceable_field',
-          '#content' => $build,
-        ];
-      }
-
-      return $build;
     }
 
-    return NULL;
+    return $build;
   }
 
   /**
@@ -89,6 +87,7 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
     if ($common = $this->adapter->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang)) {
       return $common[$field_name] ?? NULL;
     }
+
     return NULL;
   }
 
@@ -111,6 +110,7 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
     if ($person = $this->adapter->getPerson($tmdb_id, $lang)) {
       return $person[$field] ?? NULL;
     }
+
     return NULL;
   }
 

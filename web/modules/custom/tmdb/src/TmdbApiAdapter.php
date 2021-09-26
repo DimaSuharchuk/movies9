@@ -181,10 +181,19 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getCommonFieldsByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang, bool $only_cached = FALSE): ?array {
-    if ($response = $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang, $only_cached)) {
-      return $response['common'];
+    $name = "{$bundle->key()}_{$tmdb_id}_{$lang->key()}_$only_cached";
+    $data = &drupal_static(__METHOD__ . $name);
+
+    if (!is_null($data)) {
+      return $data;
     }
-    return NULL;
+
+    $response = $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang, $only_cached);
+    if (is_array($response)) {
+      $data = $response['common'] ?? [];
+    }
+
+    return $data;
   }
 
   /**
@@ -200,13 +209,22 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getFullInfoByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang, bool $only_cached = FALSE): ?array {
+    $name = "{$bundle->key()}_{$tmdb_id}_{$lang->key()}_$only_cached";
+    $data = &drupal_static(__METHOD__ . $name);
+
+    if (!is_null($data)) {
+      return $data;
+    }
+
     $query = (new FullRequest())
       ->setBundle($bundle)
       ->setTmdbId($tmdb_id)
       ->setLanguage($lang);
 
     if (!$only_cached || $query->hasCache()) {
-      return $query->response();
+      $data = $query->response();
+
+      return $data;
     }
 
     return NULL;

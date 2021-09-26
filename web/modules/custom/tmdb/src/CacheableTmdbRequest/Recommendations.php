@@ -54,7 +54,7 @@ class Recommendations extends CacheableTmdbRequest {
       }
 
       throw new TmdbApiException(
-        TmdbApiException::STATUS_FAILED,
+        TmdbApiException::STATUS_RESOURCE_NOT_FOUND,
         sprintf(
           'Recommendations does not work for bundle %s TMDb ID %d.',
           $this->bundle->key(),

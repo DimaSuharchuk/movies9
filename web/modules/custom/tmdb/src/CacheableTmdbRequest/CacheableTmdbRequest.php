@@ -29,6 +29,13 @@ abstract class CacheableTmdbRequest {
   public function response(): ?array {
     $this->local_storage = Drupal::service('tmdb.local_storage');
     $file_path = $this->getStorageFilePath();
+
+    $data = &drupal_static(__METHOD__ . $file_path);
+
+    if (!is_null($data)) {
+      return $data;
+    }
+
     if (!$data = $this->local_storage->load($file_path)) {
       // Create and save connect to TMDb API.
       $api_key = Settings::get('tmdb_api_key');
@@ -37,7 +44,15 @@ abstract class CacheableTmdbRequest {
 
       try {
         $data = $this->request();
-      } catch (TmdbApiException $e) {
+      }
+      catch (TmdbApiException $e) {
+        // Don't wanna log "404".
+        if ($e->getCode() == TmdbApiException::STATUS_RESOURCE_NOT_FOUND) {
+          $data = [];
+
+          return [];
+        }
+
         Drupal::logger(static::class)
           ->info($e->getMessage() . "<br><br>\n\n" . $e->getTraceAsString());
 

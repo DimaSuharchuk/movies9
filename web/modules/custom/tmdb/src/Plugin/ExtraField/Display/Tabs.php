@@ -51,10 +51,10 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
     if ($entity->bundle() === 'movie' && $this->getCommonFieldValue('collection_id')) {
       $build['collection'] = $this->buildAjaxLink('collection', 'Collection');
     }
-    if ($this->adapter->getRecommendations($bundle, $tmdb_id, $lang, 1)['results']) {
+    if (!empty($this->adapter->getRecommendations($bundle, $tmdb_id, $lang, 1)['results'])) {
       $build['related'] = $this->buildAjaxLink('related', 'Related');
     }
-    if ($this->adapter->getSimilar($bundle, $tmdb_id, $lang, 1)['results']) {
+    if (!empty($this->adapter->getSimilar($bundle, $tmdb_id, $lang, 1)['results'])) {
       $build['similar'] = $this->buildAjaxLink('similar', 'Similar');
     }
 

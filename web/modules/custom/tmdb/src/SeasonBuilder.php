@@ -46,7 +46,7 @@ class SeasonBuilder {
     $tmdb_id = $node->{'field_tmdb_id'}->value;
 
     $seasons_count = $this->adapter
-      ->getCommonFieldsByTmdbId(NodeBundle::tv(), $tmdb_id, $lang)['number_of_seasons'];
+      ->getCommonFieldsByTmdbId(NodeBundle::tv(), $tmdb_id, $lang)['number_of_seasons'] ?? 0;
 
     $season = $this->adapter->getSeason($tmdb_id, $season_number, $lang);
 

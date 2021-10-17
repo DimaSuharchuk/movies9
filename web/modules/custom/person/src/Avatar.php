@@ -21,7 +21,7 @@ class Avatar {
    *   Renderable array for avatar.
    */
   public function build(array $person, TmdbImageFormat $format): array {
-    if ($person['profile_path']) {
+    if (!empty($person['profile_path'])) {
       return $this->buildTmdbImageRenderableArray(
         $format,
         $person['profile_path'],
@@ -29,8 +29,8 @@ class Avatar {
       );
     }
 
-    $uri = $this->getAvatarUriByGender($person['gender']);
-    return $this->buildImageRenderableArray($uri, $person['name'], $format);
+    $uri = $this->getAvatarUriByGender($person['gender'] ?? NULL);
+    return $this->buildImageRenderableArray($uri, $person['name'] ?? '', $format);
   }
 
   /**

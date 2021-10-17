@@ -42,12 +42,13 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
 
     $lang = Language::memberByValue($entity->language()->getId());
 
-    $credits = $this->getPersonCommonField('combined_credits', TRUE);
-    if ($cast_teasers = $credits['cast']) {
-      $build['acting'] = $this->buildTeasersBlock($lang, $cast_teasers, 'acting', 'Acting');
-    }
-    if ($crew_teasers = $credits['crew']) {
-      $build['production'] = $this->buildTeasersBlock($lang, $crew_teasers, 'production', 'Production');
+    if ($credits = $this->getPersonCommonField('combined_credits', TRUE)) {
+      if ($cast_teasers = $credits['cast']) {
+        $build['acting'] = $this->buildTeasersBlock($lang, $cast_teasers, 'acting', 'Acting');
+      }
+      if ($crew_teasers = $credits['crew']) {
+        $build['production'] = $this->buildTeasersBlock($lang, $crew_teasers, 'production', 'Production');
+      }
     }
 
     return $build;

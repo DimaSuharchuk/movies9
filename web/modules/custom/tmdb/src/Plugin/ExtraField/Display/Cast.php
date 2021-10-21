@@ -54,7 +54,7 @@ class Cast extends ExtraTmdbFieldDisplayBase {
   /**
    * @see TmdbApiAdapter::getCast()
    */
-  private function getCast(): array {
+  private function getCast(): ?array {
     $bundle = NodeBundle::memberByValue($this->entity->bundle());
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
 

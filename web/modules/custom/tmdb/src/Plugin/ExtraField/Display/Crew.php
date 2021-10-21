@@ -96,7 +96,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
   /**
    * @see TmdbApiAdapter::getCrew()
    */
-  private function getCrew(): array {
+  private function getCrew(): ?array {
     $bundle = NodeBundle::memberByValue($this->entity->bundle());
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
 

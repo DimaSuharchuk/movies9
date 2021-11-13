@@ -1,5 +1,5 @@
 (function () {
-  const searchWrapper = document.getElementById("search-desktop-wrapper");
+  const searchWrapper = document.getElementById("search-wrapper");
   if (!searchWrapper) {
     return;
   }

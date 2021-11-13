@@ -22,11 +22,16 @@
  */
 .header-inner-wrapper {
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-areas: "logo mobile-nav";
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "logo search mobile-nav";
   grid-column-gap: 20px;
+  @include media-breakpoint-up(sm) {
+    grid-column-gap: 50px;
+  }
   @include media-breakpoint-up(lg) {
-    grid-template-areas: "logo desktop-nav";
+    grid-column-gap: 20px;
+    grid-template-areas: "logo desktop-nav search switchers";
+    grid-template-columns: auto 1fr auto auto;
   }
   @include media-breakpoint-up(xl) {
     grid-column-gap: 50px;
@@ -35,6 +40,7 @@
   #block-logo {
     grid-area: logo;
     place-self: start;
+    width: 42px;
 
     img {
       height: 40px;
@@ -44,12 +50,8 @@
   .desktop-nav {
     grid-area: desktop-nav;
     display: grid;
-    grid-template-columns: 1fr auto auto;
-    grid-template-areas: "desktop-menu search language-switcher theme-switcher";
-    grid-column-gap: 20px;
-    @include media-breakpoint-up(xl) {
-      grid-column-gap: 50px;
-    }
+    align-content: center;
+    justify-content: start;
 
     .main-menu {
       grid-area: desktop-menu;
@@ -82,61 +84,69 @@
         }
       }
     }
+  }
 
-    #search-desktop-wrapper {
-      grid-area: search;
-      display: flex;
-      align-items: center;
-      position: relative;
+  #search-wrapper {
+    grid-area: search;
+    // @see _search.scss
+  }
+
+  .switchers-wrapper {
+    grid-area: switchers;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "language-switcher theme-switcher";
+    grid-column-gap: 20px;
+    @include media-breakpoint-up(xl) {
+      grid-column-gap: 50px;
+    }
+  }
+
+  #block-language-switcher {
+    grid-area: language-switcher;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .active-language {
+      border-bottom: 2px solid $text-color-second;
+      padding: 6px 0;
+      cursor: pointer;
+      user-select: none;
     }
 
-    #block-language-switcher {
-      grid-area: language-switcher;
-      position: relative;
-      display: flex;
-      align-items: center;
+    .links {
+      position: absolute;
+      top: 42px;
+      left: -6px;
+      z-index: 9;
+      border-bottom-left-radius: $movies-border-radius-default;
+      border-bottom-right-radius: $movies-border-radius-default;
+      background-color: $bg-color-white;
+      box-shadow: 5px 5px 18px -8px rgba(0, 0, 0, .2);
+      height: 0;
+      overflow: hidden;
+      transition: height .2s ease-in-out;
 
-      .active-language {
-        border-bottom: 2px solid $text-color-second;
-        padding: 6px 0;
-        cursor: pointer;
-        user-select: none;
+      &.open {
+        height: 60px;
       }
 
-      .links {
-        position: absolute;
-        top: 42px;
-        left: -6px;
-        z-index: 9;
-        padding: 0 6px;
-        border-bottom-left-radius: $movies-border-radius-default;
-        border-bottom-right-radius: $movies-border-radius-default;
-        background-color: $bg-color-white;
-        box-shadow: 5px 5px 18px -8px rgba(0, 0, 0, .2);
-        height: 0;
-        overflow: hidden;
-        transition: height .2s ease-in-out;
+      li {
+        list-style: none;
 
-        &.open {
-          height: 60px;
+        + li {
+          margin-top: 1rem;
         }
 
-        li {
-          list-style: none;
-
-          + li {
-            margin-top: 1rem;
-          }
-
-          a {
-            color: $text-color-main;
-            user-select: none;
-          }
+        a {
+          padding: 6px;
+          color: $text-color-main;
+          user-select: none;
         }
       }
     }
   }
-
 
   .mobile-nav {
     grid-area: mobile-nav;
@@ -278,19 +288,19 @@
           }
         }
       }
+    }
 
-      #block-language-switcher {
-        .active-language {
-          border-bottom: 2px solid $dk_text-color-second;
-        }
+    #block-language-switcher {
+      .active-language {
+        border-bottom: 2px solid $dk_text-color-second;
+      }
 
-        .links {
-          background-color: $dk_bg-color-white;
+      .links {
+        background-color: $dk_bg-color-white;
 
-          li {
-            a {
-              color: $dk_text-color-main;
-            }
+        li {
+          a {
+            color: $dk_text-color-main;
           }
         }
       }

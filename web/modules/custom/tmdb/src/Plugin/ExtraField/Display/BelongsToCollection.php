@@ -54,6 +54,7 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
         // Set biggest "timestamp" for movie sorting.
         $time_a = $this->getReleaseDateTimestampByTmdbId($a['id']) ?? PHP_INT_MAX;
         $time_b = $this->getReleaseDateTimestampByTmdbId($b['id']) ?? PHP_INT_MAX;
+
         return $time_a <=> $time_b;
       });
       $build = [
@@ -102,8 +103,10 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
       if ($date_string = $common['release_date']) {
         $timestamp = $this->date_helper->dateStringToTimestamp($date_string);
       }
+
       return $timestamp;
     }
+
     return NULL;
   }
 

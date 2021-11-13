@@ -62,16 +62,13 @@ class Search extends FormBase {
         'method' => 'html',
       ],
     ];
-    $form['clear_input'] = [
+    $form['container_right'] = [
       '#type' => 'container',
       '#attributes' => [
-        'id' => 'reset-search-input',
-      ],
-      'content' => [
-        '#markup' => '&times;',
+        'id' => 'search-elements-align-right',
       ],
     ];
-    $form['search_type'] = [
+    $form['container_right']['search_type'] = [
       '#type' => 'select',
       '#options' => [
         TmdbSearchType::multi => $this->t('any', [], ['context' => 'Search']),
@@ -83,6 +80,15 @@ class Search extends FormBase {
         'callback' => '::ajaxHandler',
         'wrapper' => 'search-results',
         'method' => 'html',
+      ],
+    ];
+    $form['container_right']['clear_input'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'id' => 'reset-search-input',
+      ],
+      'content' => [
+        '#markup' => '&times;',
       ],
     ];
     $form['search_results'] = [

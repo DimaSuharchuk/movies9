@@ -3,7 +3,7 @@
 
   D.behaviors.languageSwitcher = {
     attach: (context, settings) => {
-      const trigger = document.querySelector(".desktop-nav .active-language");
+      const trigger = document.querySelector("#block-language-switcher .active-language");
       if (trigger && !settings.menuOnce) {
         settings.menuOnce = true;
         trigger.addEventListener("click", function () {

@@ -1,15 +1,23 @@
-#search-desktop-wrapper {
+#search-wrapper {
+  display: flex;
+  align-items: center;
   background-color: $bg-search;
   border-radius: 20px;
+  @include media-breakpoint-up(md) {
+    position: relative;
+  }
 
   input {
-    max-width: 270px;
+    width: 100%;
     height: 40px;
     border: none;
     border-radius: 20px;
     padding: 0 100px 0 10px;
     background-color: transparent;
     color: $text-color-main;
+    @include media-breakpoint-up(lg) {
+      max-width: 270px;
+    }
     @include media-breakpoint-up(xl) {
       max-width: 310px;
     }
@@ -25,6 +33,15 @@
       border: none;
     }
   }
+}
+
+#search-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+#search-elements-align-right {
+  position: relative;
 
   select {
     position: absolute;
@@ -43,18 +60,6 @@
     option {
       background-color: $bg_color-white;
     }
-  }
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0 50%;
   }
 }
 
@@ -88,6 +93,12 @@
   padding-right: 5px;
   background-color: $bg-search;
   border-radius: $movies-border-radius-big;
+  @include media-breakpoint-down(sm) {
+    top: 75px;
+    left: 15px;
+    right: 15px;
+    width: auto;
+  }
 
   .teasers-list {
     max-height: 440px;
@@ -182,12 +193,24 @@
   }
 }
 
+@keyframes gradient {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
 
 /**
  * DARK THEME.
  */
 [data-theme="dark"] {
-  #search-desktop-wrapper {
+  #search-wrapper {
     background-color: $dk_bg-search;
 
     input {

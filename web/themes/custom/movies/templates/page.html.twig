@@ -56,9 +56,13 @@
           <nav class="main-menu" role="navigation">
             {{ page.header.movies_main_navigation }}
           </nav>
-          <div id="search-desktop-wrapper">
-            {{ page.header.search_form }}
-          </div>
+        </div>
+
+        <div id="search-wrapper">
+          {{ page.header.search_form }}
+        </div>
+
+        <div class="switchers-wrapper mobile-hide">
           {{ page.header.language_switcher }}
           <div class="theme-switcher">
             <span class="text light">{{ "Day"|t({},{"context":"Theme switcher"}) }}</span>

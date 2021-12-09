@@ -1,11 +1,14 @@
 uuid: 8462ad72-c4a2-46b0-910a-e006fe7bf599
 langcode: ru
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - person
+    - system
 _core:
   default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
 id: anonymous
-label: 'Anonymous user'
+label: 'Анонимный пользователь'
 weight: 0
 is_admin: false
 permissions:

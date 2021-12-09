@@ -13,11 +13,11 @@ bundle: person
 mode: default
 content:
   field_avatar:
+    type: tmdb_image_textfield
     weight: 3
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: tmdb_image_textfield
-    region: content
   langcode:
     type: language_select
     weight: 0

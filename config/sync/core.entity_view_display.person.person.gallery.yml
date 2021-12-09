@@ -13,10 +13,10 @@ bundle: person
 mode: gallery
 content:
   extra_field_gallery:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   extra_field_biography: true
   extra_field_birthday: true

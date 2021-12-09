@@ -13,10 +13,10 @@ bundle: person
 mode: filmography
 content:
   extra_field_filmography:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   extra_field_biography: true
   extra_field_birthday: true

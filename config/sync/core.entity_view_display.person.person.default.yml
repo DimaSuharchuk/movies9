@@ -13,57 +13,57 @@ bundle: person
 mode: default
 content:
   extra_field_biography:
+    settings: {  }
+    third_party_settings: {  }
     weight: 4
     region: content
+  extra_field_birthday:
     settings: {  }
     third_party_settings: {  }
-  extra_field_birthday:
     weight: 5
     region: content
+  extra_field_deathday:
     settings: {  }
     third_party_settings: {  }
-  extra_field_deathday:
     weight: 6
     region: content
+  extra_field_filmography:
     settings: {  }
     third_party_settings: {  }
-  extra_field_filmography:
     weight: 9
     region: content
+  extra_field_known_for_department:
     settings: {  }
     third_party_settings: {  }
-  extra_field_known_for_department:
     weight: 8
     region: content
+  extra_field_original_title:
     settings: {  }
     third_party_settings: {  }
-  extra_field_original_title:
     weight: 2
     region: content
+  extra_field_person_tabs:
     settings: {  }
     third_party_settings: {  }
-  extra_field_person_tabs:
     weight: 1
     region: content
+  extra_field_place_of_birth:
     settings: {  }
     third_party_settings: {  }
-  extra_field_place_of_birth:
     weight: 7
     region: content
+  extra_field_title:
     settings: {  }
     third_party_settings: {  }
-  extra_field_title:
     weight: 3
     region: content
-    settings: {  }
-    third_party_settings: {  }
   field_avatar:
-    weight: 0
+    type: tmdb_image_compact
     label: hidden
     settings:
       width: w400
     third_party_settings: {  }
-    type: tmdb_image_compact
+    weight: 0
     region: content
 hidden:
   extra_field_gallery: true

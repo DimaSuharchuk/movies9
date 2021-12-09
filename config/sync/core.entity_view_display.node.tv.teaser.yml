@@ -19,28 +19,28 @@ bundle: tv
 mode: teaser
 content:
   extra_field_imdb_rating:
+    settings: {  }
+    third_party_settings: {  }
     weight: 1
     region: content
+  extra_field_original_title:
     settings: {  }
     third_party_settings: {  }
-  extra_field_original_title:
     weight: 3
     region: content
+  extra_field_title:
     settings: {  }
     third_party_settings: {  }
-  extra_field_title:
     weight: 2
     region: content
-    settings: {  }
-    third_party_settings: {  }
   field_poster:
     type: tmdb_image_compact
-    weight: 0
-    region: content
     label: hidden
     settings:
       width: w185
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   extra_field_approved: true
   extra_field_cast: true

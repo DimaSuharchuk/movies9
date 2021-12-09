@@ -18,10 +18,10 @@ bundle: movie
 mode: crew
 content:
   extra_field_crew:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   extra_field_approved: true
   extra_field_belongs_to_collection: true

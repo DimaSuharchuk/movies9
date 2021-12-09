@@ -18,10 +18,10 @@ bundle: tv
 mode: seasons
 content:
   extra_field_seasons:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   extra_field_approved: true
   extra_field_cast: true

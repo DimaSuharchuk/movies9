@@ -15,8 +15,8 @@ plugin: movies_language_switcher
 settings:
   id: movies_language_switcher
   label: 'Language switcher'
-  provider: imdb
   label_display: '0'
+  provider: imdb
   trim_links: 1
   trim_length: '3'
 visibility: {  }

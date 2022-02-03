@@ -1,19 +1,25 @@
 extra-tabs:
   js:
-    js/extra-tabs.js: {}
+    js/extra-tabs.js: { }
   dependencies:
     - core/drupal
 
 tmdb_field_post_update:
   version: 1.0
   js:
-    js/tmdb-field-post-update.js: {}
+    js/tmdb-field-post-update.js: { }
   dependencies:
     - core/drupal
 
 guest_stars:
   version: 1.0
   js:
-    js/guest-stars.js: {}
+    js/guest-stars.js: { }
+  dependencies:
+    - core/drupal
+
+nnm:
+  js:
+    js/nnm.js: { }
   dependencies:
     - core/drupal

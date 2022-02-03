@@ -132,3 +132,50 @@ msgstr "Серіал"
 msgctxt "Search"
 msgid "Person"
 msgstr "Персона"
+
+# NNM.
+msgid "Info about torrents from NNM-Club"
+msgstr "Інформація про торренти з NNM-Club"
+
+msgid "Get links to torrent and magnet link from NNM-Club"
+msgstr "Отримати посилання на торрент і магнет-посилання з NNM-Club"
+
+msgctxt "nnm"
+msgid "Download torrent file"
+msgstr "Завантажити торрент-файл"
+
+msgctxt "nnm"
+msgid "Magnetize"
+msgstr "Примагнітитись"
+
+msgctxt "nnm"
+msgid "Title"
+msgstr "Заголовок"
+
+msgctxt "nnm"
+msgid "Size"
+msgstr "Розмір"
+
+msgctxt "nnm"
+msgid "Seeders"
+msgstr "Роздають"
+
+msgctxt "nnm"
+msgid "Get torrent/magnet"
+msgstr "Отримати торрент/магнет-посилання"
+
+msgctxt "nnm"
+msgid "Load"
+msgstr "Завантажити"
+
+msgctxt "nnm"
+msgid "No results. You can also try again on other languages."
+msgstr "Немає результатів. Ви можете спробувати ще раз змінивши мову сайту на англійську."
+
+msgctxt "nnm"
+msgid "Go to nnm-club"
+msgstr "Перейти на сайт nnm-club"
+
+msgctxt "nnm"
+msgid "Show torrents info"
+msgstr "Переглянути інформацію про торренти"

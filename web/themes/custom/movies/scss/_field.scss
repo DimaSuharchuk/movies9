@@ -162,12 +162,83 @@
   a {
     position: absolute;
     top: 0;
-    right: 0;
-    background: url(../assets/torrent.svg) no-repeat;
-    background-size: cover;
+    right: 35px;
+    background: url(../assets/nnm.webp) no-repeat;
+    background-size: contain;
     width: 30px;
     height: 30px;
     font-size: 0;
+  }
+}
+
+.field-noname-sheet {
+  a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: url(../assets/sheet.svg) no-repeat right;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+  }
+}
+
+.nnm-sheet-modal {
+  table {
+    width: 100%;
+  }
+
+  th {
+    background-color: darkgray;
+    padding: 10px;
+  }
+
+  tr {
+    min-height: 30px;
+  }
+
+  td {
+    border: 1px solid cadetblue;
+    text-align: center;
+    padding: 2px 5px;
+  }
+}
+
+.nnm-sheet-empty-message {
+  min-height: 100px;
+  display: grid;
+  place-content: center;
+}
+
+/**
+ * Torrent icons.
+ */
+a[data-topic-id] {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nnm-links-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.nnm-torrent-link {
+  display: block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+
+  &.file {
+    background-image: url(../assets/torrent.svg);
+  }
+
+  &.magnet {
+    background-image: url(../assets/magnet.svg);
   }
 }
 

@@ -4,6 +4,7 @@ namespace Drupal\tmdb;
 
 use Drupal\imdb\enum\Language;
 use Drupal\imdb\enum\NodeBundle;
+use Drupal\node\NodeInterface;
 use Drupal\tmdb\CacheableTmdbRequest\EpisodeImdbId;
 use Drupal\tmdb\CacheableTmdbRequest\FindByImdbId;
 use Drupal\tmdb\CacheableTmdbRequest\FullRequest;
@@ -194,6 +195,28 @@ class TmdbApiAdapter {
     }
 
     return $data;
+  }
+
+  /**
+   * Get value of some common movie or TV field from TMDb API or cached file.
+   *
+   * @param $field_name
+   *   Name of common field in TMDbLocalStorage (some fields key rewrote with
+   *   more logical name).
+   *
+   * @return mixed|null
+   *   Field value.
+   */
+  public function getCommonFieldValue(NodeInterface $node, string $field_name) {
+    $bundle = NodeBundle::memberByValue($node->bundle());
+    $tmdb_id = $node->{'field_tmdb_id'}->value;
+    $lang = Language::memberByValue($node->language()->getId());
+
+    if ($common = $this->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang)) {
+      return $common[$field_name] ?? NULL;
+    }
+
+    return NULL;
   }
 
   /**

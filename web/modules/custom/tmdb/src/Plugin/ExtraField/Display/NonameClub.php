@@ -43,26 +43,25 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    if ($this->current_user->isAuthenticated()) {
+    if ($this->current_user->hasPermission('view nnm')) {
       // Search on "nnm" in English if English is currently active, or Russian
       // for others.
       $lang = $entity->language()->getId() === 'en' ? 'en' : 'ru';
       /** @var \Drupal\node\NodeInterface $node */
       $node = $entity->getTranslation($lang);
 
-      $clear_title = preg_replace('/[^a-zа-я\d\s-]/iu', '', $node->getTitle());
+      $search_string = preg_replace('/[^a-zа-я\d\s-]/iu', '', $node->getTitle());
 
-      $year = '';
       switch ($entity->bundle()) {
         case NodeBundle::movie:
           if ($release_date = $this->getCommonFieldValue('release_date')) {
-            $year = ' ' . $this->date_helper->dateStringToYear($release_date);
+            $search_string .= ' ' . $this->date_helper->dateStringToYear($release_date);
           }
           break;
 
         case NodeBundle::tv:
           if ($start_date = $this->getCommonFieldValue('first_air_date')) {
-            $year = ' ' . $this->date_helper->dateStringToYear($start_date);
+            $search_string .= ' ' . $this->date_helper->dateStringToYear($start_date);
           }
           break;
 
@@ -75,7 +74,7 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
           '//nnmclub.to/forum/tracker.php',
           [
             'query' => [
-              'nm' => "{$clear_title} {$year}", // search string: "title + year"
+              'nm' => $search_string, // search string: "title + year"
               'o' => 10, // sort by Seeders
               's' => 2, // sorting DESC
               'sha' => 0, // disable Author column
@@ -84,6 +83,7 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
           ]
         ),
         '#attributes' => [
+          'title' => $this->t('Go to nnm-club', [], ['context' => 'nnm']),
           'class' => [
             'noname-club-icon',
           ],

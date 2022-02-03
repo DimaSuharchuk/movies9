@@ -1,0 +1,12 @@
+uuid: 6019107e-52d4-4ccc-a759-301bf5dd4ecd
+langcode: en
+status: true
+dependencies:
+  module:
+    - tmdb
+id: verified
+label: Verified
+weight: 2
+is_admin: null
+permissions:
+  - 'view nnm'

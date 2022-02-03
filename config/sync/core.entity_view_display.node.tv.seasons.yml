@@ -31,6 +31,7 @@ hidden:
   extra_field_imdb_rating: true
   extra_field_networks: true
   extra_field_noname_club: true
+  extra_field_noname_sheet: true
   extra_field_number_of_episodes: true
   extra_field_number_of_seasons: true
   extra_field_original_title: true

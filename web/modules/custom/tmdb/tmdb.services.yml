@@ -25,3 +25,7 @@ services:
     class: Drupal\tmdb\builder\SearchMiniTeaserBuilder
     arguments:
       - '@person.avatar'
+  tmdb.nnm_helper:
+    class: Drupal\tmdb\NnmHelper
+    arguments:
+      - '@http_client'

@@ -1,0 +1,14 @@
+tmdb.nnm-sheet:
+  path: '/nnm-sheet-popup/{nid}'
+  defaults:
+    _title: 'Info about torrents from NNM-Club'
+    _controller: '\Drupal\tmdb\Controller\NnmController::getTable'
+  requirements:
+    _permission: 'view nnm'
+tmdb.nnm-magnet:
+  path: '/nnm-magnet/{topic_id}'
+  defaults:
+    _title: 'Get links to torrent and magnet link from NNM-Club'
+    _controller: '\Drupal\tmdb\Controller\NnmController::getTorrentMagnet'
+  requirements:
+    _permission: 'view nnm'

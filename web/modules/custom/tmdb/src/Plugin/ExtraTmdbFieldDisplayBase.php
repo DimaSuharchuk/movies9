@@ -7,7 +7,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\extra_field\Plugin\ExtraFieldDisplayBase;
 use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
 use Drupal\tmdb\TmdbApiAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -80,15 +79,10 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
    *   Field value.
    */
   protected function getCommonFieldValue(string $field_name) {
-    $bundle = NodeBundle::memberByValue($this->entity->bundle());
-    $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
-    $lang = Language::memberByValue($this->entity->language()->getId());
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $this->entity;
 
-    if ($common = $this->adapter->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang)) {
-      return $common[$field_name] ?? NULL;
-    }
-
-    return NULL;
+    return $this->adapter->getCommonFieldValue($node, $field_name);
   }
 
   /**

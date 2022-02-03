@@ -77,6 +77,7 @@ namespace PHPSTORM_META {
       'database.replica_kill_switch' => '\Drupal\Core\Database\ReplicaKillSwitch',
       'datetime.time' => '\Drupal\Component\Datetime\Time',
       'file_system' => '\Drupal\Core\File\FileSystem',
+      'file_url_generator' => '\Drupal\Core\File\FileUrlGenerator',
       'form_builder' => '\Drupal\Core\Form\FormBuilder',
       'form_validator' => '\Drupal\Core\Form\FormValidator',
       'form_submitter' => '\Drupal\Core\Form\FormSubmitter',
@@ -115,9 +116,11 @@ namespace PHPSTORM_META {
       'extension.list.profile' => '\Drupal\Core\Extension\ProfileExtensionList',
       'extension.list.theme' => '\Drupal\Core\Extension\ThemeExtensionList',
       'extension.list.theme_engine' => '\Drupal\Core\Extension\ThemeEngineExtensionList',
+      'extension.path.resolver' => '\Drupal\Core\Extension\ExtensionPathResolver',
       'content_uninstall_validator' => '\Drupal\Core\ProxyClass\Entity\ContentUninstallValidator',
       'required_module_uninstall_validator' => '\Drupal\Core\ProxyClass\Extension\RequiredModuleUninstallValidator',
       'module_required_by_themes_uninstall_validator' => '\Drupal\Core\ProxyClass\Extension\ModuleRequiredByThemesUninstallValidator',
+      'database_driver_uninstall_validator' => '\Drupal\Core\ProxyClass\Extension\DatabaseDriverUninstallValidator',
       'theme_handler' => '\Drupal\Core\Extension\ThemeHandler',
       'theme_installer' => '\Drupal\Core\Extension\ThemeInstaller',
       'entity.memory_cache' => '\Drupal\Core\Cache\MemoryCache\MemoryCache',
@@ -159,7 +162,7 @@ namespace PHPSTORM_META {
       'plugin.cache_clearer' => '\Drupal\Core\ProxyClass\Plugin\CachedDiscoveryClearer',
       'paramconverter.menu_link' => '\Drupal\Core\ProxyClass\ParamConverter\MenuLinkPluginConverter',
       'menu_link.static.overrides' => '\Drupal\Core\Menu\StaticMenuLinkOverrides',
-      'request_stack' => '\Symfony\Component\HttpFoundation\RequestStack',
+      'request_stack' => '\Drupal\Core\Http\RequestStack',
       'current_route_match' => '\Drupal\Core\Routing\CurrentRouteMatch',
       'event_dispatcher' => '\Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher',
       'app.root' => '\SplString',
@@ -376,6 +379,8 @@ namespace PHPSTORM_META {
       'placeholder_strategy' => '\Drupal\Core\Render\Placeholder\ChainedPlaceholderStrategy',
       'placeholder_strategy.single_flush' => '\Drupal\Core\Render\Placeholder\SingleFlushStrategy',
       'email.validator' => '\Drupal\Component\Utility\EmailValidator',
+      'update.update_hook_registry' => '\Drupal\Core\Update\UpdateHookRegistry',
+      'update.update_hook_registry_factory' => '\Drupal\Core\Update\UpdateHookRegistryFactory',
       'update.post_update_registry' => '\Drupal\Core\Update\UpdateRegistry',
       'update.post_update_registry_factory' => '\Drupal\Core\Update\UpdateRegistryFactory',
       'uuid' => '\Drupal\Component\Uuid\Php',
@@ -418,6 +423,8 @@ namespace PHPSTORM_META {
       'access_check.field_ui.view_mode' => '\Drupal\field_ui\Access\ViewModeAccessCheck',
       'access_check.field_ui.form_mode' => '\Drupal\field_ui\Access\FormModeAccessCheck',
       'file.usage' => '\Drupal\file\FileUsage\DatabaseFileUsageBackend',
+      'file.upload_handler' => '\Drupal\file\Upload\FileUploadHandler',
+      'file.repository' => '\Drupal\file\FileRepository',
       'plugin.manager.filter' => '\Drupal\filter\FilterPluginManager',
       'filter.uninstall_validator' => '\Drupal\filter\ProxyClass\FilterUninstallValidator',
       'imdb.helper' => '\Drupal\imdb\IMDbHelper',
@@ -469,12 +476,19 @@ namespace PHPSTORM_META {
       'system.config_subscriber' => '\Drupal\system\SystemConfigSubscriber',
       'system.config_cache_tag' => '\Drupal\system\EventSubscriber\ConfigCacheTag',
       'system.timezone_resolver' => '\Drupal\system\TimeZoneResolver',
+      'system.file_event.subscriber' => '\Drupal\system\EventSubscriber\SecurityFileUploadEventSubscriber',
+      'logger.channel.system' => '\Drupal\Core\Logger\LoggerChannel',
+      'system.sa_fetcher' => '\Drupal\system\SecurityAdvisories\SecurityAdvisoriesFetcher',
+      'system.advisories_config_subscriber' => '\Drupal\system\EventSubscriber\AdvisoriesConfigSubscriber',
       'taxonomy_term.breadcrumb' => '\Drupal\taxonomy\TermBreadcrumbBuilder',
+      'taxonomy_term.taxonomy_term_route_context' => '\Drupal\taxonomy\ContextProvider\TermRouteContext',
       'tmdb.adapter' => '\Drupal\tmdb\TmdbApiAdapter',
       'tmdb.local_storage' => '\Drupal\tmdb\TmdbLocalStorage',
       'tmdb.tmdb_teaser' => '\Drupal\tmdb\TmdbTeaser',
       'tmdb.season_builder' => '\Drupal\tmdb\SeasonBuilder',
       'tmdb.tmdb_field_lazy_builder' => '\Drupal\tmdb\TmdbFieldLazyBuilder',
+      'tmdb.builder.search_mini_teaser' => '\Drupal\tmdb\builder\SearchMiniTeaserBuilder',
+      'tmdb.nnm_helper' => '\Drupal\tmdb\NnmHelper',
       'cache.toolbar' => '\Drupal\Core\Cache\CacheBackendInterface',
       'toolbar.page_cache_request_policy.allow_toolbar_path' => '\Drupal\toolbar\PageCache\AllowToolbarPath',
       'toolbar.menu_tree' => '\Drupal\toolbar\Menu\ToolbarMenuLinkTree',
@@ -548,6 +562,7 @@ namespace PHPSTORM_META {
       'language.commands' => '\Drush\Drupal\Commands\core\LanguageCommands',
       'locale.commands' => '\Drush\Drupal\Commands\core\LocaleCommands',
       'messenger.commands' => '\Drush\Drupal\Commands\core\MessengerCommands',
+      'migrate_runner.commands' => '\Drush\Drupal\Commands\core\MigrateRunnerCommands',
       'queue.commands' => '\Drush\Drupal\Commands\core\QueueCommands',
       'role.commands' => '\Drush\Drupal\Commands\core\RoleCommands',
       'state.commands' => '\Drush\Drupal\Commands\core\StateCommands',
@@ -566,6 +581,7 @@ namespace PHPSTORM_META {
       'language_request_subscriber' => '\Drupal\language\EventSubscriber\LanguageRequestSubscriber',
       'path_processor_language' => '\Drupal\language\HttpKernel\PathProcessorLanguage',
       'node.node_translation_exception' => '\Drupal\node\EventSubscriber\NodeTranslationExceptionSubscriber',
+      'cache.backend.null' => '\Drupal\Core\Cache\NullBackendFactory',
       'logger.drupaltodrush' => '\Drush\Log\DrushLog',
       'drupal.proxy_original_service.page_cache_response_policy' => '\Drupal\Core\PageCache\ChainResponsePolicy',
       'drupal.proxy_original_service.config.installer' => '\Drupal\Core\Config\ConfigInstaller',
@@ -574,6 +590,7 @@ namespace PHPSTORM_META {
       'drupal.proxy_original_service.content_uninstall_validator' => '\Drupal\Core\Entity\ContentUninstallValidator',
       'drupal.proxy_original_service.required_module_uninstall_validator' => '\Drupal\Core\Extension\RequiredModuleUninstallValidator',
       'drupal.proxy_original_service.module_required_by_themes_uninstall_validator' => '\Drupal\Core\Extension\ModuleRequiredByThemesUninstallValidator',
+      'drupal.proxy_original_service.database_driver_uninstall_validator' => '\Drupal\Core\Extension\DatabaseDriverUninstallValidator',
       'drupal.proxy_original_service.plugin.cache_clearer' => '\Drupal\Core\Plugin\CachedDiscoveryClearer',
       'drupal.proxy_original_service.paramconverter.menu_link' => '\Drupal\Core\ParamConverter\MenuLinkPluginConverter',
       'drupal.proxy_original_service.lock' => '\Drupal\Core\Lock\DatabaseLockBackend',
@@ -599,15 +616,15 @@ namespace PHPSTORM_META {
     \Drupal\Core\Entity\EntityTypeManagerInterface::getStorage(0),
     map([
       'block' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
-      'field_config' => '\Drupal\field\FieldConfigStorage',
       'field_storage_config' => '\Drupal\field\FieldStorageConfigStorage',
+      'field_config' => '\Drupal\field\FieldConfigStorage',
       'file' => '\Drupal\file\FileStorage',
       'filter_format' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
-      'language_content_settings' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
       'configurable_language' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
+      'language_content_settings' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
       'menu_link_content' => '\Drupal\menu_link_content\MenuLinkContentStorage',
-      'node' => '\Drupal\node\NodeStorage',
       'node_type' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
+      'node' => '\Drupal\node\NodeStorage',
       'path_alias' => '\Drupal\path_alias\PathAliasStorage',
       'person' => '\Drupal\Core\Entity\Sql\SqlContentEntityStorage',
       'menu' => '\Drupal\system\MenuStorage',
@@ -617,11 +634,11 @@ namespace PHPSTORM_META {
       'user_role' => '\Drupal\user\RoleStorage',
       'user' => '\Drupal\user\UserStorage',
       'view' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
-      'date_format' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
+      'entity_form_mode' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
+      'entity_view_display' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
       'entity_view_mode' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
       'entity_form_display' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
-      'entity_view_display' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
-      'entity_form_mode' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
+      'date_format' => '\Drupal\Core\Config\Entity\ConfigEntityStorage',
       'base_field_override' => '\Drupal\Core\Field\BaseFieldOverrideStorage',
     ])
   );
@@ -644,12 +661,12 @@ namespace PHPSTORM_META {
     \Drupal\Core\Entity\EntityTypeManagerInterface::getListBuilder(0),
     map([
       'block' => '\Drupal\block\BlockListBuilder',
-      'field_config' => '\Drupal\field_ui\FieldConfigListBuilder',
       'field_storage_config' => '\Drupal\field_ui\FieldStorageConfigListBuilder',
+      'field_config' => '\Drupal\field_ui\FieldConfigListBuilder',
       'filter_format' => '\Drupal\filter\FilterFormatListBuilder',
       'configurable_language' => '\Drupal\language\LanguageListBuilder',
-      'node' => '\Drupal\node\NodeListBuilder',
       'node_type' => '\Drupal\node\NodeTypeListBuilder',
+      'node' => '\Drupal\node\NodeListBuilder',
       'person' => '\Drupal\person\PersonEntityListBuilder',
       'menu' => '\Drupal\menu_ui\MenuListBuilder',
       'taxonomy_term' => '\Drupal\Core\Entity\EntityListBuilder',
@@ -657,9 +674,9 @@ namespace PHPSTORM_META {
       'user_role' => '\Drupal\user\RoleListBuilder',
       'user' => '\Drupal\user\UserListBuilder',
       'view' => '\Drupal\views_ui\ViewListBuilder',
-      'date_format' => '\Drupal\system\DateFormatListBuilder',
-      'entity_view_mode' => '\Drupal\field_ui\EntityDisplayModeListBuilder',
       'entity_form_mode' => '\Drupal\field_ui\EntityFormModeListBuilder',
+      'entity_view_mode' => '\Drupal\field_ui\EntityDisplayModeListBuilder',
+      'date_format' => '\Drupal\system\DateFormatListBuilder',
     ])
   );
 
@@ -667,15 +684,15 @@ namespace PHPSTORM_META {
     \Drupal\Core\Entity\EntityTypeManagerInterface::getAccessControlHandler(0),
     map([
      'block' => '\Drupal\block\BlockAccessControlHandler',
-     'field_config' => '\Drupal\field\FieldConfigAccessControlHandler',
      'field_storage_config' => '\Drupal\field\FieldStorageConfigAccessControlHandler',
+     'field_config' => '\Drupal\field\FieldConfigAccessControlHandler',
      'file' => '\Drupal\file\FileAccessControlHandler',
      'filter_format' => '\Drupal\filter\FilterFormatAccessControlHandler',
-     'language_content_settings' => '\Drupal\Core\Entity\EntityAccessControlHandler',
      'configurable_language' => '\Drupal\language\LanguageAccessControlHandler',
+     'language_content_settings' => '\Drupal\Core\Entity\EntityAccessControlHandler',
      'menu_link_content' => '\Drupal\menu_link_content\MenuLinkContentAccessControlHandler',
-     'node' => '\Drupal\node\NodeAccessControlHandler',
      'node_type' => '\Drupal\node\NodeTypeAccessControlHandler',
+     'node' => '\Drupal\node\NodeAccessControlHandler',
      'path_alias' => '\Drupal\Core\Entity\EntityAccessControlHandler',
      'person' => '\Drupal\person\PersonEntityAccessControlHandler',
      'menu' => '\Drupal\system\MenuAccessControlHandler',
@@ -685,11 +702,11 @@ namespace PHPSTORM_META {
      'user_role' => '\Drupal\user\RoleAccessControlHandler',
      'user' => '\Drupal\user\UserAccessControlHandler',
      'view' => '\Drupal\Core\Entity\EntityAccessControlHandler',
-     'date_format' => '\Drupal\system\DateFormatAccessControlHandler',
+     'entity_form_mode' => '\Drupal\Core\Entity\EntityAccessControlHandler',
+     'entity_view_display' => '\Drupal\Core\Entity\Entity\Access\EntityViewDisplayAccessControlHandler',
      'entity_view_mode' => '\Drupal\Core\Entity\EntityAccessControlHandler',
      'entity_form_display' => '\Drupal\Core\Entity\Entity\Access\EntityFormDisplayAccessControlHandler',
-     'entity_view_display' => '\Drupal\Core\Entity\Entity\Access\EntityViewDisplayAccessControlHandler',
-     'entity_form_mode' => '\Drupal\Core\Entity\EntityAccessControlHandler',
+     'date_format' => '\Drupal\system\DateFormatAccessControlHandler',
      'base_field_override' => '\Drupal\Core\Field\BaseFieldOverrideAccessControlHandler',
     ])
   );
@@ -698,13 +715,13 @@ namespace PHPSTORM_META {
   override(\Drupal\block\Entity\Block::load(), map(['' => '\Drupal\block\Entity\Block']));
   override(\Drupal\block\Entity\Block::create(), map(['' => '\Drupal\block\Entity\Block']));
 
-  override(\Drupal\field\Entity\FieldConfig::loadMultiple(), map(['' => '\Drupal\field\Entity\FieldConfig[]']));
-  override(\Drupal\field\Entity\FieldConfig::load(), map(['' => '\Drupal\field\Entity\FieldConfig']));
-  override(\Drupal\field\Entity\FieldConfig::create(), map(['' => '\Drupal\field\Entity\FieldConfig']));
-
   override(\Drupal\field\Entity\FieldStorageConfig::loadMultiple(), map(['' => '\Drupal\field\Entity\FieldStorageConfig[]']));
   override(\Drupal\field\Entity\FieldStorageConfig::load(), map(['' => '\Drupal\field\Entity\FieldStorageConfig']));
   override(\Drupal\field\Entity\FieldStorageConfig::create(), map(['' => '\Drupal\field\Entity\FieldStorageConfig']));
+
+  override(\Drupal\field\Entity\FieldConfig::loadMultiple(), map(['' => '\Drupal\field\Entity\FieldConfig[]']));
+  override(\Drupal\field\Entity\FieldConfig::load(), map(['' => '\Drupal\field\Entity\FieldConfig']));
+  override(\Drupal\field\Entity\FieldConfig::create(), map(['' => '\Drupal\field\Entity\FieldConfig']));
 
   override(\Drupal\file\Entity\File::loadMultiple(), map(['' => '\Drupal\file\Entity\File[]']));
   override(\Drupal\file\Entity\File::load(), map(['' => '\Drupal\file\Entity\File']));
@@ -714,25 +731,25 @@ namespace PHPSTORM_META {
   override(\Drupal\filter\Entity\FilterFormat::load(), map(['' => '\Drupal\filter\Entity\FilterFormat']));
   override(\Drupal\filter\Entity\FilterFormat::create(), map(['' => '\Drupal\filter\Entity\FilterFormat']));
 
-  override(\Drupal\language\Entity\ContentLanguageSettings::loadMultiple(), map(['' => '\Drupal\language\Entity\ContentLanguageSettings[]']));
-  override(\Drupal\language\Entity\ContentLanguageSettings::load(), map(['' => '\Drupal\language\Entity\ContentLanguageSettings']));
-  override(\Drupal\language\Entity\ContentLanguageSettings::create(), map(['' => '\Drupal\language\Entity\ContentLanguageSettings']));
-
   override(\Drupal\language\Entity\ConfigurableLanguage::loadMultiple(), map(['' => '\Drupal\language\Entity\ConfigurableLanguage[]']));
   override(\Drupal\language\Entity\ConfigurableLanguage::load(), map(['' => '\Drupal\language\Entity\ConfigurableLanguage']));
   override(\Drupal\language\Entity\ConfigurableLanguage::create(), map(['' => '\Drupal\language\Entity\ConfigurableLanguage']));
+
+  override(\Drupal\language\Entity\ContentLanguageSettings::loadMultiple(), map(['' => '\Drupal\language\Entity\ContentLanguageSettings[]']));
+  override(\Drupal\language\Entity\ContentLanguageSettings::load(), map(['' => '\Drupal\language\Entity\ContentLanguageSettings']));
+  override(\Drupal\language\Entity\ContentLanguageSettings::create(), map(['' => '\Drupal\language\Entity\ContentLanguageSettings']));
 
   override(\Drupal\menu_link_content\Entity\MenuLinkContent::loadMultiple(), map(['' => '\Drupal\menu_link_content\Entity\MenuLinkContent[]']));
   override(\Drupal\menu_link_content\Entity\MenuLinkContent::load(), map(['' => '\Drupal\menu_link_content\Entity\MenuLinkContent']));
   override(\Drupal\menu_link_content\Entity\MenuLinkContent::create(), map(['' => '\Drupal\menu_link_content\Entity\MenuLinkContent']));
 
-  override(\Drupal\node\Entity\Node::loadMultiple(), map(['' => '\Drupal\node\Entity\Node[]']));
-  override(\Drupal\node\Entity\Node::load(), map(['' => '\Drupal\node\Entity\Node']));
-  override(\Drupal\node\Entity\Node::create(), map(['' => '\Drupal\node\Entity\Node']));
-
   override(\Drupal\node\Entity\NodeType::loadMultiple(), map(['' => '\Drupal\node\Entity\NodeType[]']));
   override(\Drupal\node\Entity\NodeType::load(), map(['' => '\Drupal\node\Entity\NodeType']));
   override(\Drupal\node\Entity\NodeType::create(), map(['' => '\Drupal\node\Entity\NodeType']));
+
+  override(\Drupal\node\Entity\Node::loadMultiple(), map(['' => '\Drupal\node\Entity\Node[]']));
+  override(\Drupal\node\Entity\Node::load(), map(['' => '\Drupal\node\Entity\Node']));
+  override(\Drupal\node\Entity\Node::create(), map(['' => '\Drupal\node\Entity\Node']));
 
   override(\Drupal\path_alias\Entity\PathAlias::loadMultiple(), map(['' => '\Drupal\path_alias\Entity\PathAlias[]']));
   override(\Drupal\path_alias\Entity\PathAlias::load(), map(['' => '\Drupal\path_alias\Entity\PathAlias']));
@@ -770,9 +787,13 @@ namespace PHPSTORM_META {
   override(\Drupal\views\Entity\View::load(), map(['' => '\Drupal\views\Entity\View']));
   override(\Drupal\views\Entity\View::create(), map(['' => '\Drupal\views\Entity\View']));
 
-  override(\Drupal\Core\Datetime\Entity\DateFormat::loadMultiple(), map(['' => '\Drupal\Core\Datetime\Entity\DateFormat[]']));
-  override(\Drupal\Core\Datetime\Entity\DateFormat::load(), map(['' => '\Drupal\Core\Datetime\Entity\DateFormat']));
-  override(\Drupal\Core\Datetime\Entity\DateFormat::create(), map(['' => '\Drupal\Core\Datetime\Entity\DateFormat']));
+  override(\Drupal\Core\Entity\Entity\EntityFormMode::loadMultiple(), map(['' => '\Drupal\Core\Entity\Entity\EntityFormMode[]']));
+  override(\Drupal\Core\Entity\Entity\EntityFormMode::load(), map(['' => '\Drupal\Core\Entity\Entity\EntityFormMode']));
+  override(\Drupal\Core\Entity\Entity\EntityFormMode::create(), map(['' => '\Drupal\Core\Entity\Entity\EntityFormMode']));
+
+  override(\Drupal\Core\Entity\Entity\EntityViewDisplay::loadMultiple(), map(['' => '\Drupal\Core\Entity\Entity\EntityViewDisplay[]']));
+  override(\Drupal\Core\Entity\Entity\EntityViewDisplay::load(), map(['' => '\Drupal\Core\Entity\Entity\EntityViewDisplay']));
+  override(\Drupal\Core\Entity\Entity\EntityViewDisplay::create(), map(['' => '\Drupal\Core\Entity\Entity\EntityViewDisplay']));
 
   override(\Drupal\Core\Entity\Entity\EntityViewMode::loadMultiple(), map(['' => '\Drupal\Core\Entity\Entity\EntityViewMode[]']));
   override(\Drupal\Core\Entity\Entity\EntityViewMode::load(), map(['' => '\Drupal\Core\Entity\Entity\EntityViewMode']));
@@ -782,13 +803,9 @@ namespace PHPSTORM_META {
   override(\Drupal\Core\Entity\Entity\EntityFormDisplay::load(), map(['' => '\Drupal\Core\Entity\Entity\EntityFormDisplay']));
   override(\Drupal\Core\Entity\Entity\EntityFormDisplay::create(), map(['' => '\Drupal\Core\Entity\Entity\EntityFormDisplay']));
 
-  override(\Drupal\Core\Entity\Entity\EntityViewDisplay::loadMultiple(), map(['' => '\Drupal\Core\Entity\Entity\EntityViewDisplay[]']));
-  override(\Drupal\Core\Entity\Entity\EntityViewDisplay::load(), map(['' => '\Drupal\Core\Entity\Entity\EntityViewDisplay']));
-  override(\Drupal\Core\Entity\Entity\EntityViewDisplay::create(), map(['' => '\Drupal\Core\Entity\Entity\EntityViewDisplay']));
-
-  override(\Drupal\Core\Entity\Entity\EntityFormMode::loadMultiple(), map(['' => '\Drupal\Core\Entity\Entity\EntityFormMode[]']));
-  override(\Drupal\Core\Entity\Entity\EntityFormMode::load(), map(['' => '\Drupal\Core\Entity\Entity\EntityFormMode']));
-  override(\Drupal\Core\Entity\Entity\EntityFormMode::create(), map(['' => '\Drupal\Core\Entity\Entity\EntityFormMode']));
+  override(\Drupal\Core\Datetime\Entity\DateFormat::loadMultiple(), map(['' => '\Drupal\Core\Datetime\Entity\DateFormat[]']));
+  override(\Drupal\Core\Datetime\Entity\DateFormat::load(), map(['' => '\Drupal\Core\Datetime\Entity\DateFormat']));
+  override(\Drupal\Core\Datetime\Entity\DateFormat::create(), map(['' => '\Drupal\Core\Datetime\Entity\DateFormat']));
 
   override(\Drupal\Core\Field\Entity\BaseFieldOverride::loadMultiple(), map(['' => '\Drupal\Core\Field\Entity\BaseFieldOverride[]']));
   override(\Drupal\Core\Field\Entity\BaseFieldOverride::load(), map(['' => '\Drupal\Core\Field\Entity\BaseFieldOverride']));

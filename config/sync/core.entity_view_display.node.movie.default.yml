@@ -30,17 +30,22 @@ content:
   extra_field_imdb_rating:
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   extra_field_movie_release_date:
     settings: {  }
     third_party_settings: {  }
-    weight: 8
+    weight: 9
     region: content
   extra_field_noname_club:
     settings: {  }
     third_party_settings: {  }
     weight: 6
+    region: content
+  extra_field_noname_sheet:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
     region: content
   extra_field_original_title:
     settings: {  }
@@ -50,22 +55,22 @@ content:
   extra_field_overview:
     settings: {  }
     third_party_settings: {  }
-    weight: 12
+    weight: 13
     region: content
   extra_field_production_companies:
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 12
     region: content
   extra_field_runtime:
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   extra_field_site:
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 11
     region: content
   extra_field_tabs:
     settings: {  }
@@ -80,7 +85,7 @@ content:
   extra_field_videos:
     settings: {  }
     third_party_settings: {  }
-    weight: 13
+    weight: 14
     region: content
   field_poster:
     type: tmdb_image_compact

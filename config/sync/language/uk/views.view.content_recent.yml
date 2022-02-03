@@ -4,6 +4,10 @@ display:
   default:
     display_title: Базово
     display_options:
+      title: 'Останні матеріали'
+      fields:
+        changed:
+          separator: ', '
       exposed_form:
         options:
           submit_button: Застосувати
@@ -11,10 +15,6 @@ display:
           exposed_sorts_label: 'Впорядкувати за'
           sort_asc_label: Зрост
           sort_desc_label: Спад
-      fields:
-        changed:
-          separator: ', '
-      title: 'Останні матеріали'
       empty:
         area_text_custom:
           content: 'Матеріали відсутні.'

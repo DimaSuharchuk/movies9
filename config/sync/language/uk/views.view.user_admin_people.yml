@@ -4,24 +4,7 @@ display:
   default:
     display_title: Базово
     display_options:
-      exposed_form:
-        options:
-          submit_button: Фільтр
-          reset_button_label: Скинути
-          exposed_sorts_label: 'Впорядкувати за'
-          sort_asc_label: Зрост
-          sort_desc_label: Спад
-      pager:
-        options:
-          tags:
-            previous: '‹ Попередня'
-            next: 'Наступна ›'
-            first: '« Перша'
-            last: 'Остання »'
-          expose:
-            items_per_page_label: 'Елементів на сторінку'
-            items_per_page_options_all_label: '- Усе -'
-            offset_label: Зміщення
+      title: Люди
       fields:
         user_bulk_form:
           label: 'Масове оновлення'
@@ -30,8 +13,8 @@ display:
         status:
           label: Стан
           settings:
-            format_custom_true: Активно
             format_custom_false: Заблоковано
+            format_custom_true: Активно
         roles_target_id:
           label: Ролі
         created:
@@ -42,6 +25,27 @@ display:
           label: Операції
         mail:
           separator: ', '
+      pager:
+        options:
+          tags:
+            next: 'Наступна ›'
+            previous: '‹ Попередня'
+            first: '« Перша'
+            last: 'Остання »'
+          expose:
+            items_per_page_label: 'Елементів на сторінку'
+            items_per_page_options_all_label: '- Усе -'
+            offset_label: Зміщення
+      exposed_form:
+        options:
+          submit_button: Фільтр
+          reset_button_label: Скинути
+          exposed_sorts_label: 'Впорядкувати за'
+          sort_asc_label: Зрост
+          sort_desc_label: Спад
+      empty:
+        area_text_custom:
+          content: 'Люди відсутні.'
       filters:
         combine:
           expose:
@@ -60,10 +64,6 @@ display:
         permission:
           expose:
             label: Повноваження
-      title: Люди
-      empty:
-        area_text_custom:
-          content: 'Люди відсутні.'
       use_more_text: ще
   page_1:
     display_title: Сторінка

@@ -2,21 +2,9 @@ label: Вміст
 description: 'Пошук матеріалів і керування ними.'
 display:
   default:
+    display_title: Базово
     display_options:
-      exposed_form:
-        options:
-          submit_button: Фільтр
-          reset_button_label: Скинути
-          exposed_sorts_label: 'Впорядкувати за'
-          sort_asc_label: Зрост
-          sort_desc_label: Спад
-      pager:
-        options:
-          tags:
-            previous: '‹ Попередня'
-            next: 'Наступна ›'
-            first: '« Перша'
-            last: 'Остання »'
+      title: Вміст
       fields:
         title:
           label: Заголовок
@@ -28,12 +16,29 @@ display:
         status:
           label: Стан
           settings:
-            format_custom_true: Опубліковано
             format_custom_false: Неопубліковано
+            format_custom_true: Опубліковано
         changed:
           label: Оновлено
         operations:
           label: Операції
+      pager:
+        options:
+          tags:
+            next: 'Наступна ›'
+            previous: '‹ Попередня'
+            first: '« Перша'
+            last: 'Остання »'
+      exposed_form:
+        options:
+          submit_button: Фільтр
+          reset_button_label: Скинути
+          exposed_sorts_label: 'Впорядкувати за'
+          sort_asc_label: Зрост
+          sort_desc_label: Спад
+      empty:
+        area_text_custom:
+          content: 'Матеріали відсутні.'
       filters:
         title:
           expose:
@@ -54,16 +59,11 @@ display:
         langcode:
           expose:
             label: Мова
-      title: Вміст
-      empty:
-        area_text_custom:
-          content: 'Матеріали відсутні.'
-    display_title: Базово
   page_1:
+    display_title: Сторінка
     display_options:
       menu:
         title: Вміст
       tab_options:
         title: Вміст
         description: 'Пошук матеріалів та керування ними'
-    display_title: Сторінка

@@ -80,7 +80,6 @@ msgstr "@i сезон"
 msgid "episode @i"
 msgstr "серия @i"
 
-msgctxt "Attachable teasers"
 msgid "Load more"
 msgstr "Загрузить ещё"
 

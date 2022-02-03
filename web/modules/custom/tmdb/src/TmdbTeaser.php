@@ -76,7 +76,7 @@ class TmdbTeaser {
       $route = $storage_type === TmdbLocalStorageType::recommendations() ? 'imdb.recommendations' : 'imdb.similar';
       $render['#more_button'] = [
         '#type' => 'link',
-        '#title' => $this->t('Load more', [], ['context' => 'Attachable teasers']),
+        '#title' => $this->t('Load more'),
         '#url' => Url::fromRoute($route, [
           'nid' => $node_id,
           'page' => ++$page,

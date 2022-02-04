@@ -2,7 +2,7 @@
 
 namespace Drupal\tmdb\CacheableTmdbRequest;
 
-use Drupal\imdb\enum\Language;
+use Drupal\mvs\enum\Language;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class MovieCollection extends CacheableTmdbRequest {
@@ -10,7 +10,6 @@ class MovieCollection extends CacheableTmdbRequest {
   private int $movie_tmdb_id;
 
   private Language $lang;
-
 
   public function setMovieTmdbId(int $movie_tmdb_id): self {
     $this->movie_tmdb_id = $movie_tmdb_id;
@@ -21,7 +20,6 @@ class MovieCollection extends CacheableTmdbRequest {
     $this->lang = $lang;
     return $this;
   }
-
 
   /**
    * {@inheritDoc}
@@ -43,7 +41,6 @@ class MovieCollection extends CacheableTmdbRequest {
       'id' => $data['id'],
       'name' => $data['name'],
       'poster_path' => $data['poster_path'],
-      'teasers' => [],
     ];
 
     // Filter nested teasers.

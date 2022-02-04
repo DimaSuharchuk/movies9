@@ -7,9 +7,9 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\Queue\RequeueException;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\imdb\EntityCreator;
-use Drupal\imdb\EntityHelper;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\EntityCreator;
+use Drupal\mvs\EntityHelper;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbApiAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -43,7 +43,6 @@ class NodeCreatorQueueWorker extends QueueWorkerBase implements ContainerFactory
     return $instance;
   }
 
-
   /**
    * {@inheritDoc}
    */
@@ -66,7 +65,7 @@ class NodeCreatorQueueWorker extends QueueWorkerBase implements ContainerFactory
     $tmdb_id = $tmdb_response['tmdb_id'];
 
     // Create movie or TV on all languages.
-    if (!$node_id = $this->entity_helper->prepareNode($bundle, $tmdb_id, TRUE)) {
+    if (!$this->entity_helper->prepareNode($bundle, $tmdb_id, TRUE)) {
       $error = $this->t('%type has not been created with TMDb ID %tmdb_id.', [
         '%type' => $bundle->value(),
         '%tmdb_id' => $tmdb_id,

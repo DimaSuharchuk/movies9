@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
-    - imdb
+    - mvs
   theme:
     - movies
 id: language_switcher
@@ -16,7 +16,7 @@ settings:
   id: movies_language_switcher
   label: 'Language switcher'
   label_display: '0'
-  provider: imdb
+  provider: mvs
   trim_links: 1
   trim_length: '3'
 visibility: {  }

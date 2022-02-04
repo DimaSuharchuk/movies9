@@ -2,8 +2,8 @@
 
 namespace Drupal\tmdb;
 
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\node\NodeInterface;
 use Drupal\tmdb\CacheableTmdbRequest\EpisodeImdbId;
 use Drupal\tmdb\CacheableTmdbRequest\FindByImdbId;

@@ -2,8 +2,8 @@
 
 namespace Drupal\tmdb\CacheableTmdbRequest;
 
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
 use Tmdb\Exception\TmdbApiException;
 
@@ -14,7 +14,6 @@ class FullRequest extends CacheableTmdbRequest {
   private int $tmdb_id;
 
   private Language $lang;
-
 
   public function setBundle(NodeBundle $bundle): self {
     $this->bundle = $bundle;
@@ -30,7 +29,6 @@ class FullRequest extends CacheableTmdbRequest {
     $this->lang = $lang;
     return $this;
   }
-
 
   /**
    * @inheritDoc
@@ -92,7 +90,6 @@ class FullRequest extends CacheableTmdbRequest {
       'similar' => $similar,
     ];
   }
-
 
   /**
    * Purge common fields of the movie.

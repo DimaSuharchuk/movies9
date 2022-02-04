@@ -57,7 +57,6 @@ class PersonEntity extends ContentEntityBase implements PersonEntityInterface {
 
   use EntityPublishedTrait;
 
-
   /**
    * {@inheritdoc}
    */

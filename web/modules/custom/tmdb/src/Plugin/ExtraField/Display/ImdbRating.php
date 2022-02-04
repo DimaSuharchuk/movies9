@@ -33,7 +33,6 @@ class ImdbRating extends ExtraTmdbFieldDisplayBase {
     return $instance;
   }
 
-
   /**
    * {@inheritDoc}
    */

@@ -4,8 +4,8 @@ namespace Drupal\tmdb;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\enum\TmdbLocalStorageType;
 
 class TmdbTeaser {
@@ -20,7 +20,6 @@ class TmdbTeaser {
     $this->adapter = $adapter;
     $this->tmdb_lazy = $tmdb_lazy;
   }
-
 
   /**
    * Wrap TMDb teasers for right AJAX calls.
@@ -37,7 +36,7 @@ class TmdbTeaser {
    *
    * @return array
    */
-  public function buildAttachableTmdbTeasersWithWrapper(TmdbLocalStorageType $storage_type, int $node_id, array $teasers, NodeBundle $bundle, Language $lang, int $page, $more_button = FALSE): array {
+  public function buildAttachableTmdbTeasersWithWrapper(TmdbLocalStorageType $storage_type, int $node_id, array $teasers, NodeBundle $bundle, Language $lang, int $page, bool $more_button = FALSE): array {
     return [
       '#theme' => 'tmdb_attachable_teasers_wrapper',
       '#tmdb_attachable_teasers' => $this->buildAttachableTmdbTeasers(
@@ -65,7 +64,7 @@ class TmdbTeaser {
    *
    * @return array
    */
-  public function buildAttachableTmdbTeasers(TmdbLocalStorageType $storage_type, int $node_id, array $teasers, NodeBundle $bundle, Language $lang, int $page, $more_button = FALSE): array {
+  public function buildAttachableTmdbTeasers(TmdbLocalStorageType $storage_type, int $node_id, array $teasers, NodeBundle $bundle, Language $lang, int $page, bool $more_button = FALSE): array {
     $render = [
       '#theme' => 'tmdb_attachable_teasers',
       '#items' => $this->buildTmdbTeasers($teasers, $bundle, $lang),
@@ -73,7 +72,7 @@ class TmdbTeaser {
     ];
 
     if ($more_button) {
-      $route = $storage_type === TmdbLocalStorageType::recommendations() ? 'imdb.recommendations' : 'imdb.similar';
+      $route = $storage_type === TmdbLocalStorageType::recommendations() ? 'mvs.recommendations' : 'mvs.similar';
       $render['#more_button'] = [
         '#type' => 'link',
         '#title' => $this->t('Load more'),

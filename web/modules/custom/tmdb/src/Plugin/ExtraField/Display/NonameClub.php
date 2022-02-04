@@ -5,8 +5,8 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
-use Drupal\imdb\DateHelper;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\DateHelper;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -35,7 +35,6 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
 
     return $instance;
   }
-
 
   /**
    * @inheritDoc

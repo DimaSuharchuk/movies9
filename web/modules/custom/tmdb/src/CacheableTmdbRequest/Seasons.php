@@ -2,7 +2,7 @@
 
 namespace Drupal\tmdb\CacheableTmdbRequest;
 
-use Drupal\imdb\enum\Language;
+use Drupal\mvs\enum\Language;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class Seasons extends CacheableTmdbRequest {
@@ -12,7 +12,6 @@ class Seasons extends CacheableTmdbRequest {
   private int $season_number;
 
   private Language $lang;
-
 
   public function setTvTmdbId(int $tv_tmdb_id): self {
     $this->tv_tmdb_id = $tv_tmdb_id;
@@ -28,7 +27,6 @@ class Seasons extends CacheableTmdbRequest {
     $this->lang = $lang;
     return $this;
   }
-
 
   /**
    * @inheritDoc

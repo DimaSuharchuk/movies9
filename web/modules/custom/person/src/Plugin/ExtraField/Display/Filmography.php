@@ -3,8 +3,8 @@
 namespace Drupal\person\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Drupal\tmdb\TmdbTeaser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -33,7 +33,6 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
     return $instance;
   }
 
-
   /**
    * {@inheritDoc}
    */
@@ -53,7 +52,6 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
 
     return $build;
   }
-
 
   /**
    * Build a renderable array to display it on a page with Movie and TV series
@@ -78,7 +76,7 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
     $build = [
       '#type' => 'container',
       '#attributes' => [
-        'id' => "filmography-{$id}",
+        'id' => "filmography-$id",
         'class' => ['filmography-wrapper', 'container'],
       ],
       'title' => [

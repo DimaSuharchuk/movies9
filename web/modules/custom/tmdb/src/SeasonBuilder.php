@@ -4,9 +4,9 @@ namespace Drupal\tmdb;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\imdb\DateHelper;
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\DateHelper;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\node\Entity\Node;
 use Drupal\person\Avatar;
 use Drupal\tmdb\enum\TmdbImageFormat;
@@ -30,7 +30,6 @@ class SeasonBuilder {
     $this->person_avatar = $avatar;
   }
 
-
   /**
    * Build all season content + nested episodes list.
    *
@@ -46,7 +45,7 @@ class SeasonBuilder {
     $tmdb_id = $node->{'field_tmdb_id'}->value;
 
     $seasons_count = $this->adapter
-      ->getCommonFieldsByTmdbId(NodeBundle::tv(), $tmdb_id, $lang)['number_of_seasons'] ?? 0;
+        ->getCommonFieldsByTmdbId(NodeBundle::tv(), $tmdb_id, $lang)['number_of_seasons'] ?? 0;
 
     $season = $this->adapter->getSeason($tmdb_id, $season_number, $lang);
 
@@ -71,7 +70,6 @@ class SeasonBuilder {
       '#episodes' => $this->buildEpisodes($tmdb_id, $season_number, $season['episodes'], $lang),
     ];
   }
-
 
   /**
    * Build navigation menu for seasons.
@@ -119,7 +117,7 @@ class SeasonBuilder {
     return [
       '#type' => 'link',
       '#title' => $this->t($link_title, [], ['context' => 'Extra tabs']),
-      '#url' => Url::fromRoute('imdb.season_tabs_ajax_handler', [
+      '#url' => Url::fromRoute('mvs.season_tabs_ajax_handler', [
         'node_id' => $node_id,
         'season' => $season,
       ]),

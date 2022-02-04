@@ -4,6 +4,7 @@ namespace Drupal\imdb;
 
 use Drupal\Component\Serialization\SerializationInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\mvs\Constant;
 
 class ImdbRating {
 
@@ -12,7 +13,6 @@ class ImdbRating {
   private IMDbHelper $imdb_helper;
 
   private SerializationInterface $json;
-
 
   /**
    * ImdbRating constructor.
@@ -26,7 +26,6 @@ class ImdbRating {
     $this->json = $json;
     $this->imdb_helper = $helper;
   }
-
 
   /**
    * Get average rating by IMDb ID.
@@ -84,7 +83,6 @@ class ImdbRating {
     return NULL;
   }
 
-
   /**
    * Fastest method. Read from file.
    *
@@ -121,7 +119,7 @@ class ImdbRating {
    */
   private function getOmdbRating(string $imdb_id): ?array {
     $omdb_api_key = $this->settings::get('omdb_api_key');
-    if ($omdb_response = @file_get_contents("http://www.omdbapi.com/?apikey={$omdb_api_key}&i={$imdb_id}")) {
+    if ($omdb_response = @file_get_contents("https://www.omdbapi.com/?apikey=$omdb_api_key&i=$imdb_id")) {
       if ($array = $this->json::decode($omdb_response)) {
         if (isset($array['imdbRating'])) {
           return $this->buildResultArray(
@@ -144,7 +142,7 @@ class ImdbRating {
    * @return array|null
    */
   private function getImdbRating(string $imdb_id): ?array {
-    if ($imdb_page = @file_get_contents("https://www.imdb.com/title/{$imdb_id}")) {
+    if ($imdb_page = @file_get_contents("https://www.imdb.com/title/$imdb_id")) {
       preg_match('/"aggregateRating": ({\n?(.*\n\s*)+?})/', $imdb_page, $matches);
       if ($aggregate_rating = @$this->json::decode($matches[1])) {
         return $this->buildResultArray($aggregate_rating['ratingValue'], $aggregate_rating['ratingCount']);

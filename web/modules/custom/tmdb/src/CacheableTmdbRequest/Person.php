@@ -2,7 +2,7 @@
 
 namespace Drupal\tmdb\CacheableTmdbRequest;
 
-use Drupal\imdb\enum\Language;
+use Drupal\mvs\enum\Language;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class Person extends CacheableTmdbRequest {
@@ -20,7 +20,6 @@ class Person extends CacheableTmdbRequest {
     $this->lang = $lang;
     return $this;
   }
-
 
   /**
    * @inheritDoc
@@ -82,7 +81,6 @@ class Person extends CacheableTmdbRequest {
 
     return $filtered;
   }
-
 
   /**
    * A wrapper for the "$this->massageTeaserFields()" method, which processes 1

@@ -23,53 +23,9 @@ imdb.update_genres:
   requirements:
     _permission: 'administer site configuration'
 
-
 #
 # Node handlers.
 #
-imdb.tmdb_node_redirect:
-  path: '/redirect-handler/{bundle}/{tmdb_id}'
-  defaults:
-    _title: 'Redirect to real node'
-    _controller: '\Drupal\imdb\Controller\NodeController::redirect'
-  requirements:
-    _permission: 'access content'
-imdb.random:
-  path: '/random'
-  defaults:
-    _controller: '\Drupal\imdb\Controller\NodeController::random'
-  requirements:
-    _permission: 'access content'
-  options:
-    no_cache: TRUE
-imdb.node_tabs_ajax_handler:
-  path: '/node/{node_id}/{tab}'
-  defaults:
-    _title: 'Tab with trailers'
-    _controller: '\Drupal\imdb\Controller\NodeController::nodeTabsAjaxHandler'
-  requirements:
-    _permission: 'access content'
-imdb.season_tabs_ajax_handler:
-  path: '/node/{node_id}/season/{season}'
-  defaults:
-    _title: 'Rebuild season block'
-    _controller: '\Drupal\imdb\Controller\NodeController::seasonTabsAjaxHandler'
-  requirements:
-    _permission: 'access content'
-imdb.recommendations:
-  path: '/recommendations/{nid}/{page}'
-  defaults:
-    _title: 'Recommendations'
-    _controller: '\Drupal\imdb\Controller\NodeController::recommendations'
-  requirements:
-    _permission: 'access content'
-imdb.similar:
-  path: '/similar/{nid}/{page}'
-  defaults:
-    _title: 'Similar'
-    _controller: '\Drupal\imdb\Controller\NodeController::similar'
-  requirements:
-    _permission: 'access content'
 imdb.node_imdb_rating_field:
   path: '/field/imdb-rating/node/{bundle}/{tmdb_id}'
   defaults:
@@ -77,50 +33,10 @@ imdb.node_imdb_rating_field:
     _controller: '\Drupal\imdb\Controller\NodeController::nodeImdbRating'
   requirements:
     _permission: 'access content'
-imdb.node_original_title_field:
-  path: '/field/original-title/node/{bundle}/{tmdb_id}'
-  defaults:
-    _title: 'Node original title'
-    _controller: '\Drupal\imdb\Controller\NodeController::nodeOriginalTitle'
-  requirements:
-    _permission: 'access content'
-imdb.season_original_title_field:
-  path: '/field/original-title/season/{tv_tmdb_id}/{season_number}'
-  defaults:
-    _title: 'Season original title'
-    _controller: '\Drupal\imdb\Controller\NodeController::seasonOriginalTitle'
-  requirements:
-    _permission: 'access content'
 imdb.episode_imdb_rating_field:
   path: '/field/imdb-rating/episode/{tv_tmdb_id}/{season_number}/{episode_number}'
   defaults:
     _title: 'Episode IMDb rating'
     _controller: '\Drupal\imdb\Controller\NodeController::episodeImdbRating'
-  requirements:
-    _permission: 'access content'
-imdb.episode_original_title_field:
-  path: '/field/original-title/episode/{tv_tmdb_id}/{season_number}/{episode_number}'
-  defaults:
-    _title: 'Episode original title'
-    _controller: '\Drupal\imdb\Controller\NodeController::episodeOriginalTitle'
-  requirements:
-    _permission: 'access content'
-
-
-#
-# Person handlers.
-#
-imdb.tmdb_person_redirect:
-  path: '/redirect-handler/person/{tmdb_id}'
-  defaults:
-    _title: 'Redirect to person entity view page'
-    _controller: '\Drupal\imdb\Controller\PersonController::redirect'
-  requirements:
-    _permission: 'access content'
-imdb.person_tabs_ajax_handler:
-  path: '/person/{person_id}/{tab}'
-  defaults:
-    _title: 'Tab with filmography'
-    _controller: '\Drupal\imdb\Controller\PersonController::personTabsAjaxHandler'
   requirements:
     _permission: 'access content'

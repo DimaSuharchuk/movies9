@@ -5,7 +5,7 @@
  * Site updates.
  */
 
-use Drupal\imdb\Constant;
+use Drupal\mvs\Constant;
 
 /**
  * Delete terms: "News", "Reality", "Talk" and nodes using the terms.

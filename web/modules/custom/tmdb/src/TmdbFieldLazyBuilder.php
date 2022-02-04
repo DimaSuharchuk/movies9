@@ -3,9 +3,9 @@
 namespace Drupal\tmdb;
 
 use Drupal\Core\Security\TrustedCallbackInterface;
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
 use Drupal\imdb\ImdbRating;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 
 class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
 
@@ -17,7 +17,6 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
     $this->tmdb_adapter = $adapter;
     $this->imdb_rating = $rating;
   }
-
 
   /**
    * Generate lazy builder placeholder for "IMDb Rating" field of node.
@@ -115,7 +114,6 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
       '#create_placeholder' => TRUE,
     ];
   }
-
 
   /**
    * Build renderable array for field "IMDb Rating" of node or custom
@@ -311,7 +309,6 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
       ],
     ];
   }
-
 
   /**
    * {@inheritDoc}

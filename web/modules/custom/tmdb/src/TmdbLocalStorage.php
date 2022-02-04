@@ -9,7 +9,6 @@ class TmdbLocalStorage {
 
   private FileStorage $tmdb_storage;
 
-
   /**
    * TmdbLocalStorage constructor.
    *
@@ -21,7 +20,6 @@ class TmdbLocalStorage {
       'bin' => 'tmdb_storage',
     ]);
   }
-
 
   /**
    * Checks if a file exists in this path.

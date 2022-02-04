@@ -10,13 +10,11 @@ class SearchMiniTeaserBuilder {
 
   use StringTranslationTrait;
 
-
   protected Avatar $avatar;
 
   public function __construct(Avatar $avatar) {
     $this->avatar = $avatar;
   }
-
 
   /**
    * Build a list of renderable arrays with mini teaser for Movie, TV or Person.

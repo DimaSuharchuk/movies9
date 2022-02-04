@@ -1,0 +1,85 @@
+#
+# Node handlers.
+#
+mvs.tmdb_node_redirect:
+  path: '/redirect-handler/{bundle}/{tmdb_id}'
+  defaults:
+    _title: 'Redirect to real node'
+    _controller: '\Drupal\mvs\Controller\NodeController::redirect'
+  requirements:
+    _permission: 'access content'
+mvs.random:
+  path: '/random'
+  defaults:
+    _controller: '\Drupal\mvs\Controller\NodeController::random'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+mvs.node_tabs_ajax_handler:
+  path: '/node/{node_id}/{tab}'
+  defaults:
+    _title: 'Tab with trailers'
+    _controller: '\Drupal\mvs\Controller\NodeController::nodeTabsAjaxHandler'
+  requirements:
+    _permission: 'access content'
+mvs.season_tabs_ajax_handler:
+  path: '/node/{node_id}/season/{season}'
+  defaults:
+    _title: 'Rebuild season block'
+    _controller: '\Drupal\mvs\Controller\NodeController::seasonTabsAjaxHandler'
+  requirements:
+    _permission: 'access content'
+mvs.recommendations:
+  path: '/recommendations/{nid}/{page}'
+  defaults:
+    _title: 'Recommendations'
+    _controller: '\Drupal\mvs\Controller\NodeController::recommendations'
+  requirements:
+    _permission: 'access content'
+mvs.similar:
+  path: '/similar/{nid}/{page}'
+  defaults:
+    _title: 'Similar'
+    _controller: '\Drupal\mvs\Controller\NodeController::similar'
+  requirements:
+    _permission: 'access content'
+mvs.node_original_title_field:
+  path: '/field/original-title/node/{bundle}/{tmdb_id}'
+  defaults:
+    _title: 'Node original title'
+    _controller: '\Drupal\mvs\Controller\NodeController::nodeOriginalTitle'
+  requirements:
+    _permission: 'access content'
+mvs.season_original_title_field:
+  path: '/field/original-title/season/{tv_tmdb_id}/{season_number}'
+  defaults:
+    _title: 'Season original title'
+    _controller: '\Drupal\mvs\Controller\NodeController::seasonOriginalTitle'
+  requirements:
+    _permission: 'access content'
+mvs.episode_original_title_field:
+  path: '/field/original-title/episode/{tv_tmdb_id}/{season_number}/{episode_number}'
+  defaults:
+    _title: 'Episode original title'
+    _controller: '\Drupal\mvs\Controller\NodeController::episodeOriginalTitle'
+  requirements:
+    _permission: 'access content'
+
+#
+# Person handlers.
+#
+mvs.tmdb_person_redirect:
+  path: '/redirect-handler/person/{tmdb_id}'
+  defaults:
+    _title: 'Redirect to person entity view page'
+    _controller: '\Drupal\mvs\Controller\PersonController::redirect'
+  requirements:
+    _permission: 'access content'
+mvs.person_tabs_ajax_handler:
+  path: '/person/{person_id}/{tab}'
+  defaults:
+    _title: 'Tab with filmography'
+    _controller: '\Drupal\mvs\Controller\PersonController::personTabsAjaxHandler'
+  requirements:
+    _permission: 'access content'

@@ -5,7 +5,7 @@
  * Contains person.module.
  */
 
-use Drupal\imdb\enum\Language;
+use Drupal\mvs\enum\Language;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 /**
@@ -24,7 +24,7 @@ function person_theme($existing, $type, $theme, $path): array {
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function person_theme_suggestions_person(array $variables) {
+function person_theme_suggestions_person(array $variables): array {
   return [
     "person__{$variables['elements']['#view_mode']}",
   ];

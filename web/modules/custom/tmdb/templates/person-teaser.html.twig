@@ -4,7 +4,7 @@
   {% set person_classes = person_classes.addClass('no-photo') %}
 {% endif %}
 
-<article data-redirect="{{ path('imdb.tmdb_person_redirect', {'tmdb_id': tmdb_id}) }}" {{ person_classes }}>
+<article data-redirect="{{ path('mvs.tmdb_person_redirect', {'tmdb_id': tmdb_id}) }}" {{ person_classes }}>
   <div class="avatar">{{ avatar }}</div>
   <div class="name">{{ name }}</div>
   {% if role %}

@@ -3,7 +3,7 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\person\Avatar;
 use Drupal\tmdb\enum\TmdbImageFormat;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
@@ -33,7 +33,6 @@ class Cast extends ExtraTmdbFieldDisplayBase {
     return $instance;
   }
 
-
   /**
    * {@inheritDoc}
    */
@@ -49,7 +48,6 @@ class Cast extends ExtraTmdbFieldDisplayBase {
 
     return $build;
   }
-
 
   /**
    * @see TmdbApiAdapter::getCast()

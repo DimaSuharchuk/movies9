@@ -54,7 +54,7 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
     return [
       '#type' => 'link',
       '#title' => $this->t($link_title, [], ['context' => 'Extra tabs']),
-      '#url' => Url::fromRoute('imdb.person_tabs_ajax_handler', [
+      '#url' => Url::fromRoute('mvs.person_tabs_ajax_handler', [
         'person_id' => $this->entity->id(),
         'tab' => $tab,
       ]),

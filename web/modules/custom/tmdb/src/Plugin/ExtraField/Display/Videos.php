@@ -3,8 +3,8 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 
 /**
@@ -41,7 +41,6 @@ class Videos extends ExtraTmdbFieldDisplayBase {
 
     return $build;
   }
-
 
   /**
    * @param Language $lang

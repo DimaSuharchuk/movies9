@@ -3,7 +3,7 @@
 namespace Drupal\person\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\imdb\DateHelper;
+use Drupal\mvs\DateHelper;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -29,7 +29,6 @@ class Birthday extends ExtraTmdbFieldDisplayBase {
 
     return $instance;
   }
-
 
   /**
    * {@inheritDoc}

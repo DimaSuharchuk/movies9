@@ -2,8 +2,8 @@
 
 namespace Drupal\tmdb\CacheableTmdbRequest;
 
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class Genres extends CacheableTmdbRequest {
@@ -11,7 +11,6 @@ class Genres extends CacheableTmdbRequest {
   private NodeBundle $bundle;
 
   private Language $lang;
-
 
   public function setBundle(NodeBundle $bundle): self {
     $this->bundle = $bundle;
@@ -22,7 +21,6 @@ class Genres extends CacheableTmdbRequest {
     $this->lang = $lang;
     return $this;
   }
-
 
   /**
    * {@inheritDoc}

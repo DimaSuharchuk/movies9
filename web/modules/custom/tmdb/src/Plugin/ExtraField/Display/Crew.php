@@ -5,7 +5,7 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Extension\ModuleHandler;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\person\Avatar;
 use Drupal\tmdb\enum\TmdbImageFormat;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
@@ -38,7 +38,6 @@ class Crew extends ExtraTmdbFieldDisplayBase {
     return $instance;
   }
 
-
   /**
    * {@inheritDoc}
    */
@@ -68,7 +67,6 @@ class Crew extends ExtraTmdbFieldDisplayBase {
 
     return $build;
   }
-
 
   /**
    * @param array $persons
@@ -158,7 +156,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
    */
   private function sortedJobsList(): array {
     $module = $this->module_handler->getModule('tmdb')->getPath();
-    $yml = file_get_contents("{$module}/files/departments.yaml");
+    $yml = file_get_contents("$module/files/departments.yaml");
     $departments = Yaml::decode($yml);
 
     return [

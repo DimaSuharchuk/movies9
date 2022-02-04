@@ -2,8 +2,8 @@
 
 namespace Drupal\tmdb\CacheableTmdbRequest;
 
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
 use Tmdb\Exception\TmdbApiException;
 
@@ -16,7 +16,6 @@ class Similar extends CacheableTmdbRequest {
   private Language $lang;
 
   private int $page = 1;
-
 
   public function setBundle(NodeBundle $bundle): self {
     $this->bundle = $bundle;
@@ -37,7 +36,6 @@ class Similar extends CacheableTmdbRequest {
     $this->page = $page;
     return $this;
   }
-
 
   /**
    * {@inheritDoc}

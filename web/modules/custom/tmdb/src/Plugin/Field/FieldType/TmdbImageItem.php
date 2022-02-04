@@ -1,0 +1,45 @@
+<?php
+
+namespace Drupal\tmdb\Plugin\Field\FieldType;
+
+use Drupal\Core\Field\Annotation\FieldType;
+use Drupal\Core\Field\FieldItemBase;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\TypedData\DataDefinition;
+
+/**
+ * @FieldType(
+ *   id = "tmdb_image",
+ *   label = @Translation("TMDb image"),
+ *   description = @Translation("This field stores a name of TMDb image."),
+ *   category = @Translation("Text"),
+ *   default_widget = "tmdb_image_textfield",
+ *   default_formatter = "tmdb_image_original"
+ * )
+ */
+class TmdbImageItem extends FieldItemBase {
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition): array {
+    return [
+      'value' => DataDefinition::create('string')->setLabel(t('Text')),
+    ];
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function schema(FieldStorageDefinitionInterface $field_definition): array {
+    return [
+      'columns' => [
+        'value' => [
+          'type' => 'varchar',
+          'length' => 64,
+        ],
+      ],
+    ];
+  }
+
+}

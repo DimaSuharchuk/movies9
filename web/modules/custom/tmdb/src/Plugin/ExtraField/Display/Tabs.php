@@ -4,8 +4,8 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Url;
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 
 /**
@@ -76,7 +76,7 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
     return [
       '#type' => 'link',
       '#title' => $this->t($link_title, [], ['context' => 'Extra tabs']),
-      '#url' => Url::fromRoute('imdb.node_tabs_ajax_handler', [
+      '#url' => Url::fromRoute('mvs.node_tabs_ajax_handler', [
         'node_id' => $this->entity->id(),
         'tab' => $tab,
       ]),

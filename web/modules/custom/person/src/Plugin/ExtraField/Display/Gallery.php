@@ -4,8 +4,8 @@ namespace Drupal\person\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\extra_field\Annotation\ExtraFieldDisplay;
-use Drupal\imdb\Constant;
-use Drupal\imdb\ImageBuilder;
+use Drupal\mvs\Constant;
+use Drupal\mvs\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 
@@ -42,7 +42,6 @@ class Gallery extends ExtraTmdbFieldDisplayBase {
 
     return $build;
   }
-
 
   /**
    * Build array of avatars.

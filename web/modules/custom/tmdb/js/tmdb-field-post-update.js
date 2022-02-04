@@ -100,7 +100,6 @@
     }
   };
 
-
   /**
    * Get IMDb rating from prepared url, prepare html for field "imdb rating"
    * and replace placeholder with that html.
@@ -147,7 +146,6 @@
     request.send();
   }
 
-
   /**
    * Build html for field "IMDb rating".
    *
@@ -187,7 +185,6 @@
 
     return tmdbField;
   }
-
 
   /**
    * Helper function: Check is the string can be a number.

@@ -6,27 +6,17 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Site\Settings;
-use Drupal\imdb\Constant;
 use Drupal\imdb\IMDbHelper;
+use Drupal\mvs\Constant;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ImdbIdsAddForm extends FormBase {
 
-  /**
-   * @var Settings|object|null
-   */
-  private $settings;
+  private ?Settings $settings;
 
-  /**
-   * @var IMDbHelper|object|null
-   */
-  private $imdb_helper;
+  private ?IMDbHelper $imdb_helper;
 
-  /**
-   * @var QueueFactory|object|null
-   */
-  private $queue;
-
+  private ?QueueFactory $queue;
 
   /**
    * {@inheritDoc}
@@ -41,7 +31,6 @@ class ImdbIdsAddForm extends FormBase {
 
     return $instance;
   }
-
 
   /**
    * {@inheritDoc}

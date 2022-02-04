@@ -4,7 +4,7 @@ namespace Drupal\tmdb\CacheableTmdbRequest;
 
 use Drupal;
 use Drupal\Core\Site\Settings;
-use Drupal\imdb\enum\NodeBundle;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbLocalStorage;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
 use Tmdb\ApiToken;
@@ -16,7 +16,6 @@ abstract class CacheableTmdbRequest {
   protected TmdbLocalStorage $local_storage;
 
   protected Client $connect;
-
 
   /**
    * Response from TMDb API already cached into TMDbLocalStorage.
@@ -118,7 +117,6 @@ abstract class CacheableTmdbRequest {
    */
   abstract protected function getStorageFilePath(): TmdbLocalStorageFilePath;
 
-
   /**
    * Helper method. Filter raw array of arrays by fields from $allowed_fields
    * array.
@@ -151,7 +149,6 @@ abstract class CacheableTmdbRequest {
   protected function nodeApi(NodeBundle $bundle) {
     return NodeBundle::movie() === $bundle ? $this->connect->getMoviesApi() : $this->connect->getTvApi();
   }
-
 
   /**
    * Helper method used in a few places.

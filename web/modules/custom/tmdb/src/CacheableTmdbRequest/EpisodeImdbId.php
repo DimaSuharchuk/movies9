@@ -12,7 +12,6 @@ class EpisodeImdbId extends CacheableTmdbRequest {
 
   private int $episode_number;
 
-
   public function setTvTmdbId(int $tv_tmdb_id): self {
     $this->tv_tmdb_id = $tv_tmdb_id;
     return $this;
@@ -27,7 +26,6 @@ class EpisodeImdbId extends CacheableTmdbRequest {
     $this->episode_number = $episode_number;
     return $this;
   }
-
 
   /**
    * @inheritDoc

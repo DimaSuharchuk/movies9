@@ -6,21 +6,7 @@
  */
 
 use Drupal\Core\Site\Settings;
-use Drupal\imdb\Constant;
-
-/**
- * Implements hook_theme().
- */
-function imdb_theme($existing, $type, $theme, $path) {
-  return [
-    'movies_language_switcher' => [
-      'variables' => [
-        'active_label' => NULL,
-        'links' => [],
-      ],
-    ],
-  ];
-}
+use Drupal\mvs\Constant;
 
 /**
  * Implements hook_cron().
@@ -31,7 +17,7 @@ function imdb_cron() {
     if ($unzipped = @gzdecode($zipped)) {
       $private_dir = Settings::get('file_private_path');
       $filename = Constant::IMDB_RATINGS_FILE_NAME;
-      file_put_contents("{$private_dir}/{$filename}", $unzipped);
+      file_put_contents("$private_dir/$filename", $unzipped);
     }
     else {
       // If means that file exists, but it's not gzip.
@@ -45,64 +31,6 @@ function imdb_cron() {
 }
 
 /**
- * Implements hook_element_info_alter().
- */
-function imdb_element_info_alter(array &$info) {
-  $info['view']['#pre_render'][] = [
-    Drupal\imdb\Element\View::class,
-    'preRenderViewElement',
-  ];
-}
-
-/**
- * Implements hook_form_BASE_FORM_ID_alter().
- */
-function imdb_form_views_exposed_form_alter(&$form) {
-  $bundle = NULL;
-  $remove_animation_filter = TRUE;
-
-  switch ($form['#id']) {
-    case 'views-exposed-form-movies-home':
-      $bundle = ['movie', 'tv'];
-      $remove_animation_filter = FALSE;
-      break;
-
-    case 'views-exposed-form-movies-movie':
-      $bundle = 'movie';
-      break;
-
-    case 'views-exposed-form-movies-tv':
-      $bundle = 'tv';
-      break;
-
-    case 'views-exposed-form-movies-animation':
-      $bundle = ['movie', 'tv'];
-      break;
-
-  }
-
-  if ($bundle) {
-    // Get genres for current bundle.
-    $genres_by_bundle = Drupal::service('entity_finder')
-      ->findTermsGenres()
-      ->addCondition('field_used_in', $bundle)
-      ->execute();
-
-    // Get genres (options) from form.
-    $genres = &$form['field_genres_target_id']['#options'];
-    // Filter only genres used in current bundle.
-    $genres = array_intersect_key($genres, $genres_by_bundle);
-    // Sort by name ASC.
-    asort($genres);
-
-    // Remove "Animation" filter from some view.
-    if ($remove_animation_filter && $tid = _get_animation_term_id()) {
-      unset($genres[$tid]);
-    }
-  }
-}
-
-/**
  * Implements hook_toolbar_alter().
  *
  * @param $items
@@ -110,17 +38,4 @@ function imdb_form_views_exposed_form_alter(&$form) {
  */
 function imdb_toolbar_alter(&$items) {
   $items['administration']['#attached']['library'][] = 'imdb/imdb.menu';
-}
-
-/**
- * Helper function returns ID of term "Animation".
- *
- * @return int|null
- */
-function _get_animation_term_id(): ?int {
-  return Drupal::service('entity_finder')
-    ->findTermsGenres()
-    ->addCondition('name', 'Animation')
-    ->reduce()
-    ->execute();
 }

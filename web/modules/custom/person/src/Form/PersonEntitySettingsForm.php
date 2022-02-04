@@ -18,7 +18,7 @@ class PersonEntitySettingsForm extends FormBase {
    * @return string
    *   The unique string identifying the form.
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'personentity_settings';
   }
 
@@ -45,8 +45,9 @@ class PersonEntitySettingsForm extends FormBase {
    * @return array
    *   Form definition array.
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['personentity_settings']['#markup'] = 'Settings form for Person entities. Manage field settings here.';
+
     return $form;
   }
 

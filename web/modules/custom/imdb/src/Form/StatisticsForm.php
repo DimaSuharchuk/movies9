@@ -9,41 +9,23 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\State\State;
-use Drupal\imdb\Constant;
-use Drupal\imdb\EntityFinder;
+use Drupal\mvs\Constant;
+use Drupal\mvs\EntityFinder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class StatisticsForm extends FormBase {
 
-  /**
-   * @var FileSystem|object|null
-   */
-  private $file_system;
+  private ?FileSystem $file_system;
 
-  /**
-   * @var Settings|object|null
-   */
-  private $settings;
+  private ?Settings $settings;
 
-  /**
-   * @var DateFormatter|object|null
-   */
-  private $date_formatter;
+  private ?DateFormatter $date_formatter;
 
-  /**
-   * @var State|object|null
-   */
-  private $state;
+  private ?State $state;
 
-  /**
-   * @var EntityFinder|object|null
-   */
-  private $finder;
+  private ?EntityFinder $finder;
 
-  /**
-   * @var QueueFactory|object|null
-   */
-  private $queue;
+  private ?QueueFactory $queue;
 
   /**
    * {@inheritDoc}
@@ -81,7 +63,6 @@ class StatisticsForm extends FormBase {
       '#value' => $this->t('Clear TMDb queue'),
     ];
 
-
     $form['important'] = [
       '#type' => 'details',
       '#title' => $this->t('Other important settings'),
@@ -102,7 +83,6 @@ class StatisticsForm extends FormBase {
         '%time' => $this->date_formatter->formatTimeDiffSince($this->state->get('system.cron_last')),
       ]),
     ];
-
 
     /**
      * Statistics.

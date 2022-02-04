@@ -3,7 +3,7 @@
 namespace Drupal\tmdb\CacheableTmdbRequest;
 
 use Drupal;
-use Drupal\imdb\enum\Language;
+use Drupal\mvs\enum\Language;
 use Drupal\tmdb\enum\TmdbSearchType;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
 
@@ -18,7 +18,6 @@ class Search extends CacheableTmdbRequest {
   private int $page = 1;
 
   private ?string $media_type = NULL;
-
 
   /**
    * @param string $search_query
@@ -53,7 +52,6 @@ class Search extends CacheableTmdbRequest {
     $this->page = $page;
     return $this;
   }
-
 
   /**
    * @inheritDoc
@@ -112,7 +110,6 @@ class Search extends CacheableTmdbRequest {
       'results' => $this->filterResults($data['results']),
     ];
   }
-
 
   /**
    * Filter list of TMDb search results.

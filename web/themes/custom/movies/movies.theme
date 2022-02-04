@@ -5,7 +5,7 @@
  * Movies theme file.
  */
 
-use Drupal\imdb\Form\Search;
+use Drupal\mvs\Form\Search;
 
 /**
  * Implements hook_preprocess_HOOK().

@@ -26,6 +26,7 @@ module:
   menu_link_content: 0
   menu_ui: 0
   module_filter: 0
+  mvs: 0
   node: 0
   options: 0
   page_cache: 0

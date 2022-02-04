@@ -4,10 +4,10 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\extra_field\Annotation\ExtraFieldDisplay;
-use Drupal\imdb\DateHelper;
-use Drupal\imdb\enum\Language;
-use Drupal\imdb\enum\NodeBundle;
-use Drupal\imdb\ImageBuilder;
+use Drupal\mvs\DateHelper;
+use Drupal\mvs\enum\Language;
+use Drupal\mvs\enum\NodeBundle;
+use Drupal\mvs\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Drupal\tmdb\TmdbTeaser;
@@ -39,7 +39,6 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
     return $instance;
   }
 
-
   /**
    * {@inheritDoc}
    */
@@ -49,7 +48,7 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
     if ($collection = $this->getMovieCollection()) {
       // Sort movies by release date.
       usort($collection['teasers'], function ($a, $b) {
-        // If some movie haven't release date (null returned from method) we
+        // If some movie haven't "release date" (null returned from method) we
         // should move that movie to the end of the collection.
         // Set biggest "timestamp" for movie sorting.
         $time_a = $this->getReleaseDateTimestampByTmdbId($a['id']) ?? PHP_INT_MAX;
@@ -78,7 +77,6 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
 
     return $build;
   }
-
 
   /**
    * @see TmdbApiAdapter::getMovieCollection()

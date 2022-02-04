@@ -2,8 +2,8 @@
 
 namespace Drupal\person;
 
-use Drupal\imdb\Constant;
-use Drupal\imdb\ImageBuilder;
+use Drupal\mvs\Constant;
+use Drupal\mvs\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 class Avatar {

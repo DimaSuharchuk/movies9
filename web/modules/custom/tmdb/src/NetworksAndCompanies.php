@@ -2,7 +2,7 @@
 
 namespace Drupal\tmdb;
 
-use Drupal\imdb\ImageBuilder;
+use Drupal\mvs\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
 trait NetworksAndCompanies {

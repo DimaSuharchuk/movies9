@@ -8,7 +8,7 @@
 /**
  * Implements hook_theme().
  */
-function tmdb_theme($existing, $type, $theme, $path) {
+function tmdb_theme($existing, $type, $theme, $path): array {
   return [
     'tmdb_field' => [
       'variables' => [

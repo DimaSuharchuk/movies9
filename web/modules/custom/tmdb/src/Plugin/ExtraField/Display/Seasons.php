@@ -3,7 +3,7 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\imdb\enum\Language;
+use Drupal\mvs\enum\Language;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Drupal\tmdb\SeasonBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,7 +31,6 @@ class Seasons extends ExtraTmdbFieldDisplayBase {
 
     return $instance;
   }
-
 
   /**
    * @inheritDoc

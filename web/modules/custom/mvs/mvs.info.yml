@@ -1,0 +1,8 @@
+name: MVS
+description: Provides main functionality for the Movies site.
+type: module
+package: Custom
+core_version_requirement: ^9
+
+"interface translation project": mvs
+"interface translation server pattern": modules/custom/%project/translations/%language.po

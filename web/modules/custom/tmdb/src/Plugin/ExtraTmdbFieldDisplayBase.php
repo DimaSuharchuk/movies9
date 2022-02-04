@@ -6,7 +6,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\extra_field\Plugin\ExtraFieldDisplayBase;
-use Drupal\imdb\enum\Language;
+use Drupal\mvs\enum\Language;
 use Drupal\tmdb\TmdbApiAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -15,7 +15,6 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
   use StringTranslationTrait;
 
   protected ?TmdbApiAdapter $adapter;
-
 
   /**
    * {@inheritDoc}
@@ -28,24 +27,23 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
     return $instance;
   }
 
-
   /**
    * @inheritDoc
    */
   public function view(ContentEntityInterface $entity): ?array {
     $build = $this->build($entity);
 
-    $d = $this->getPluginDefinition();
+    $definition = $this->getPluginDefinition();
 
     // Wrap every TMDb extra field with this wrapper.
     $build = [
       '#theme' => 'tmdb_field',
       '#content' => $build,
-      '#css_class' => $d['css_class'] ?? $this->getPluginId(),
+      '#css_class' => $definition['css_class'] ?? $this->getPluginId(),
     ];
 
     // Wrap some fields with theme "replaceable_field" for AJAX tabs.
-    if (isset($d['replaceable']) && $d['replaceable'] === TRUE) {
+    if (isset($definition['replaceable']) && $definition['replaceable'] === TRUE) {
       $build = [
         '#theme' => 'replaceable_field',
         '#content' => $build,
@@ -65,7 +63,6 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
    *   Renderable array.
    */
   abstract public function build(ContentEntityInterface $entity): array;
-
 
   /**
    * Helper method: Get value of some common movie or TV field from TMDb API or

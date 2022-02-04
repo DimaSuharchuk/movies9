@@ -5,7 +5,7 @@ namespace Drupal\tmdb\Plugin\ExtraField\Display;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Url;
-use Drupal\imdb\EntityFinder;
+use Drupal\mvs\EntityFinder;
 use Drupal\taxonomy\TermInterface;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -32,7 +32,6 @@ class Genres extends ExtraTmdbFieldDisplayBase {
 
     return $instance;
   }
-
 
   /**
    * {@inheritDoc}
@@ -70,7 +69,7 @@ class Genres extends ExtraTmdbFieldDisplayBase {
         '#title' => $genre->getTranslation($langcode)->getName(),
         '#url' => Url::fromRoute(
           'view.movies.home',
-          ["field_genres_target_id[{$genre_id}]" => $genre_id],
+          ["field_genres_target_id[$genre_id]" => $genre_id],
         ),
       ];
     }

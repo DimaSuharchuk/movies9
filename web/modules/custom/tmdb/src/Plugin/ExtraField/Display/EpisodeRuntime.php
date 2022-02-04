@@ -3,7 +3,7 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\imdb\TimeHelper;
+use Drupal\mvs\TimeHelper;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -29,7 +29,6 @@ class EpisodeRuntime extends ExtraTmdbFieldDisplayBase {
 
     return $instance;
   }
-
 
   /**
    * {@inheritDoc}

@@ -12,7 +12,7 @@ class PersonEntityViewsData extends EntityViewsData {
   /**
    * {@inheritdoc}
    */
-  public function getViewsData() {
+  public function getViewsData(): array {
     // Additional information for Views integration, such as table joins, can be
     // put here.
     return parent::getViewsData();

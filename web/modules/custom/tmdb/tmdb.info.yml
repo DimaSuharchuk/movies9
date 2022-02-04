@@ -4,6 +4,7 @@ core_version_requirement: ^9
 type: module
 package: Custom
 dependencies:
+  - mvs:mvs
   - imdb:imdb
   - person:person
   - extra_field:extra_field

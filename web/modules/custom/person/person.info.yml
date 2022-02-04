@@ -4,6 +4,7 @@ description: Defines Drupal content entity for persons from TMDb.
 core_version_requirement: ^9
 package: Custom
 dependencies:
+  - mvs:mvs
   - extra_field:extra_field
 
 "interface translation project": person

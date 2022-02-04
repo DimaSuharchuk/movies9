@@ -4,6 +4,7 @@ type: module
 package: Custom
 core_version_requirement: ^9
 dependencies:
+  - mvs:mvs
   - tmdb:tmdb
 
 "interface translation project": imdb

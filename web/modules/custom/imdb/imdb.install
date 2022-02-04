@@ -36,3 +36,10 @@ function imdb_update_9101() {
     $ts->delete($terms);
   }
 }
+
+/**
+ * Install module "mvs".
+ */
+function imdb_update_9301() {
+  Drupal::service('module_installer')->install(['mvs']);
+}

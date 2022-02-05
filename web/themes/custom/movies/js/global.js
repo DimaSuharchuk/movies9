@@ -56,8 +56,21 @@
     attach: () => {
       document.querySelectorAll("[data-redirect]:not(.processed)").forEach(article => {
         article.classList.add("processed");
-        article.addEventListener("click", () => {
-          location.href = article.dataset.redirect;
+
+        article.addEventListener("click", evt => {
+          // Click with ctrl.
+          if (evt.ctrlKey) {
+            window.open(article.dataset.redirect, '_blank');
+          }
+          // Left click.
+          else {
+            location.href = article.dataset.redirect;
+          }
+        });
+
+        // Middle button click.
+        article.addEventListener("auxclick", () => {
+          window.open(article.dataset.redirect, '_blank');
         });
       });
     }

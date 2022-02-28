@@ -11,5 +11,5 @@ page:
   front: /home
 admin_compact_mode: false
 weight_select_max: 100
-default_langcode: ru
+default_langcode: uk
 mail_notification: ''

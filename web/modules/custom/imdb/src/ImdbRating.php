@@ -35,10 +35,7 @@ class ImdbRating {
    * @return float
    */
   public function getRatingValue(string $imdb_id): float {
-    if ($rating = $this->getRating($imdb_id)) {
-      return $rating['rating'];
-    }
-    return 0;
+    return ($rating = $this->getRating($imdb_id)) ? $rating['rating'] : 0;
   }
 
   /**
@@ -49,10 +46,7 @@ class ImdbRating {
    * @return int
    */
   public function getNumVotes(string $imdb_id): int {
-    if ($rating = $this->getRating($imdb_id)) {
-      return $rating['num_votes'];
-    }
-    return 0;
+    return ($rating = $this->getRating($imdb_id)) ? $rating['num_votes'] : 0;
   }
 
   /**
@@ -73,12 +67,12 @@ class ImdbRating {
     if ($rating = $this->getRatingFromFile($imdb_id)) {
       return $rating;
     }
-    if ($rating = $this->getOmdbRating($imdb_id)) {
-      return $rating;
-    }
-    if ($rating = $this->getImdbRating($imdb_id)) {
-      return $rating;
-    }
+    //if ($rating = $this->getOmdbRating($imdb_id)) {
+    //  return $rating;
+    //}
+    //if ($rating = $this->getImdbRating($imdb_id)) {
+    //  return $rating;
+    //}
 
     return NULL;
   }
@@ -92,17 +86,12 @@ class ImdbRating {
    */
   private function getRatingFromFile(string $imdb_id): ?array {
     $private_dir = $this->settings::get('file_private_path');
-    // Read file.
-    $content = file_get_contents($private_dir . '/' . Constant::IMDB_RATINGS_FILE_NAME);
-    // Try to find line by IMDb ID.
-    if ($pos_id = strpos($content, $imdb_id)) {
-      $content_from_pos = substr($content, $pos_id);
-      $pos_break = strpos($content_from_pos, "\n");
-      $line = substr($content_from_pos, 0, $pos_break);
+    $filepath = $private_dir . '/' . Constant::IMDB_RATINGS_FILE_NAME;
 
-      [, $rating, $num_votes] = explode("\t", $line);
+    if ($line = \shell_exec("grep -m 1 $imdb_id $filepath")) {
+      [, $rating] = explode("\t", $line);
 
-      return $this->buildResultArray($rating, $num_votes);
+      return $this->buildResultArray($rating, NULL);
     }
 
     return NULL;

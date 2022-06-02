@@ -52,6 +52,7 @@
     color: $text-color-main;
     border: none;
     transition-duration: 500ms;
+    cursor: context-menu;
 
     &.active {
       right: 40px;

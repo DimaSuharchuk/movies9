@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the module.
+ */
+
+/**
+ * Remove unapproved nodes.
+ */
+function mvs_update_9001(&$sandbox) {
+  $limit = 200;
+
+  if (!isset($sandbox['max'])) {
+    $nodes_ids = Drupal::entityQuery('node')
+      ->condition('field_approved', 0, '=')
+      ->execute();
+    $sandbox['nodes_ids'] = $nodes_ids;
+    $sandbox['max'] = count($nodes_ids);
+  }
+
+  if ($sandbox['max']) {
+    $process_ids = array_splice($sandbox['nodes_ids'], 0, $limit);
+
+    $storage = Drupal::entityTypeManager()->getStorage('node');
+    $nodes = $storage->loadMultiple($process_ids);
+    $storage->delete($nodes);
+
+    $remain = count($sandbox['nodes_ids']);
+
+    if ($remain) {
+      $sandbox['#finished'] = ($sandbox['max'] - $remain) / $sandbox['max'];
+    }
+    else {
+      $sandbox['#finished'] = 1;
+    }
+  }
+}
+
+/**
+ * Remove "Person" entities.
+ */
+function mvs_update_9002() {
+  $db = \Drupal::database();
+
+  // Remove "Person" entities.
+  $db->truncate('person')->execute();
+  $db->truncate('person_field_data')->execute();
+  $db->truncate('person__field_avatar')->execute();
+
+  // Clear cache tables.
+  $db->truncate('cachetags')->execute();
+  $db->truncate('cache_bootstrap')->execute();
+  $db->truncate('cache_config')->execute();
+  $db->truncate('cache_container')->execute();
+  $db->truncate('cache_data')->execute();
+  $db->truncate('cache_default')->execute();
+  $db->truncate('cache_discovery')->execute();
+  $db->truncate('cache_dynamic_page_cache')->execute();
+  $db->truncate('cache_entity')->execute();
+  $db->truncate('cache_menu')->execute();
+  $db->truncate('cache_page')->execute();
+  $db->truncate('cache_render')->execute();
+  $db->truncate('cache_toolbar')->execute();
+}

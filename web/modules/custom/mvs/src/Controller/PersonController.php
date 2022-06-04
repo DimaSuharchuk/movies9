@@ -62,20 +62,22 @@ class PersonController implements ContainerInjectionInterface {
    * @param $tab
    *   Name of tab. It must be the same as existing person view mode.
    *
-   * @return AjaxResponse
+   * @return AjaxResponse|RedirectResponse
    */
-  public function personTabsAjaxHandler($person_id, $tab): AjaxResponse {
-    $person = PersonEntity::load($person_id);
+  public function personTabsAjaxHandler($person_id, $tab) {
+    if ($person = PersonEntity::load($person_id)) {
+      $response = new AjaxResponse();
+      $response->addCommand(
+        new ReplaceCommand(
+          '#js-replaceable-block',
+          $this->builder->view($person, $tab)
+        )
+      );
 
-    $response = new AjaxResponse();
-    $response->addCommand(
-      new ReplaceCommand(
-        '#js-replaceable-block',
-        $this->builder->view($person, $tab)
-      )
-    );
+      return $response;
+    }
 
-    return $response;
+    return new RedirectResponse(Url::fromRoute('<front>')->toString());
   }
 
 }

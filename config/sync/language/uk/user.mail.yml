@@ -1,5 +1,6 @@
 cancel_confirm:
   subject: 'Запит на скасування облікового запису користувача [user:display-name] на сайті [site:name]'
+  body: "[user:display-name],\r\n\r\nA request to cancel your account has been made at [site:name].\r\n\r\nYou may now cancel your account on [site:url-brief] by clicking this link or copying and pasting it into your browser:\r\n\r\n[user:cancel-url]\r\n\r\nNOTE: The cancellation of your account is not reversible.\r\n\r\nThis link expires in one day and nothing will happen if it is not used.\r\n\r\n--  [site:name] team"
 password_reset:
   subject: 'Інформація про заміну авторизаційних даних для користувача [user:display-name] на сайті [site:name]'
   body: "[user:display-name],\r\n\r\nЗ сайту [site:name] було виконано запит на скидання пароля для вашого облікового запису.\r\n\r\nТепер ви можете увійти на сайт натиснувши на цьому посиланні або скопіювавши його в адресний рядок вашого браузера:\r\n\r\n[user:one-time-login-url]\r\n\r\nЦе посилання можна використати для входу лише один раз і воно виведе вас на сторінку, де можна встановити новий пароль. Термін дії цього посилання - одна доба, і якщо його не буде використано, то скидання пароля не відбудеться.\r\n\r\n--  Адміністрація сайту [site:name]"

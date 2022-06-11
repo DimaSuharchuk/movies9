@@ -26,6 +26,8 @@ display:
           label: 'Дата зміни'
         count:
           label: 'Використано в'
+          alter:
+            path: 'admin/content/files/usage/{{ fid }}'
       pager:
         options:
           tags:

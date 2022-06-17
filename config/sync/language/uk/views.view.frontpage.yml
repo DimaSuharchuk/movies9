@@ -25,8 +25,6 @@ display:
       empty:
         area_text_custom:
           content: 'Вміст головної сторінки ще не створено.<br />Щоб розпочати створення сайту перегляньте <a target="_blank" href="https://www.drupal.org/docs/user_guide/en/index.html">Посібник користувача</a>.'
-        title:
-          title: 'Вітаємо на сайті [site:name]'
   feed_1:
     display_title: Канал
   page_1:

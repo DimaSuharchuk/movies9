@@ -31,6 +31,7 @@ module:
   menu_ui: 0
   module_filter: 0
   mvs: 0
+  mysql: 0
   node: 0
   options: 0
   page_cache: 0

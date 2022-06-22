@@ -6,10 +6,22 @@ position: ''
 offset: null
 favicon:
   disable: false
-  ratios:
-    bartik: 60
-    bootstrap: 60
-    claro: 60
-    olivero: 60
-    seven: 60
-    stark: 60
+  themes:
+    bartik:
+      ratio: 60
+      background: false
+    bootstrap:
+      ratio: 60
+      background: false
+    claro:
+      ratio: 60
+      background: false
+    olivero:
+      ratio: 60
+      background: false
+    seven:
+      ratio: 60
+      background: false
+    stark:
+      ratio: 60
+      background: false

@@ -16,6 +16,11 @@ function mvs_theme($existing, $type, $theme, $path): array {
         'links' => [],
       ],
     ],
+    'mvs_error_page' => [
+      'variables' => [
+        'error_code' => NULL,
+      ],
+    ],
   ];
 }
 

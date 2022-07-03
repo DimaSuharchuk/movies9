@@ -1,3 +1,18 @@
+mvs.error_403:
+  path: '/denied'
+  defaults:
+    _title: 'Access denied'
+    _controller: '\Drupal\mvs\Controller\MvsController::page403'
+  requirements:
+    _access: 'TRUE'
+mvs.error_404:
+  path: '/not-found'
+  defaults:
+    _title: 'Page not found'
+    _controller: '\Drupal\mvs\Controller\MvsController::page404'
+  requirements:
+    _access: 'TRUE'
+
 #
 # Node handlers.
 #

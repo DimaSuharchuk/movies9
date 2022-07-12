@@ -132,7 +132,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
       return [
         '#theme' => 'field_with_label',
         '#label' => 'imdb',
-        '#content' => $this->imdb_rating->getRatingValue($imdb_id),
+        '#content' => $this->imdb_rating->getRating($imdb_id),
       ];
     }
     // Else prepare html for update IMDb rating later via JS.
@@ -244,7 +244,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
       return [
         '#theme' => 'field_with_label',
         '#label' => 'imdb',
-        '#content' => $this->imdb_rating->getRatingValue($imdb_id),
+        '#content' => $this->imdb_rating->getRating($imdb_id),
       ];
     }
     // Else prepare html for update IMDb rating later via JS.

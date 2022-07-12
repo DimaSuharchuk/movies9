@@ -1,6 +1,17 @@
 services:
-  imdb.helper:
-    class: Drupal\imdb\IMDbHelper
   imdb.rating:
     class: Drupal\imdb\ImdbRating
-    arguments: [ '@settings','@serialization.json','@imdb.helper' ]
+    arguments:
+      - '@imdb.rating.manager.db'
+      - '@imdb.rating.manager.file'
+  imdb.rating.repository:
+    class: Drupal\imdb\Repository\ImdbRatingRepository
+    arguments:
+      - '@database'
+      - '@logger.factory'
+  imdb.rating.manager.db:
+    class: Drupal\imdb\Manager\ImdbRatingDbManager
+    arguments:
+      - '@imdb.rating.repository'
+  imdb.rating.manager.file:
+    class: Drupal\imdb\Manager\ImdbRatingFileManager

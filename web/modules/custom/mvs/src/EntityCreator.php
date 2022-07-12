@@ -10,7 +10,6 @@ use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\imdb\exception\EmptyValueException;
 use Drupal\imdb\exception\ImdbIdException;
 use Drupal\imdb\exception\TmdbIdException;
-use Drupal\imdb\IMDbHelper;
 use Drupal\mvs\enum\EntityBundle;
 use Drupal\mvs\enum\EntityType;
 use Drupal\mvs\enum\Language;
@@ -19,6 +18,7 @@ use Drupal\mvs\enum\TermBundle;
 use Drupal\node\Entity\Node;
 use Drupal\person\Entity\PersonEntity;
 use Drupal\taxonomy\Entity\Term;
+use function is_imdb_id;
 
 class EntityCreator {
 
@@ -26,19 +26,15 @@ class EntityCreator {
 
   private EntityFinder $finder;
 
-  private IMDbHelper $imdb;
-
   /**
    * EntityCreator constructor.
    *
    * @param EntityTypeManager $manager
    * @param EntityFinder $finder
-   * @param IMDbHelper $imdb
    */
-  public function __construct(EntityTypeManager $manager, EntityFinder $finder, IMDbHelper $imdb) {
+  public function __construct(EntityTypeManager $manager, EntityFinder $finder) {
     $this->entity_type_manager = $manager;
     $this->finder = $finder;
-    $this->imdb = $imdb;
   }
 
   /**
@@ -183,7 +179,7 @@ class EntityCreator {
     if (!$title) {
       throw new EmptyValueException('Title cannot be empty.');
     }
-    if (!$this->imdb->isImdbId($imdb_id)) {
+    if (!is_imdb_id($imdb_id)) {
       throw new ImdbIdException('Invalid IMDb ID.');
     }
 

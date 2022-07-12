@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace PHPSTORM_META {
 
@@ -427,8 +427,10 @@ namespace PHPSTORM_META {
       'file.repository' => '\Drupal\file\FileRepository',
       'plugin.manager.filter' => '\Drupal\filter\FilterPluginManager',
       'filter.uninstall_validator' => '\Drupal\filter\ProxyClass\FilterUninstallValidator',
-      'imdb.helper' => '\Drupal\imdb\IMDbHelper',
       'imdb.rating' => '\Drupal\imdb\ImdbRating',
+      'imdb.rating.repository' => '\Drupal\imdb\Repository\ImdbRatingRepository',
+      'imdb.rating.manager.db' => '\Drupal\imdb\Manager\ImdbRatingDbManager',
+      'imdb.rating.manager.file' => '\Drupal\imdb\Manager\ImdbRatingFileManager',
       'plugin.manager.language_negotiation_method' => '\Drupal\language\LanguageNegotiationMethodManager',
       'language_negotiator' => '\Drupal\language\LanguageNegotiator',
       'language.config_subscriber' => '\Drupal\language\EventSubscriber\ConfigSubscriber',
@@ -559,6 +561,7 @@ namespace PHPSTORM_META {
       'drupal.commands' => '\Drush\Drupal\Commands\core\DrupalCommands',
       'deploy_hook.commands' => '\Drush\Drupal\Commands\core\DeployHookCommands',
       'entity.commands' => '\Drush\Drupal\Commands\core\EntityCommands',
+      'link.hooks' => '\Drush\Drupal\Commands\core\LinkHooks',
       'image.commands' => '\Drush\Drupal\Commands\core\ImageCommands',
       'jsonapi.commands' => '\Drush\Drupal\Commands\core\JsonapiCommands',
       'language.commands' => '\Drush\Drupal\Commands\core\LanguageCommands',
@@ -572,6 +575,11 @@ namespace PHPSTORM_META {
       'user.commands' => '\Drush\Drupal\Commands\core\UserCommands',
       'views.commands' => '\Drush\Drupal\Commands\core\ViewsCommands',
       'watchdog.commands' => '\Drush\Drupal\Commands\core\WatchdogCommands',
+      'field.create.commands' => '\Drush\Drupal\Commands\field\FieldCreateCommands',
+      'field.info.commands' => '\Drush\Drupal\Commands\field\FieldInfoCommands',
+      'field.delete.commands' => '\Drush\Drupal\Commands\field\FieldDeleteCommands',
+      'field.base-override-create.commands' => '\Drush\Drupal\Commands\field\FieldBaseOverrideCreateCommands',
+      'field.base-info.commands' => '\Drush\Drupal\Commands\field\FieldBaseInfoCommands',
       'pm.commands' => '\Drush\Drupal\Commands\pm\PmCommands',
       'theme.commands' => '\Drush\Drupal\Commands\pm\ThemeCommands',
       'sanitize.commands' => '\Drush\Drupal\Commands\sql\SanitizeCommands',
@@ -835,5 +843,28 @@ namespace PHPSTORM_META {
     \Drupal\Core\Messenger\MessengerInterface::TYPE_WARNING,
     \Drupal\Core\Messenger\MessengerInterface::TYPE_ERROR
   );
+
+  expectedArguments(
+    \Drupal\Core\File\FileSystemInterface::prepareDirectory(),
+    1,
+    \Drupal\Core\File\FileSystemInterface::CREATE_DIRECTORY,
+    \Drupal\Core\File\FileSystemInterface::MODIFY_PERMISSIONS
+  );
+
+  registerArgumentsSet('file_system_exists_behaviour',
+    \Drupal\Core\File\FileSystemInterface::EXISTS_RENAME,
+    \Drupal\Core\File\FileSystemInterface::EXISTS_REPLACE,
+    \Drupal\Core\File\FileSystemInterface::EXISTS_ERROR
+  );
+
+  expectedArguments(\Drupal\Core\File\FileSystemInterface::copy(), 2, argumentsSet('file_system_exists_behaviour'));
+  expectedArguments(\Drupal\Core\File\FileSystemInterface::move(), 2, argumentsSet('file_system_exists_behaviour'));
+  expectedArguments(\Drupal\Core\File\FileSystemInterface::saveData(), 2, argumentsSet('file_system_exists_behaviour'));
+  expectedArguments(\Drupal\Core\File\FileSystemInterface::getDestinationFilename(), 1, argumentsSet('file_system_exists_behaviour'));
+  expectedArguments(\file_copy(), 2, argumentsSet('file_system_exists_behaviour'));
+  expectedArguments(\file_move(), 2, argumentsSet('file_system_exists_behaviour'));
+  expectedArguments(\file_save_data(), 2, argumentsSet('file_system_exists_behaviour'));
+  expectedArguments(\file_save_upload(), 4, argumentsSet('file_system_exists_behaviour'));
+  expectedArguments(\system_retrieve_file(), 3, argumentsSet('file_system_exists_behaviour'));
 
 }

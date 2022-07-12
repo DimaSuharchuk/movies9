@@ -4,8 +4,8 @@ namespace Drupal\imdb\Controller;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\mvs\enum\NodeBundle;
 use Drupal\imdb\ImdbRating;
+use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbApiAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -37,8 +37,9 @@ class NodeController implements ContainerInjectionInterface {
    */
   public function nodeImdbRating(string $bundle, int $tmdb_id): AjaxResponse {
     if ($imdb_id = $this->adapter->getImdbId(NodeBundle::memberByValue($bundle), $tmdb_id)) {
-      return new AjaxResponse($this->imdb_rating->getRatingValue($imdb_id));
+      return new AjaxResponse($this->imdb_rating->getRating($imdb_id));
     }
+
     return new AjaxResponse();
   }
 
@@ -53,8 +54,9 @@ class NodeController implements ContainerInjectionInterface {
    */
   public function episodeImdbRating(int $tv_tmdb_id, int $season_number, int $episode_number): AjaxResponse {
     if ($imdb_id = $this->adapter->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode_number)) {
-      return new AjaxResponse($this->imdb_rating->getRatingValue($imdb_id));
+      return new AjaxResponse($this->imdb_rating->getRating($imdb_id));
     }
+
     return new AjaxResponse();
   }
 

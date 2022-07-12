@@ -5,7 +5,43 @@
  * Site updates.
  */
 
+use Drupal\imdb\Repository\ImdbRatingRepository;
 use Drupal\mvs\Constant;
+
+/**
+ * Implements hook_schema().
+ */
+function imdb_schema(): array {
+  $schema = [];
+
+  $schema[ImdbRatingRepository::getTable()] = [
+    'description' => 'Contains movies rating from IMDB.',
+    'fields' => [
+      'imdb_id' => [
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Movie's IMDB ID.",
+      ],
+      'rating' => [
+        'type' => 'numeric',
+        'unsigned' => TRUE,
+        'precision' => 3,
+        'scale' => 1,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Movie's IMDB rating.",
+      ],
+    ],
+    'primary key' => ['imdb_id'],
+    'indexes' => [
+      'rating' => ['rating'],
+    ],
+  ];
+
+  return $schema;
+}
 
 /**
  * Delete terms: "News", "Reality", "Talk" and nodes using the terms.
@@ -42,4 +78,43 @@ function imdb_update_9101() {
  */
 function imdb_update_9301() {
   Drupal::service('module_installer')->install(['mvs']);
+}
+
+/**
+ * Add table for IMDB rating.
+ */
+function imdb_update_9401() {
+  $table = ImdbRatingRepository::getTable();
+  $spec = imdb_schema()[$table];
+  $schema = Drupal::database()->schema();
+
+  if (!$schema->tableExists($table)) {
+    $schema->createTable($table, $spec);
+  }
+}
+
+/**
+ * Add ratings for existing nodes.
+ */
+function imdb_update_9402() {
+  $manager_file = Drupal::service('imdb.rating.manager.file');
+  $manager_db = Drupal::service('imdb.rating.manager.db');
+
+  $manager_db->clear();
+  $manager_file->refresh();
+
+  $imdb_ids = Drupal::database()
+    ->select('node__field_imdb_id', 'n')
+    ->fields('n', ['field_imdb_id_value'])
+    ->execute()
+    ->fetchCol();
+
+  $ratings = $manager_file->getMultiple($imdb_ids);
+
+  foreach ($ratings as $imdb_id => $rating) {
+    $manager_db->set($imdb_id, $rating);
+  }
+
+  Drupal::state()
+    ->set('imdb.rating.last_update', Drupal::time()->getRequestTime());
 }

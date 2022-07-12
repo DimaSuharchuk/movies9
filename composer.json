@@ -28,7 +28,8 @@
         "drupal/views_infinite_scroll": "^2",
         "drush/drush": "^11.0",
         "eloquent/enumeration": "^6.0",
-        "php-tmdb/api": "^3.0"
+        "php-tmdb/api": "^3.0",
+        "ext-pdo": "*"
     },
     "conflict": {
         "drupal/drupal": "*"

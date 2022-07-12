@@ -7,7 +7,6 @@ services:
     arguments:
       - '@entity_type.manager'
       - '@entity_finder'
-      - '@imdb.helper'
   entity_helper:
     class: Drupal\mvs\EntityHelper
     arguments:

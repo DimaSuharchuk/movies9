@@ -6,15 +6,13 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Site\Settings;
-use Drupal\imdb\IMDbHelper;
 use Drupal\mvs\Constant;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function is_imdb_id;
 
 class ImdbIdsAddForm extends FormBase {
 
   private ?Settings $settings;
-
-  private ?IMDbHelper $imdb_helper;
 
   private ?QueueFactory $queue;
 
@@ -27,7 +25,6 @@ class ImdbIdsAddForm extends FormBase {
     $instance->settings = $container->get('settings');
     $instance->messenger = $container->get('messenger');
     $instance->queue = $container->get('queue');
-    $instance->imdb_helper = $container->get('imdb.helper');
 
     return $instance;
   }
@@ -86,7 +83,7 @@ class ImdbIdsAddForm extends FormBase {
     // Collect valid IDs.
     $imdb_ids = [];
     foreach ($input_ids as $input_id) {
-      if ($this->imdb_helper->isImdbId($input_id)) {
+      if (is_imdb_id($input_id)) {
         $imdb_ids[] = $input_id;
       }
     }

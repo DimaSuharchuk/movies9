@@ -5,31 +5,6 @@
  * Module's main file. Provides work with different IMDB APIs.
  */
 
-use Drupal\Core\Site\Settings;
-use Drupal\mvs\Constant;
-
-/**
- * Implements hook_cron().
- */
-function imdb_cron() {
-  // Update "IMDB ratings" file in private directory.
-  if ($zipped = @file_get_contents('https://datasets.imdbws.com/title.ratings.tsv.gz')) {
-    if ($unzipped = @gzdecode($zipped)) {
-      $private_dir = Settings::get('file_private_path');
-      $filename = Constant::IMDB_RATINGS_FILE_NAME;
-      file_put_contents("$private_dir/$filename", $unzipped);
-    }
-    else {
-      // If means that file exists, but it's not gzip.
-      Drupal::logger('imdb_ratings')->error($zipped);
-    }
-  }
-  else {
-    Drupal::logger('imdb_ratings')
-      ->error('IMDB ratings have not been updated.');
-  }
-}
-
 /**
  * Implements hook_toolbar_alter().
  *
@@ -38,4 +13,61 @@ function imdb_cron() {
  */
 function imdb_toolbar_alter(&$items) {
   $items['administration']['#attached']['library'][] = 'imdb/imdb.menu';
+}
+
+/**
+ * Batch process callback.
+ * Import IMDb ratings into DB.
+ *
+ * @param $imdb_ids
+ *   IMDb IDs of existing nodes.
+ * @param $context
+ *   Batch context.
+ *
+ * @return void
+ * @group imdb_rating
+ */
+function imdb_rating_insert_batch($imdb_ids, &$context) {
+  $manager_file = Drupal::service('imdb.rating.manager.file');
+  $manager_db = Drupal::service('imdb.rating.manager.db');
+
+  $ratings = $manager_file->getMultiple($imdb_ids);
+
+  foreach ($ratings as $imdb_id => $rating) {
+    $manager_db->set($imdb_id, $rating);
+  }
+}
+
+/**
+ * Batch finish callback.
+ * Import IMDb ratings into DB.
+ *
+ * @param $success
+ *   TRUE if batch finished successfully, FALSE - otherwise.
+ * @param $results
+ *   Batch results.
+ * @param $operations
+ *   Batch operations.
+ *
+ * @return void
+ * @group imdb_rating
+ */
+function imdb_rating_insert_batch_finished($success, $results, $operations) {
+  if ($success) {
+    Drupal::state()
+      ->set('imdb.rating.last_update', Drupal::time()->getRequestTime());
+  }
+}
+
+/**
+ * Check is the string a correct IMDb ID.
+ *
+ * @param string $id
+ *   String for check.
+ *
+ * @return bool
+ *   String is IMDb ID.
+ */
+function is_imdb_id(string $id): bool {
+  return (bool) preg_match('/^tt\d{7,8}$/', $id);
 }

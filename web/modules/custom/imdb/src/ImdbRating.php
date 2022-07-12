@@ -2,51 +2,25 @@
 
 namespace Drupal\imdb;
 
-use Drupal\Component\Serialization\SerializationInterface;
-use Drupal\Core\Site\Settings;
-use Drupal\mvs\Constant;
+use Drupal\imdb\Manager\ImdbRatingDbManager;
+use Drupal\imdb\Manager\ImdbRatingFileManager;
+use function is_null;
 
 class ImdbRating {
 
-  private Settings $settings;
+  private ?ImdbRatingDbManager $db_manager;
 
-  private IMDbHelper $imdb_helper;
-
-  private SerializationInterface $json;
+  private ?ImdbRatingFileManager $file_manager;
 
   /**
    * ImdbRating constructor.
    *
-   * @param Settings $settings
-   * @param SerializationInterface $json
-   * @param IMDbHelper $helper
+   * @param \Drupal\imdb\Manager\ImdbRatingDbManager $db_manager
+   * @param \Drupal\imdb\Manager\ImdbRatingFileManager $file_manager
    */
-  public function __construct(Settings $settings, SerializationInterface $json, IMDbHelper $helper) {
-    $this->settings = $settings;
-    $this->json = $json;
-    $this->imdb_helper = $helper;
-  }
-
-  /**
-   * Get average rating by IMDb ID.
-   *
-   * @param string $imdb_id
-   *
-   * @return float
-   */
-  public function getRatingValue(string $imdb_id): float {
-    return ($rating = $this->getRating($imdb_id)) ? $rating['rating'] : 0;
-  }
-
-  /**
-   * Get count of votes by IMDb ID.
-   *
-   * @param string $imdb_id
-   *
-   * @return int
-   */
-  public function getNumVotes(string $imdb_id): int {
-    return ($rating = $this->getRating($imdb_id)) ? $rating['num_votes'] : 0;
+  public function __construct(ImdbRatingDbManager $db_manager, ImdbRatingFileManager $file_manager) {
+    $this->db_manager = $db_manager;
+    $this->file_manager = $file_manager;
   }
 
   /**
@@ -55,107 +29,21 @@ class ImdbRating {
    * @param string $imdb_id
    *   IMDb ID.
    *
-   * @return array|null
+   * @return float
    */
-  public function getRating(string $imdb_id): ?array {
-    // Validate IMDb ID.
-    if (!$this->imdb_helper->isImdbId($imdb_id)) {
-      return NULL;
-    }
+  public function getRating(string $imdb_id): float {
+    $rating = $this->db_manager->get($imdb_id);
 
-    // Try to get rating from fastest method to slowest.
-    if ($rating = $this->getRatingFromFile($imdb_id)) {
+    if (!is_null($rating)) {
       return $rating;
     }
-    //if ($rating = $this->getOmdbRating($imdb_id)) {
-    //  return $rating;
-    //}
-    //if ($rating = $this->getImdbRating($imdb_id)) {
-    //  return $rating;
-    //}
 
-    return NULL;
-  }
+    // Get rating from file.
+    $rating = $this->file_manager->get($imdb_id);
+    // Save rating from file into DB.
+    $this->db_manager->set($imdb_id, $rating);
 
-  /**
-   * Fastest method. Read from file.
-   *
-   * @param string $imdb_id
-   *
-   * @return array
-   */
-  private function getRatingFromFile(string $imdb_id): ?array {
-    $private_dir = $this->settings::get('file_private_path');
-    $filepath = $private_dir . '/' . Constant::IMDB_RATINGS_FILE_NAME;
-
-    if ($line = \shell_exec("grep -m 1 $imdb_id $filepath")) {
-      [, $rating] = explode("\t", $line);
-
-      return $this->buildResultArray($rating, NULL);
-    }
-
-    return NULL;
-  }
-
-  /**
-   * Fast method.
-   * Returns slightly outdated information about IMDb rating and votes count by
-   * IMDb ID.
-   *
-   * @param string $imdb_id
-   *
-   * @return array|null
-   */
-  private function getOmdbRating(string $imdb_id): ?array {
-    $omdb_api_key = $this->settings::get('omdb_api_key');
-    if ($omdb_response = @file_get_contents("https://www.omdbapi.com/?apikey=$omdb_api_key&i=$imdb_id")) {
-      if ($array = $this->json::decode($omdb_response)) {
-        if (isset($array['imdbRating'])) {
-          return $this->buildResultArray(
-            $array['imdbRating'],
-            filter_var($array['imdbVotes'], FILTER_SANITIZE_NUMBER_INT)
-          );
-        }
-      }
-    }
-
-    return NULL;
-  }
-
-  /**
-   * Slow method.
-   * Parse IMDb page and return exact actual data.
-   *
-   * @param string $imdb_id
-   *
-   * @return array|null
-   */
-  private function getImdbRating(string $imdb_id): ?array {
-    if ($imdb_page = @file_get_contents("https://www.imdb.com/title/$imdb_id")) {
-      preg_match('/"aggregateRating": ({\n?(.*\n\s*)+?})/', $imdb_page, $matches);
-      if ($aggregate_rating = @$this->json::decode($matches[1])) {
-        return $this->buildResultArray($aggregate_rating['ratingValue'], $aggregate_rating['ratingCount']);
-      }
-    }
-
-    return NULL;
-  }
-
-  /**
-   * Interface of response from this service.
-   *
-   * @param $rating_value
-   *   Average rating from IMDb site.
-   * @param $number_of_votes
-   *   The number of people who voted for a given film, TV or episode.
-   *
-   * @return array
-   */
-  private function buildResultArray($rating_value, $number_of_votes): array {
-    return [
-      'rating' => (float) $rating_value,
-      'num_votes' => (int) $number_of_votes,
-    ];
+    return $rating;
   }
 
 }

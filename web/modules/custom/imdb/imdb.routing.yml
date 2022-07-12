@@ -8,6 +8,13 @@ imdb.statistics:
     _title: 'Statistics'
   requirements:
     _permission: 'administer site configuration'
+imdb.imdb_rating:
+  path: '/admin/imdb/rating'
+  defaults:
+    _form: '\Drupal\imdb\Form\ImdbRatingForm'
+    _title: 'Rating'
+  requirements:
+    _permission: 'administer site configuration'
 imdb.imdb_add:
   path: '/admin/imdb/add'
   defaults:

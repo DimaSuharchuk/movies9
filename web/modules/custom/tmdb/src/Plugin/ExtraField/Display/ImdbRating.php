@@ -17,10 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ImdbRating extends ExtraTmdbFieldDisplayBase {
 
-  /**
-   * @var ImdbRatingService|object|null
-   */
-  private $rating;
+  private ?ImdbRatingService $rating;
 
   /**
    * {@inheritDoc}
@@ -39,8 +36,7 @@ class ImdbRating extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    $imdb_id = $entity->{'field_imdb_id'}->value;
-    if ($rating = $this->rating->getRatingValue($imdb_id)) {
+    if ($rating = $this->rating->getRating($entity->{'field_imdb_id'}->value)) {
       $build = [
         '#theme' => 'field_with_label',
         '#label' => 'imdb',

@@ -4,8 +4,6 @@ namespace Drupal\mvs;
 
 final class Constant {
 
-  const IMDB_RATINGS_FILE_NAME = 'title.ratings.tsv';
-
   const TMDB_IMAGE_BASE_URL = '//image.tmdb.org/t/p/';
 
   const GENDER_WOMAN = 1;

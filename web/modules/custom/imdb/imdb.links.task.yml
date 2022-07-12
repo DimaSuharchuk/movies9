@@ -3,13 +3,18 @@ imdb.statistics_tab:
   base_route: imdb.admin_imdb
   title: Statistics
   weight: 1
+imdb.imdb_rating_tab:
+  route_name: imdb.imdb_rating
+  base_route: imdb.admin_imdb
+  title: Rating
+  weight: 2
 imdb.imdb_add_tab:
   route_name: imdb.imdb_add
   base_route: imdb.admin_imdb
   title: Add
-  weight: 2
+  weight: 3
 imdb.genres_tab:
   route_name: imdb.update_genres
   base_route: imdb.admin_imdb
   title: Genres
-  weight: 3
+  weight: 4

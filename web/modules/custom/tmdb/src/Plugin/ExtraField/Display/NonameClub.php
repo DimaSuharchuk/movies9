@@ -43,11 +43,8 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
     $build = [];
 
     if ($this->current_user->hasPermission('view nnm')) {
-      // Search on "nnm" in English if English is currently active, or Russian
-      // for others.
-      $lang = $entity->language()->getId() === 'en' ? 'en' : 'ru';
       /** @var \Drupal\node\NodeInterface $node */
-      $node = $entity->getTranslation($lang);
+      $node = $entity->getTranslation('en');
 
       $search_string = preg_replace('/[^a-zа-я\d\s-]/iu', '', $node->getTitle());
 

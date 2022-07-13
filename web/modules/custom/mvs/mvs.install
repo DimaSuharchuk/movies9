@@ -63,3 +63,44 @@ function mvs_update_9002() {
   $db->truncate('cache_render')->execute();
   $db->truncate('cache_toolbar')->execute();
 }
+
+/**
+ * Remove russian language from tables.
+ */
+function mvs_update_9003() {
+  $db = Drupal::database();
+
+  $db->delete('locales_target')->condition('language', 'ru')->execute();
+
+  $tables_langcode = [
+    'locale_file',
+    'menu_link_content_data',
+    'menu_link_content_field_revision',
+    'node_field_data',
+    'node_field_revision',
+    'node_revision__field_poster',
+    'node__field_poster',
+    'person_field_data',
+    'taxonomy_term_field_data',
+    'taxonomy_term_field_revision',
+  ];
+
+  foreach ($tables_langcode as $table) {
+    $db->delete($table)->condition('langcode', 'ru')->execute();
+  }
+
+  $db->update('users')
+    ->fields(['langcode' => 'en'])
+    ->condition('langcode', 'ru')
+    ->execute();
+  $db->update('users_field_data')
+    ->fields(['langcode' => 'en', 'preferred_langcode' => 'en'])
+    ->condition('langcode', 'ru')
+    ->execute();
+  $db->update('user__roles')
+    ->fields(['langcode' => 'en'])
+    ->condition('langcode', 'ru')
+    ->execute();
+
+  Drupal::service('cache.render')->deleteAll();
+}

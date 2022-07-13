@@ -7,10 +7,8 @@ url:
   source: path_prefix
   prefixes:
     en: en
-    ru: ru
     uk: uk
   domains:
     en: ''
-    ru: ''
     uk: ''
 selected_langcode: site_default

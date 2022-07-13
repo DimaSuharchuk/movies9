@@ -48,12 +48,7 @@ class NnmController implements ContainerInjectionInterface {
   public function getTable(int $nid): array {
     /** @var \Drupal\node\NodeInterface $node */
     $node = $this->node_storage->load($nid);
-
-    // Search on "nnm" in English if English is currently active, or Russian
-    // for others.
-    $lang = $this->language_manager->getCurrentLanguage()
-      ->getId() === 'en' ? 'en' : 'ru';
-    $node = $node->getTranslation($lang);
+    $node = $node->getTranslation('en');
 
     $search_string = preg_replace('/[^a-zа-я\d\s-]/iu', '', $node->getTitle());
 

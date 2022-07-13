@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "191b169542cd4bb09edc5646cb06a130",
+    "content-hash": "9b3ae9312dacaeb2d43fa9137e144919",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2241,17 +2241,17 @@
         },
         {
             "name": "drupal/standwithukraine",
-            "version": "1.3.3",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/standwithukraine.git",
-                "reference": "1.3.3"
+                "reference": "1.3.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/standwithukraine-1.3.3.zip",
-                "reference": "1.3.3",
-                "shasum": "b1465479202ae2cc117a05b58716e0c0650d0899"
+                "url": "https://ftp.drupal.org/files/projects/standwithukraine-1.3.4.zip",
+                "reference": "1.3.4",
+                "shasum": "4c0865359a9e9dc11edc76d87599df9494022b93"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9 || ^10",
@@ -2261,8 +2261,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.3.3",
-                    "datestamp": "1656366023",
+                    "version": "1.3.4",
+                    "datestamp": "1657401212",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -2348,16 +2348,16 @@
         },
         {
             "name": "drush/drush",
-            "version": "11.0.9",
+            "version": "11.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drush-ops/drush.git",
-                "reference": "88b2293ded84f67aad96ad6dbd64cacd84bcd6fe"
+                "reference": "5ee249f4e511d65c099e86317719fb3a15370e6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/88b2293ded84f67aad96ad6dbd64cacd84bcd6fe",
-                "reference": "88b2293ded84f67aad96ad6dbd64cacd84bcd6fe",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/5ee249f4e511d65c099e86317719fb3a15370e6b",
+                "reference": "5ee249f4e511d65c099e86317719fb3a15370e6b",
                 "shasum": ""
             },
             "require": {
@@ -2366,12 +2366,12 @@
                 "consolidation/annotated-command": "^4.5.3",
                 "consolidation/config": "^2",
                 "consolidation/filter-via-dot-access-data": "^2",
-                "consolidation/robo": "^3.0.9",
+                "consolidation/robo": "^3.0.9 || ^4.0.0-alpha1",
                 "consolidation/site-alias": "^3.1.3",
                 "consolidation/site-process": "^4.1.3 || ^5",
                 "enlightn/security-checker": "^1",
                 "ext-dom": "*",
-                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "guzzlehttp/guzzle": "^6.5 || ^7.0",
                 "league/container": "^3.4 || ^4",
                 "php": ">=7.4",
                 "psy/psysh": "~0.11",
@@ -2482,7 +2482,7 @@
                 "irc": "irc://irc.freenode.org/drush",
                 "issues": "https://github.com/drush-ops/drush/issues",
                 "slack": "https://drupal.slack.com/messages/C62H9CWQM",
-                "source": "https://github.com/drush-ops/drush/tree/11.0.9"
+                "source": "https://github.com/drush-ops/drush/tree/11.1.1"
             },
             "funding": [
                 {
@@ -2490,7 +2490,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-16T12:01:55+00:00"
+            "time": "2022-07-12T16:08:05+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -7614,7 +7614,8 @@
     "prefer-lowest": false,
     "platform": {
         "ext-igbinary": "^3.1",
-        "ext-zlib": "^7.4"
+        "ext-zlib": "^7.4",
+        "ext-pdo": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

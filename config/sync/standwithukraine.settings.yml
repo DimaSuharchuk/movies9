@@ -1,6 +1,7 @@
 _core:
   default_config_hash: S4AQF8KxVOVyxMQb5pZ2TJHmwqNec5uOYwvbAW56dXk
 langcode: uk
+single: true
 url: null
 position: ''
 offset: null

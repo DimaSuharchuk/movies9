@@ -1,0 +1,65 @@
+#user-login-form {
+  display: grid;
+  place-content: center;
+  height: calc(100vh - 170px);
+  padding-left: 15px;
+  padding-right: 15px;
+
+  .description {
+    display: none;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 20px;
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    background-color: $bg-search;
+    color: $text-color-main;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+
+    &[type=submit] {
+      color: $text-color-main;
+      background-color: $bg-color-light-gray;
+      cursor: pointer;
+    }
+
+    &::placeholder {
+      color: $text-color-main;
+    }
+
+    &:focus {
+      //outline: none;
+    }
+  }
+
+}
+
+#block-movies-local-tasks {
+  display: none;
+}
+
+
+/**
+ * DARK THEME.
+ */
+[data-theme=dark] {
+  #user-login-form input {
+    &[type=text],
+    &[type=password] {
+      color: $dk_text-color-main;
+      background-color: $dk_bg-color-light-gray;
+    }
+
+    &[type=submit] {
+      color: $dk_text-color-main;
+      background-color: $dk_bg-option;
+    }
+  }
+}

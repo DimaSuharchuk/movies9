@@ -16,6 +16,7 @@
     ],
     "require": {
         "ext-igbinary": "^3.1",
+        "ext-pdo": "*",
         "ext-zlib": "^7.4",
         "composer/installers": "^1.2",
         "drupal/adminimal_admin_toolbar": "^1.11",
@@ -28,8 +29,7 @@
         "drupal/views_infinite_scroll": "^2",
         "drush/drush": "^11.0",
         "eloquent/enumeration": "^6.0",
-        "php-tmdb/api": "^3.0",
-        "ext-pdo": "*"
+        "php-tmdb/api": "^3.0"
     },
     "conflict": {
         "drupal/drupal": "*"

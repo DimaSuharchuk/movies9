@@ -75,22 +75,21 @@
  * Logo-based fields.
  * Production companies, networks.
  */
-.field-production-companies,
-.field-networks {
-  .content {
-    margin-bottom: -10px;
+.properties {
+  .field-production-companies,
+  .field-networks {
+    .content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+      grid-gap: 10px 30px;
 
-    img {
-      height: min-content;
-      max-height: 30px;
-      width: auto;
-      max-width: 100%;
-      filter: grayscale(1);
-      opacity: .5;
-      margin-bottom: 10px;
-
-      &:not(:last-child) {
-        margin-right: 30px;
+      img {
+        height: min-content;
+        max-height: 50px;
+        width: auto;
+        max-width: 100%;
+        filter: grayscale(1);
+        opacity: .5;
       }
     }
   }
@@ -307,5 +306,18 @@ a[data-topic-id] {
    */
   .field-original-title {
     color: $dk_text-color-3d;
+  }
+
+  /**
+   * Logo-based fields.
+   * Production companies, networks.
+   */
+  .properties {
+    .field-production-companies,
+    .field-networks {
+      img {
+        filter: grayscale(1) invert(1);
+      }
+    }
   }
 }

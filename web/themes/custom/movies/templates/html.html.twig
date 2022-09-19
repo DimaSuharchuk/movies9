@@ -35,13 +35,6 @@
 </head>
 <body{{ attributes }}>
 <script>"1"===localStorage.getItem("dark-theme")&&(document.body.dataset.theme="dark")</script>
-{#
-Keyboard navigation/accessibility link to main content section in
-page.html.twig.
-#}
-<a href="#main-content" class="visually-hidden focusable">
-  {{ 'Skip to main content'|t }}
-</a>
 {{ page_top }}
 {{ page }}
 {{ page_bottom }}

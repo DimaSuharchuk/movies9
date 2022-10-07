@@ -26,3 +26,5 @@ favicon:
     stark:
       ratio: 60
       background: false
+    gin:
+      ratio: 60

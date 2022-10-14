@@ -2,11 +2,10 @@
 
 namespace Drupal\imdb\Form;
 
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Site\Settings;
-use Drupal\mvs\Constant;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function is_imdb_id;
 
@@ -14,7 +13,7 @@ class ImdbIdsAddForm extends FormBase {
 
   private ?Settings $settings;
 
-  private ?QueueFactory $queue;
+  private Connection $db;
 
   /**
    * {@inheritDoc}
@@ -24,7 +23,7 @@ class ImdbIdsAddForm extends FormBase {
 
     $instance->settings = $container->get('settings');
     $instance->messenger = $container->get('messenger');
-    $instance->queue = $container->get('queue');
+    $instance->db = $container->get('database');
 
     return $instance;
   }
@@ -89,9 +88,27 @@ class ImdbIdsAddForm extends FormBase {
     }
 
     if ($imdb_ids) {
-      $q = $this->queue->get(Constant::NODE_SAVE_WORKER_ID);
-      foreach ($imdb_ids as $imdb_id) {
-        $q->createItem(['imdb_id' => $imdb_id]);
+      $query = $this->db->select('node_revision__field_imdb_id', 'i')
+        ->fields('i', ['field_imdb_id_value'])
+        ->condition('i.field_imdb_id_value', $imdb_ids, 'IN')
+        ->condition('a.field_approved_value', 1);
+      $query->leftJoin('node__field_approved', 'a', 'a.entity_id = i.entity_id');
+      $imdb_ids_in_db = $query->execute()->fetchCol();
+      $new_imdb_ids = \array_diff($imdb_ids, $imdb_ids_in_db);
+
+      if ($new_imdb_ids) {
+        $operations = [];
+
+        foreach (\array_unique($new_imdb_ids) as $imdb_id) {
+          $operations[] = ['imdb_nodes_insert_batch', [$imdb_id]];
+        }
+
+        $batch = [
+          'title' => $this->t('Adding movies to the site ...'),
+          'operations' => $operations,
+          'finished' => 'imdb_nodes_insert_batch_finished',
+        ];
+        batch_set($batch);
       }
     }
   }

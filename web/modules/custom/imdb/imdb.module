@@ -5,6 +5,9 @@
  * Module's main file. Provides work with different IMDB APIs.
  */
 
+use Drupal\Core\StringTranslation\PluralTranslatableMarkup;
+use Drupal\mvs\enum\NodeBundle;
+
 /**
  * Implements hook_toolbar_alter().
  *
@@ -56,6 +59,49 @@ function imdb_rating_insert_batch_finished($success, $results, $operations) {
   if ($success) {
     Drupal::state()
       ->set('imdb.rating.last_update', Drupal::time()->getRequestTime());
+  }
+}
+
+/**
+ * Create nodes or update existing nodes without "Approved" status.
+ */
+function imdb_nodes_insert_batch($imdb_id, &$context) {
+  // Check and update "Approved" status if the node already exists.
+  if (Drupal::service('entity_creator')->updateNodeApprovedStatus($imdb_id)) {
+    $context['results'][] = $imdb_id;
+
+    return;
+  }
+
+  // Get Node bundle and TMDb ID by IMDb ID.
+  if (!$tmdb = Drupal::service('tmdb.adapter')->getTmdbIdByImdbId($imdb_id)) {
+    return;
+  }
+
+  /** @var NodeBundle $bundle */
+  $bundle = $tmdb['type'];
+  /** @var int $tmdb_id */
+  $tmdb_id = $tmdb['tmdb_id'];
+
+  // Create movie or TV on all languages.
+  if (!Drupal::service('entity_helper')->prepareNode($bundle, $tmdb_id, TRUE)) {
+    throw new Exception(t('%type has not been created with TMDb ID %tmdb_id.', [
+      '%type' => $bundle->value(),
+      '%tmdb_id' => $tmdb_id,
+    ]));
+  }
+
+  $context['results'][] = $imdb_id;
+}
+
+/**
+ * Success message for "imdb_nodes_insert_batch".
+ */
+function imdb_nodes_insert_batch_finished($success, $results, $operations) {
+  if ($success) {
+    Drupal::messenger()->addMessage(
+      new PluralTranslatableMarkup(count($results), 'Added/updated @count movie.', 'Added/updated @count movies.')
+    );
   }
 }
 

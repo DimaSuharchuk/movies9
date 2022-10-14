@@ -2,14 +2,10 @@
 
 namespace Drupal\imdb\Form;
 
-use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Site\Settings;
-use Drupal\Core\State\State;
-use Drupal\mvs\Constant;
 use Drupal\mvs\EntityFinder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -19,13 +15,7 @@ class StatisticsForm extends FormBase {
 
   private ?Settings $settings;
 
-  private ?DateFormatter $date_formatter;
-
-  private ?State $state;
-
   private ?EntityFinder $finder;
-
-  private ?QueueFactory $queue;
 
   /**
    * {@inheritDoc}
@@ -35,9 +25,6 @@ class StatisticsForm extends FormBase {
 
     $instance->file_system = $container->get('file_system');
     $instance->settings = $container->get('settings');
-    $instance->date_formatter = $container->get('date.formatter');
-    $instance->state = $container->get('state');
-    $instance->queue = $container->get('queue');
     $instance->finder = $container->get('entity_finder');
 
     return $instance;
@@ -54,15 +41,6 @@ class StatisticsForm extends FormBase {
    * @inheritDoc
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $form['actions'] = [
-      '#type' => 'actions',
-      '#weight' => 0,
-    ];
-    $form['actions']['clear'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Clear TMDb queue'),
-    ];
-
     $form['important'] = [
       '#type' => 'details',
       '#title' => $this->t('Other important settings'),
@@ -75,13 +53,6 @@ class StatisticsForm extends FormBase {
       '#title' => $this->t('Private file system exists and directory is readable.'),
       '#default_value' => $private_system && $this->file_system->prepareDirectory($private_system, NULL),
       '#disabled' => TRUE,
-    ];
-    // Cron info.
-    $form['important']['cron'] = [
-      '#type' => 'item',
-      '#markup' => $this->t('Cron last run: %time ago.', [
-        '%time' => $this->date_formatter->formatTimeDiffSince($this->state->get('system.cron_last')),
-      ]),
     ];
 
     /**
@@ -125,15 +96,6 @@ class StatisticsForm extends FormBase {
       ]),
     ];
 
-    // TMDb Queue.
-    $form['statistics']['node_save_queue'] = [
-      '#type' => 'item',
-      '#markup' => $this->t('Untreated Node saving queue items: %count.', [
-        '%count' => $this->queue->get(Constant::NODE_SAVE_WORKER_ID)
-          ->numberOfItems(),
-      ]),
-    ];
-
     return $form;
   }
 
@@ -141,7 +103,6 @@ class StatisticsForm extends FormBase {
    * @inheritDoc
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $this->queue->get(Constant::NODE_SAVE_WORKER_ID)->deleteQueue();
   }
 
 }

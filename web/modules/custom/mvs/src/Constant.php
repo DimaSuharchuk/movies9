@@ -140,15 +140,6 @@ final class Constant {
    */
   const VIDEOS = 'videos';
 
-  /**
-   * Queue Worker IDS:
-   */
-
-  /**
-   * @see \Drupal\imdb\Plugin\QueueWorker\NodeCreatorQueueWorker
-   */
-  const NODE_SAVE_WORKER_ID = 'create_node_by_imdb_id_worker';
-
   final private function __construct() {
   }
 

@@ -1,10 +1,17 @@
 _core:
   default_config_hash: S4AQF8KxVOVyxMQb5pZ2TJHmwqNec5uOYwvbAW56dXk
-langcode: uk
-single: true
-url: null
-position: ''
-offset: null
+message:
+  text: |-
+    We Stand With
+    Ukraine
+  single: true
+  sizes:
+    first: true
+    last: false
+  url: null
+  position: ''
+  offset: null
+  langcode: uk
 favicon:
   disable: false
   themes:

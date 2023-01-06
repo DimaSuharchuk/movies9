@@ -1,8 +1,16 @@
 (Drupal => {
   Drupal.behaviors.extraTabs = {
     attach: context => {
-      // Define tabs once.
-      const tabs = context.querySelectorAll(".field-tabs a");
+      const wrapper = context.querySelector(".field-tabs:not(.processed)");
+
+      if (!wrapper) {
+        return;
+      }
+
+      // Once.
+      wrapper.classList.add("processed");
+
+      const tabs = wrapper.querySelectorAll(".field-tabs a");
 
       // Set class "active" to first tab by default.
       if (tabs[0]) {
@@ -13,10 +21,7 @@
       tabs.forEach(tab => {
         tab.addEventListener("click", () => {
           // Remove class "active" from sibling tabs.
-          const tabs_collection = tab.parentNode.children;
-          for (const tab of tabs_collection) {
-            tab.classList.remove("active")
-          }
+          for (const tab of tabs) tab.classList.remove("active");
           // Add class "active" to clicked tab.
           tab.classList.add("active");
 

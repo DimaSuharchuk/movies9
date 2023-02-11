@@ -1,6 +1,6 @@
 name: TMDB
 description: "Any functionality that is associated with TMDb API."
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 type: module
 package: Custom
 dependencies:

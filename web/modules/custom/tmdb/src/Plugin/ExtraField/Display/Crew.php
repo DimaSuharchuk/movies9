@@ -161,7 +161,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
 
     return [
       'departments' => array_keys($departments),
-      'jobs' => call_user_func_array('array_merge', $departments),
+      'jobs' => call_user_func_array('array_merge', array_values($departments)),
     ];
   }
 

@@ -3,13 +3,22 @@
 namespace Drupal\tmdb\CacheableTmdbRequest;
 
 use Drupal;
-use Drupal\Core\Site\Settings;
 use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbLocalStorage;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
-use Tmdb\ApiToken;
+use Http\Adapter\Guzzle6\Client as GuzzleClient;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tmdb\Client;
+use Tmdb\Event\BeforeRequestEvent;
+use Tmdb\Event\Listener\Request\AcceptJsonRequestListener;
+use Tmdb\Event\Listener\Request\ApiTokenRequestListener;
+use Tmdb\Event\Listener\Request\ContentTypeJsonRequestListener;
+use Tmdb\Event\Listener\Request\UserAgentRequestListener;
+use Tmdb\Event\Listener\RequestListener;
+use Tmdb\Event\RequestEvent;
 use Tmdb\Exception\TmdbApiException;
+use Tmdb\Token\Api\ApiToken;
+use const TMDB_API_KEY;
 
 abstract class CacheableTmdbRequest {
 
@@ -37,9 +46,34 @@ abstract class CacheableTmdbRequest {
 
     if (!$data = $this->local_storage->load($file_path)) {
       // Create and save connect to TMDb API.
-      $api_key = Settings::get('tmdb_api_key');
-      $token = new ApiToken($api_key);
-      $this->connect = new Client($token);
+      $token = new ApiToken(TMDB_API_KEY);
+      $ed = new EventDispatcher();
+      $this->connect = new Client([
+        'api_token' => $token,
+        'event_dispatcher' => [
+          'adapter' => $ed,
+        ],
+        'http' => [
+          'client' => new GuzzleClient(),
+        ],
+      ]);
+      /**
+       * Required event listeners and events to be registered with the PSR-14 Event Dispatcher.
+       */
+      $requestListener = new RequestListener($this->connect->getHttpClient(), $ed);
+      $ed->addListener(RequestEvent::class, $requestListener);
+
+      $apiTokenListener = new ApiTokenRequestListener($this->connect->getToken());
+      $ed->addListener(BeforeRequestEvent::class, $apiTokenListener);
+
+      $acceptJsonListener = new AcceptJsonRequestListener();
+      $ed->addListener(BeforeRequestEvent::class, $acceptJsonListener);
+
+      $jsonContentTypeListener = new ContentTypeJsonRequestListener();
+      $ed->addListener(BeforeRequestEvent::class, $jsonContentTypeListener);
+
+      $userAgentListener = new UserAgentRequestListener();
+      $ed->addListener(BeforeRequestEvent::class, $userAgentListener);
 
       try {
         $data = $this->request();

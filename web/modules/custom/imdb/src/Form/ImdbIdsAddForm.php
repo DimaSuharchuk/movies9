@@ -5,13 +5,14 @@ namespace Drupal\imdb\Form;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Site\Settings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function array_diff;
+use function array_unique;
+use function defined;
 use function is_imdb_id;
+use const TMDB_API_KEY;
 
 class ImdbIdsAddForm extends FormBase {
-
-  private ?Settings $settings;
 
   private Connection $db;
 
@@ -21,7 +22,6 @@ class ImdbIdsAddForm extends FormBase {
   public static function create(ContainerInterface $container): ImdbIdsAddForm {
     $instance = parent::create($container);
 
-    $instance->settings = $container->get('settings');
     $instance->messenger = $container->get('messenger');
     $instance->db = $container->get('database');
 
@@ -41,12 +41,9 @@ class ImdbIdsAddForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     // Check API keys.
     $disabled = FALSE;
-    if (!$this->settings::get('tmdb_api_key')) {
+
+    if (!defined(TMDB_API_KEY)) {
       $this->messenger->addError($this->t('TMDb API key is not defined.'));
-      $disabled = TRUE;
-    }
-    if (!$this->settings::get('omdb_api_key')) {
-      $this->messenger->addError($this->t('OMDb API key is not defined.'));
       $disabled = TRUE;
     }
 
@@ -94,12 +91,12 @@ class ImdbIdsAddForm extends FormBase {
         ->condition('a.field_approved_value', 1);
       $query->leftJoin('node__field_approved', 'a', 'a.entity_id = i.entity_id');
       $imdb_ids_in_db = $query->execute()->fetchCol();
-      $new_imdb_ids = \array_diff($imdb_ids, $imdb_ids_in_db);
+      $new_imdb_ids = array_diff($imdb_ids, $imdb_ids_in_db);
 
       if ($new_imdb_ids) {
         $operations = [];
 
-        foreach (\array_unique($new_imdb_ids) as $imdb_id) {
+        foreach (array_unique($new_imdb_ids) as $imdb_id) {
           $operations[] = ['imdb_nodes_insert_batch', [$imdb_id]];
         }
 

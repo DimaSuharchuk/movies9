@@ -10,7 +10,6 @@ use function array_diff;
 use function array_unique;
 use function defined;
 use function is_imdb_id;
-use const TMDB_API_KEY;
 
 class ImdbIdsAddForm extends FormBase {
 
@@ -42,7 +41,7 @@ class ImdbIdsAddForm extends FormBase {
     // Check API keys.
     $disabled = FALSE;
 
-    if (!defined(TMDB_API_KEY)) {
+    if (!defined('TMDB_API_KEY')) {
       $this->messenger->addError($this->t('TMDb API key is not defined.'));
       $disabled = TRUE;
     }

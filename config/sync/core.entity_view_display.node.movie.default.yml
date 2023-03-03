@@ -10,7 +10,7 @@ dependencies:
     - field.field.node.movie.field_tmdb_id
     - node.type.movie
   module:
-    - imdb
+    - tmdb
     - user
 id: node.movie.default
 targetEntityType: node
@@ -27,6 +27,11 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
+  extra_field_imdb_id:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
   extra_field_imdb_rating:
     settings: {  }
     third_party_settings: {  }
@@ -35,7 +40,7 @@ content:
   extra_field_movie_release_date:
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   extra_field_noname_club:
     settings: {  }
@@ -55,22 +60,22 @@ content:
   extra_field_overview:
     settings: {  }
     third_party_settings: {  }
-    weight: 13
+    weight: 14
     region: content
   extra_field_production_companies:
     settings: {  }
     third_party_settings: {  }
-    weight: 12
+    weight: 13
     region: content
   extra_field_runtime:
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 11
     region: content
   extra_field_site:
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 12
     region: content
   extra_field_tabs:
     settings: {  }
@@ -85,7 +90,7 @@ content:
   extra_field_videos:
     settings: {  }
     third_party_settings: {  }
-    weight: 14
+    weight: 15
     region: content
   field_poster:
     type: tmdb_image_compact

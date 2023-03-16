@@ -6,8 +6,8 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManager;
-use Drupal\Core\Path\PathMatcher;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -22,7 +22,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
 
   private ?LanguageManager $language_manager;
 
-  private ?PathMatcher $path_matcher;
+  private ?CurrentRouteMatch $routeMatch;
 
   /**
    * @inheritDoc
@@ -31,7 +31,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
     $instance = new static($configuration, $plugin_id, $plugin_definition);
 
     $instance->language_manager = $container->get('language_manager');
-    $instance->path_matcher = $container->get('path.matcher');
+    $instance->routeMatch = $container->get('current_route_match');
 
     return $instance;
   }
@@ -40,9 +40,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
    * @inheritDoc
    */
   public function build(): array {
-    $route = $this->path_matcher->isFrontPage() ? '<front>' : '<current>';
-    $links = $this->language_manager->getLanguageSwitchLinks(LanguageInterface::TYPE_INTERFACE, Url::fromRoute($route));
-    $links = $links->{'links'};
+    $links = $this->language_manager->getLanguageSwitchLinks(LanguageInterface::TYPE_INTERFACE, Url::fromRouteMatch($this->routeMatch))->links;
 
     $current_language = $this->language_manager->getCurrentLanguage();
     $lang_code = $current_language->getId();
@@ -51,7 +49,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
     // Remove active language from list.
     unset($links[$lang_code]);
 
-    // Trim language name if need.
+    // Trim language name if needed.
     $conf = $this->getConfiguration();
     if ($conf['trim_links']) {
       $length = $conf['trim_length'];

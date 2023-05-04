@@ -3,9 +3,13 @@ langcode: en
 status: true
 dependencies:
   module:
+    - standwithukraine
     - system
   theme:
     - movies
+third_party_settings:
+  standwithukraine:
+    enabled: true
 id: logo
 theme: movies
 region: header

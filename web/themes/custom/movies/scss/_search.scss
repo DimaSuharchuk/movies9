@@ -90,7 +90,7 @@
  */
 #search-results:not(:empty) {
   position: absolute;
-  z-index: 2;
+  z-index: 11;
   width: 100%;
   top: 45px;
   padding-right: 5px;
@@ -229,5 +229,20 @@
 
   #search-results {
     background-color: $dk_bg-search;
+  }
+}
+
+/**
+ * IOS.
+ */
+@supports (-webkit-touch-callout: none) {
+  #search-results:not(:empty) {
+    position: relative;
+
+    @include media-breakpoint-down(sm) {
+      top: 0;
+      left: 0;
+      right: 0;
+    }
   }
 }

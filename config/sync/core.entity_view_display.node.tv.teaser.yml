@@ -11,7 +11,7 @@ dependencies:
     - field.field.node.tv.field_tmdb_id
     - node.type.tv
   module:
-    - imdb
+    - tmdb
     - user
 id: node.tv.teaser
 targetEntityType: node
@@ -47,6 +47,7 @@ hidden:
   extra_field_crew: true
   extra_field_episode_runtime: true
   extra_field_genres: true
+  extra_field_imdb_id: true
   extra_field_networks: true
   extra_field_noname_club: true
   extra_field_noname_sheet: true

@@ -10,16 +10,16 @@ dependencies:
 _core:
   default_config_hash: Z1Lg95xnf11BTHIugkzple_pdxZdECiqLRcrLVo3bcw
 id: glossary
-label: Глоссарий
+label: Глосарій
 module: node
-description: 'Все материалы, по алфавиту.'
+description: 'Всі матеріали, за літерою.'
 tag: default
 base_table: node_field_data
 base_field: nid
 display:
   default:
     id: default
-    display_title: Основной
+    display_title: Базово
     display_plugin: default
     position: 0
     display_options:
@@ -137,7 +137,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: 'Последнее обновление'
+          label: 'Останнє оновлення'
           exclude: false
           alter:
             alter_text: false
@@ -183,6 +183,15 @@ display:
             date_format: long
             custom_date_format: ''
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
       pager:
         type: mini
         options:
@@ -195,22 +204,22 @@ display:
             previous: ‹‹
           expose:
             items_per_page: false
-            items_per_page_label: 'Элементов на страницу'
+            items_per_page_label: 'Елементів на сторінку'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- Все -'
+            items_per_page_options_all_label: '- Усе -'
             offset: false
-            offset_label: Пропустить
+            offset_label: Зміщення
       exposed_form:
         type: basic
         options:
-          submit_button: Применить
+          submit_button: Застосувати
           reset_button: false
-          reset_button_label: Сбросить
-          exposed_sorts_label: 'Сортировать по'
+          reset_button_label: Скинути
+          exposed_sorts_label: 'Впорядкувати за'
           expose_sort_order: true
-          sort_asc_label: 'По возрастанию'
-          sort_desc_label: 'По убыванию'
+          sort_asc_label: Зрост
+          sort_desc_label: Спад
       access:
         type: perm
         options:
@@ -378,7 +387,7 @@ display:
       tags: {  }
   attachment_1:
     id: attachment_1
-    display_title: Вложение
+    display_title: Долучення
     display_plugin: attachment
     position: 2
     display_options:
@@ -446,7 +455,7 @@ display:
       tags: {  }
   page_1:
     id: page_1
-    display_title: Страница
+    display_title: Сторінка
     display_plugin: page
     position: 1
     display_options:
@@ -457,7 +466,7 @@ display:
       path: glossary
       menu:
         type: normal
-        title: Глоссарий
+        title: Глосарій
         weight: 0
         menu_name: main
         parent: ''

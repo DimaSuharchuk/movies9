@@ -27,6 +27,7 @@ hidden:
   extra_field_belongs_to_collection: true
   extra_field_crew: true
   extra_field_genres: true
+  extra_field_imdb_id: true
   extra_field_imdb_rating: true
   extra_field_movie_release_date: true
   extra_field_noname_club: true

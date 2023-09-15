@@ -6,7 +6,6 @@ use Drupal;
 use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbLocalStorage;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
-use Http\Adapter\Guzzle6\Client as GuzzleClient;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tmdb\Client;
 use Tmdb\Event\BeforeRequestEvent;
@@ -54,7 +53,7 @@ abstract class CacheableTmdbRequest {
           'adapter' => $ed,
         ],
         'http' => [
-          'client' => new GuzzleClient(),
+          'client' => null,
         ],
       ]);
       /**

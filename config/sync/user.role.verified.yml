@@ -3,10 +3,12 @@ langcode: en
 status: true
 dependencies:
   module:
+    - file
     - tmdb
 id: verified
 label: Verified
 weight: 2
 is_admin: null
 permissions:
+  - 'delete own files'
   - 'view nnm'

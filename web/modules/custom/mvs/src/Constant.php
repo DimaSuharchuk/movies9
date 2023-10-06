@@ -4,7 +4,7 @@ namespace Drupal\mvs;
 
 final class Constant {
 
-  const TMDB_IMAGE_BASE_URL = '//image.tmdb.org/t/p/';
+  const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 
   const GENDER_WOMAN = 1;
 

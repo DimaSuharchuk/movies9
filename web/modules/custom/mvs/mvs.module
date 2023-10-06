@@ -5,6 +5,11 @@
  * Module's main file.
  */
 
+use Drupal\mvs\Constant;
+use Drupal\mvs\enum\NodeBundle;
+use Drupal\tmdb\enum\TmdbImageFormat;
+use Drupal\tmdb\TmdbApiAdapter;
+
 /**
  * Implements hook_theme().
  */
@@ -22,6 +27,108 @@ function mvs_theme($existing, $type, $theme, $path): array {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function mvs_page_attachments(array &$attachments): void {
+  if (Drupal::routeMatch()->getRouteName() == 'entity.node.canonical') {
+    /** @var \Drupal\node\Entity\Node $node */
+    $node = Drupal::routeMatch()->getParameter('node');
+
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => [
+          'property' => 'og:title',
+          'content' => $node->getTitle(),
+        ],
+      ],
+      'og-title',
+    ];
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => [
+          'property' => 'og:type',
+          'content' => $node->bundle() == NodeBundle::movie() ? 'video.movie' : 'video.tv_show',
+        ],
+      ],
+      'og-type',
+    ];
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => [
+          'property' => 'og:image',
+          'content' => Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w185()
+              ->key() . $node->{'field_poster'}->value,
+        ],
+      ],
+      'og-image',
+    ];
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => [
+          'property' => 'og:url',
+          'content' => $node->toUrl('canonical', ['absolute' => TRUE])
+            ->toString(),
+        ],
+      ],
+      'og-url',
+    ];
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => [
+          'property' => 'og:description',
+          'content' => (new TmdbApiAdapter())->getCommonFieldValue($node, 'overview') ?? '',
+        ],
+      ],
+      'og-description',
+    ];
+
+    $language_manager = \Drupal::languageManager();
+    $current = $language_manager->getCurrentLanguage()->getId();
+    $languages = $language_manager->getLanguages();
+
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => [
+          'property' => 'og:locale',
+          'content' => _get_locale_code_ISO8859_1($current),
+        ],
+      ],
+      'og-locale',
+    ];
+
+    foreach ($languages as $language) {
+      $language = $language->getId();
+
+      if ($language != $current) {
+        $attachments['#attached']['html_head'][] = [
+          [
+            '#type' => 'html_tag',
+            '#tag' => 'meta',
+            '#attributes' => [
+              'property' => 'og:locale:alternate',
+              'content' => _get_locale_code_ISO8859_1($language),
+            ],
+          ],
+          "og-locale-alternate-$language",
+        ];
+      }
+    }
+  }
 }
 
 /**
@@ -99,4 +206,20 @@ function _get_animation_term_id(): ?int {
     ->addCondition('name', 'Animation')
     ->reduce()
     ->execute();
+}
+
+/**
+ * Helper function converts locale code from ISO 639-1 to ISO 8859-1.
+ *
+ * @param string $langcode
+ *   Langcode in ISO 639-1 format e.g. "en", "uk".
+ *
+ * @return string
+ *   Langcode in ISO 8859-1 format e.g. "en_US", "uk_UA".
+ */
+function _get_locale_code_ISO8859_1(string $langcode): string {
+  return match ($langcode) {
+    'en' => 'en_US',
+    'uk' => 'uk_UA',
+  };
 }

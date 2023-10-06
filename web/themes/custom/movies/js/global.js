@@ -1,12 +1,12 @@
-(D => {
+((D, once) => {
   "use strict";
 
   D.behaviors.languageSwitcher = {
-    attach: (context, settings) => {
-      const trigger = document.querySelector("#block-language-switcher .active-language");
-      if (trigger && !settings.menuOnce) {
-        settings.menuOnce = true;
-        trigger.addEventListener("click", function () {
+    attach: context => {
+      const [languageSwitcher] = once('desktop-button--language-switcher', '#block-language-switcher .active-language', context)
+
+      if (languageSwitcher) {
+        languageSwitcher.addEventListener("click", function () {
           this.nextElementSibling.classList.toggle("open");
         });
       }
@@ -15,7 +15,8 @@
 
   D.behaviors.hamburger = {
     attach: context => {
-      const hamburger = context.querySelector(".hamburger");
+      const [hamburger] = once('mobile-button--hamburger-menu', '.hamburger', context)
+
       if (hamburger) {
         hamburger.addEventListener("click", function () {
           this.classList.toggle("open");
@@ -26,20 +27,19 @@
   };
 
   D.behaviors.themeSwitcher = {
-    attach: (context, settings) => {
-      if (!settings.themeSwitcherOnce) {
-        settings.themeSwitcherOnce = true;
+    attach: context => {
+      const themeSwitchers = once('button--theme-switcher', '.theme-switcher', context)
 
-        document.querySelectorAll(".theme-switcher").forEach(wrapper => {
-          wrapper.addEventListener("click", () => {
+      if (themeSwitchers.length) {
+        themeSwitchers.forEach(themeSwitcher => {
+          themeSwitcher.addEventListener("click", () => {
             if (localStorage.getItem("dark-theme") !== "1") {
               Drupal.behaviors.themeSwitcher.setDark();
-            }
-            else {
+            } else {
               Drupal.behaviors.themeSwitcher.setLight();
             }
           });
-        });
+        })
       }
     },
     setDark: () => {
@@ -76,4 +76,4 @@
     }
   };
 
-})(Drupal);
+})(Drupal, once);

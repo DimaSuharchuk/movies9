@@ -8,7 +8,6 @@
 use Drupal\mvs\Constant;
 use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\enum\TmdbImageFormat;
-use Drupal\tmdb\TmdbApiAdapter;
 
 /**
  * Implements hook_theme().
@@ -36,6 +35,51 @@ function mvs_page_attachments(array &$attachments): void {
   if (Drupal::routeMatch()->getRouteName() == 'entity.node.canonical') {
     /** @var \Drupal\node\Entity\Node $node */
     $node = Drupal::routeMatch()->getParameter('node');
+    $adapter = Drupal::service('tmdb.adapter');
+    $date_helper = Drupal::service('date_helper');
+    $language_manager = Drupal::languageManager();
+    $current = $language_manager->getCurrentLanguage()->getId();
+    $languages = $language_manager->getLanguages();
+    $title = '';
+    $current_lang_node_title = $node->getTitle();
+    $dates = $years = [];
+
+    switch ($node->bundle()) {
+      case NodeBundle::movie():
+        if ($date = $adapter->getCommonFieldValue($node, 'release_date')) {
+          $dates[] = $date;
+        }
+        break;
+
+      case NodeBundle::tv():
+        if ($start_date = $adapter->getCommonFieldValue($node, 'first_air_date')) {
+          $dates[] = $start_date;
+
+          $end_date = '';
+          if ($adapter->getCommonFieldValue($node, 'in_production') === FALSE) {
+            $end_date = $adapter->getCommonFieldValue($node, 'last_air_date');
+          }
+          $dates[] = $end_date;
+        }
+        break;
+    }
+
+    foreach ($dates as $date) {
+      $years[] = $date ? $date_helper->dateStringToYear($date) : '';
+    }
+
+    $year = implode('–', $years);
+
+    switch ($current) {
+      case 'en':
+        $title = $year ? sprintf('%s (%s)', $current_lang_node_title, $year) : sprintf('%s', $current_lang_node_title);
+        break;
+
+      case 'uk':
+        $en_title = $node->getTranslation('en')->getTitle();
+        $title = $year ? sprintf('%s (%s, %s)', $current_lang_node_title, $year, $en_title) : sprintf('%s (%s)', $current_lang_node_title, $en_title);
+        break;
+    }
 
     $attachments['#attached']['html_head'][] = [
       [
@@ -43,7 +87,7 @@ function mvs_page_attachments(array &$attachments): void {
         '#tag' => 'meta',
         '#attributes' => [
           'property' => 'og:title',
-          'content' => $node->getTitle(),
+          'content' => $title,
         ],
       ],
       'og-title',
@@ -89,15 +133,11 @@ function mvs_page_attachments(array &$attachments): void {
         '#tag' => 'meta',
         '#attributes' => [
           'property' => 'og:description',
-          'content' => (new TmdbApiAdapter())->getCommonFieldValue($node, 'overview') ?? '',
+          'content' => $adapter->getCommonFieldValue($node, 'overview') ?? '',
         ],
       ],
       'og-description',
     ];
-
-    $language_manager = \Drupal::languageManager();
-    $current = $language_manager->getCurrentLanguage()->getId();
-    $languages = $language_manager->getLanguages();
 
     $attachments['#attached']['html_head'][] = [
       [

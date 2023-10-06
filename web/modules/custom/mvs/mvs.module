@@ -109,7 +109,7 @@ function mvs_page_attachments(array &$attachments): void {
         '#tag' => 'meta',
         '#attributes' => [
           'property' => 'og:image',
-          'content' => Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w400()
+          'content' => Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::original()
               ->key() . $node->{'field_poster'}->value,
         ],
       ],

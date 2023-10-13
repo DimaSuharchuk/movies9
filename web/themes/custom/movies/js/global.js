@@ -48,7 +48,7 @@
     },
     setLight: () => {
       document.body.dataset.theme = "";
-      localStorage.removeItem("dark-theme");
+      localStorage.setItem("dark-theme", "0");
     },
   };
 

@@ -5,6 +5,7 @@ namespace Drupal\mvs\Repository;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Exception;
 use PDO;
 
 /**
@@ -72,9 +73,15 @@ abstract class BaseRepository implements BaseRepositoryInterface {
    */
   public function create(array $data) {
     if ($this->validateFields($data)) {
-      $query = $this->database->insert($this::getTable());
-
-      return $query->fields($data)->execute();
+      try {
+        return $this->database
+          ->insert($this::getTable())
+          ->fields($data)
+          ->execute();
+      } catch (Exception $e) {
+        // Try to write over existing value.
+        $this->logger->error($e->getMessage());
+      }
     }
 
     return 0;

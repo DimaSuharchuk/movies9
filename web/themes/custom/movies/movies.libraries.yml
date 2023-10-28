@@ -18,3 +18,7 @@ custom-colorbox:
       css/custom-colorbox.css: { }
   js:
     js/custom-colorbox.js: { }
+
+person-page-sort-items-by-rating:
+  js:
+    js/person-page-sort-items-by-rating.js: { }

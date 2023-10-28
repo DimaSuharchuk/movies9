@@ -31,7 +31,9 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
     return [
       '#lazy_builder' => [
         'tmdb.tmdb_field_lazy_builder:renderNodeImdbRatingField',
-        [$bundle->key(), $tmdb_id],
+        // I also add a bit of random here for JS sorting after render.
+        // Because the same teaser in a few places broke the sorting.
+        [$bundle->key(), $tmdb_id, rand()],
       ],
       '#create_placeholder' => TRUE,
     ];

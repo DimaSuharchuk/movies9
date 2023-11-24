@@ -7,20 +7,20 @@ dependencies:
 _core:
   default_config_hash: J5EbGNdz0YUaSIYKwomyFSOtZjsV9TrBA3qdb3ZwBS0
 id: user_admin_people
-label: Пользователи
+label: Люди
 module: user
-description: 'Поиск и управление людьми, взаимодействующих с вашим сайтом.'
+description: 'Пошук людей, які взаємодіють з сайтом, і керування ними.'
 tag: default
 base_table: users_field_data
 base_field: uid
 display:
   default:
     id: default
-    display_title: Основной
+    display_title: Базово
     display_plugin: default
     position: 0
     display_options:
-      title: Пользователи
+      title: Люди
       fields:
         user_bulk_form:
           id: user_bulk_form
@@ -31,7 +31,7 @@ display:
           admin_label: ''
           entity_type: user
           plugin_id: user_bulk_form
-          label: 'Массовое обновление'
+          label: 'Масове оновлення'
           exclude: false
           alter:
             alter_text: false
@@ -82,7 +82,7 @@ display:
           entity_type: user
           entity_field: name
           plugin_id: field
-          label: 'Имя пользователя'
+          label: "Ім'я користувача"
           exclude: false
           alter:
             alter_text: false
@@ -123,7 +123,20 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
+          click_sort_column: value
           type: user_name
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         status:
           id: status
           table: users_field_data
@@ -134,7 +147,7 @@ display:
           entity_type: user
           entity_field: status
           plugin_id: field
-          label: Статус
+          label: Стан
           exclude: false
           alter:
             alter_text: false
@@ -178,7 +191,7 @@ display:
           type: boolean
           settings:
             format: custom
-            format_custom_false: Заблокировано
+            format_custom_false: Заблоковано
             format_custom_true: Активно
         roles_target_id:
           id: roles_target_id
@@ -188,7 +201,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: user_roles
-          label: Роли
+          label: Ролі
           exclude: false
           alter:
             alter_text: false
@@ -241,7 +254,7 @@ display:
           entity_type: user
           entity_field: created
           plugin_id: field
-          label: 'Зарегистрирован на сайте'
+          label: 'Зареєстрований вже'
           exclude: false
           alter:
             alter_text: false
@@ -297,7 +310,7 @@ display:
           entity_type: user
           entity_field: access
           plugin_id: field
-          label: 'Последнее посещение'
+          label: 'Останній доступ'
           exclude: false
           alter:
             alter_text: false
@@ -340,8 +353,8 @@ display:
           hide_alter_empty: true
           type: timestamp_ago
           settings:
-            future_format: '@interval с этих пор'
-            past_format: '@interval назад'
+            future_format: '@interval віднині'
+            past_format: '@interval тому'
             granularity: 2
         operations:
           id: operations
@@ -352,7 +365,7 @@ display:
           admin_label: ''
           entity_type: user
           plugin_id: entity_operations
-          label: Операции
+          label: Операції
           exclude: false
           alter:
             alter_text: false
@@ -466,29 +479,29 @@ display:
           total_pages: 0
           id: 0
           tags:
-            next: 'Следующий ›'
-            previous: '‹ Предыдущий'
-            first: '« Первая'
-            last: 'Последняя »'
+            next: 'Наступна ›'
+            previous: '‹ Попередня'
+            first: '« Перша'
+            last: 'Остання »'
           expose:
             items_per_page: false
-            items_per_page_label: 'Элементов на страницу'
+            items_per_page_label: 'Елементів на сторінку'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- Все -'
+            items_per_page_options_all_label: '- Усе -'
             offset: false
-            offset_label: Пропустить
+            offset_label: Зміщення
           quantity: 9
       exposed_form:
         type: basic
         options:
-          submit_button: Фильтр
+          submit_button: Фільтр
           reset_button: true
-          reset_button_label: Сбросить
-          exposed_sorts_label: 'Сортировать по'
+          reset_button_label: Скинути
+          exposed_sorts_label: 'Впорядкувати за'
           expose_sort_order: true
-          sort_asc_label: 'По возрастанию'
-          sort_desc_label: 'По убыванию'
+          sort_asc_label: Зрост
+          sort_desc_label: Спад
       access:
         type: perm
         options:
@@ -505,7 +518,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: 'Нет доступных людей.'
+          content: 'Люди відсутні.'
           tokenize: false
       sorts:
         created:
@@ -539,7 +552,7 @@ display:
           exposed: true
           expose:
             operator_id: combine_op
-            label: 'Имя или email содержит'
+            label: "Ім'я чи електронна адреса містять"
             description: ''
             use_operator: false
             operator: combine_op
@@ -600,7 +613,7 @@ display:
               administrator: '0'
           is_grouped: true
           group_info:
-            label: Статус
+            label: Стан
             description: ''
             identifier: status
             optional: true
@@ -615,7 +628,7 @@ display:
                 operator: '='
                 value: '1'
               2:
-                title: Заблокировано
+                title: Заблоковано
                 operator: '='
                 value: '0'
         roles_target_id:
@@ -674,7 +687,7 @@ display:
           exposed: true
           expose:
             operator_id: permission_op
-            label: 'Право доступа'
+            label: Повноваження
             description: ''
             use_operator: false
             operator: permission_op
@@ -877,7 +890,7 @@ display:
       show_admin_links: true
       use_more: false
       use_more_always: false
-      use_more_text: ещё
+      use_more_text: ще
       link_display: page_1
       link_url: ''
       display_comment: ''
@@ -894,7 +907,7 @@ display:
       tags: {  }
   page_1:
     id: page_1
-    display_title: Страница
+    display_title: Сторінка
     display_plugin: page
     position: 1
     display_options:
@@ -906,14 +919,14 @@ display:
       menu:
         type: 'default tab'
         title: Список
-        description: 'Поиск и управление людьми, взаимодействующих с вашим сайтом.'
+        description: 'Пошук людей, які взаємодіють з сайтом, і керування ними.'
         weight: -10
         menu_name: admin
         context: ''
       tab_options:
         type: normal
-        title: Пользователи
-        description: 'Управление учётными записями, ролями и правами пользователей.'
+        title: Люди
+        description: 'Керування обліковими записами, ролями та повноваженнями.'
         weight: 0
         menu_name: admin
     cache_metadata:

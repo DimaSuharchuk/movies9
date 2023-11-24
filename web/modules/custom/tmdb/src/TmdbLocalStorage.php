@@ -33,10 +33,10 @@ class TmdbLocalStorage {
   }
 
   /**
-   * Load data from file path if file exists.
+   * Load data from a file path if file exists.
    *
    * @param TmdbLocalStorageFilePath $file_path
-   *   Path to file for load.
+   *   Path to file for a load.
    *
    * @return array|null
    */
@@ -46,6 +46,7 @@ class TmdbLocalStorage {
         file_get_contents($this->tmdb_storage->getFullPath($file_path))
       );
     }
+
     return NULL;
   }
 

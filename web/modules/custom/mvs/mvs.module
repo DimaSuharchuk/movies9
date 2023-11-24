@@ -5,7 +5,9 @@
  * Module's main file.
  */
 
+use Drupal\Core\Entity\EntityMalformedException;
 use Drupal\mvs\Constant;
+use Drupal\mvs\enum\Language;
 use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\enum\TmdbImageFormat;
 
@@ -44,14 +46,14 @@ function mvs_page_attachments(array &$attachments): void {
     $current_lang_node_title = $node->getTitle();
     $dates = $years = [];
 
-    switch ($node->bundle()) {
-      case NodeBundle::movie():
+    switch (NodeBundle::from($node->bundle())) {
+      case NodeBundle::movie:
         if ($date = $adapter->getCommonFieldValue($node, 'release_date')) {
           $dates[] = $date;
         }
         break;
 
-      case NodeBundle::tv():
+      case NodeBundle::tv:
         if ($start_date = $adapter->getCommonFieldValue($node, 'first_air_date')) {
           $dates[] = $start_date;
 
@@ -70,13 +72,13 @@ function mvs_page_attachments(array &$attachments): void {
 
     $year = implode('–', $years);
 
-    switch ($current) {
-      case 'en':
+    switch (Language::from($current)) {
+      case Language::en:
         $title = $year ? sprintf('%s (%s)', $current_lang_node_title, $year) : sprintf('%s', $current_lang_node_title);
         break;
 
-      case 'uk':
-        $en_title = $node->getTranslation('en')->getTitle();
+      case Language::uk:
+        $en_title = $node->getTranslation(Language::en->name)->getTitle();
         $title = $year ? sprintf('%s (%s, %s)', $current_lang_node_title, $year, $en_title) : sprintf('%s (%s)', $current_lang_node_title, $en_title);
         break;
     }
@@ -98,7 +100,7 @@ function mvs_page_attachments(array &$attachments): void {
         '#tag' => 'meta',
         '#attributes' => [
           'property' => 'og:type',
-          'content' => $node->bundle() == NodeBundle::movie() ? 'video.movie' : 'video.tv_show',
+          'content' => NodeBundle::from($node->bundle()) == NodeBundle::movie ? 'video.movie' : 'video.tv_show',
         ],
       ],
       'og-type',
@@ -109,24 +111,27 @@ function mvs_page_attachments(array &$attachments): void {
         '#tag' => 'meta',
         '#attributes' => [
           'property' => 'og:image',
-          'content' => Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w780()
-              ->key() . $node->{'field_poster'}->value,
+          'content' => Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w780->name . $node->{'field_poster'}->value,
         ],
       ],
       'og-image',
     ];
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:url',
-          'content' => $node->toUrl('canonical', ['absolute' => TRUE])
-            ->toString(),
+    try {
+      $attachments['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'meta',
+          '#attributes' => [
+            'property' => 'og:url',
+            'content' => $node->toUrl('canonical', ['absolute' => TRUE])
+              ->toString(),
+          ],
         ],
-      ],
-      'og-url',
-    ];
+        'og-url',
+      ];
+    }
+    catch (EntityMalformedException) {
+    }
     $attachments['#attached']['html_head'][] = [
       [
         '#type' => 'html_tag',
@@ -223,7 +228,7 @@ function mvs_form_views_exposed_form_alter(&$form) {
 
     // Get genres (options) from form.
     $genres = &$form['field_genres_target_id']['#options'];
-    // Filter only genres used in current bundle.
+    // Filter only genres used in the current bundle.
     $genres = array_intersect_key($genres, $genres_by_bundle);
     // Sort by name ASC.
     asort($genres);
@@ -259,7 +264,7 @@ function _get_animation_term_id(): ?int {
  */
 function _get_locale_code_ISO8859_1(string $langcode): string {
   return match ($langcode) {
-    'en' => 'en_US',
-    'uk' => 'uk_UA',
+    Language::en->name => 'en_US',
+    Language::uk->name => 'uk_UA',
   };
 }

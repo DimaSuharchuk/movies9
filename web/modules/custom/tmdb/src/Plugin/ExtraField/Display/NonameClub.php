@@ -6,6 +6,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\mvs\DateHelper;
+use Drupal\mvs\enum\Language;
 use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -44,11 +45,11 @@ class NonameClub extends ExtraTmdbFieldDisplayBase {
 
     if ($this->current_user->hasPermission('view nnm')) {
       /** @var \Drupal\node\NodeInterface $node */
-      $node = $entity->getTranslation('en');
+      $node = $entity->getTranslation(Language::en->name);
 
       $search_string = preg_replace('/[^a-zа-я\d\s-]/iu', '', $node->getTitle());
 
-      switch ($entity->bundle()) {
+      switch (NodeBundle::from($node->bundle())) {
         case NodeBundle::movie:
           if ($release_date = $this->getCommonFieldValue('release_date')) {
             $search_string .= ' ' . $this->date_helper->dateStringToYear($release_date);

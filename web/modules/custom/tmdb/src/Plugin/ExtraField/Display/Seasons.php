@@ -43,7 +43,7 @@ class Seasons extends ExtraTmdbFieldDisplayBase {
       ->buildSeason(
         $node,
         1,
-        Language::memberByValue($node->language()->getId())
+        Language::from($node->language()->getId())
       );
   }
 

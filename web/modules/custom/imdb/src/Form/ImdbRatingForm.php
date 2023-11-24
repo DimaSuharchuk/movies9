@@ -83,7 +83,7 @@ class ImdbRatingForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Truncate table with IMDb ratings first.
+    // Truncate the table with IMDb ratings first.
     $this->ratingDbManager->clear();
     // Refresh the file with ratings.
     try {

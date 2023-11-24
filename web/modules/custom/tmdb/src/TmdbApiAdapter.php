@@ -30,16 +30,14 @@ class TmdbApiAdapter {
    */
   public function getMovieCollection(int $movie_tmdb_id, Language $lang): ?array {
     // Fetch movie common fields first.
-    if ($common = $this->getCommonFieldsByTmdbId(NodeBundle::movie(), $movie_tmdb_id, $lang)) {
-      // Get collection info from TMDb API.
-      if (isset($common['collection_id'])) {
-        return (new MovieCollection())
-          ->setMovieTmdbId($common['collection_id'])
-          ->setLanguage($lang)
-          ->response();
-      }
-
-      return NULL;
+    if (
+      ($common = $this->getCommonFieldsByTmdbId(NodeBundle::movie, $movie_tmdb_id, $lang))
+      && isset($common['collection_id'])
+    ) {
+      return (new MovieCollection())
+        ->setMovieTmdbId($common['collection_id'])
+        ->setLanguage($lang)
+        ->response();
     }
 
     return NULL;
@@ -52,14 +50,10 @@ class TmdbApiAdapter {
    * @param int $tmdb_id
    * @param Language $lang
    *
-   * @return array|null
+   * @return array
    */
-  public function getVideos(NodeBundle $bundle, int $tmdb_id, Language $lang): ?array {
-    if ($response = $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang)) {
-      return $response['videos'];
-    }
-
-    return NULL;
+  public function getVideos(NodeBundle $bundle, int $tmdb_id, Language $lang): array {
+    return $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang)['videos'] ?? [];
   }
 
   /**
@@ -68,14 +62,10 @@ class TmdbApiAdapter {
    * @param NodeBundle $bundle
    * @param int $tmdb_id
    *
-   * @return array|null
+   * @return array
    */
-  public function getCast(NodeBundle $bundle, int $tmdb_id): ?array {
-    if ($response = $this->getFullInfoByTmdbId($bundle, $tmdb_id, Language::en())) {
-      return $response['cast'];
-    }
-
-    return NULL;
+  public function getCast(NodeBundle $bundle, int $tmdb_id): array {
+    return $this->getFullInfoByTmdbId($bundle, $tmdb_id, Language::en)['cast'] ?? [];
   }
 
   /**
@@ -84,14 +74,10 @@ class TmdbApiAdapter {
    * @param NodeBundle $bundle
    * @param int $tmdb_id
    *
-   * @return array|null
+   * @return array
    */
-  public function getCrew(NodeBundle $bundle, int $tmdb_id): ?array {
-    if ($response = $this->getFullInfoByTmdbId($bundle, $tmdb_id, Language::en())) {
-      return $response['crew'];
-    }
-
-    return NULL;
+  public function getCrew(NodeBundle $bundle, int $tmdb_id): array {
+    return $this->getFullInfoByTmdbId($bundle, $tmdb_id, Language::en)['crew'] ?? [];
   }
 
   /**
@@ -102,8 +88,8 @@ class TmdbApiAdapter {
    * @param int $tmdb_id
    * @param Language $lang
    * @param int $page
-   *   Recommendations responses have maximum 20 teasers on each page. $page is
-   *   the page in TMDb API that we want to get.
+   *   Recommendations responses have a maximum of 20 teasers on each page.
+   *   $page is the page in TMDb API that we want to get.
    *
    * @return array|null
    */
@@ -124,8 +110,8 @@ class TmdbApiAdapter {
    * @param int $tmdb_id
    * @param Language $lang
    * @param int $page
-   *   Similar responses have maximum 20 teasers on each page. $page is the
-   *   page in TMDb API that we want to get.
+   *   Similar responses have a maximum of 20 teasers on each page.
+   *   $page is the page in TMDb API that we want to get.
    *
    * @return array|null
    */
@@ -143,7 +129,8 @@ class TmdbApiAdapter {
    *
    * @param string $imdb_id
    *
-   * @return array[NodeBundle, int]|null
+   * @return array|null
+   *   [NodeBundle, int].
    */
   public function getTmdbIdByImdbId(string $imdb_id): ?array {
     return (new FindByImdbId())
@@ -157,16 +144,13 @@ class TmdbApiAdapter {
    * @param NodeBundle $bundle
    * @param int $tmdb_id
    * @param bool $only_cached
-   *   If TRUE the method will return only cached result if exists and doesn't
-   *   send request to TMDb API.
+   *   If TRUE, the method will return only a cached result if it exists and
+   *   doesn't send request to TMDb API.
    *
-   * @return string|null
+   * @return string
    */
-  public function getImdbId(NodeBundle $bundle, int $tmdb_id, bool $only_cached = FALSE): ?string {
-    if ($common = $this->getCommonFieldsByTmdbId($bundle, $tmdb_id, Language::en(), $only_cached)) {
-      return $common['imdb_id'];
-    }
-    return NULL;
+  public function getImdbId(NodeBundle $bundle, int $tmdb_id, bool $only_cached = FALSE): string {
+    return $this->getCommonFieldsByTmdbId($bundle, $tmdb_id, Language::en, $only_cached)['imdb_id'] ?? '';
   }
 
   /**
@@ -176,29 +160,25 @@ class TmdbApiAdapter {
    * @param int $tmdb_id
    * @param Language $lang
    * @param bool $only_cached
-   *   If TRUE the method will return only cached result if exists and doesn't
-   *   send request to TMDb API.
+   *   If TRUE, the method will return only a cached result if it exists and
+   *   doesn't send request to TMDb API.
    *
    * @return array|null
    */
   public function getCommonFieldsByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang, bool $only_cached = FALSE): ?array {
-    $name = "{$bundle->key()}_{$tmdb_id}_{$lang->key()}_$only_cached";
+    $name = "{$bundle->name}_{$tmdb_id}_{$lang->name}_$only_cached";
     $data = &drupal_static(__METHOD__ . $name);
 
-    if (!is_null($data)) {
-      return $data;
-    }
-
-    $response = $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang, $only_cached);
-    if (is_array($response)) {
-      $data = $response['common'] ?? [];
+    if (is_null($data)) {
+      $data = $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang, $only_cached)['common'] ?? [];
     }
 
     return $data;
   }
 
   /**
-   * Get value of some common movie or TV field from TMDb API or cached file.
+   * Get the value of some common movie or TV field from TMDb API or cached
+   * file.
    *
    * @param $field_name
    *   Name of common field in TMDbLocalStorage (some fields key rewrote with
@@ -207,16 +187,13 @@ class TmdbApiAdapter {
    * @return mixed|null
    *   Field value.
    */
-  public function getCommonFieldValue(NodeInterface $node, string $field_name) {
-    $bundle = NodeBundle::memberByValue($node->bundle());
+  public function getCommonFieldValue(NodeInterface $node, string $field_name): mixed {
+    $bundle = NodeBundle::from($node->bundle());
     $tmdb_id = $node->{'field_tmdb_id'}->value;
-    $lang = Language::memberByValue($node->language()->getId());
+    $lang = Language::from($node->language()->getId());
+    $common = $this->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang);
 
-    if ($common = $this->getCommonFieldsByTmdbId($bundle, $tmdb_id, $lang)) {
-      return $common[$field_name] ?? NULL;
-    }
-
-    return NULL;
+    return $common[$field_name] ?? NULL;
   }
 
   /**
@@ -226,31 +203,29 @@ class TmdbApiAdapter {
    * @param int $tmdb_id
    * @param Language $lang
    * @param bool $only_cached
-   *   If TRUE the method will return only cached result if exists and doesn't
-   *   send request to TMDb API.
+   *   If TRUE, the method will return only a cached result if it exists and
+   *   doesn't send request to TMDb API.
    *
-   * @return array|null
+   * @return array
    */
-  public function getFullInfoByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang, bool $only_cached = FALSE): ?array {
-    $name = "{$bundle->key()}_{$tmdb_id}_{$lang->key()}_$only_cached";
+  public function getFullInfoByTmdbId(NodeBundle $bundle, int $tmdb_id, Language $lang, bool $only_cached = FALSE): array {
+    $name = "{$bundle->name}_{$tmdb_id}_{$lang->name}_$only_cached";
     $data = &drupal_static(__METHOD__ . $name);
 
-    if (!is_null($data)) {
-      return $data;
+    if (is_null($data)) {
+      $data = [];
+
+      $query = (new FullRequest())
+        ->setBundle($bundle)
+        ->setTmdbId($tmdb_id)
+        ->setLanguage($lang);
+
+      if (!$only_cached || $query->hasCache()) {
+        $data = $query->response();
+      }
     }
 
-    $query = (new FullRequest())
-      ->setBundle($bundle)
-      ->setTmdbId($tmdb_id)
-      ->setLanguage($lang);
-
-    if (!$only_cached || $query->hasCache()) {
-      $data = $query->response();
-
-      return $data;
-    }
-
-    return NULL;
+    return $data;
   }
 
   /**
@@ -260,8 +235,8 @@ class TmdbApiAdapter {
    * @param int $season_number
    * @param Language $lang
    * @param bool $only_cached
-   *   If TRUE the method will return only cached result if exists and doesn't
-   *   send request to TMDb API.
+   *   If TRUE, the method will return only a cached result if it exists and
+   *   doesn't send request to TMDb API.
    *
    * @return array|null
    */
@@ -285,8 +260,8 @@ class TmdbApiAdapter {
    * @param int $season_number
    * @param int $episode_number
    * @param bool $only_cached
-   *   If TRUE the method will return only cached result if exists and doesn't
-   *   send request to TMDb API.
+   *   If TRUE, the method will return only a cached result if it exists and
+   *   doesn't send request to TMDb API.
    *
    * @return string|null
    */
@@ -313,7 +288,7 @@ class TmdbApiAdapter {
    */
   public function getMovieGenres(Language $lang): array {
     return (new Genres())
-      ->setBundle(NodeBundle::movie())
+      ->setBundle(NodeBundle::movie)
       ->setLanguage($lang)
       ->response();
   }
@@ -328,7 +303,7 @@ class TmdbApiAdapter {
    */
   public function getTvGenres(Language $lang): array {
     return (new Genres())
-      ->setBundle(NodeBundle::tv())
+      ->setBundle(NodeBundle::tv)
       ->setLanguage($lang)
       ->response();
   }
@@ -353,7 +328,7 @@ class TmdbApiAdapter {
    * Perform a search.
    *
    * @param string $search_string
-   *   A string to search in movies, TV series, or persons.
+   *   A string of search in movies, TV series, or persons.
    * @param TmdbSearchType $search_type
    * @param Language $lang
    * @param int $page

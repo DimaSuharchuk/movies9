@@ -71,15 +71,15 @@ class UpdateGenres extends FormBase {
    * {@inheritDoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    foreach (Language::members() as $lang) {
+    foreach (Language::cases() as $lang) {
       // Get movie and TV genres.
       $movie_genres = $this->adapter->getMovieGenres($lang);
       $tv_genres = $this->adapter->getTvGenres($lang);
 
       // Build genre array from movie+tv genres for saving in TaxonomyTerm.
       $genres = [];
-      $this->buildGenres($genres, $movie_genres, NodeBundle::movie());
-      $this->buildGenres($genres, $tv_genres, NodeBundle::tv());
+      $this->buildGenres($genres, $movie_genres, NodeBundle::movie);
+      $this->buildGenres($genres, $tv_genres, NodeBundle::tv);
 
       $genres = array_diff_key($genres, array_flip(Constant::EXCLUDED_GENRES_TMDB_IDS));
 
@@ -104,7 +104,7 @@ class UpdateGenres extends FormBase {
       $n = mb_convert_case(mb_substr($n, 0, 1), MB_CASE_UPPER) . mb_substr($n, 1, mb_strlen($n));
 
       $genres[$genre['id']]['name'] = $n;
-      $genres[$genre['id']]['used_in'][] = $bundle->value();
+      $genres[$genre['id']]['used_in'][] = $bundle->name;
     }
   }
 

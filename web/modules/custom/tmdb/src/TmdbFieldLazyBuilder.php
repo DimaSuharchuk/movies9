@@ -33,7 +33,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
         'tmdb.tmdb_field_lazy_builder:renderNodeImdbRatingField',
         // I also add a bit of random here for JS sorting after render.
         // Because the same teaser in a few places broke the sorting.
-        [$bundle->key(), $tmdb_id, rand()],
+        [$bundle->name, $tmdb_id, rand()],
       ],
       '#create_placeholder' => TRUE,
     ];
@@ -52,7 +52,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
     return [
       '#lazy_builder' => [
         'tmdb.tmdb_field_lazy_builder:renderNodeOriginalTitleField',
-        [$bundle->key(), $tmdb_id],
+        [$bundle->name, $tmdb_id],
       ],
       '#create_placeholder' => TRUE,
     ];
@@ -78,7 +78,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
   }
 
   /**
-   * Generate lazy builder placeholder for "IMDb Rating" field of episode.
+   * Generate lazy builder placeholder for "IMDb Rating" field of an episode.
    *
    * @param int $tv_tmdb_id
    * @param int $season_number
@@ -118,7 +118,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
   }
 
   /**
-   * Build renderable array for field "IMDb Rating" of node or custom
+   * Build a renderable array for field "IMDb Rating" of node or custom
    * placeholder like lazy builder for further processing via JS.
    *
    * @param string $bundle
@@ -128,8 +128,8 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
    */
   public function renderNodeImdbRatingField(string $bundle, int $tmdb_id): array {
     // Render field if cache exists.
-    if ($imdb_id = $this->tmdb_adapter
-      ->getImdbId(NodeBundle::memberByValue($bundle), $tmdb_id, TRUE)
+    if (
+      $imdb_id = $this->tmdb_adapter->getImdbId(NodeBundle::from($bundle), $tmdb_id, TRUE)
     ) {
       return [
         '#theme' => 'field_with_label',
@@ -155,7 +155,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
   }
 
   /**
-   * Build renderable array for field "Original title" of node or custom
+   * Build a renderable array for field "Original title" of node or custom
    * placeholder like lazy builder for further processing via JS.
    *
    * @param string $bundle
@@ -165,8 +165,9 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
    */
   public function renderNodeOriginalTitleField(string $bundle, int $tmdb_id): array {
     // Render field if cache exists.
-    if ($common = $this->tmdb_adapter
-      ->getCommonFieldsByTmdbId(NodeBundle::memberByValue($bundle), $tmdb_id, Language::en(), TRUE)
+    if (
+      ($common = $this->tmdb_adapter->getCommonFieldsByTmdbId(NodeBundle::tryFrom($bundle), $tmdb_id, Language::en, TRUE))
+      && !empty($common['title'])
     ) {
       return [
         '#theme' => 'tmdb_field',
@@ -192,7 +193,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
   }
 
   /**
-   * Build renderable array for field "Original title" of season or custom
+   * Build a renderable array for field "Original title" of season or custom
    * placeholder like lazy builder for further processing via JS.
    *
    * @param int $tv_tmdb_id
@@ -202,8 +203,9 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
    */
   public function renderSeasonOriginalTitleField(int $tv_tmdb_id, int $season_number): array {
     // Render field if cache exists.
-    if ($season = $this->tmdb_adapter
-      ->getSeason($tv_tmdb_id, $season_number, Language::en(), TRUE)
+    if (
+      ($season = $this->tmdb_adapter->getSeason($tv_tmdb_id, $season_number, Language::en, TRUE))
+      && !empty($season['title'])
     ) {
       return [
         '#theme' => 'tmdb_field',
@@ -240,8 +242,8 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
    */
   public function renderEpisodeImdbRatingField(int $tv_tmdb_id, int $season_number, int $episode_number): array {
     // Print only cached IMDb ratings.
-    if ($imdb_id = $this->tmdb_adapter
-      ->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode_number, TRUE)
+    if (
+      $imdb_id = $this->tmdb_adapter->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode_number, TRUE)
     ) {
       return [
         '#theme' => 'field_with_label',
@@ -268,7 +270,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
   }
 
   /**
-   * Build renderable array for field "Original title" of episode or custom
+   * Build a renderable array for field "Original title" of episode or custom
    * placeholder like lazy builder for further processing via JS.
    *
    * @param int $tv_tmdb_id
@@ -279,10 +281,10 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
    */
   public function renderEpisodeOriginalTitleField(int $tv_tmdb_id, int $season_number, int $episode_number): ?array {
     // Render field if cache exists.
-    if ($season = $this->tmdb_adapter
-      ->getSeason($tv_tmdb_id, $season_number, Language::en(), TRUE)
+    if (
+      $season = $this->tmdb_adapter->getSeason($tv_tmdb_id, $season_number, Language::en, TRUE)
     ) {
-      // Search for episode.
+      // Search for an episode.
       foreach ($season['episodes'] as $episode) {
         if ($episode['episode_number'] == $episode_number) {
           return [
@@ -292,6 +294,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
           ];
         }
       }
+
       return NULL;
     }
     // Else prepare html for update IMDb rating later via JS.

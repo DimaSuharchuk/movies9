@@ -2,6 +2,8 @@
 
 namespace Drupal\mvs\Repository;
 
+use Drupal\Core\Database\StatementInterface;
+
 /**
  * Interface BaseRepositoryInterface.
  *
@@ -18,7 +20,7 @@ interface BaseRepositoryInterface {
   public static function getTable(): string;
 
   /**
-   * Get logger name for dblog type column.
+   * Get logger name for "dblog" type column.
    *
    * @return string
    *   Logger name.
@@ -28,13 +30,13 @@ interface BaseRepositoryInterface {
   /**
    * Get item by ID.
    *
-   * @param int|string $id
+   * @param int $id
    *   Entity ID.
    *
    * @return array
    *   Entity values.
    */
-  public function findById($id): array;
+  public function findById(int $id): array;
 
   /**
    * Get items.
@@ -56,12 +58,12 @@ interface BaseRepositoryInterface {
    * @return \Drupal\Core\Database\StatementInterface|int|string|null
    *   Record ID if successful.
    */
-  public function create(array $data);
+  public function create(array $data): int|string|StatementInterface|null;
 
   /**
    * Update some field(s) of the Entity by ID.
    *
-   * @param int|string $id
+   * @param int $id
    *   Entity ID.
    * @param array $data
    *   New values.
@@ -69,7 +71,7 @@ interface BaseRepositoryInterface {
    * @return \Drupal\Core\Database\StatementInterface|int|string|null
    *   1 if successful.
    */
-  public function update($id, array $data);
+  public function update(int $id, array $data): int|string|StatementInterface|null;
 
   /**
    * Delete item by ID.
@@ -78,7 +80,7 @@ interface BaseRepositoryInterface {
    *   Entity ID.
    *
    * @return int
-   *   1 if successfully deleted and 0 if an entity not found.
+   *   1 if successfully deleted and 0 if an entity is not found.
    */
   public function delete(int $id): int;
 

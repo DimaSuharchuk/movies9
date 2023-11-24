@@ -11,7 +11,8 @@ class Avatar {
   use ImageBuilder;
 
   /**
-   * Wrap with theme "Image" person's avatar or find defined avatar by gender.
+   * Wrap with the theme "Image" person's avatar or find defined avatar by
+   * gender.
    *
    * @param array $person
    *   Array with Person info from TMDb API.
@@ -44,20 +45,11 @@ class Avatar {
    * @return string
    */
   public function getAvatarUriByGender(int $gender = NULL): string {
-    switch ($gender) {
-      case Constant::GENDER_MAN:
-        $uri = Constant::UNDEFINED_MAN_IMAGE;
-        break;
-
-      case Constant::GENDER_WOMAN:
-        $uri = Constant::UNDEFINED_WOMAN_IMAGE;
-        break;
-
-      default:
-        $uri = Constant::UNDEFINED_PERSON_IMAGE;
-    }
-
-    return $uri;
+    return match ($gender) {
+      Constant::GENDER_MAN => Constant::UNDEFINED_MAN_IMAGE,
+      Constant::GENDER_WOMAN => Constant::UNDEFINED_WOMAN_IMAGE,
+      default => Constant::UNDEFINED_PERSON_IMAGE,
+    };
   }
 
 }

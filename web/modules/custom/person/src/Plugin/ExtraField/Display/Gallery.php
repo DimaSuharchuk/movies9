@@ -31,7 +31,7 @@ class Gallery extends ExtraTmdbFieldDisplayBase {
     if ($avatars = $this->getPersonCommonField('images')) {
       $build = [
         '#theme' => 'tmdb_items_list',
-        '#items' => $this->buildAvatars($avatars, TmdbImageFormat::w185()),
+        '#items' => $this->buildAvatars($avatars, TmdbImageFormat::w185),
         '#attached' => [
           'library' => [
             'person/avatar-full-popup',
@@ -44,7 +44,7 @@ class Gallery extends ExtraTmdbFieldDisplayBase {
   }
 
   /**
-   * Build array of avatars.
+   * Build an array of avatars.
    *
    * @param array $avatars
    *   Raw data from TMDb API.
@@ -61,7 +61,7 @@ class Gallery extends ExtraTmdbFieldDisplayBase {
   }
 
   /**
-   * Build renderable array with Person avatar.
+   * Build a renderable array with Person avatar.
    *
    * @param string $path
    *   Avatar file name from TMDb API.
@@ -76,8 +76,8 @@ class Gallery extends ExtraTmdbFieldDisplayBase {
       $this->t('Click to enlarge the image'),
     );
 
-    $big_format = TmdbImageFormat::w780();
-    $big_image_uri = Constant::TMDB_IMAGE_BASE_URL . $big_format->key() . $path;
+    $big_format = TmdbImageFormat::w780;
+    $big_image_uri = Constant::TMDB_IMAGE_BASE_URL . $big_format->name . $path;
     $build += [
       '#attributes' => [
         'data-full_image' => $big_image_uri,

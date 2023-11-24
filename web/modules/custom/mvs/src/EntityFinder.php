@@ -38,7 +38,7 @@ class EntityFinder {
    * @return $this
    */
   public function findNodesMovie(): self {
-    return $this->findNodes()->byBundle(EntityBundle::movie());
+    return $this->findNodes()->byBundle(EntityBundle::movie);
   }
 
   /**
@@ -48,7 +48,7 @@ class EntityFinder {
    * @return $this
    */
   public function findNodesTv(): self {
-    return $this->findNodes()->byBundle(EntityBundle::tv());
+    return $this->findNodes()->byBundle(EntityBundle::tv);
   }
 
   /**
@@ -58,7 +58,7 @@ class EntityFinder {
    * @return $this
    */
   public function findTermsGenres(): self {
-    return $this->findTerms()->byBundle(EntityBundle::genre());
+    return $this->findTerms()->byBundle(EntityBundle::genre);
   }
 
   /**
@@ -68,7 +68,7 @@ class EntityFinder {
    * @return $this
    */
   public function findNodes(): self {
-    return $this->findEntities(EntityType::node());
+    return $this->findEntities(EntityType::node);
   }
 
   /**
@@ -78,7 +78,7 @@ class EntityFinder {
    * @return $this
    */
   public function findTerms(): self {
-    return $this->findEntities(EntityType::term());
+    return $this->findEntities(EntityType::term);
   }
 
   /**
@@ -88,7 +88,7 @@ class EntityFinder {
    * @return $this
    */
   public function findPersons(): self {
-    return $this->findEntities(EntityType::person());
+    return $this->findEntities(EntityType::person);
   }
 
   /**
@@ -102,6 +102,7 @@ class EntityFinder {
    */
   public function findEntities(EntityType $type): self {
     $this->getStorage($type);
+
     return $this;
   }
 
@@ -133,17 +134,19 @@ class EntityFinder {
       $bundle_key = $this->entity_type_manager
         ->getDefinition($this->storage->getEntityTypeId())
         ->getKey('bundle');
+
       if ($bundle_key) {
         // Convert "Entity Bundle"s to strings.
         array_walk($bundles, function (&$value) {
-          $value = $value->value();
+          $value = $value->name;
         });
         // Set bundles.
         $this->search_values[$bundle_key] = $bundles;
       }
     }
-    catch (PluginNotFoundException $e) {
+    catch (PluginNotFoundException) {
     }
+
     return $this;
   }
 
@@ -160,6 +163,7 @@ class EntityFinder {
    */
   public function byTmdbId(int $tmdb_id): self {
     $this->reduce();
+
     return $this->byTmdbIds([$tmdb_id]);
   }
 
@@ -188,6 +192,7 @@ class EntityFinder {
    */
   public function byImdbId(string $imdb_id): self {
     $this->reduce();
+
     return $this->byImdbIds([$imdb_id]);
   }
 
@@ -204,11 +209,11 @@ class EntityFinder {
   }
 
   /**
-   * Set additional optional conditions in search query.
+   * Set additional optional conditions in a search query.
    *
    * @param string $property
-   *   It should be property or field of entity. For example: "uid", "title",
-   *   "field_imdb_id" etc.
+   *   It should be property or field of entity.
+   *   For example, "uid", "title", "field_imdb_id" etc.
    * @param $value
    *   Value of property of field for search.
    *
@@ -220,13 +225,14 @@ class EntityFinder {
   }
 
   /**
-   * Query should return only single result.
+   * The query should return only a single result.
    *
    * @return $this
    */
   public function reduce(): self {
     $this->limit = 1;
     $this->reduce = TRUE;
+
     return $this;
   }
 
@@ -240,16 +246,18 @@ class EntityFinder {
    */
   public function limit(int $limit): self {
     $this->limit = max($limit, 0);
+
     return $this;
   }
 
   /**
-   * Query will return the number of results.
+   * The query will return the number of results.
    *
    * @return $this
    */
   public function count(): self {
     $this->count = TRUE;
+
     return $this;
   }
 
@@ -260,15 +268,16 @@ class EntityFinder {
    */
   public function loadEntities(): self {
     $this->load = TRUE;
+
     return $this;
   }
 
   /**
-   * Last *required* step return results of query.
+   * Last *required* step return results of the query.
    *
    * @return EntityInterface|EntityInterface[]|int|mixed
    */
-  public function execute() {
+  public function execute(): mixed {
     $return = $ids = $this->findByProperties($this->search_values);
 
     if ($this->count) {
@@ -307,6 +316,7 @@ class EntityFinder {
    */
   public function loadById(int $id): ?EntityInterface {
     $entities = $this->loadMultipleById([$id]);
+
     return $entities ? reset($entities) : NULL;
   }
 
@@ -333,10 +343,10 @@ class EntityFinder {
    * @param QueryInterface $entity_query
    *   EntityQuery instance.
    * @param array $values
-   *   An associative array of properties of the entity, where the keys are the
+   *   An associative array of entity properties, where the keys are the
    *   property names and the values are the values those properties must have.
    */
-  private function buildPropertyQuery(QueryInterface $entity_query, array $values) {
+  private function buildPropertyQuery(QueryInterface $entity_query, array $values): void {
     foreach ($values as $name => $value) {
       // Cast scalars to array, so we can consistently use an IN condition.
       $entity_query->condition($name, (array) $value, 'IN');
@@ -346,7 +356,7 @@ class EntityFinder {
   /**
    * Updated Drupal core method EntityStorageInterface::loadByProperties(),
    * added limit to query, and we don't load Drupal entities in this method
-   * unnecessarily if query should return only IDs.
+   * unnecessarily if the query should return only IDs.
    *
    * @param array $values
    *   Search terms. See self::addCondition().
@@ -362,14 +372,17 @@ class EntityFinder {
       // Build a query to fetch the entity IDs.
       $entity_query = $this->storage->getQuery();
       $entity_query->accessCheck(FALSE);
+
       if ($this->limit) {
         $entity_query->range(0, $this->limit);
       }
+
       $this->buildPropertyQuery($entity_query, $values);
       $result = $entity_query->execute();
 
       return $result ?: [];
     }
+
     return [];
   }
 
@@ -381,9 +394,9 @@ class EntityFinder {
    */
   private function getStorage(EntityType $type): void {
     try {
-      $this->storage = $this->entity_type_manager->getStorage($type->value());
+      $this->storage = $this->entity_type_manager->getStorage($type->value);
     }
-    catch (PluginException $_) {
+    catch (PluginException) {
       $this->storage = NULL;
     }
   }

@@ -2,13 +2,8 @@
 
 namespace Drupal\mvs\enum;
 
-use Eloquent\Enumeration\AbstractEnumeration;
+enum PersonBundle: string {
 
-/**
- * @method static person()
- */
-class PersonBundle extends AbstractEnumeration {
-
-  const person = 'person';
+  case person = 'person';
 
 }

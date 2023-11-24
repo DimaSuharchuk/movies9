@@ -42,11 +42,11 @@ class Recommendations extends ExtraTmdbFieldDisplayBase {
 
     if ($recommendations = $this->getRecommendationsFirstPage()) {
       $build = $this->tmdb_teaser->buildAttachableTmdbTeasersWithWrapper(
-        TmdbLocalStorageType::recommendations(),
+        TmdbLocalStorageType::recommendations,
         $entity->id(),
         $recommendations['results'],
-        NodeBundle::memberByValue($entity->bundle()),
-        Language::memberByValue($entity->language()->getId()),
+        NodeBundle::from($entity->bundle()),
+        Language::from($entity->language()->getId()),
         1,
         $recommendations['total_pages'] > 1
       );
@@ -59,9 +59,9 @@ class Recommendations extends ExtraTmdbFieldDisplayBase {
    * @see TmdbApiAdapter::getRecommendations()
    */
   private function getRecommendationsFirstPage(): ?array {
-    $bundle = NodeBundle::memberByValue($this->entity->bundle());
+    $bundle = NodeBundle::from($this->entity->bundle());
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
-    $lang = Language::memberByValue($this->entity->language()->getId());
+    $lang = Language::from($this->entity->language()->getId());
 
     return $this->adapter->getRecommendations($bundle, $tmdb_id, $lang, 1);
   }

@@ -62,6 +62,7 @@ class Genres extends ExtraTmdbFieldDisplayBase {
     $langcode = $lang->getId();
 
     $genres_links = [];
+
     foreach ($genres as $genre) {
       $genre_id = $genre->id();
       $genres_links[] = [
@@ -73,6 +74,7 @@ class Genres extends ExtraTmdbFieldDisplayBase {
         ),
       ];
     }
+
     return $genres_links;
   }
 

@@ -33,8 +33,8 @@ class PersonController implements ContainerInjectionInterface {
   }
 
   /**
-   * Find Person entity by its TMDb ID, or create one if it doesn't exist, and
-   * redirect to it.
+   * Find "Person" entity by its TMDb ID, or create one if it doesn't exist,
+   * and redirect to it.
    *
    * @param $tmdb_id
    *   Person TMDb ID.
@@ -42,9 +42,10 @@ class PersonController implements ContainerInjectionInterface {
    * @return RedirectResponse
    */
   public function redirect($tmdb_id): RedirectResponse {
-    if (is_numeric($tmdb_id) && $entity_id = $this
-        ->entity_helper
-        ->preparePerson($tmdb_id)) {
+    if (
+      is_numeric($tmdb_id)
+      && $entity_id = $this->entity_helper->preparePerson($tmdb_id)
+    ) {
       return new RedirectResponse(
         Url::fromRoute('entity.person.canonical', ['person' => $entity_id])
           ->toString()
@@ -64,7 +65,7 @@ class PersonController implements ContainerInjectionInterface {
    *
    * @return AjaxResponse|RedirectResponse
    */
-  public function personTabsAjaxHandler($person_id, $tab) {
+  public function personTabsAjaxHandler($person_id, $tab): RedirectResponse|AjaxResponse {
     if ($person = PersonEntity::load($person_id)) {
       $response = new AjaxResponse();
       $response->addCommand(

@@ -72,7 +72,7 @@ class TmdbTeaser {
     ];
 
     if ($more_button) {
-      $route = $storage_type === TmdbLocalStorageType::recommendations() ? 'mvs.recommendations' : 'mvs.similar';
+      $route = $storage_type === TmdbLocalStorageType::recommendations ? 'mvs.recommendations' : 'mvs.similar';
       $render['#more_button'] = [
         '#type' => 'link',
         '#title' => $this->t('Load more'),
@@ -90,7 +90,7 @@ class TmdbTeaser {
   }
 
   /**
-   * Build renderable array from TMDb teasers data.
+   * Build a renderable array from TMDb teasers data.
    *
    * @param array $teasers
    * @param NodeBundle $bundle
@@ -100,15 +100,16 @@ class TmdbTeaser {
    */
   public function buildTmdbTeasers(array $teasers, NodeBundle $bundle, Language $lang): array {
     $render = [];
+
     foreach ($teasers as $teaser) {
       $render[] = [
         '#theme' => 'tmdb_teaser',
-        '#bundle' => $bundle->value(),
+        '#bundle' => $bundle->name,
         '#tmdb_id' => $teaser['id'],
         '#poster' => $teaser['poster_path'] ?: NULL,
         '#imdb_rating' => $this->tmdb_lazy->generateNodeImdbRatingPlaceholder($bundle, $teaser['id']),
         '#title' => $teaser['title'],
-        '#original_title' => $lang !== Language::en() ? $this->tmdb_lazy->generateNodeOriginalTitlePlaceholder($bundle, $teaser['id']) : NULL,
+        '#original_title' => $lang !== Language::en ? $this->tmdb_lazy->generateNodeOriginalTitlePlaceholder($bundle, $teaser['id']) : NULL,
       ];
     }
 

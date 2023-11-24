@@ -2,44 +2,19 @@
 
 namespace Drupal\tmdb\enum;
 
-use Eloquent\Enumeration\AbstractEnumeration;
+enum TmdbImageFormat: string {
 
-/**
- * @method static original()
- * @method static w45()
- * @method static w92()
- * @method static w154()
- * @method static w185()
- * @method static w200()
- * @method static w300()
- * @method static w342()
- * @method static w400()
- * @method static w500()
- * @method static w780()
- */
-class TmdbImageFormat extends AbstractEnumeration {
-
-  const original = 'original';
-
-  const w45 = '45';
-
-  const w92 = '92';
-
-  const w154 = '154';
-
-  const w185 = '185';
-
-  const w200 = '200';
-
-  const w300 = '300';
-
-  const w342 = '342';
-
-  const w400 = '400';
-
-  const w500 = '500';
-
-  const w780 = '780';
+  case original = 'original';
+  case w45 = '45';
+  case w92 = '92';
+  case w154 = '154';
+  case w185 = '185';
+  case w200 = '200';
+  case w300 = '300';
+  case w342 = '342';
+  case w400 = '400';
+  case w500 = '500';
+  case w780 = '780';
 
   /**
    * Returns only formats that start with "w" letter.
@@ -47,9 +22,17 @@ class TmdbImageFormat extends AbstractEnumeration {
    * @return array
    */
   public static function getCompactFormats(): array {
-    $formats = self::members();
-    unset($formats[self::original]);
-    return $formats;
+    return array_filter(self::cases(), fn($format) => $format !== self::original);
+  }
+
+  public static function tryFromKey(int|string $key): ?static {
+    foreach (self::cases() as $case) {
+      if ($case->name === $key) {
+        return $case;
+      }
+    }
+
+    return NULL;
   }
 
 }

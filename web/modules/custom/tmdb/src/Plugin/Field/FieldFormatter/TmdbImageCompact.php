@@ -47,7 +47,7 @@ class TmdbImageCompact extends FormatterBase {
    * {@inheritDoc}
    */
   public function settingsSummary(): array {
-    $format = TmdbImageFormat::memberByKey($this->getSetting('width'));
+    $format = TmdbImageFormat::tryFromKey($this->getSetting('width'));
 
     return [
       $this->t('Rendered with width: %w', [
@@ -60,8 +60,7 @@ class TmdbImageCompact extends FormatterBase {
    * {@inheritDoc}
    */
   public static function defaultSettings(): array {
-    return
-      ['width' => TmdbImageFormat::w200()->key()] + parent::defaultSettings();
+    return ['width' => TmdbImageFormat::w200->name] + parent::defaultSettings();
   }
 
   /**
@@ -77,7 +76,7 @@ class TmdbImageCompact extends FormatterBase {
     foreach ($items as $delta => $item) {
       if ($item->value) {
         $elements[$delta] = $this->buildTmdbImageRenderableArray(
-          TmdbImageFormat::memberByKey($tmdb_width),
+          TmdbImageFormat::tryFromKey($tmdb_width),
           $item->value,
           $parent_entity->label(),
         );
@@ -95,7 +94,7 @@ class TmdbImageCompact extends FormatterBase {
    * @return string
    */
   private function formatToPx(TmdbImageFormat $format): string {
-    return "{$format->value()}px";
+    return "{$format->value}px";
   }
 
 }

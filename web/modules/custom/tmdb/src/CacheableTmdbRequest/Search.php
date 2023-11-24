@@ -27,16 +27,19 @@ class Search extends CacheableTmdbRequest {
    */
   public function setSearchQuery(string $search_query): self {
     $this->query = $search_query;
+
     return $this;
   }
 
   public function setSearchType(TmdbSearchType $search_type): self {
     $this->search_type = $search_type;
+
     return $this;
   }
 
   public function setLanguage(Language $lang): self {
     $this->lang = $lang;
+
     return $this;
   }
 
@@ -50,6 +53,7 @@ class Search extends CacheableTmdbRequest {
    */
   public function setPage(int $page): self {
     $this->page = $page;
+
     return $this;
   }
 
@@ -63,24 +67,28 @@ class Search extends CacheableTmdbRequest {
       case TmdbSearchType::multi:
         $method = 'searchMulti';
         break;
+
       case TmdbSearchType::movies:
         $method = 'searchMovies';
         $this->media_type = 'movie';
         break;
+
       case TmdbSearchType::tv:
         $method = 'searchTv';
         $this->media_type = 'tv';
         break;
+
       case TmdbSearchType::persons:
         $method = 'searchPersons';
         $this->media_type = 'person';
         break;
+
       default:
         return [];
     }
 
     return $api->$method($this->query, [
-      'language' => $this->lang->key(),
+      'language' => $this->lang->name,
       'page' => $this->page,
       'include_adult' => TRUE,
     ]);
@@ -94,8 +102,8 @@ class Search extends CacheableTmdbRequest {
       'search',
       "{$this->query}_{$this->page}",
       [
-        "{$this->lang->key()}",
-        "{$this->search_type->key()}",
+        "{$this->lang->name}",
+        "{$this->search_type->name}",
       ],
     );
   }
@@ -205,7 +213,7 @@ class Search extends CacheableTmdbRequest {
   /**
    * @inheritDoc
    */
-  protected function massageAfterLoad(array &$data) {
+  protected function massageAfterLoad(array &$data): void {
     foreach ($data['results'] as $k => $result) {
       switch ($result['t']) {
         case 'm':

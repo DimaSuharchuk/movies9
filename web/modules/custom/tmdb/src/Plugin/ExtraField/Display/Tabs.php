@@ -22,9 +22,11 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
    * @inheritDoc
    */
   public function build(ContentEntityInterface $entity): array {
-    $bundle = NodeBundle::memberByValue($entity->bundle());
+    $bundle = NodeBundle::from($entity->bundle());
+    $is_movie = $bundle === NodeBundle::movie;
+    $is_tv = !$is_movie;
     $tmdb_id = $entity->{'field_tmdb_id'}->value;
-    $lang = Language::memberByValue($entity->language()->getId());
+    $lang = Language::from($entity->language()->getId());
 
     $build = [
       '#attached' => [
@@ -36,24 +38,30 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
     ];
 
     // Check if there is content for each tab and add tabs for them.
-    if ($entity->bundle() === 'tv') {
+    if ($is_tv) {
       $build['seasons'] = $this->buildAjaxLink('seasons', 'Seasons');
     }
-    if ($entity->bundle() === 'movie' || $this->adapter->getVideos($bundle, $tmdb_id, $lang)) {
+
+    if ($is_movie || $this->adapter->getVideos($bundle, $tmdb_id, $lang)) {
       $build['trailers'] = $this->buildAjaxLink('trailers', 'Trailers');
     }
+
     if ($this->adapter->getCast($bundle, $tmdb_id)) {
       $build['cast'] = $this->buildAjaxLink('cast', 'Cast');
     }
+
     if ($this->adapter->getCrew($bundle, $tmdb_id)) {
       $build['crew'] = $this->buildAjaxLink('crew', 'Crew');
     }
-    if ($entity->bundle() === 'movie' && $this->getCommonFieldValue('collection_id')) {
+
+    if ($is_movie && $this->getCommonFieldValue('collection_id')) {
       $build['collection'] = $this->buildAjaxLink('collection', 'Collection');
     }
+
     if (!empty($this->adapter->getRecommendations($bundle, $tmdb_id, $lang, 1)['results'])) {
       $build['related'] = $this->buildAjaxLink('related', 'Related');
     }
+
     if (!empty($this->adapter->getSimilar($bundle, $tmdb_id, $lang, 1)['results'])) {
       $build['similar'] = $this->buildAjaxLink('similar', 'Similar');
     }
@@ -62,7 +70,7 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
   }
 
   /**
-   * Create ajax link for tab.
+   * Create an ajax link for tab.
    *
    * @param string $tab
    *   Tab name must be the same as node view mode.
@@ -70,7 +78,7 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
    *   Name of the tab that will be displayed on the page.
    *
    * @return array
-   *   Renderable array of ajax link.
+   *   Renderable array of an ajax link.
    */
   private function buildAjaxLink(string $tab, string $link_title): array {
     return [

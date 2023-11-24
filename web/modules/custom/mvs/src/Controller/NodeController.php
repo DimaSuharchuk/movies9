@@ -20,7 +20,6 @@ use Drupal\tmdb\enum\TmdbLocalStorageType;
 use Drupal\tmdb\SeasonBuilder;
 use Drupal\tmdb\TmdbApiAdapter;
 use Drupal\tmdb\TmdbTeaser;
-use Eloquent\Enumeration\Exception\AbstractUndefinedMemberException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -67,21 +66,16 @@ class NodeController implements ContainerInjectionInterface {
    * @param int|string $tmdb_id
    *   TMDb ID.
    *
-   * @return RedirectResponse
+   * @return RedirectResponse|null
    *
    * @see NodeBundle
    */
-  public function redirect($bundle, $tmdb_id): ?RedirectResponse {
-    $node_bundle = FALSE;
-    try {
-      $node_bundle = NodeBundle::memberByValue($bundle);
-    }
-    catch (AbstractUndefinedMemberException $e) {
-    }
-
-    if ($node_bundle && is_numeric($tmdb_id) && $node_id = $this
-        ->entity_helper
-        ->prepareNode($node_bundle, $tmdb_id)) {
+  public function redirect($bundle, int|string $tmdb_id): ?RedirectResponse {
+    if (
+      ($node_bundle = NodeBundle::tryFrom($bundle))
+      && is_numeric($tmdb_id)
+      && ($node_id = $this->entity_helper->prepareNode($node_bundle, $tmdb_id))
+    ) {
       return new RedirectResponse(
         Url::fromRoute('entity.node.canonical', ['node' => $node_id])
           ->toString()
@@ -113,14 +107,14 @@ class NodeController implements ContainerInjectionInterface {
   /**
    * Replace block "js-replaceable-block" with content of some tab context.
    *
-   * @param $node_id
+   * @param int|string $node_id
    *   Node ID.
-   * @param $tab
+   * @param string $tab
    *   Name of tab. It must be the same as existing node view mode.
    *
    * @return AjaxResponse
    */
-  public function nodeTabsAjaxHandler($node_id, $tab): AjaxResponse {
+  public function nodeTabsAjaxHandler(int|string $node_id, string $tab): AjaxResponse {
     $response = new AjaxResponse();
 
     if ($node = Node::load($node_id)) {
@@ -153,7 +147,7 @@ class NodeController implements ContainerInjectionInterface {
 
     if ($node = Node::load($node_id)) {
       $langcode = $this->language_manager->getCurrentLanguage()->getId();
-      $lang = Language::memberByValue($langcode);
+      $lang = Language::from($langcode);
 
       $response->addCommand(
         new HtmlCommand(
@@ -178,7 +172,7 @@ class NodeController implements ContainerInjectionInterface {
    * @see RorS
    */
   public function recommendations($nid, $page): AjaxResponse {
-    return $this->RorS($nid, TmdbLocalStorageType::recommendations(), $page);
+    return $this->RorS($nid, TmdbLocalStorageType::recommendations, $page);
   }
 
   /**
@@ -190,33 +184,38 @@ class NodeController implements ContainerInjectionInterface {
    * @see RorS
    */
   public function similar($nid, $page): AjaxResponse {
-    return $this->RorS($nid, TmdbLocalStorageType::similar(), $page);
+    return $this->RorS($nid, TmdbLocalStorageType::similar, $page);
   }
 
   /**
    * Load TMDb teasers of "recommendations" or "similar" nodes and attach them
-   * via AJAX to same set of previous "TMDb results page" on page where AJAX
-   * link placed with css class "more-button-wrapper".
+   * via AJAX to the same set of previous "TMDb results page" on page where the
+   * AJAX link placed with css class "more-button-wrapper".
    *
    * @param int $node_id
    *   Node ID.
    * @param TmdbLocalStorageType $storage_type
    * @param int $page
-   *   TMDb results page. It used in "recommendations" and "similar" TMDb
-   *   responses.
+   *   TMDb results page.
+   *   It is used in "recommendations" and "similar" TMDb responses.
    *
    * @return AjaxResponse
    */
   private function RorS(int $node_id, TmdbLocalStorageType $storage_type, int $page): AjaxResponse {
-    $node = Node::load($node_id);
+    $response = new AjaxResponse();
 
-    $bundle = NodeBundle::memberByValue($node->bundle());
+    if (!$node = Node::load($node_id)) {
+      return $response;
+    }
+
+    $bundle = NodeBundle::from($node->bundle());
     $tmdb_id = $node->{'field_tmdb_id'}->value;
-    $langcode = $this->language_manager->getCurrentLanguage()->getId();
-    $lang = Language::memberByValue($langcode);
+    $lang = Language::from(
+      $this->language_manager->getCurrentLanguage()->getId()
+    );
 
     // Get recommendations or similar teasers from TMDb API or TMDbLocalStorage.
-    $r = TmdbLocalStorageType::recommendations() === $storage_type
+    $r = TmdbLocalStorageType::recommendations === $storage_type
       ? $this->adapter->getRecommendations($bundle, $tmdb_id, $lang, $page)
       : $this->adapter->getSimilar($bundle, $tmdb_id, $lang, $page);
 
@@ -231,10 +230,9 @@ class NodeController implements ContainerInjectionInterface {
       $r['total_pages'] > $page
     );
 
-    $response = new AjaxResponse();
     // Remove button from previous (same like this) response.
     $response->addCommand(new RemoveCommand('.more-button-wrapper'));
-    // Attach to previous page "prepend place".
+    // Attach to the previous page "prepend place".
     $response->addCommand(new AppendCommand('.append-place', $attachable_teasers));
 
     return $response;
@@ -249,10 +247,9 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function nodeOriginalTitle(string $bundle, int $tmdb_id): AjaxResponse {
-    if ($common = $this->adapter->getCommonFieldsByTmdbId(NodeBundle::memberByValue($bundle), $tmdb_id, Language::en())) {
-      return new AjaxResponse($common['title']);
-    }
-    return new AjaxResponse();
+    $common = $this->adapter->getCommonFieldsByTmdbId(NodeBundle::tryFrom($bundle), $tmdb_id, Language::en);
+
+    return new AjaxResponse($common['title'] ?? NULL);
   }
 
   /**
@@ -264,10 +261,9 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function seasonOriginalTitle(int $tv_tmdb_id, int $season_number): AjaxResponse {
-    if ($season = $this->adapter->getSeason($tv_tmdb_id, $season_number, Language::en())) {
-      return new AjaxResponse($season['title']);
-    }
-    return new AjaxResponse();
+    $season = $this->adapter->getSeason($tv_tmdb_id, $season_number, Language::en);
+
+    return new AjaxResponse($season['title'] ?? NULL);
   }
 
   /**
@@ -280,14 +276,15 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function episodeOriginalTitle(int $tv_tmdb_id, int $season_number, int $episode_number): AjaxResponse {
-    if ($season = $this->adapter->getSeason($tv_tmdb_id, $season_number, Language::en())) {
-      // Search for episode.
+    if ($season = $this->adapter->getSeason($tv_tmdb_id, $season_number, Language::en)) {
+      // Search for an episode.
       foreach ($season['episodes'] as $episode) {
         if ($episode['episode_number'] == $episode_number) {
           return new AjaxResponse($episode['name']);
         }
       }
     }
+
     return new AjaxResponse();
   }
 

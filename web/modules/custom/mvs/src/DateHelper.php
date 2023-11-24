@@ -42,7 +42,7 @@ class DateHelper {
   /**
    * Convert some date string into any PHP date format.
    *
-   * @param string|null $s
+   * @param string $s
    *   Date string in any PHP correct format.
    * @param string $format
    *   PHP Date format. https://www.php.net/manual/ru/function.date.php
@@ -71,7 +71,7 @@ class DateHelper {
     try {
       return (new DateTime($s))->getTimestamp();
     }
-    catch (Exception $e) {
+    catch (Exception) {
       return NULL;
     }
   }

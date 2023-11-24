@@ -24,7 +24,7 @@ class TmdbImageWidget extends WidgetBase {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
     $element += [
       '#type' => 'textfield',
-      '#default_value' => $items[$delta]->value ?: NULL,
+      '#default_value' => $items[$delta]?->value,
       '#size' => 60,
       '#maxlength' => 64,
       '#element_validate' => [

@@ -42,11 +42,11 @@ class Similar extends ExtraTmdbFieldDisplayBase {
 
     if ($similar = $this->getSimilarFirstPage()) {
       $build = $this->tmdb_teaser->buildAttachableTmdbTeasersWithWrapper(
-        TmdbLocalStorageType::similar(),
+        TmdbLocalStorageType::similar,
         $entity->id(),
         $similar['results'],
-        NodeBundle::memberByValue($entity->bundle()),
-        Language::memberByValue($entity->language()->getId()),
+        NodeBundle::from($entity->bundle()),
+        Language::from($entity->language()->getId()),
         1,
         $similar['total_pages'] > 1
       );
@@ -59,9 +59,9 @@ class Similar extends ExtraTmdbFieldDisplayBase {
    * @see TmdbApiAdapter::getSimilar()
    */
   private function getSimilarFirstPage(): ?array {
-    $bundle = NodeBundle::memberByValue($this->entity->bundle());
+    $bundle = NodeBundle::from($this->entity->bundle());
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
-    $lang = Language::memberByValue($this->entity->language()->getId());
+    $lang = Language::from($this->entity->language()->getId());
 
     return $this->adapter->getSimilar($bundle, $tmdb_id, $lang, 1);
   }

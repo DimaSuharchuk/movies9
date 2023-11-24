@@ -27,7 +27,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * @inheritDoc
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): LanguageSwitcher|ContainerFactoryPluginInterface|static {
     $instance = new static($configuration, $plugin_id, $plugin_definition);
 
     $instance->language_manager = $container->get('language_manager');
@@ -46,7 +46,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
     $lang_code = $current_language->getId();
     $current_lang_name = $this->language_manager->getNativeLanguages()[$lang_code]->getName();
 
-    // Remove active language from list.
+    // Remove active language from a list.
     unset($links[$lang_code]);
 
     // Trim language name if needed.
@@ -113,7 +113,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
-  public function blockValidate($form, FormStateInterface $form_state) {
+  public function blockValidate($form, FormStateInterface $form_state): void {
     $is_trim = $form_state->getValue('trim_links');
     if ($is_trim && $form_state->getValue('trim_length') < 1) {
       $form_state->setErrorByName('trim_length', $this->t('Minimum 1 character.'));
@@ -123,7 +123,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
-  public function blockSubmit($form, FormStateInterface $form_state) {
+  public function blockSubmit($form, FormStateInterface $form_state): void {
     $is_trim = $form_state->getValue('trim_links');
     $this->configuration['trim_links'] = $is_trim;
     if ($is_trim) {

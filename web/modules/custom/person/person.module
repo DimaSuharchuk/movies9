@@ -40,7 +40,7 @@ function person_preprocess_person(&$variables) {
       $entity = $variables['elements']['#person'];
       /** @var \Drupal\tmdb\TmdbApiAdapter $adapter */
       $adapter = Drupal::service('tmdb.adapter');
-      $person_data = $adapter->getPerson($entity->{'tmdb_id'}->value, Language::en());
+      $person_data = $adapter->getPerson($entity->{'tmdb_id'}->value, Language::en);
       /** @var \Drupal\person\Avatar $person_avatar */
       $person_avatar = Drupal::service('person.avatar');
 
@@ -55,7 +55,7 @@ function person_preprocess_person(&$variables) {
         '#title' => 'Avatar',
         '#label_display' => 'hidden',
         '#is_multiple' => FALSE,
-        0 => $person_avatar->build($person_data, TmdbImageFormat::w400()),
+        0 => $person_avatar->build($person_data, TmdbImageFormat::w400),
       ];
     }
   }

@@ -9,6 +9,7 @@ use Drupal\Core\Language\LanguageManager;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\mvs\DateHelper;
+use Drupal\mvs\enum\Language;
 use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\NnmHelper;
 use Drupal\tmdb\TmdbApiAdapter;
@@ -48,11 +49,11 @@ class NnmController implements ContainerInjectionInterface {
   public function getTable(int $nid): array {
     /** @var \Drupal\node\NodeInterface $node */
     $node = $this->node_storage->load($nid);
-    $node = $node->getTranslation('en');
+    $node = $node->getTranslation(Language::en->name);
 
     $search_string = preg_replace('/[^a-zа-я\d\s-]/iu', '', $node->getTitle());
 
-    switch ($node->bundle()) {
+    switch (NodeBundle::from($node->bundle())) {
       case NodeBundle::movie:
         if ($release_date = $this->adapter->getCommonFieldValue($node, 'release_date')) {
           $search_string .= ' ' . $this->date_helper->dateStringToYear($release_date);

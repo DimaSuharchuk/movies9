@@ -10,7 +10,7 @@ trait NetworksAndCompanies {
   use ImageBuilder;
 
   /**
-   * Build array of "Production companies" or "Networks" from TMDb API.
+   * Build an array of "Production companies" or "Networks" from TMDb API.
    *
    * @param array $items
    *   Array of companies or networks from TMDb API.
@@ -24,7 +24,7 @@ trait NetworksAndCompanies {
     foreach ($items as $item) {
       if ($item['logo_path']) {
         $build[] = $this->buildTmdbImageRenderableArray(
-          TmdbImageFormat::w92(),
+          TmdbImageFormat::w92,
           $item['logo_path'],
           $item['name'],
         );

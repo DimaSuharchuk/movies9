@@ -2,28 +2,13 @@
 
 namespace Drupal\tmdb\enum;
 
-use Eloquent\Enumeration\AbstractEnumeration;
+enum TmdbLocalStorageType: string {
 
-/**
- * @method static common()
- * @method static recommendations()
- * @method static similar()
- * @method static videos()
- * @method static cast()
- * @method static crew()
- */
-class TmdbLocalStorageType extends AbstractEnumeration {
-
-  const common = 'common';
-
-  const recommendations = 'recommendations';
-
-  const similar = 'similar';
-
-  const videos = 'videos';
-
-  const cast = 'cast';
-
-  const crew = 'crew';
+  case common = 'common';
+  case recommendations = 'recommendations';
+  case similar = 'similar';
+  case videos = 'videos';
+  case cast = 'cast';
+  case crew = 'crew';
 
 }

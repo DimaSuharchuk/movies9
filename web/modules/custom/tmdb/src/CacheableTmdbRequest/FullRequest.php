@@ -17,16 +17,19 @@ class FullRequest extends CacheableTmdbRequest {
 
   public function setBundle(NodeBundle $bundle): self {
     $this->bundle = $bundle;
+
     return $this;
   }
 
   public function setTmdbId(int $tmdb_id): self {
     $this->tmdb_id = $tmdb_id;
+
     return $this;
   }
 
   public function setLanguage(Language $lang): self {
     $this->lang = $lang;
+
     return $this;
   }
 
@@ -35,15 +38,15 @@ class FullRequest extends CacheableTmdbRequest {
    */
   protected function request(): array {
     switch ($this->bundle) {
-      case NodeBundle::movie():
+      case NodeBundle::movie:
         return $this->nodeApi($this->bundle)->getMovie($this->tmdb_id, [
-          'language' => $this->lang->key(),
+          'language' => $this->lang->name,
           'append_to_response' => 'recommendations,similar,videos,credits',
         ]);
 
-      case NodeBundle::tv():
+      case NodeBundle::tv:
         return $this->nodeApi($this->bundle)->getTvshow($this->tmdb_id, [
-          'language' => $this->lang->key(),
+          'language' => $this->lang->name,
           'append_to_response' => 'recommendations,similar,videos,credits,external_ids',
         ]);
     }
@@ -59,8 +62,8 @@ class FullRequest extends CacheableTmdbRequest {
    */
   protected function getStorageFilePath(): TmdbLocalStorageFilePath {
     return new TmdbLocalStorageFilePath(
-      $this->bundle->key(),
-      "{$this->tmdb_id}_{$this->lang->key()}"
+      $this->bundle->name,
+      "{$this->tmdb_id}_{$this->lang->name}"
     );
   }
 
@@ -68,13 +71,7 @@ class FullRequest extends CacheableTmdbRequest {
    * @inheritDoc
    */
   protected function massageBeforeSave(array $data): array {
-    if (NodeBundle::movie() === $this->bundle) {
-      $common = $this->purgeMovieCommonFields($data);
-    }
-    else {
-      $common = $this->purgeTvCommonFields($data);
-    }
-
+    $common = NodeBundle::movie === $this->bundle ? $this->purgeMovieCommonFields($data) : $this->purgeTvCommonFields($data);
     $cast = $this->purgeCastFields($data);
     $crew = $this->purgeCrewFields($data);
     $videos = $this->purgeVideosFields($data);
@@ -117,7 +114,7 @@ class FullRequest extends CacheableTmdbRequest {
     if ($data['belongs_to_collection']) {
       $filtered['collection_id'] = $data['belongs_to_collection']['id'];
     }
-    // Collect only genres IDs.
+    // Collect only genres' IDs.
     $filtered['genres_ids'] = array_column($data['genres'], 'id');
 
     return $filtered;
@@ -158,7 +155,7 @@ class FullRequest extends CacheableTmdbRequest {
       ]),
       'imdb_id' => $data['external_ids']['imdb_id'],
     ];
-    // Collect only genres IDs.
+    // Collect only genres' IDs.
     $filtered['genres_ids'] = array_column($data['genres'], 'id');
     // Get average episode runtime.
     if ($time_arr = $data['episode_run_time']) {
@@ -210,7 +207,7 @@ class FullRequest extends CacheableTmdbRequest {
   }
 
   /**
-   * Purge fields of videos arrays.
+   * Purge fields of videos' arrays.
    *
    * @param array[] $data
    *

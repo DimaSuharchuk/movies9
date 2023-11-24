@@ -14,11 +14,13 @@ class Genres extends CacheableTmdbRequest {
 
   public function setBundle(NodeBundle $bundle): self {
     $this->bundle = $bundle;
+
     return $this;
   }
 
   public function setLanguage(Language $lang): self {
     $this->lang = $lang;
+
     return $this;
   }
 
@@ -27,11 +29,9 @@ class Genres extends CacheableTmdbRequest {
    */
   protected function request(): array {
     $api = $this->connect->getGenresApi();
-    $params = ['language' => $this->lang->value()];
+    $params = ['language' => $this->lang->name];
 
-    return NodeBundle::movie() === $this->bundle
-      ? $api->getMovieGenres($params)
-      : $api->getTvGenres($params);
+    return NodeBundle::movie === $this->bundle ? $api->getMovieGenres($params) : $api->getTvGenres($params);
   }
 
   /**
@@ -47,7 +47,7 @@ class Genres extends CacheableTmdbRequest {
   protected function getStorageFilePath(): TmdbLocalStorageFilePath {
     return new TmdbLocalStorageFilePath(
       'genres',
-      "{$this->bundle->key()}_{$this->lang->key()}"
+      "{$this->bundle->name}_{$this->lang->name}"
     );
   }
 

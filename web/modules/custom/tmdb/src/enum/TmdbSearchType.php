@@ -2,22 +2,11 @@
 
 namespace Drupal\tmdb\enum;
 
-use Eloquent\Enumeration\AbstractEnumeration;
+enum TmdbSearchType: string {
 
-/**
- * @method static multi()
- * @method static movies()
- * @method static tv()
- * @method static persons()
- */
-class TmdbSearchType extends AbstractEnumeration {
-
-  const multi = 'multi';
-
-  const movies = 'movies';
-
-  const tv = 'tv';
-
-  const persons = 'persons';
+  case multi = 'multi';
+  case movies = 'movies';
+  case tv = 'tv';
+  case persons = 'persons';
 
 }

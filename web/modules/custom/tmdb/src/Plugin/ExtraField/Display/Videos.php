@@ -22,7 +22,7 @@ class Videos extends ExtraTmdbFieldDisplayBase {
    * {@inheritDoc}
    */
   public function build(ContentEntityInterface $entity): array {
-    $lang = Language::memberByValue($entity->language()->getId());
+    $lang = Language::from($entity->language()->getId());
 
     if ($videos = $this->getVideos($lang)) {
       $build = [
@@ -49,8 +49,8 @@ class Videos extends ExtraTmdbFieldDisplayBase {
    *
    * @see TmdbApiAdapter::getVideos()
    */
-  private function getVideos(Language $lang): ?array {
-    $bundle = NodeBundle::memberByValue($this->entity->bundle());
+  private function getVideos(Language $lang): array {
+    $bundle = NodeBundle::from($this->entity->bundle());
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
 
     return $this->adapter->getVideos($bundle, $tmdb_id, $lang);
@@ -75,7 +75,7 @@ class Videos extends ExtraTmdbFieldDisplayBase {
         '#name' => $video['name'],
         '#size' => $video['size'],
         '#key' => $video['key'],
-        '#language' => $lang->value(),
+        '#language' => $lang->name,
       ];
     }
 
@@ -83,14 +83,14 @@ class Videos extends ExtraTmdbFieldDisplayBase {
   }
 
   /**
-   * Sort videos by size: videos with better quality goes to top.
+   * Sort videos by size: videos with better quality go to the top.
    *
    * @param array $videos
    *   Videos from TMDb API.
    */
   private function sortBySize(array &$videos): void {
     usort($videos, function ($a, $b) {
-      // Better videos above.
+      // Better videos up.
       return $b['size'] <=> $a['size'];
     });
   }

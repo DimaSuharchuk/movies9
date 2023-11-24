@@ -23,7 +23,7 @@ class ImdbRatingDbManager {
    * @param string $imdb_id
    *   IMDb ID.
    *
-   * @return float
+   * @return float|null
    *   IMDb rating.
    */
   public function get(string $imdb_id): ?float {
@@ -57,7 +57,7 @@ class ImdbRatingDbManager {
    *
    * @return void
    */
-  public function set(string $imdb_id, float $rating) {
+  public function set(string $imdb_id, float $rating): void {
     $this->repository->create([
       'imdb_id' => $imdb_id,
       'rating' => $rating,
@@ -69,12 +69,12 @@ class ImdbRatingDbManager {
    *
    * @return void
    */
-  public function clear() {
+  public function clear(): void {
     $this->repository->truncate();
   }
 
   /**
-   * Get count of all records in table.
+   * Get count of all records in the table.
    *
    * @return int
    *   Count of IMDb ratings in the table.

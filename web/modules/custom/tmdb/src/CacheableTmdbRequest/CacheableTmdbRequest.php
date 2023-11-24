@@ -7,6 +7,8 @@ use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbLocalStorage;
 use Drupal\tmdb\TmdbLocalStorageFilePath;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Tmdb\Api\Movies;
+use Tmdb\Api\Tv;
 use Tmdb\Client;
 use Tmdb\Event\BeforeRequestEvent;
 use Tmdb\Event\Listener\Request\AcceptJsonRequestListener;
@@ -53,7 +55,7 @@ abstract class CacheableTmdbRequest {
           'adapter' => $ed,
         ],
         'http' => [
-          'client' => null,
+          'client' => NULL,
         ],
       ]);
       /**
@@ -102,7 +104,7 @@ abstract class CacheableTmdbRequest {
   }
 
   /**
-   * Only check is the "static" request cached.
+   * Only check is the "static" a request cached.
    *
    * @return bool
    *   Local file exists.
@@ -151,8 +153,8 @@ abstract class CacheableTmdbRequest {
   abstract protected function getStorageFilePath(): TmdbLocalStorageFilePath;
 
   /**
-   * Helper method. Filter raw array of arrays by fields from $allowed_fields
-   * array.
+   * Helper method.
+   * Filter a raw array of arrays by fields from $allowed_fields array.
    *
    * @param array[] $raw
    *   Raw data.
@@ -164,11 +166,13 @@ abstract class CacheableTmdbRequest {
    */
   protected function allowedFieldsFilter(array $raw, array $allowed_fields): array {
     $purged = [];
+
     foreach ($raw as $i => $item) {
       foreach ($allowed_fields as $field) {
         $purged[$i][$field] = $item[$field] ?? NULL;
       }
     }
+
     return $purged;
   }
 
@@ -179,8 +183,8 @@ abstract class CacheableTmdbRequest {
    *
    * @return \Tmdb\Api\Movies|\Tmdb\Api\Tv
    */
-  protected function nodeApi(NodeBundle $bundle) {
-    return NodeBundle::movie() === $bundle ? $this->connect->getMoviesApi() : $this->connect->getTvApi();
+  protected function nodeApi(NodeBundle $bundle): Tv|Movies {
+    return NodeBundle::movie === $bundle ? $this->connect->getMoviesApi() : $this->connect->getTvApi();
   }
 
   /**
@@ -216,6 +220,7 @@ abstract class CacheableTmdbRequest {
     ];
 
     $purged = [];
+
     foreach ($raw_teasers as $i => $teaser) {
       foreach ($allowed_fields as $field) {
         if ($field === 'title' && !isset($teaser['title'])) {
@@ -229,6 +234,7 @@ abstract class CacheableTmdbRequest {
         }
       }
     }
+
     return $purged;
   }
 

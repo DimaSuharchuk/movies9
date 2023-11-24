@@ -35,13 +35,15 @@ class EntityHelper {
    *   Node ID if node for all languages has been successfully created.
    */
   public function prepareNode(NodeBundle $bundle, int $tmdb_id, bool $approved_status = FALSE): ?int {
-    $e_bundle = EntityBundle::memberByKey($bundle->key());
+    $e_bundle = EntityBundle::from($bundle->name);
+
     if (!$node_id = $this->finder->findNodes()
       ->byBundle($e_bundle)
       ->byTmdbId($tmdb_id)
       ->reduce()
-      ->execute()) {
-      $all_languages = Language::members();
+      ->execute()
+    ) {
+      $all_languages = Language::cases();
 
       // Fetch data for every language from TMDb API first.
       // This is very important to do because this code will only work once for
@@ -60,7 +62,7 @@ class EntityHelper {
           return NULL;
         }
 
-        $node_data[$lang->key()] = $fetch;
+        $node_data[$lang->name] = $fetch;
       }
 
       // Check if all data is received.
@@ -69,7 +71,7 @@ class EntityHelper {
 
         // Create node for every language.
         foreach ($all_languages as $lang) {
-          $langcode = $lang->key();
+          $langcode = $lang->name;
 
           try {
             $node = $this->creator->createNodeMovieOrTv(
@@ -83,15 +85,15 @@ class EntityHelper {
               $lang
             );
           }
-          catch (ImdbException|TypeError $e) {
-            // This means that only part of necessary data comes from the
+          catch (ImdbException|TypeError) {
+            // This means that only part of the necessary data comes from the
             // TMDb API. Therefore, such node cannot be saved.
             return NULL;
           }
         }
 
         // Get node ID from any (last) translation.
-        $node_id = $node ? $node->id() : NULL;
+        $node_id = $node?->id();
       }
       else {
         $node_id = NULL;
@@ -102,7 +104,7 @@ class EntityHelper {
   }
 
   /**
-   * Create Person content entity in all languages if it doesn't exist.
+   * Create "Person" content entity in all languages if it doesn't exist.
    *
    * @param int $tmdb_id
    *   Person TMDb ID.
@@ -115,7 +117,7 @@ class EntityHelper {
       ->addCondition('tmdb_id', $tmdb_id)
       ->reduce()
       ->execute()) {
-      $all_languages = Language::members();
+      $all_languages = Language::cases();
 
       // Fetch data for every language from TMDb API first.
       // This is very important to do because this code will only work once for
@@ -124,7 +126,7 @@ class EntityHelper {
       $person_data = [];
       foreach ($all_languages as $lang) {
         // Fetch data from TMDb API.
-        $person_data[$lang->key()] = $this->adapter->getPerson($tmdb_id, $lang);
+        $person_data[$lang->name] = $this->adapter->getPerson($tmdb_id, $lang);
       }
 
       // Check if all data is received.
@@ -133,7 +135,7 @@ class EntityHelper {
 
         // Create Person for every language.
         foreach ($all_languages as $lang) {
-          $lang_code = $lang->key();
+          $lang_code = $lang->name;
 
           try {
             $person = $this->creator->createPerson(
@@ -143,15 +145,15 @@ class EntityHelper {
               $person_data[$lang_code]['profile_path'],
             );
           }
-          catch (ImdbException|TypeError $e) {
-            // This means that only part of necessary data comes from the
+          catch (ImdbException|TypeError) {
+            // This means that only part of the necessary data comes from the
             // TMDb API. Therefore, such node cannot be saved.
             return NULL;
           }
         }
 
         // Get Person ID from any (last) translation.
-        $person_id = $person ? $person->id() : NULL;
+        $person_id = $person?->id();
       }
       else {
         $person_id = NULL;

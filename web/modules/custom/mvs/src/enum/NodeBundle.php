@@ -2,16 +2,9 @@
 
 namespace Drupal\mvs\enum;
 
-use Eloquent\Enumeration\AbstractEnumeration;
+enum NodeBundle: string {
 
-/**
- * @method static movie()
- * @method static tv()
- */
-class NodeBundle extends AbstractEnumeration {
-
-  const movie = 'movie';
-
-  const tv = 'tv';
+  case movie = 'movie';
+  case tv = 'tv';
 
 }

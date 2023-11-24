@@ -14,11 +14,13 @@ class Person extends CacheableTmdbRequest {
 
   public function setTmdbId(int $tmdb_id): self {
     $this->tmdb_id = $tmdb_id;
+
     return $this;
   }
 
   public function setLanguage(Language $lang): self {
     $this->lang = $lang;
+
     return $this;
   }
 
@@ -27,7 +29,7 @@ class Person extends CacheableTmdbRequest {
    */
   protected function request(): array {
     $params = [
-      'language' => $this->lang->key(),
+      'language' => $this->lang->name,
       'append_to_response' => 'movie_credits,tv_credits,images',
     ];
 
@@ -40,7 +42,7 @@ class Person extends CacheableTmdbRequest {
   protected function getStorageFilePath(): TmdbLocalStorageFilePath {
     return new TmdbLocalStorageFilePath(
       'person',
-      "{$this->tmdb_id}_{$this->lang->key()}",
+      "{$this->tmdb_id}_{$this->lang->name}",
     );
   }
 
@@ -51,7 +53,6 @@ class Person extends CacheableTmdbRequest {
     // Filter nested teasers.
     $allowed_teaser_fields = [
       'id',
-      'media_type',
       'title',
       'original_title',
       'name',
@@ -71,12 +72,12 @@ class Person extends CacheableTmdbRequest {
       'known_for_department' => $data['known_for_department'],
       'place_of_birth' => $data['place_of_birth'],
       'movie_credits' => [
-        'cast' => $this->massageTeasers($this->allowedFieldsFilter($data['movie_credits']['cast'], $allowed_teaser_fields)),
-        'crew' => $this->massageTeasers($this->allowedFieldsFilter($data['movie_credits']['crew'], $allowed_teaser_fields)),
+        'cast' => $this->massageTeasers(NodeBundle::movie, $this->allowedFieldsFilter($data['movie_credits']['cast'], $allowed_teaser_fields)),
+        'crew' => $this->massageTeasers(NodeBundle::movie, $this->allowedFieldsFilter($data['movie_credits']['crew'], $allowed_teaser_fields)),
       ],
       'tv_credits' => [
-        'cast' => $this->massageTeasers($this->allowedFieldsFilter($data['tv_credits']['cast'], $allowed_teaser_fields)),
-        'crew' => $this->massageTeasers($this->allowedFieldsFilter($data['tv_credits']['crew'], $allowed_teaser_fields)),
+        'cast' => $this->massageTeasers(NodeBundle::tv, $this->allowedFieldsFilter($data['tv_credits']['cast'], $allowed_teaser_fields)),
+        'crew' => $this->massageTeasers(NodeBundle::tv, $this->allowedFieldsFilter($data['tv_credits']['crew'], $allowed_teaser_fields)),
       ],
     ];
 
@@ -91,8 +92,8 @@ class Person extends CacheableTmdbRequest {
   }
 
   /**
-   * A wrapper for the "$this->massageTeaserFields()" method, which processes 1
-   * teaser, but here we process an array of teasers.
+   * A wrapper for the "$this->massageTeaserFields()" method, which processes
+   * one teaser, but here we process an array of teasers.
    *
    * @param array $a
    *   Array of Movies/TVs teasers.
@@ -102,24 +103,22 @@ class Person extends CacheableTmdbRequest {
    *
    * @see Person::massageTeaserFields()
    */
-  private function massageTeasers(array $a): array {
+  private function massageTeasers(NodeBundle $bundle, array $a): array {
     foreach ($a as &$teaser) {
-      $this->massageTeaserFields($teaser);
+      $this->massageTeaserFields($bundle, $teaser);
     }
+
     return $a;
   }
 
   /**
-   * Let's set the TV keys to the same form as Movie uses. Also rename field
-   * "media_type" to "bundle".
+   * Let's set the TV keys to the same form as Movie uses.
+   * Also rename the field "media_type" to "bundle".
    *
    * @param array $teaser
    *   Array of Movie/TV fields raw data from TMDb API.
    */
-  private function massageTeaserFields(array &$teaser): void {
-    // Replace key "media_type" with "bundle".
-    $teaser['bundle'] = $teaser['media_type'];
-    unset($teaser['media_type']);
+  private function massageTeaserFields(NodeBundle $bundle, array &$teaser): void {
     // Bundle "TV" use keys "name". We reduce everything to one form, i.e. "title".
     $teaser['title'] = $teaser['title'] ?: $teaser['name'];
     unset($teaser['name']);
@@ -152,21 +151,21 @@ class Person extends CacheableTmdbRequest {
 
     // Cast.
     foreach ($movie_credits['cast'] as $credit) {
-      $credit['bundle'] = NodeBundle::movie;
+      $credit['bundle'] = NodeBundle::movie->name;
       $cast[$credit['id']] = $credit;
     }
     foreach ($tv_credits['cast'] as $credit) {
-      $credit['bundle'] = NodeBundle::tv;
+      $credit['bundle'] = NodeBundle::tv->name;
       $cast[$credit['id']] = $credit;
     }
 
     // Crew.
     foreach ($movie_credits['crew'] as $credit) {
-      $credit['bundle'] = NodeBundle::movie;
+      $credit['bundle'] = NodeBundle::movie->name;
       $crew[$credit['id']] = $credit;
     }
     foreach ($tv_credits['crew'] as $credit) {
-      $credit['bundle'] = NodeBundle::tv;
+      $credit['bundle'] = NodeBundle::tv->name;
       $crew[$credit['id']] = $credit;
     }
 

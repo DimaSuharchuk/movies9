@@ -14,16 +14,19 @@ class EpisodeImdbId extends CacheableTmdbRequest {
 
   public function setTvTmdbId(int $tv_tmdb_id): self {
     $this->tv_tmdb_id = $tv_tmdb_id;
+
     return $this;
   }
 
   public function setSeasonNumber(int $season_number): self {
     $this->season_number = $season_number;
+
     return $this;
   }
 
   public function setEpisodeNumber(int $episode_number): self {
     $this->episode_number = $episode_number;
+
     return $this;
   }
 

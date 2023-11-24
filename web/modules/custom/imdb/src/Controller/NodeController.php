@@ -36,11 +36,11 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function nodeImdbRating(string $bundle, int $tmdb_id): AjaxResponse {
-    if ($imdb_id = $this->adapter->getImdbId(NodeBundle::memberByValue($bundle), $tmdb_id)) {
-      return new AjaxResponse($this->imdb_rating->getRating($imdb_id));
-    }
+    $node_bundle = NodeBundle::tryFrom($bundle);
 
-    return new AjaxResponse();
+    return ($node_bundle && ($imdb_id = $this->adapter->getImdbId($node_bundle, $tmdb_id)))
+      ? new AjaxResponse($this->imdb_rating->getRating($imdb_id))
+      : new AjaxResponse();
   }
 
   /**
@@ -53,11 +53,9 @@ class NodeController implements ContainerInjectionInterface {
    * @return AjaxResponse
    */
   public function episodeImdbRating(int $tv_tmdb_id, int $season_number, int $episode_number): AjaxResponse {
-    if ($imdb_id = $this->adapter->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode_number)) {
-      return new AjaxResponse($this->imdb_rating->getRating($imdb_id));
-    }
-
-    return new AjaxResponse();
+    return ($imdb_id = $this->adapter->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode_number))
+      ? new AjaxResponse($this->imdb_rating->getRating($imdb_id))
+      : new AjaxResponse();
   }
 
 }

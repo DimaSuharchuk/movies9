@@ -12,6 +12,7 @@ class FindByImdbId extends CacheableTmdbRequest {
 
   public function setImdbId(string $imdb_id): self {
     $this->imdb_id = $imdb_id;
+
     return $this;
   }
 
@@ -28,13 +29,13 @@ class FindByImdbId extends CacheableTmdbRequest {
         switch ($k) {
           case 'movie_results':
             return [
-              'type' => NodeBundle::movie(),
+              'type' => NodeBundle::movie->name,
               'tmdb_id' => $v[0]['id'],
             ];
 
           case 'tv_results':
             return [
-              'type' => NodeBundle::tv(),
+              'type' => NodeBundle::tv->name,
               'tmdb_id' => $v[0]['id'],
             ];
         }
@@ -51,15 +52,16 @@ class FindByImdbId extends CacheableTmdbRequest {
    * {@inheritDoc}
    */
   protected function massageBeforeSave(array $data): array {
-    $data['type'] = $data['type']->value();
+    $data['type'] = $data['type']->name;
+
     return $data;
   }
 
   /**
    * {@inheritDoc}
    */
-  protected function massageAfterLoad(array &$data) {
-    $data['type'] = NodeBundle::memberByValue($data['type']);
+  protected function massageAfterLoad(array &$data): void {
+    $data['type'] = NodeBundle::tryFrom($data['type']);
   }
 
   /**

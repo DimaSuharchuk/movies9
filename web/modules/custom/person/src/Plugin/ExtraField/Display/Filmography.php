@@ -39,7 +39,7 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
   public function build(ContentEntityInterface $entity): array {
     $build = [];
 
-    $lang = Language::memberByValue($entity->language()->getId());
+    $lang = Language::from($entity->language()->getId());
 
     if ($credits = $this->getPersonCommonField('combined_credits', TRUE)) {
       if ($cast_teasers = $credits['cast']) {
@@ -62,9 +62,9 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
    *   Raw data from TMDb API with movies/series (teasers) in which the current
    *   Person was involved.
    * @param string $id
-   *   Using this ID as CSS ID of the block on page.
+   *   Using this ID as CSS ID of the block on the page.
    * @param string $title
-   *   Title of the block on page.
+   *   Title of the block on the page.
    *
    * @return array
    */
@@ -92,7 +92,7 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
       $build['movies'] = [
         '#theme' => 'tmdb_items_list',
         '#title' => $this->t('Movies', [], ['context' => 'Field label']),
-        '#items' => $this->tmdb_teaser->buildTmdbTeasers($movies, NodeBundle::movie(), $lang),
+        '#items' => $this->tmdb_teaser->buildTmdbTeasers($movies, NodeBundle::movie, $lang),
         '#use_container' => FALSE,
       ];
     }
@@ -100,7 +100,7 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
       $build['tvs'] = [
         '#theme' => 'tmdb_items_list',
         '#title' => $this->t('TVs', [], ['context' => 'Field label']),
-        '#items' => $this->tmdb_teaser->buildTmdbTeasers($tvs, NodeBundle::tv(), $lang),
+        '#items' => $this->tmdb_teaser->buildTmdbTeasers($tvs, NodeBundle::tv, $lang),
         '#use_container' => FALSE,
       ];
     }
@@ -109,7 +109,7 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
   }
 
   /**
-   * Separate movie teasers from TV series teasers into 2 arrays.
+   * Separate movie teasers from TV series teasers into two arrays.
    *
    * @param array $teasers
    *   An array of mixed teasers.
@@ -120,9 +120,11 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
    */
   private function separateTeasersByBundle(array $teasers): array {
     $separated = [];
+
     foreach ($teasers as $teaser) {
       $separated[$teaser['bundle']][] = $teaser;
     }
+
     return $separated;
   }
 

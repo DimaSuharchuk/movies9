@@ -43,7 +43,7 @@ class TmdbImageOriginal extends FormatterBase {
     foreach ($items as $delta => $item) {
       if ($item->value) {
         $elements[$delta] = $this->buildTmdbImageRenderableArray(
-          TmdbImageFormat::original(),
+          TmdbImageFormat::original,
           $item->value,
           $parent_entity->label(),
         );

@@ -2,13 +2,8 @@
 
 namespace Drupal\mvs\enum;
 
-use Eloquent\Enumeration\AbstractEnumeration;
+enum TermBundle: string {
 
-/**
- * @method static genre()
- */
-class TermBundle extends AbstractEnumeration {
-
-  const genre = 'genre';
+  case genre = 'genre';
 
 }

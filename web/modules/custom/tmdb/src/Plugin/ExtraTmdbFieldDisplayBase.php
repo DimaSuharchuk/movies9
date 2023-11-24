@@ -65,8 +65,8 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
   abstract public function build(ContentEntityInterface $entity): array;
 
   /**
-   * Helper method: Get value of some common movie or TV field from TMDb API or
-   * cached file.
+   * Helper method: Get the value of some common movie or TV field from TMDb
+   * API or cached file.
    *
    * @param $field_name
    *   Name of common field in TMDbLocalStorage (some fields key rewrote with
@@ -95,14 +95,11 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
    */
   protected function getPersonCommonField(string $field, bool $language_required = FALSE) {
     $tmdb_id = $this->entity->{'tmdb_id'}->value;
-    $lang = $language_required ? Language::memberByValue($this->entity->language()
-      ->getId()) : Language::en();
+    $lang = $language_required
+      ? Language::from($this->entity->language()->getId())
+      : Language::en;
 
-    if ($person = $this->adapter->getPerson($tmdb_id, $lang)) {
-      return $person[$field] ?? NULL;
-    }
-
-    return NULL;
+    return (($person = $this->adapter->getPerson($tmdb_id, $lang)) && !empty($person[$field])) ? $person[$field] : NULL;
   }
 
 }

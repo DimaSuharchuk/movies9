@@ -53,7 +53,7 @@ class Cast extends ExtraTmdbFieldDisplayBase {
    * @see TmdbApiAdapter::getCast()
    */
   private function getCast(): ?array {
-    $bundle = NodeBundle::memberByValue($this->entity->bundle());
+    $bundle = NodeBundle::from($this->entity->bundle());
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
 
     return $this->adapter->getCast($bundle, $tmdb_id);
@@ -73,7 +73,7 @@ class Cast extends ExtraTmdbFieldDisplayBase {
       $build[] = [
         '#theme' => 'person_teaser',
         '#tmdb_id' => $person['id'],
-        '#avatar' => $this->person_avatar->build($person, TmdbImageFormat::w185()),
+        '#avatar' => $this->person_avatar->build($person, TmdbImageFormat::w185),
         '#name' => $person['name'],
         '#role' => $person['character'],
         '#photo' => (bool) $person['profile_path'],

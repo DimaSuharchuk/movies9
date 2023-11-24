@@ -13,11 +13,13 @@ class MovieCollection extends CacheableTmdbRequest {
 
   public function setMovieTmdbId(int $movie_tmdb_id): self {
     $this->movie_tmdb_id = $movie_tmdb_id;
+
     return $this;
   }
 
   public function setLanguage(Language $lang): self {
     $this->lang = $lang;
+
     return $this;
   }
 
@@ -28,7 +30,7 @@ class MovieCollection extends CacheableTmdbRequest {
     return $this->connect
       ->getCollectionsApi()
       ->getCollection($this->movie_tmdb_id, [
-        'language' => $this->lang->value(),
+        'language' => $this->lang->name,
       ]);
   }
 
@@ -61,7 +63,7 @@ class MovieCollection extends CacheableTmdbRequest {
   protected function getStorageFilePath(): TmdbLocalStorageFilePath {
     return new TmdbLocalStorageFilePath(
       'movie_collection',
-      "{$this->movie_tmdb_id}_{$this->lang->key()}"
+      "{$this->movie_tmdb_id}_{$this->lang->name}"
     );
   }
 

@@ -3,6 +3,7 @@
 namespace Drupal\mvs\Repository;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Exception;
@@ -45,7 +46,7 @@ abstract class BaseRepository implements BaseRepositoryInterface {
   /**
    * {@inheritdoc}
    */
-  public function findById($id): array {
+  public function findById(int $id): array {
     return (array) $this->database->select($this::getTable(), 't')
       ->fields('t')
       ->condition('id', $id)
@@ -71,14 +72,15 @@ abstract class BaseRepository implements BaseRepositoryInterface {
   /**
    * {@inheritdoc}
    */
-  public function create(array $data) {
+  public function create(array $data): int|string|StatementInterface|null {
     if ($this->validateFields($data)) {
       try {
         return $this->database
           ->insert($this::getTable())
           ->fields($data)
           ->execute();
-      } catch (Exception $e) {
+      }
+      catch (Exception $e) {
         // Try to write over existing value.
         $this->logger->error($e->getMessage());
       }
@@ -90,7 +92,7 @@ abstract class BaseRepository implements BaseRepositoryInterface {
   /**
    * {@inheritdoc}
    */
-  public function update($id, array $data) {
+  public function update($id, array $data): int|string|StatementInterface|null {
     if ($this->validateFields($data)) {
       $query = $this->database->update($this::getTable());
       $query->condition('id', $id);
@@ -136,7 +138,7 @@ abstract class BaseRepository implements BaseRepositoryInterface {
   /**
    * Delete all items in table.
    */
-  public function truncate() {
+  public function truncate(): void {
     $this->database->truncate($this::getTable())->execute();
   }
 

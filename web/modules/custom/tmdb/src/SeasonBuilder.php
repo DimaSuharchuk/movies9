@@ -45,7 +45,7 @@ class SeasonBuilder {
     $tmdb_id = $node->{'field_tmdb_id'}->value;
 
     $seasons_count = $this->adapter
-        ->getCommonFieldsByTmdbId(NodeBundle::tv(), $tmdb_id, $lang)['number_of_seasons'] ?? 0;
+      ->getCommonFieldsByTmdbId(NodeBundle::tv, $tmdb_id, $lang)['number_of_seasons'] ?? 0;
 
     $season = $this->adapter->getSeason($tmdb_id, $season_number, $lang);
 
@@ -59,7 +59,7 @@ class SeasonBuilder {
       '#theme' => 'season',
       '#tabs' => $this->buildTabs($node->id(), $seasons_count, $season_number),
       '#poster_path' => $season['poster_path'],
-      '#original_title' => $lang !== Language::en() ? $this->tmdb_lazy->generateSeasonOriginalTitlePlaceholder($tmdb_id, $season_number) : NULL,
+      '#original_title' => $lang !== Language::en ? $this->tmdb_lazy->generateSeasonOriginalTitlePlaceholder($tmdb_id, $season_number) : NULL,
       '#title' => $season['title'],
       '#episodes_count' => [
         '#theme' => 'field_with_label',
@@ -72,7 +72,7 @@ class SeasonBuilder {
   }
 
   /**
-   * Build navigation menu for seasons.
+   * Build a navigation menu for seasons.
    *
    * @param int $node_id
    *   Node "tv" ID.
@@ -99,19 +99,19 @@ class SeasonBuilder {
   }
 
   /**
-   * Create ajax link for season tabs nav.
+   * Create an ajax link for season tabs nav.
    *
    * @param int $node_id
    *   Node "tv" ID.
    * @param string $season
    *   Season number.
    * @param string $link_title
-   *   Title of tab shown on page.
+   *   Title of tab shown on the page.
    * @param bool $is_active
    *   Is current tab an active tab.
    *
    * @return array
-   *   Renderable array of ajax link.
+   *   Renderable array of an ajax link.
    */
   private function buildAjaxLink(int $node_id, string $season, string $link_title, bool $is_active = FALSE): array {
     return [
@@ -140,6 +140,7 @@ class SeasonBuilder {
    */
   private function buildEpisodes(int $tv_tmdb_id, int $season_number, array $episodes_list, Language $lang): array {
     $episodes = [];
+
     foreach ($episodes_list as $episode) {
       $episodes[] = $this->buildEpisode($tv_tmdb_id, $season_number, $episode, $lang);
     }
@@ -164,22 +165,26 @@ class SeasonBuilder {
   private function buildEpisode(int $tv_tmdb_id, int $season_number, array $episode, Language $lang): array {
     // Prepare guest stars.
     $stars = [];
+
     foreach ($episode['guest_stars'] as $star) {
       if (!$star['id']) {
         // Skip the person without ID (because it sometimes comes from the API),
         // because it's impossible to create a link to this entity.
         continue;
       }
+
       $stars[] = [
         '#theme' => 'person_teaser',
         '#tmdb_id' => $star['id'],
-        '#avatar' => $this->person_avatar->build($star, TmdbImageFormat::w185()),
+        '#avatar' => $this->person_avatar->build($star, TmdbImageFormat::w185),
         '#photo' => (bool) $star['profile_path'],
         '#name' => $star['name'],
         '#role' => $star['character'],
       ];
     }
+
     $stars_wrapper = NULL;
+
     if ($stars) {
       $stars_wrapper = [
         '#theme' => 'tmdb_avatars_list',
@@ -192,7 +197,7 @@ class SeasonBuilder {
     return [
       '#theme' => 'episode',
       '#still_path' => $episode['still_path'],
-      '#original_title' => $lang !== Language::en() ? $this->tmdb_lazy->generateEpisodeOriginalTitlePlaceholder(
+      '#original_title' => $lang !== Language::en ? $this->tmdb_lazy->generateEpisodeOriginalTitlePlaceholder(
         $tv_tmdb_id,
         $season_number,
         $episode['episode_number']

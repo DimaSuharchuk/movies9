@@ -42,6 +42,7 @@ class TvReleaseYears extends ExtraTmdbFieldDisplayBase {
 
       $end_year = '';
       $in_production = $this->getCommonFieldValue('in_production');
+
       if ($in_production === FALSE) {
         $end_date = $this->getCommonFieldValue('last_air_date');
         $end_year = $this->date_helper->dateStringToYear($end_date);

@@ -19,6 +19,7 @@ class PersonEntityListBuilder extends EntityListBuilder {
   public function buildHeader(): array {
     $header['id'] = $this->t('Person ID');
     $header['name'] = $this->t('Name');
+
     return $header + parent::buildHeader();
   }
 
@@ -33,6 +34,7 @@ class PersonEntityListBuilder extends EntityListBuilder {
       'entity.person.edit_form',
       ['person' => $entity->id()]
     );
+
     return $row + parent::buildRow($entity);
   }
 

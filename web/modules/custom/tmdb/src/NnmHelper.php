@@ -3,6 +3,7 @@
 namespace Drupal\tmdb;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 
 class NnmHelper {
@@ -31,15 +32,20 @@ class NnmHelper {
     $results = [];
 
     // Fetch all nnm results for the movie.
-    $response = $this->httpClient->get('https://nnmclub.to/forum/tracker.php', [
-      'query' => [
-        'nm' => $search_string, // search string: "title + year"
-        'o' => 10, // sort by Seeders
-        's' => 2, // sorting DESC
-        'sha' => 0, // disable Author column
-        'shr' => 1, // enable Rating column
-      ],
-    ]);
+    try {
+      $response = $this->httpClient->get('https://nnmclub.to/forum/tracker.php', [
+        'query' => [
+          'nm' => $search_string, // search string: "title + year"
+          'o' => 10, // sort by Seeders
+          's' => 2, // sorting DESC
+          'sha' => 0, // disable Author column
+          'shr' => 1, // enable Rating column
+        ],
+      ]);
+    }
+    catch (GuzzleException) {
+      return $results;
+    }
 
     // Prepare and parse the response.
     $html = $this->prepareNnmHtml($response);
@@ -55,7 +61,7 @@ class NnmHelper {
   }
 
   /**
-   * Get link to torrent and magnet link.
+   * Get a link to torrent and magnet link.
    *
    * @param int $topic_id
    *   Nnm topic (like node) ID.
@@ -64,13 +70,19 @@ class NnmHelper {
    *   Array with info: "torrent_link" and "magnet_link".
    */
   public function getTorrentMagnet(int $topic_id): array {
-    $response = $this->httpClient->get('https://nnmclub.to/forum/viewtopic.php', ['query' => ['t' => $topic_id]]);
+    $results = [];
+
+    try {
+      $response = $this->httpClient->get('https://nnmclub.to/forum/viewtopic.php', ['query' => ['t' => $topic_id]]);
+    }
+    catch (GuzzleException) {
+      return $results;
+    }
 
     // Prepare and parse the response.
     $html = $this->prepareNnmHtml($response);
 
     // Fetch info from every page.
-    $results = [];
     (preg_match('/<a class="maintitle" href="viewtopic\.php\?t=(?<topic_id>\d+)">/', $html, $match));
     if (!empty($match['topic_id'])) {
       (preg_match('/<a href="download\.php\?id=(?<torrent_id>\d+)" rel="nofollow">Скачать<\/a>/', $html, $match)) && $results['torrent_link'] = 'https://nnmclub.to/forum/download.php?id=' . $match['torrent_id'];

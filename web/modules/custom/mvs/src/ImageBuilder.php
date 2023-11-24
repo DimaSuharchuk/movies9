@@ -10,7 +10,7 @@ use Drupal\tmdb\enum\TmdbImageFormat;
 trait ImageBuilder {
 
   /**
-   * Build renderable array for Tmdb image.
+   * Build a renderable array for Tmdb image.
    *
    * @param \Drupal\tmdb\enum\TmdbImageFormat $format
    * @param string $tmdb_image_path
@@ -22,7 +22,7 @@ trait ImageBuilder {
    *   Renderable array for "img" tag.
    */
   public function buildTmdbImageRenderableArray(TmdbImageFormat $format, string $tmdb_image_path, string $alt): array {
-    $uri = Constant::TMDB_IMAGE_BASE_URL . $format->key() . $tmdb_image_path;
+    $uri = Constant::TMDB_IMAGE_BASE_URL . $format->name . $tmdb_image_path;
 
     return $this->buildImageRenderableArray($uri, $alt, $format);
   }
@@ -77,7 +77,7 @@ trait ImageBuilder {
    * @return int[]
    */
   protected function buildWidthHeight(TmdbImageFormat $format): array {
-    $width = intval($format->value());
+    $width = intval($format->value);
     $height = intval(round($width * 1.5));
 
     return [

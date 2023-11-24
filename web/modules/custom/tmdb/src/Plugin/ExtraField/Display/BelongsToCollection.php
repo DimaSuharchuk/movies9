@@ -48,9 +48,9 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
     if ($collection = $this->getMovieCollection()) {
       // Sort movies by release date.
       usort($collection['teasers'], function ($a, $b) {
-        // If some movie haven't "release date" (null returned from method) we
+        // If some movie hasn't "release date" (null returned from method), we
         // should move that movie to the end of the collection.
-        // Set biggest "timestamp" for movie sorting.
+        // Set the biggest "timestamp" for movie sorting.
         $time_a = $this->getReleaseDateTimestampByTmdbId($a['id']) ?? PHP_INT_MAX;
         $time_b = $this->getReleaseDateTimestampByTmdbId($b['id']) ?? PHP_INT_MAX;
 
@@ -61,14 +61,14 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
         '#title' => $collection['name'],
         '#items' => $this->tmdb_teaser->buildTmdbTeasers(
           $collection['teasers'],
-          NodeBundle::movie(),
-          Language::memberByValue($entity->language()->getId())
+          NodeBundle::movie,
+          Language::from($entity->language()->getId())
         ),
       ];
-      // If collection has a poster.
+      // If a collection has a poster.
       if ($poster = $collection['poster_path']) {
         $build['#poster'] = $this->buildTmdbImageRenderableArray(
-          TmdbImageFormat::w400(),
+          TmdbImageFormat::w400,
           $poster,
           $collection['name'],
         );
@@ -83,26 +83,21 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
    */
   private function getMovieCollection(): ?array {
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
-    $lang = Language::memberByValue($this->entity->language()->getId());
+    $lang = Language::from($this->entity->language()->getId());
 
     return $this->adapter->getMovieCollection($tmdb_id, $lang);
   }
 
   /**
-   * Returns Movie's release date converted to timestamp if the date exists.
+   * Return Movie's release date converted to timestamp if the date exists.
    *
    * @param int $tmdb_id
    *
    * @return int|null
    */
   private function getReleaseDateTimestampByTmdbId(int $tmdb_id): ?int {
-    if ($common = $this->adapter->getCommonFieldsByTmdbId(NodeBundle::movie(), $tmdb_id, Language::en())) {
-      $timestamp = NULL;
-      if ($date_string = $common['release_date']) {
-        $timestamp = $this->date_helper->dateStringToTimestamp($date_string);
-      }
-
-      return $timestamp;
+    if ($common = $this->adapter->getCommonFieldsByTmdbId(NodeBundle::movie, $tmdb_id, Language::en)) {
+      return ($date_string = $common['release_date'] ?? FALSE) ? $this->date_helper->dateStringToTimestamp($date_string) : NULL;
     }
 
     return NULL;

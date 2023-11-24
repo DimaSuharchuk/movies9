@@ -2,19 +2,10 @@
 
 namespace Drupal\mvs\enum;
 
-use Eloquent\Enumeration\AbstractEnumeration;
+enum EntityType: string {
 
-/**
- * @method static node()
- * @method static term()
- * @method static person()
- */
-class EntityType extends AbstractEnumeration {
-
-  const node = 'node';
-
-  const term = 'taxonomy_term';
-
-  const person = 'person';
+  case node = 'node';
+  case term = 'taxonomy_term';
+  case person = 'person';
 
 }

@@ -40,7 +40,7 @@ class ImdbRatingFileManager {
    *   IMDb IDs.
    *
    * @return array
-   *   IMDb ratings.
+   *   Ratings from IMDb.
    */
   public function getMultiple(array $imdb_ids): array {
     $ratings = [];
@@ -72,7 +72,7 @@ class ImdbRatingFileManager {
    * @return void
    * @throws \Exception
    */
-  public function refresh() {
+  public function refresh(): void {
     // Update "IMDB ratings" file in private directory.
     if ($zipped = @file_get_contents('https://datasets.imdbws.com/title.ratings.tsv.gz')) {
       if ($unzipped = @gzdecode($zipped)) {

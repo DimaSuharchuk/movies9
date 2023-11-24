@@ -15,16 +15,19 @@ class Seasons extends CacheableTmdbRequest {
 
   public function setTvTmdbId(int $tv_tmdb_id): self {
     $this->tv_tmdb_id = $tv_tmdb_id;
+
     return $this;
   }
 
   public function setSeasonNumber(int $season_number): self {
     $this->season_number = $season_number;
+
     return $this;
   }
 
   public function setLanguage(Language $lang): self {
     $this->lang = $lang;
+
     return $this;
   }
 
@@ -35,7 +38,7 @@ class Seasons extends CacheableTmdbRequest {
     return $this->connect
       ->getTvSeasonApi()
       ->getSeason($this->tv_tmdb_id, $this->season_number, [
-        'language' => $this->lang->key(),
+        'language' => $this->lang->name,
       ]);
   }
 
@@ -87,7 +90,7 @@ class Seasons extends CacheableTmdbRequest {
   protected function getStorageFilePath(): TmdbLocalStorageFilePath {
     return new TmdbLocalStorageFilePath(
       'seasons',
-      "{$this->tv_tmdb_id}_{$this->season_number}_{$this->lang->key()}"
+      "{$this->tv_tmdb_id}_{$this->season_number}_{$this->lang->name}"
     );
   }
 

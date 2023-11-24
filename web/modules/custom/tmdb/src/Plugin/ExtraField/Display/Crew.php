@@ -42,10 +42,11 @@ class Crew extends ExtraTmdbFieldDisplayBase {
    * {@inheritDoc}
    */
   public function build(ContentEntityInterface $entity): array {
-    $is_tv = $entity->bundle() === NodeBundle::tv;
+    $is_tv = NodeBundle::tryFrom($entity->bundle()) === NodeBundle::tv;
 
     $build = [];
     $i = 0;
+
     if ($is_tv && $created_by = $this->getCommonFieldValue('created_by')) {
       $build[$i] = [
         '#theme' => 'tmdb_avatars_list',
@@ -60,6 +61,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
         '#theme' => 'tmdb_avatars_list',
         '#items' => $this->buildCrewItems($crew),
       ];
+
       if ($is_tv) {
         $build[$i]['#title'] = $this->t('Crew', [], ['context' => 'Field label']);
       }
@@ -82,7 +84,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
       $build[] = [
         '#theme' => 'person_teaser',
         '#tmdb_id' => $person['id'],
-        '#avatar' => $this->person_avatar->build($person, TmdbImageFormat::w185()),
+        '#avatar' => $this->person_avatar->build($person, TmdbImageFormat::w185),
         '#photo' => (bool) $person['profile_path'],
         '#name' => $person['name'],
       ];
@@ -95,7 +97,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
    * @see TmdbApiAdapter::getCrew()
    */
   private function getCrew(): ?array {
-    $bundle = NodeBundle::memberByValue($this->entity->bundle());
+    $bundle = NodeBundle::from($this->entity->bundle());
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
 
     return $this->adapter->getCrew($bundle, $tmdb_id);
@@ -118,7 +120,7 @@ class Crew extends ExtraTmdbFieldDisplayBase {
       $build[] = [
         '#theme' => 'person_teaser',
         '#tmdb_id' => $person['id'],
-        '#avatar' => $this->person_avatar->build($person, TmdbImageFormat::w185()),
+        '#avatar' => $this->person_avatar->build($person, TmdbImageFormat::w185),
         '#photo' => (bool) $person['profile_path'],
         '#name' => $person['name'],
         '#department' => $person['department'],
@@ -141,10 +143,13 @@ class Crew extends ExtraTmdbFieldDisplayBase {
       if ($a['department'] === $b['department']) {
         $position_a_job = array_search($a['job'], $list['jobs']);
         $position_b_job = array_search($b['job'], $list['jobs']);
+
         return $position_a_job <=> $position_b_job;
       }
+
       $position_a_dep = array_search($a['department'], $list['departments']);
       $position_b_dep = array_search($b['department'], $list['departments']);
+
       return $position_a_dep <=> $position_b_dep;
     });
   }

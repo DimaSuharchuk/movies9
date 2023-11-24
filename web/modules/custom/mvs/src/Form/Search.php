@@ -5,11 +5,11 @@ namespace Drupal\mvs\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\mvs\enum\Language;
 use Drupal\tmdb\builder\SearchMiniTeaserBuilder;
 use Drupal\tmdb\enum\TmdbSearchType;
 use Drupal\tmdb\TmdbApiAdapter;
-use Eloquent\Enumeration\Exception\UndefinedMemberException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Search extends FormBase {
@@ -69,12 +69,7 @@ class Search extends FormBase {
     ];
     $form['container_right']['search_type'] = [
       '#type' => 'select',
-      '#options' => [
-        TmdbSearchType::multi => $this->t('any', [], ['context' => 'Search']),
-        TmdbSearchType::movies => $this->t('movies', [], ['context' => 'Search']),
-        TmdbSearchType::tv => $this->t('tv series', [], ['context' => 'Search']),
-        TmdbSearchType::persons => $this->t('persons', [], ['context' => 'Search']),
-      ],
+      '#options' => $this->getOptions(),
       '#ajax' => [
         'callback' => '::ajaxHandler',
         'wrapper' => 'search-results',
@@ -125,14 +120,13 @@ class Search extends FormBase {
     }
 
     $search_type_raw = $form_state->getValue('search_type');
-    $lang_id = $this->languageManager->getCurrentLanguage()->getId();
-    try {
-      $search_type = TmdbSearchType::memberByKey($search_type_raw);
-      $lang = Language::memberByKey($lang_id);
-    }
-    catch (UndefinedMemberException $e) {
+
+    if (!$search_type = TmdbSearchType::tryFrom($search_type_raw)) {
       return $response;
     }
+
+    $lang_id = $this->languageManager->getCurrentLanguage()->getId();
+    $lang = Language::from($lang_id);
 
     // Perform a search.
     $results = $this->adapter->search($query, $search_type, $lang);
@@ -163,7 +157,7 @@ class Search extends FormBase {
         ),
       ],
     ];
-    // Add link to "Search results page".
+    // Add a link to "Search results page".
     if ($results['total_pages'] > 1) {
       $response[] = [
         '#type' => 'container',
@@ -178,6 +172,35 @@ class Search extends FormBase {
     }
 
     return $response;
+  }
+
+  /**
+   * Build options for search's select list.
+   */
+  protected function getOptions(): array {
+    $options = [];
+
+    foreach (TmdbSearchType::cases() as $type) {
+      $options[$type->name] = $this->getOptionLabel($type);
+    }
+
+    return $options;
+  }
+
+  /**
+   * Get label by type.
+   *
+   * @param \Drupal\tmdb\enum\TmdbSearchType $type
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup
+   */
+  protected function getOptionLabel(TmdbSearchType $type): TranslatableMarkup {
+    return match ($type) {
+      TmdbSearchType::multi => $this->t('any', [], ['context' => 'Search']),
+      TmdbSearchType::movies => $this->t('movies', [], ['context' => 'Search']),
+      TmdbSearchType::tv => $this->t('tv series', [], ['context' => 'Search']),
+      TmdbSearchType::persons => $this->t('persons', [], ['context' => 'Search']),
+    };
   }
 
 }

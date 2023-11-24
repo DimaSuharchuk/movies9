@@ -50,7 +50,7 @@ class EntityCreator {
    * @return Term|null
    */
   public function createTermGenre(string $name, int $tmdb_id, array $used_in, Language $lang): ?Term {
-    return $this->createTerm(TermBundle::genre(), $lang, $name, $tmdb_id, ['field_used_in' => $used_in]);
+    return $this->createTerm(TermBundle::genre, $lang, $name, $tmdb_id, ['field_used_in' => $used_in]);
   }
 
   /**
@@ -84,7 +84,7 @@ class EntityCreator {
     $genres_ids = $this->finder->findTermsGenres()
       ->byTmdbIds($genres_tmdb_ids)
       ->execute();
-    // Build array with all needed fields.
+    // Build an array with all needed fields.
     $fields_data = [
       'field_approved' => $approved,
       'field_genres' => $genres_ids,
@@ -117,7 +117,7 @@ class EntityCreator {
 
     /** @var PersonEntity $person */
     $person = $this->createEntity(
-      EntityType::person(),
+      EntityType::person,
       $lang,
       NULL,
       [
@@ -145,19 +145,19 @@ class EntityCreator {
    * @param array $fields_data
    *   Other fields data.
    *
-   * @return Term
+   * @return Term|null
    */
   private function createTerm(TermBundle $bundle, Language $lang, string $name, int $tmdb_id, array $fields_data = []): ?Term {
     if (!$name) {
       throw new EmptyValueException('Genre name cannot be empty.');
     }
 
-    $bundle = EntityBundle::memberByValue($bundle->value());
+    $bundle = EntityBundle::from($bundle->name);
     $fields_data += [
       'name' => $name,
     ];
     /** @var Term $term */
-    $term = $this->createEntityBasedOnTmdbField(EntityType::term(), $bundle, $lang, $tmdb_id, $fields_data);
+    $term = $this->createEntityBasedOnTmdbField(EntityType::term, $bundle, $lang, $tmdb_id, $fields_data);
 
     return $term;
   }
@@ -173,7 +173,7 @@ class EntityCreator {
    * @param array $fields_data
    *   Other fields data.
    *
-   * @return Node
+   * @return Node|null
    */
   private function createNode(NodeBundle $bundle, Language $lang, string $title, int $tmdb_id, string $imdb_id, array $fields_data = []): ?Node {
     if (!$title) {
@@ -183,13 +183,13 @@ class EntityCreator {
       throw new ImdbIdException('Invalid IMDb ID.');
     }
 
-    $bundle = EntityBundle::memberByValue($bundle->value());
+    $bundle = EntityBundle::from($bundle->name);
     $fields_data += [
       'title' => $title,
       'field_imdb_id' => $imdb_id,
     ];
     /** @var Node $node */
-    $node = $this->createEntityBasedOnTmdbField(EntityType::node(), $bundle, $lang, $tmdb_id, $fields_data);
+    $node = $this->createEntityBasedOnTmdbField(EntityType::node, $bundle, $lang, $tmdb_id, $fields_data);
 
     return $node;
   }
@@ -217,7 +217,7 @@ class EntityCreator {
       try {
         return $node->save();
       }
-      catch (EntityStorageException $e) {
+      catch (EntityStorageException) {
         return FALSE;
       }
     }
@@ -236,7 +236,7 @@ class EntityCreator {
    * @param array $fields_data
    *   Other fields data.
    *
-   * @return ContentEntityInterface
+   * @return ContentEntityInterface|null
    */
   private function createEntityBasedOnTmdbField(EntityType $type, EntityBundle $bundle, Language $lang, int $tmdb_id, array $fields_data = []): ?ContentEntityInterface {
     if ($tmdb_id < 1) {
@@ -249,9 +249,10 @@ class EntityCreator {
   }
 
   /**
-   * Create abstract entity. If entity has unique field, the entity will be
-   * found in DB and returned, or returned on specific language, or added new
-   * fields translations to exists entity.
+   * Create abstract entity.
+   * If an entity has a unique field, the entity will be found in DB and
+   * returned, or returned on specific language, or add new fields translations
+   * to existed entity.
    *
    * @param EntityType $type
    *   Entity type, like "node", "taxonomy_term" etc.
@@ -267,7 +268,7 @@ class EntityCreator {
    * @param string $unique_field_value
    *   Value of unique field for search of existing entity in DB.
    *
-   * @return ContentEntityInterface
+   * @return ContentEntityInterface|null
    */
   private function createEntity(
     EntityType   $type,
@@ -278,16 +279,15 @@ class EntityCreator {
     string       $unique_field_name = '',
     string       $unique_field_value = ''
   ): ?ContentEntityInterface {
-
-    $type_value = $type->value();
-    $lang_value = $lang->value();
-    $bundle_value = $bundle ? $bundle->value() : NULL;
+    $type_value = $type->value;
+    $lang_value = $lang->name;
+    $bundle_value = $bundle?->name;
 
     $storage = NULL;
     try {
       $storage = $this->entity_type_manager->getStorage($type_value);
     }
-    catch (InvalidPluginDefinitionException|PluginNotFoundException $e) {
+    catch (InvalidPluginDefinitionException|PluginNotFoundException) {
     }
 
     $bundle_key = NULL;
@@ -296,7 +296,7 @@ class EntityCreator {
         $bundle_key = $this->entity_type_manager->getDefinition($type_value, FALSE)
           ->getKey('bundle');
       }
-      catch (PluginNotFoundException $e) {
+      catch (PluginNotFoundException) {
       }
     }
 
@@ -305,15 +305,18 @@ class EntityCreator {
       $search_properties = [
         $unique_field_name => $unique_field_value,
       ];
-      if ($bundle) {
+
+      if ($bundle_key) {
         $search_properties[$bundle_key] = $bundle_value;
       }
+
       $entities = $storage->loadByProperties($search_properties);
     }
 
     if ($entities) {
       /** @var ContentEntityInterface $entity */
       $entity = reset($entities);
+
       if ($entity->hasTranslation($lang_value)) {
         return $entity->getTranslation($lang_value);
       }
@@ -323,6 +326,7 @@ class EntityCreator {
 
         // Set translatable fields.
         $translatable_fields = array_keys($entity->getTranslatableFields());
+
         foreach ($fields_data + $properties_data as $field => $value) {
           if (in_array($field, $translatable_fields)) {
             $entity->set($field, $value);
@@ -357,7 +361,7 @@ class EntityCreator {
     try {
       $entity->save();
     }
-    catch (EntityStorageException $e) {
+    catch (EntityStorageException) {
       return NULL;
     }
 

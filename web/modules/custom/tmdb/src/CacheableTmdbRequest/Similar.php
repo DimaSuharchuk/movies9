@@ -19,21 +19,25 @@ class Similar extends CacheableTmdbRequest {
 
   public function setBundle(NodeBundle $bundle): self {
     $this->bundle = $bundle;
+
     return $this;
   }
 
   public function setTmdbId(int $tmdb_id): self {
     $this->tmdb_id = $tmdb_id;
+
     return $this;
   }
 
   public function setLanguage(Language $lang): self {
     $this->lang = $lang;
+
     return $this;
   }
 
   public function setPage(int $page): self {
     $this->page = $page;
+
     return $this;
   }
 
@@ -41,13 +45,16 @@ class Similar extends CacheableTmdbRequest {
    * {@inheritDoc}
    */
   protected function request(): array {
-    // First page usually cached already or similar better cache with other
+    // The first page usually cached already or similar better cache with other
     // fields for performance.
     if ($this->page === 1) {
-      if ($response = (new FullRequest())->setBundle($this->bundle)
-        ->setTmdbId($this->tmdb_id)
-        ->setLanguage($this->lang)
-        ->response()) {
+      if (
+        $response = (new FullRequest())
+          ->setBundle($this->bundle)
+          ->setTmdbId($this->tmdb_id)
+          ->setLanguage($this->lang)
+          ->response()
+      ) {
         return $response['similar'];
       }
 
@@ -55,7 +62,7 @@ class Similar extends CacheableTmdbRequest {
         TmdbApiException::STATUS_RESOURCE_NOT_FOUND,
         sprintf(
           'Similar does not work for bundle %s TMDb ID %d.',
-          $this->bundle->key(),
+          $this->bundle->name,
           $this->tmdb_id
         )
       );
@@ -65,7 +72,7 @@ class Similar extends CacheableTmdbRequest {
     return $this
       ->nodeApi($this->bundle)
       ->getSimilar($this->tmdb_id, [
-          'language' => $this->lang->key(),
+          'language' => $this->lang->name,
           'page' => $this->page,
         ]
       );
@@ -86,8 +93,8 @@ class Similar extends CacheableTmdbRequest {
       'similar',
       "{$this->tmdb_id}_{$this->page}",
       [
-        $this->bundle->key(),
-        $this->lang->key(),
+        $this->bundle->name,
+        $this->lang->name,
       ]
     );
   }

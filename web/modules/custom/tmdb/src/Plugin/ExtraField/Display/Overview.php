@@ -19,13 +19,7 @@ class Overview extends ExtraTmdbFieldDisplayBase {
    * {@inheritDoc}
    */
   public function build(ContentEntityInterface $entity): array {
-    $build = [];
-
-    if ($overview = $this->getCommonFieldValue('overview')) {
-      $build = ['#markup' => $overview];
-    }
-
-    return $build;
+    return ($overview = $this->getCommonFieldValue('overview')) ? ['#markup' => $overview] : [];
   }
 
 }

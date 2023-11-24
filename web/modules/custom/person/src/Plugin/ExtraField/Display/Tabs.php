@@ -40,7 +40,7 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
   }
 
   /**
-   * Create ajax link for tab.
+   * Create an ajax link for tab.
    *
    * @param string $tab
    *   Tab name must be the same as node view mode.
@@ -48,7 +48,7 @@ class Tabs extends ExtraTmdbFieldDisplayBase {
    *   Name of the tab that will be displayed on the page.
    *
    * @return array
-   *   Render array of ajax link.
+   *   Render an array of ajax link.
    */
   private function buildAjaxLink(string $tab, string $link_title): array {
     return [

@@ -76,4 +76,19 @@ class DateHelper {
     }
   }
 
+  /**
+   * Calculates number of years between the date and the current date.
+   *
+   * @param $date
+   *   Date string in format (Y-m-d).
+   *
+   * @return int|null
+   *   Number of years if argument is the correct date.
+   */
+  public function getYearsDiff($date): ?int {
+    $providedDate = DateTime::createFromFormat('Y-m-d', $date);
+
+    return $providedDate ? (new DateTime())->diff($providedDate)->y : NULL;
+  }
+
 }

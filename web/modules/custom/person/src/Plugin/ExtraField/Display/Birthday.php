@@ -37,10 +37,17 @@ class Birthday extends ExtraTmdbFieldDisplayBase {
     $build = [];
 
     if ($birthday = $this->getPersonCommonField('birthday')) {
+      $content = $this->date_helper->dateStringToReleaseDateFormat($birthday);
+
+      if ($person_years_now = $this->date_helper->getYearsDiff($birthday)) {
+        $person_years_now_t = $this->formatPlural($person_years_now, '@count year', '@count years', [], ['context' => 'Person years']);
+        $content .= " ($person_years_now_t)";
+      }
+
       $build = [
         '#theme' => 'field_with_label',
         '#label' => $this->t('birthday', [], ['context' => 'Field label']),
-        '#content' => $this->date_helper->dateStringToReleaseDateFormat($birthday),
+        '#content' => $content,
       ];
     }
 

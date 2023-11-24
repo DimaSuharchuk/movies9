@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c831a90ccdb933d0f150238a6aebea60",
+    "content-hash": "c6b1f0005ab217f68c4b827e8df31b38",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2659,60 +2659,6 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
-        },
-        {
-            "name": "eloquent/enumeration",
-            "version": "6.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/eloquent/enumeration.git",
-                "reference": "15a1959683ae4fea75e19ff09d72a344ece3c6a4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/eloquent/enumeration/zipball/15a1959683ae4fea75e19ff09d72a344ece3c6a4",
-                "reference": "15a1959683ae4fea75e19ff09d72a344ece3c6a4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Eloquent\\Enumeration\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Erin Millard",
-                    "email": "ezzatron@gmail.com",
-                    "homepage": "http://ezzatron.com/"
-                }
-            ],
-            "description": "An enumeration implementation for PHP.",
-            "homepage": "https://github.com/eloquent/enumeration",
-            "keywords": [
-                "class",
-                "enum",
-                "enumeration",
-                "multiton",
-                "set",
-                "type"
-            ],
-            "support": {
-                "issues": "https://github.com/eloquent/enumeration/issues",
-                "source": "https://github.com/eloquent/enumeration/tree/master"
-            },
-            "abandoned": true,
-            "time": "2018-11-22T02:45:56+00:00"
         },
         {
             "name": "grasmash/expander",

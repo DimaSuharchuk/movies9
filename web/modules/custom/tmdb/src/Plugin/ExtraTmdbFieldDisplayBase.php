@@ -31,7 +31,9 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
    * @inheritDoc
    */
   public function view(ContentEntityInterface $entity): ?array {
-    $build = $this->build($entity);
+    if (!$build = $this->build($entity)) {
+      return NULL;
+    }
 
     $definition = $this->getPluginDefinition();
 

@@ -6,5 +6,6 @@ dependencies:
     - node
 id: node.trailers
 label: Trailers
+description: ''
 targetEntityType: node
 cache: true

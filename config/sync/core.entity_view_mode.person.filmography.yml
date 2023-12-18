@@ -6,5 +6,6 @@ dependencies:
     - person
 id: person.filmography
 label: Filmography
+description: ''
 targetEntityType: person
 cache: true

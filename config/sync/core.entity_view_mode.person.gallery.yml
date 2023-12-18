@@ -6,5 +6,6 @@ dependencies:
     - person
 id: person.gallery
 label: Gallery
+description: ''
 targetEntityType: person
 cache: true

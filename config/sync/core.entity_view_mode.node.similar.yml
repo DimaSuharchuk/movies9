@@ -6,5 +6,6 @@ dependencies:
     - node
 id: node.similar
 label: Similar
+description: ''
 targetEntityType: node
 cache: true

@@ -20,6 +20,27 @@ function movies_preprocess_page(&$variables) {
  */
 function movies_preprocess_node(&$variables) {
   switch ($variables['view_mode']) {
+    case 'full':
+      $icon_properties = [];
+
+      $fields = [
+        'extra_field_copy_movie_admin_info',
+        'extra_field_noname_club',
+        'extra_field_noname_sheet',
+      ];
+
+      foreach ($fields as $field) {
+        if (!empty($variables['content'][$field])) {
+          $icon_properties[] = $variables['content'][$field];
+          unset($variables['content'][$field]);
+        }
+      }
+
+      if ($icon_properties) {
+        $variables['icon_properties'] = $icon_properties;
+      }
+      break;
+
     case 'teaser':
       /** @var \Drupal\node\NodeInterface $node */
       $node = $variables['node'];

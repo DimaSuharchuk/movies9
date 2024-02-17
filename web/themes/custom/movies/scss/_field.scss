@@ -21,6 +21,13 @@
   }
 }
 
+.block-icon-properties {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  grid-gap: 10px;
+}
+
 
 /**
  * Field "title".
@@ -159,9 +166,7 @@
  */
 .field-noname-club {
   a {
-    position: absolute;
-    top: 0;
-    right: 35px;
+    display: block;
     background: url(../assets/nnm.webp) no-repeat;
     background-size: contain;
     width: 30px;
@@ -172,10 +177,8 @@
 
 .field-noname-sheet {
   a {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: url(../assets/sheet.svg) no-repeat right;
+    display: block;
+    background: url(../assets/sheet.svg) no-repeat center;
     background-size: contain;
     width: 30px;
     height: 30px;
@@ -260,6 +263,27 @@ a[data-topic-id] {
 }
 
 /**
+ * Field "Copy movie admin info".
+ */
+.field-copy-movie-admin-info {
+  input {
+    display: block;
+    background: url(../assets/copy.svg) no-repeat;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+    cursor: pointer;
+    outline: none;
+    border: none;
+
+    &.clicked {
+      filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%) !important;
+    }
+  }
+}
+
+/**
  * Field "Gallery".
  */
 .field-gallery {
@@ -318,6 +342,12 @@ a[data-topic-id] {
       img {
         filter: grayscale(1) invert(1);
       }
+    }
+  }
+
+  .field-copy-movie-admin-info {
+    input {
+      filter: invert(1);
     }
   }
 }

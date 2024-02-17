@@ -23,3 +23,7 @@ nnm:
     js/nnm.js: { }
   dependencies:
     - core/drupal
+
+copy_movie_admin_info:
+  js:
+    js/copy-movie-admin-info.js: { }

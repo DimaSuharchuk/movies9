@@ -178,3 +178,6 @@ msgstr "Перейти на сайт nnm-club"
 msgctxt "nnm"
 msgid "Show torrents info"
 msgstr "Переглянути інформацію про торренти"
+
+msgid "Copy movie info for Excel"
+msgstr "Копіювання інформації про фільм для Excel"

@@ -1,1 +1,3 @@
-node-sass ../scss/style.scss ../css/style.min.css -w --output-style compressed
+#node-sass ../scss/style.scss ../css/style.min.css -w --output-style compressed
+#sass ../scss/style.scss:../css/style.min.css --style=compressed -w
+sass ../scss/style.scss:../css/style.min.css -w

@@ -23,6 +23,12 @@
           {{ content.extra_field_original_title }}
           {{ content.extra_field_title }}
 
+          {% if icon_properties %}
+            <div class="block-icon-properties">
+              {{ icon_properties }}
+            </div>
+          {% endif %}
+
           <div class="properties">
             {{ content|without(
               'field_poster',

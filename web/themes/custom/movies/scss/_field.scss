@@ -87,7 +87,7 @@
   .field-networks {
     .content {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+      grid-template-columns: repeat(auto-fit, minmax(50px, max-content));
       grid-gap: 10px 30px;
 
       img {

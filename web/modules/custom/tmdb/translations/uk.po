@@ -84,7 +84,7 @@ msgid "Load more"
 msgstr "Завантажити ще"
 
 msgid "Unfortunately, there are no trailers."
-msgstr "Нажаль, трейлерів немає."
+msgstr "На жаль, трейлерів немає."
 
 msgid "Seasons"
 msgstr "Сезони"

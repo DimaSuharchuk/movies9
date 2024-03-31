@@ -2,6 +2,6 @@ _core:
   default_config_hash: G_8GHBI3-9ngC2R-uyRQpMWndFTfL1soDJCz8Rsgl0s
 langcode: uk
 tabs: true
+path: false
 enabled_filters:
   permissions: true
-path: false

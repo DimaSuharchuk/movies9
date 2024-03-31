@@ -24,6 +24,7 @@ content:
     region: content
 hidden:
   extra_field_approved: true
+  extra_field_copy_movie_admin_info: true
   extra_field_crew: true
   extra_field_episode_runtime: true
   extra_field_genres: true

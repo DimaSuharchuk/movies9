@@ -26,6 +26,7 @@ hidden:
   extra_field_approved: true
   extra_field_belongs_to_collection: true
   extra_field_cast: true
+  extra_field_copy_movie_admin_info: true
   extra_field_crew: true
   extra_field_genres: true
   extra_field_imdb_id: true

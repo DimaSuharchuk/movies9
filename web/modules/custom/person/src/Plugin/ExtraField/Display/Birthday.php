@@ -2,6 +2,7 @@
 
 namespace Drupal\person\Plugin\ExtraField\Display;
 
+use DateTime;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\mvs\DateHelper;
 use Drupal\tmdb\Plugin\ExtraTmdbFieldDisplayBase;
@@ -39,7 +40,12 @@ class Birthday extends ExtraTmdbFieldDisplayBase {
     if ($birthday = $this->getPersonCommonField('birthday')) {
       $content = $this->date_helper->dateStringToReleaseDateFormat($birthday);
 
-      if ($person_years_now = $this->date_helper->getYearsDiff($birthday)) {
+      // Calculate person's years.
+      $date_from = DateTime::createFromFormat('Y-m-d', $birthday);
+      $deathday = $this->getPersonCommonField('deathday');
+      $date_to = $deathday ? DateTime::createFromFormat('Y-m-d', $deathday) : new DateTime();
+
+      if ($person_years_now = $this->date_helper->getYearsDiff($date_from, $date_to)) {
         $person_years_now_t = $this->formatPlural($person_years_now, '@count year', '@count years', [], ['context' => 'Person years']);
         $content .= " ($person_years_now_t)";
       }

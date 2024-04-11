@@ -40,14 +40,16 @@ class Birthday extends ExtraTmdbFieldDisplayBase {
     if ($birthday = $this->getPersonCommonField('birthday')) {
       $content = $this->date_helper->dateStringToReleaseDateFormat($birthday);
 
-      // Calculate person's years.
-      $date_from = DateTime::createFromFormat('Y-m-d', $birthday);
-      $deathday = $this->getPersonCommonField('deathday');
-      $date_to = $deathday ? DateTime::createFromFormat('Y-m-d', $deathday) : new DateTime();
+      // We count how old the person is.
+      // But if the person dies, the number of years is displayed opposite
+      // the date of death.
+      if (!$this->getPersonCommonField('deathday')) {
+        $date_from = DateTime::createFromFormat('Y-m-d', $birthday);
 
-      if ($person_years_now = $this->date_helper->getYearsDiff($date_from, $date_to)) {
-        $person_years_now_t = $this->formatPlural($person_years_now, '@count year', '@count years', [], ['context' => 'Person years']);
-        $content .= " ($person_years_now_t)";
+        if ($person_years_now = $this->date_helper->getYearsDiff($date_from, new DateTime())) {
+          $person_years_now_t = $this->formatPlural($person_years_now, '@count year', '@count years', [], ['context' => 'Person years']);
+          $content .= " ($person_years_now_t)";
+        }
       }
 
       $build = [

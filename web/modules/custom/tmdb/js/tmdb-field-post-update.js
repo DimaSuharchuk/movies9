@@ -181,7 +181,7 @@
   const buildOriginalTitleFieldHtml = title => {
     const tmdbField = document.createElement("div");
     tmdbField.classList.add("field", "field-original-title");
-    tmdbField.textContent = title;
+    tmdbField.textContent = JSON.parse(`"${title.trim()}"`);
 
     return tmdbField;
   }

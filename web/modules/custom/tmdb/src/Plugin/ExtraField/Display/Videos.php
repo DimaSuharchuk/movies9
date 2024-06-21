@@ -57,7 +57,11 @@ class Videos extends ExtraTmdbFieldDisplayBase {
     $bundle = NodeBundle::from($this->entity->bundle());
     $tmdb_id = $this->entity->{'field_tmdb_id'}->value;
 
-    return $this->adapter->getVideos($bundle, $tmdb_id, $lang);
+    $videos = $this->adapter->getVideos($bundle, $tmdb_id, $lang);
+    // Sort videos by size.
+    $this->sortBySize($videos);
+
+    return $videos;
   }
 
   /**
@@ -69,9 +73,6 @@ class Videos extends ExtraTmdbFieldDisplayBase {
    */
   private function buildItems(array $videos, Language $lang): array {
     $build = [];
-
-    // Sort videos by size.
-    $this->sortBySize($videos);
 
     foreach ($videos as $video) {
       $build[] = [

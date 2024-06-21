@@ -23,8 +23,12 @@ class Videos extends ExtraTmdbFieldDisplayBase {
    */
   public function build(ContentEntityInterface $entity): array {
     $lang = Language::from($entity->language()->getId());
+    $is_eng = $lang == Language::en;
+    $eng_videos = $this->getVideos(Language::en);
+    $videos = !$is_eng ? $this->getVideos($lang) : [];
+    $videos = array_merge($videos, $eng_videos);
 
-    if ($videos = $this->getVideos($lang)) {
+    if ($videos) {
       $build = [
         '#theme' => 'videos',
         '#items' => $this->buildItems($videos, $lang),

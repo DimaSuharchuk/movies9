@@ -20,7 +20,6 @@
         "ext-zlib": "*",
         "composer/installers": "^2",
         "cweagans/composer-patches": "^1.7",
-        "drupal/adminimal_admin_toolbar": "^2",
         "drupal/better_exposed_filters": "^7.0-beta",
         "drupal/classy": "^1.0",
         "drupal/core-composer-scaffold": "^10",

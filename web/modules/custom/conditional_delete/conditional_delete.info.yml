@@ -2,4 +2,4 @@ name: Conditional deletion
 description: Delete entities selected by some conditions.
 type: module
 package: Administration
-core_version_requirement: ^8.8 || ^9 || ^10
+core_version_requirement: ^8.8 || ^9 || ^10 || ^11

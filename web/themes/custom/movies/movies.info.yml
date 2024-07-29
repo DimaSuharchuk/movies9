@@ -1,7 +1,7 @@
 name: Movies
 type: theme
 description: 'Theme using CSS grid system like Bootstrap 4.'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^9 || ^10 || ^11
 base theme: false
 
 # Libraries.

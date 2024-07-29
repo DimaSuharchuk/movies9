@@ -2,7 +2,7 @@ name: IMDB
 description: Provides work with different IMDB APIs.
 type: module
 package: Custom
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^9 || ^10 || ^11
 dependencies:
   - mvs:mvs
   - tmdb:tmdb

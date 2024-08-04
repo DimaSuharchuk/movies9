@@ -1,0 +1,5 @@
+type: module
+name: Only Ukraine
+description: Allows requests only from ukrainian IPs.
+package: Custom
+core_version_requirement: ^10 || ^11

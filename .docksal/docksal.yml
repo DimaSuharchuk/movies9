@@ -1,5 +1,3 @@
-version: "2.1"
-
 services:
   cli:
     image: ${COMPOSE_PROJECT_NAME_SAFE}_cli
@@ -13,3 +11,7 @@ services:
       - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
     labels:
       - io.docksal.virtual-host=pma.${VIRTUAL_HOST}
+  mail:
+    extends:
+      file: ${HOME}/.docksal/stacks/services.yml
+      service: mail

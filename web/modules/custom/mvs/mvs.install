@@ -104,3 +104,14 @@ function mvs_update_9003() {
 
   Drupal::service('cache.render')->deleteAll();
 }
+
+/**
+ * Delete unnecessary entries from key/value storage.
+ */
+function mvs_update_10001() {
+  \Drupal::keyValue('system.schema')->deleteMultiple([
+    'jquery_ui_datepicker',
+    'jquery_ui_slider',
+    'jquery_ui_touch_punch',
+  ]);
+}

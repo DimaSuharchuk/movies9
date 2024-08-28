@@ -1191,17 +1191,17 @@
         },
         {
             "name": "drupal/better_exposed_filters",
-            "version": "7.0.0-beta1",
+            "version": "7.0.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/better_exposed_filters.git",
-                "reference": "7.0.0-beta1"
+                "reference": "7.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/better_exposed_filters-7.0.0-beta1.zip",
-                "reference": "7.0.0-beta1",
-                "shasum": "0e934440dca032e5fdf2791657cd1adfe8e2b39e"
+                "url": "https://ftp.drupal.org/files/projects/better_exposed_filters-7.0.1.zip",
+                "reference": "7.0.1",
+                "shasum": "985389c1c4bac5d3f1e4ea4d6c52ad3d7c789b9c"
             },
             "require": {
                 "drupal/core": "^10 || ^11"
@@ -1209,11 +1209,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "7.0.0-beta1",
-                    "datestamp": "1720195903",
+                    "version": "7.0.1",
+                    "datestamp": "1724346308",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -1239,7 +1239,7 @@
                     "homepage": "https://www.drupal.org/user/192273"
                 },
                 {
-                    "name": "Neslee Canil Pinto",
+                    "name": "neslee canil pinto",
                     "homepage": "https://www.drupal.org/user/3580850"
                 },
                 {
@@ -1775,29 +1775,29 @@
         },
         {
             "name": "drupal/standwithukraine",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/standwithukraine.git",
-                "reference": "2.0.1"
+                "reference": "2.0.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/standwithukraine-2.0.1.zip",
-                "reference": "2.0.1",
-                "shasum": "d18ffa0b20eba9d722676cdef970954227c14705"
+                "url": "https://ftp.drupal.org/files/projects/standwithukraine-2.0.2.zip",
+                "reference": "2.0.2",
+                "shasum": "73f359ce16cd6a82293e97dd15818bb85709bc2c"
             },
             "require": {
                 "drupal/core": "^9.3 || ^10 || ^11",
-                "drupal/service": "*",
+                "drupal/service": "^2.0",
                 "ext-gd": "*",
                 "lordelph/icofileloader": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.1",
-                    "datestamp": "1721312680",
+                    "version": "2.0.2",
+                    "datestamp": "1724539476",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -1810,8 +1810,9 @@
             ],
             "authors": [
                 {
-                    "name": "bvakulin",
-                    "homepage": "https://www.drupal.org/user/3112141"
+                    "name": "Oleksandr Horbatiuk (lexhouk)",
+                    "homepage": "https://www.drupal.org/u/lexhouk",
+                    "role": "Maintainer"
                 },
                 {
                     "name": "lexhouk",
@@ -1819,33 +1820,34 @@
                 }
             ],
             "description": "Provides a message and styles images to show your support for Ukrainians.",
-            "homepage": "https://www.drupal.org/project/standwithukraine",
+            "homepage": "https://drupal.org/project/standwithukraine",
             "support": {
-                "source": "https://git.drupalcode.org/project/standwithukraine"
+                "source": "https://git.drupalcode.org/project/standwithukraine",
+                "issues": "https://drupal.org/project/issues/standwithukraine"
             }
         },
         {
             "name": "drupal/views_infinite_scroll",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/views_infinite_scroll.git",
-                "reference": "2.0.2"
+                "reference": "2.0.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/views_infinite_scroll-2.0.2.zip",
-                "reference": "2.0.2",
-                "shasum": "8b2b935d1e5d94d7ad068d099512d3b915efb41f"
+                "url": "https://ftp.drupal.org/files/projects/views_infinite_scroll-2.0.3.zip",
+                "reference": "2.0.3",
+                "shasum": "3c56969f71256300226118a0f35bad66ab41306c"
             },
             "require": {
-                "drupal/core": "^9.2 || ^10"
+                "drupal/core": "^10.1 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.2",
-                    "datestamp": "1689001933",
+                    "version": "2.0.3",
+                    "datestamp": "1724335951",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -1858,11 +1860,11 @@
             ],
             "authors": [
                 {
-                    "name": "Anybody",
+                    "name": "anybody",
                     "homepage": "https://www.drupal.org/user/291091"
                 },
                 {
-                    "name": "Grevil",
+                    "name": "grevil",
                     "homepage": "https://www.drupal.org/user/3668491"
                 },
                 {
@@ -1870,7 +1872,7 @@
                     "homepage": "https://www.drupal.org/user/123612"
                 },
                 {
-                    "name": "Neslee Canil Pinto",
+                    "name": "neslee canil pinto",
                     "homepage": "https://www.drupal.org/user/3580850"
                 },
                 {
@@ -1878,7 +1880,7 @@
                     "homepage": "https://www.drupal.org/user/143827"
                 },
                 {
-                    "name": "Sam152",
+                    "name": "sam152",
                     "homepage": "https://www.drupal.org/user/1485048"
                 },
                 {
@@ -3731,16 +3733,16 @@
         },
         {
             "name": "psr/log",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
+                "reference": "79dff0b268932c640297f5208d6298f71855c03e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
-                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/79dff0b268932c640297f5208d6298f71855c03e",
+                "reference": "79dff0b268932c640297f5208d6298f71855c03e",
                 "shasum": ""
             },
             "require": {
@@ -3775,9 +3777,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/3.0.0"
+                "source": "https://github.com/php-fig/log/tree/3.0.1"
             },
-            "time": "2021-07-14T16:46:02+00:00"
+            "time": "2024-08-21T13:31:24+00:00"
         },
         {
             "name": "psr/simple-cache",

@@ -4,7 +4,6 @@ message:
   text: |-
     We Stand With
     Ukraine
-  single: true
   sizes:
     first: true
     last: false

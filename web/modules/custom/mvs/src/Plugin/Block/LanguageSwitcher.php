@@ -98,7 +98,7 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
     $form['trim_length'] = [
       '#type' => 'number',
       '#title' => $this->t('Trim length'),
-      '#default_value' => $conf['trim_links'] ? $conf['length'] : '',
+      '#default_value' => $conf['trim_length'] ?? 3,
       '#min' => 1,
       '#states' => [
         'invisible' => [
@@ -129,13 +129,6 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
     if ($is_trim) {
       $this->configuration['trim_length'] = $form_state->getValue('trim_length');
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getCacheMaxAge(): int {
-    return 0;
   }
 
 }

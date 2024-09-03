@@ -6,7 +6,6 @@
   not node.isPublished() ? 'node--unpublished',
   view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 ] %}
-{{ attach_library('classy/node') }}
 <article{{ attributes.addClass(classes) }}>
   <section class="bg-white">
     <div class="container">

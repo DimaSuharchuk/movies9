@@ -55,24 +55,17 @@ class CountryAccessService {
       $this->logger->error($e->getMessage());
     }
 
-    if ($status !== FALSE) {
-      return (bool) $status;
-    }
-
-    return $this->checkAccessFromExternalService($ip) === CountryAccess::Allow;
+    return $status !== FALSE ? (bool) $status : $this->checkAccessFromExternalService($ip) === CountryAccess::Allow;
   }
 
   protected function checkAccessFromExternalService(string $ip): CountryAccess {
-    $allowed_countries = explode(' ', $this->config->get('countries'));
-    $debug_mode = $this->config->get('debug_mode');
-
     $url = "http://www.geoplugin.net/json.gp?ip=$ip";
 
     try {
       $response = $this->httpClient->request('GET', $url);
       $data = $this->serialization->decode($response->getBody()->getContents());
 
-      if ($debug_mode) {
+      if ($this->config->get('debug_mode')) {
         $this->logger->debug('Debug: <pre>@response</pre>', ['@response' => print_r($data, TRUE)]);
       }
 
@@ -81,6 +74,7 @@ class CountryAccessService {
       }
 
       $country_code = $data['geoplugin_countryCode'];
+      $allowed_countries = explode(' ', $this->config->get('countries'));
       $status = in_array($country_code, $allowed_countries) ? CountryAccess::Allow : CountryAccess::Deny;
 
       try {

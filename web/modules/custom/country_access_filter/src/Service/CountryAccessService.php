@@ -58,25 +58,8 @@ class CountryAccessService {
     if ($status !== FALSE) {
       return (bool) $status;
     }
-    else {
-      $status = $this->checkAccessFromExternalService($ip);
 
-      if ($status !== CountryAccess::Error) {
-        try {
-          $this->database->insert('country_access_filter_ips')
-            ->fields([
-              'ip' => ip2long($ip),
-              'status' => (int) ($status === CountryAccess::Allow),
-            ])
-            ->execute();
-        }
-        catch (Exception $e) {
-          $this->logger->error($e->getMessage());
-        }
-      }
-
-      return $status === CountryAccess::Allow;
-    }
+    return $this->checkAccessFromExternalService($ip) === CountryAccess::Allow;
   }
 
   protected function checkAccessFromExternalService(string $ip): CountryAccess {
@@ -93,13 +76,27 @@ class CountryAccessService {
         $this->logger->debug('Debug: <pre>@response</pre>', ['@response' => print_r($data, TRUE)]);
       }
 
-      if (!$data) {
+      if (empty($data['geoplugin_countryCode'])) {
         return CountryAccess::Error;
       }
 
-      $country_code = $data['geoplugin_countryCode'] ?? FALSE;
+      $country_code = $data['geoplugin_countryCode'];
+      $status = in_array($country_code, $allowed_countries) ? CountryAccess::Allow : CountryAccess::Deny;
 
-      return $country_code && in_array($country_code, $allowed_countries) ? CountryAccess::Allow : CountryAccess::Deny;
+      try {
+        $this->database->insert('country_access_filter_ips')
+          ->fields([
+            'ip' => ip2long($ip),
+            'status' => (int) ($status === CountryAccess::Allow),
+            'country_code' => $country_code,
+          ])
+          ->execute();
+      }
+      catch (Exception $e) {
+        $this->logger->error($e->getMessage());
+      }
+
+      return $status;
     }
     catch (GuzzleException $e) {
       $this->logger->error('Error fetching country data: @message', ['@message' => $e->getMessage()]);

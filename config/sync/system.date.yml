@@ -4,7 +4,7 @@ first_day: 1
 country:
   default: UA
 timezone:
-  default: Europe/Kiev
+  default: UTC
   user:
     configurable: false
     default: 0

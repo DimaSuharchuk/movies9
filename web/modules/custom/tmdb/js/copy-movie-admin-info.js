@@ -5,16 +5,23 @@
         el.addEventListener('click', () => {
           const imdbId = document.querySelector('.node-wrapper .field-imdb-id .content')
           const title = document.querySelector('.node-wrapper .field-original-title')
+          const title2 = document.querySelector('.node-wrapper .field-title') // When site is on Eng language.
           const year = document.querySelector('.node-wrapper .field-movie-release-date .content')
           const years = document.querySelector('.node-wrapper .field-tv-release-years .content')
           const result = []
 
-          if (!imdbId || !title) {
+          if (!imdbId || !title && !title2) {
             return;
           }
 
           result.push(imdbId.textContent.trim())
-          result.push(title.textContent.trim())
+
+          if (title) {
+            result.push(title.textContent.trim())
+          }
+          else {
+            result.push(title2.textContent.trim())
+          }
 
           if (year) {
             result.push(year.textContent.trim().split(' ').pop())

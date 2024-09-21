@@ -131,4 +131,11 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public function getCacheMaxAge(): int {
+    return 0;
+  }
+
 }

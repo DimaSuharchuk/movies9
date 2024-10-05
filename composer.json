@@ -44,11 +44,6 @@
         }
     },
     "extra": {
-        "patches": {
-            "drupal/core": {
-                "Deprecated function: dirname()": "https://www.drupal.org/files/issues/2024-06-26/3268634_core_dirname_38.patch"
-            }
-        },
         "drupal-scaffold": {
             "locations": {
                 "web-root": "web/"

@@ -94,7 +94,7 @@ class SearchMiniTeaserBuilder {
       '#tmdb_id' => $person_data['id'],
       '#name' => $person_data['name'],
       '#avatar' => $this->avatar->build($person_data, TmdbImageFormat::w92),
-      '#department' => $this->t($person_data['known_for_department'], [], ['context' => 'known for']),
+      '#department' => !empty($person_data['known_for_department']) ? $this->t($person_data['known_for_department'], [], ['context' => 'known for']) : '',
     ];
   }
 

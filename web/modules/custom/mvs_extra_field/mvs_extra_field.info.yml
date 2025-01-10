@@ -1,0 +1,7 @@
+name: MVS Extra Field
+type: module
+description: 'Provides a plugin type for extra fields that look like real fields, but do not store data.'
+core_version_requirement: ^10 || ^11
+package: Custom
+dependencies:
+  - drupal:field

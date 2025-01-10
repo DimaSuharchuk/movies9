@@ -1,0 +1,8 @@
+services:
+  plugin.manager.mvs_extra_field_display:
+    class: Drupal\mvs_extra_field\Plugin\ExtraFieldDisplayManager
+    arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@entity_type.manager']
+
+  plugin.manager.mvs_extra_field_form:
+    class: Drupal\mvs_extra_field\Plugin\ExtraFieldFormManager
+    arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@entity_type.manager']

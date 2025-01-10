@@ -5,7 +5,7 @@ core_version_requirement: ^9 || ^10 || ^11
 package: Custom
 dependencies:
   - mvs:mvs
-  - extra_field:extra_field
+  - mvs_extra_field:mvs_extra_field
 
 "interface translation project": person
 "interface translation server pattern": modules/custom/%project/translations/%language.po

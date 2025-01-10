@@ -3,7 +3,7 @@
 namespace Drupal\tmdb\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\extra_field\Annotation\ExtraFieldDisplay;
+use Drupal\mvs_extra_field\Annotation\ExtraFieldDisplay;
 use Drupal\mvs\DateHelper;
 use Drupal\mvs\enum\Language;
 use Drupal\mvs\enum\NodeBundle;

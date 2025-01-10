@@ -5,7 +5,7 @@ namespace Drupal\tmdb\Plugin;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\extra_field\Plugin\ExtraFieldDisplayBase;
+use Drupal\mvs_extra_field\Plugin\ExtraFieldDisplayBase;
 use Drupal\mvs\enum\Language;
 use Drupal\tmdb\TmdbApiAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;

@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for Extra Field module.
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function mvs_extra_field_entity_extra_field_info() {
+  $info_form = Drupal::service('plugin.manager.mvs_extra_field_form')->fieldInfo();
+  $info_display = Drupal::service('plugin.manager.mvs_extra_field_display')->fieldInfo();
+
+  return array_merge_recursive($info_form, $info_display);
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function mvs_extra_field_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+  Drupal::service('plugin.manager.mvs_extra_field_display')->entityView($build, $entity, $display, $view_mode);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function mvs_extra_field_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  Drupal::service('plugin.manager.mvs_extra_field_form')->entityFormAlter($form, $form_state);
+}
+
+/**
+ * Implements hook_entity_bundle_create().
+ */
+function mvs_extra_field_entity_bundle_create($entity_type_id, $bundle) {
+
+  // Clear the service's local cache to prevent errors when multiple entity
+  // bundles are created and used within one call. This happens when running
+  // tests that uses multiple node types in a single test.
+  Drupal::service('plugin.manager.mvs_extra_field_display')->clearCache();
+  Drupal::service('plugin.manager.mvs_extra_field_form')->clearCache();
+}

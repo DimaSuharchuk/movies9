@@ -3,7 +3,7 @@
 namespace Drupal\person\Plugin\ExtraField\Display;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\extra_field\Annotation\ExtraFieldDisplay;
+use Drupal\mvs_extra_field\Annotation\ExtraFieldDisplay;
 use Drupal\mvs\Constant;
 use Drupal\mvs\ImageBuilder;
 use Drupal\tmdb\enum\TmdbImageFormat;

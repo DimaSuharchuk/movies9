@@ -7,7 +7,7 @@ dependencies:
   - mvs:mvs
   - imdb:imdb
   - person:person
-  - extra_field:extra_field
+  - mvs_extra_field:mvs_extra_field
 
 "interface translation project": tmdb
 "interface translation server pattern": modules/custom/%project/translations/%language.po

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b35124788e844b1dbed98eea8fb63e2a",
+    "content-hash": "2776d5118936d2f00f66e036c75baf42",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -933,6 +933,44 @@
                 "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.3"
             },
             "time": "2024-07-08T12:26:09+00:00"
+        },
+        {
+            "name": "dimasuharchuk/country-access-filter",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DimaSuharchuk/Country-Access-Filter.git",
+                "reference": "7c789c15c658880cf12ef6dab4998117cfbe3c8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DimaSuharchuk/Country-Access-Filter/zipball/7c789c15c658880cf12ef6dab4998117cfbe3c8d",
+                "reference": "7c789c15c658880cf12ef6dab4998117cfbe3c8d",
+                "shasum": ""
+            },
+            "require": {
+                "drupal/core": "^10 || ^11",
+                "php": ">=8.1"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "installer-name": "country_access_filter"
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dima Sukharchuk",
+                    "email": "suharchuk.dima@gmail.com"
+                }
+            ],
+            "description": "A custom Drupal module for country-based access filtering.",
+            "support": {
+                "source": "https://github.com/DimaSuharchuk/Country-Access-Filter/tree/v1.0.1",
+                "issues": "https://github.com/DimaSuharchuk/Country-Access-Filter/issues"
+            },
+            "time": "2025-02-07T22:11:04+00:00"
         },
         {
             "name": "doctrine/annotations",

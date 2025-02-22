@@ -1,6 +1,0 @@
-services:
-  only_ukraine.event_subscriber:
-    class: Drupal\only_ukraine\EventSubscriber\Subscriber
-    arguments: [ '@request_stack', '@http_client' ,'@serialization.json' ]
-    tags:
-      - { name: event_subscriber }

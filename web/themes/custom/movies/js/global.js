@@ -54,25 +54,26 @@
 
   D.behaviors.redirects = {
     attach: () => {
-      document.querySelectorAll("[data-redirect]:not(.processed)").forEach(article => {
-        article.classList.add("processed");
+      once('teaser-redirect', '[data-redirect]').forEach(article => article.addEventListener('mousedown', evt => {
+        evt.preventDefault();
 
-        article.addEventListener("click", evt => {
-          // Click with ctrl.
-          if (evt.ctrlKey) {
-            window.open(article.dataset.redirect, '_blank');
-          }
+        switch (evt.which) {
           // Left click.
-          else {
-            location.href = article.dataset.redirect;
-          }
-        });
+          case 1:
+            // Click with ctrl.
+            if (evt.ctrlKey) {
+              window.open(article.dataset.redirect, '_blank');
+            } else {
+              location.href = article.dataset.redirect;
+            }
+            break;
 
-        // Middle button click.
-        article.addEventListener("auxclick", () => {
-          window.open(article.dataset.redirect, '_blank');
-        });
-      });
+          // Middle click.
+          case 2:
+            window.open(article.dataset.redirect, '_blank');
+            break;
+        }
+      }));
     }
   };
 

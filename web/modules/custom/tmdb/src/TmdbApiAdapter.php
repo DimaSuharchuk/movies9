@@ -336,12 +336,7 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function search(string $search_string, TmdbSearchType $search_type, Language $lang, int $page = 1): ?array {
-    return (new Search())
-      ->setSearchQuery($search_string)
-      ->setSearchType($search_type)
-      ->setLanguage($lang)
-      ->setPage($page)
-      ->response();
+    return (new Search($search_type, $lang, $search_string, $page))->response();
   }
 
 }

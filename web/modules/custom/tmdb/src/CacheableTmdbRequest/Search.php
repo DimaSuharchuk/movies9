@@ -9,52 +9,28 @@ use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class Search extends CacheableTmdbRequest {
 
-  private TmdbSearchType $search_type;
-
-  private Language $lang;
-
+  /**
+   * Text from search input.
+   *
+   * @var string
+   */
   private string $query;
 
-  private int $page = 1;
-
-  private ?string $media_type = NULL;
-
   /**
-   * @param string $search_query
-   *   The string by which the search is performed.
+   * Constructs the Tmdb search object.
    *
-   * @return $this
-   */
-  public function setSearchQuery(string $search_query): self {
-    $this->query = $search_query;
-
-    return $this;
-  }
-
-  public function setSearchType(TmdbSearchType $search_type): self {
-    $this->search_type = $search_type;
-
-    return $this;
-  }
-
-  public function setLanguage(Language $lang): self {
-    $this->lang = $lang;
-
-    return $this;
-  }
-
-  /**
-   * The results are divided into pages of 20 items per page.
-   *
+   * @param TmdbSearchType $search_type
+   * @param Language $lang
+   * @param string $query
    * @param int $page
-   *   Number of the page.
-   *
-   * @return $this
    */
-  public function setPage(int $page): self {
-    $this->page = $page;
-
-    return $this;
+  public function __construct(
+    private readonly TmdbSearchType $search_type,
+    private readonly Language $lang,
+    string $query,
+    private readonly int $page = 1,
+  ) {
+    $this->query = $this->filterSearchQuery($query);
   }
 
   /**
@@ -62,30 +38,7 @@ class Search extends CacheableTmdbRequest {
    */
   protected function request(): array {
     $api = $this->connect->getSearchApi();
-
-    switch ($this->search_type) {
-      case TmdbSearchType::multi:
-        $method = 'searchMulti';
-        break;
-
-      case TmdbSearchType::movies:
-        $method = 'searchMovies';
-        $this->media_type = 'movie';
-        break;
-
-      case TmdbSearchType::tv:
-        $method = 'searchTv';
-        $this->media_type = 'tv';
-        break;
-
-      case TmdbSearchType::persons:
-        $method = 'searchPersons';
-        $this->media_type = 'person';
-        break;
-
-      default:
-        return [];
-    }
+    $method = $this->getRequestMethod();
 
     return $api->$method($this->query, [
       'language' => $this->lang->name,
@@ -95,12 +48,55 @@ class Search extends CacheableTmdbRequest {
   }
 
   /**
+   * Normalizes the search query string by replacing unwanted characters.
+   *
+   * @param string $string
+   *   The original search query string entered by the user.
+   *
+   * @return string
+   *   The normalized and cleaned search query.
+   */
+  private function filterSearchQuery(string $string): string {
+    return trim(str_replace(['.', '/'], ' ', $string));
+  }
+
+  /**
+   * Determines the appropriate API method based on the search type.
+   *
+   * @return string
+   *   The method name that should be called on the TMDb search API.
+   */
+  private function getRequestMethod(): string {
+    return match ($this->search_type) {
+      TmdbSearchType::multi => 'searchMulti',
+      TmdbSearchType::movies => 'searchMovies',
+      TmdbSearchType::tv => 'searchTv',
+      TmdbSearchType::persons => 'searchPersons',
+    };
+  }
+
+  /**
+   * Maps the current search type to a corresponding media type string.
+   *
+   * @return string|null
+   *   The media type string: 'movie', 'tv', or 'person', or NULL if unknown.
+   */
+  private function getMediaType(): ?string {
+    return match ($this->search_type) {
+      TmdbSearchType::movies => 'movie',
+      TmdbSearchType::tv => 'tv',
+      TmdbSearchType::persons => 'person',
+      default => NULL,
+    };
+  }
+
+  /**
    * @inheritDoc
    */
   protected function getStorageFilePath(): TmdbLocalStorageFilePath {
     return new TmdbLocalStorageFilePath(
       'search',
-      "{$this->query}_{$this->page}",
+      "{$this->query}_$this->page",
       [
         "{$this->lang->name}",
         "{$this->search_type->name}",
@@ -151,11 +147,12 @@ class Search extends CacheableTmdbRequest {
    */
   private function filterResult(array $tmdb_entity): ?array {
     $return = [];
-
     $label = NULL;
+
     if (isset($tmdb_entity['title'])) {
       $label = $tmdb_entity['title'];
     }
+
     if (isset($tmdb_entity['name'])) {
       $label = $tmdb_entity['name'];
     }
@@ -165,8 +162,9 @@ class Search extends CacheableTmdbRequest {
     }
 
     if (!isset($tmdb_entity['media_type'])) {
-      $tmdb_entity['media_type'] = $this->media_type;
+      $tmdb_entity['media_type'] = $this->getMediaType();
     }
+
     switch ($tmdb_entity['media_type']) {
       case 'movie':
         $return['t'] = 'm';
@@ -186,6 +184,7 @@ class Search extends CacheableTmdbRequest {
 
     $return['i'] = $tmdb_entity['id'];
     $return['l'] = $tmdb_entity['title'] ?? $tmdb_entity['name'];
+
     if (!empty($tmdb_entity['poster_path'])) {
       $return['p'] = $tmdb_entity['poster_path'];
     }

@@ -44,7 +44,7 @@ class Avatar {
    *
    * @return string
    */
-  public function getAvatarUriByGender(int $gender = NULL): string {
+  public function getAvatarUriByGender(?int $gender = NULL): string {
     return match ($gender) {
       Constant::GENDER_MAN => Constant::UNDEFINED_MAN_IMAGE,
       Constant::GENDER_WOMAN => Constant::UNDEFINED_WOMAN_IMAGE,

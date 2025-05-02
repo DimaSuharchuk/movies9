@@ -12,9 +12,10 @@
   <div class="season-info">
     {{ original_title }}
     <div class="field field-title">{{ title }}</div>
-    <div class="episodes-count">
-      {{ episodes_count }}
-    </div>
+    <div class="episodes-count">{{ episodes_count }}</div>
+    {% if runtime %}
+      <div class="runtime">{{ runtime }}</div>
+    {% endif %}
     <div class="field field-overview">{{ overview }}</div>
   </div>
 </section>

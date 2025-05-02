@@ -1,5 +1,9 @@
 {
   "devDependencies": {
-    "sass": "^1.71.0"
+    "sass": "^1.87.0"
+  },
+  "scripts": {
+    "build:css": "sass scss/style.scss:css/style.min.css --style=compressed --no-source-map",
+    "watch:css": "sass --watch scss/style.scss:css/style.min.css --style=compressed --no-source-map"
   }
 }

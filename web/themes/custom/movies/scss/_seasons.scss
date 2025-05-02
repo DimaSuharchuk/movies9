@@ -39,11 +39,13 @@
 
   .season-info {
     grid-area: season-info;
+    display: grid;
+    align-content: start;
+    gap: 10px;
   }
 
-  .episodes-count {
-    margin-bottom: 30px;
-
+  .episodes-count,
+  .runtime {
     .field-with-label {
       display: flex;
 
@@ -112,7 +114,8 @@
     }
   }
 
-  .imdb-rating-wrapper {
+  .imdb-rating-wrapper,
+  .runtime {
     .field-with-label {
       display: flex;
 

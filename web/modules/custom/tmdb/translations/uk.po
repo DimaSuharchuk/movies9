@@ -49,6 +49,12 @@ msgstr "Знімальна група"
 msgctxt "Field label"
 msgid "Created by"
 msgstr "Шоуранери"
+msgctxt "Field label"
+msgid "season runtime"
+msgstr "тривалість сезону"
+msgctxt "Field label"
+msgid "series duration"
+msgstr "тривалість серіалу"
 
 # Extra Tabs.
 msgctxt "Extra tabs"

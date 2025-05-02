@@ -25,12 +25,12 @@ content:
   extra_field_copy_movie_admin_info:
     settings: {  }
     third_party_settings: {  }
-    weight: 17
+    weight: 18
     region: content
   extra_field_episode_runtime:
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 12
     region: content
   extra_field_genres:
     settings: {  }
@@ -50,17 +50,17 @@ content:
   extra_field_networks:
     settings: {  }
     third_party_settings: {  }
-    weight: 13
+    weight: 14
     region: content
   extra_field_noname_club:
     settings: {  }
     third_party_settings: {  }
-    weight: 18
+    weight: 19
     region: content
   extra_field_noname_sheet:
     settings: {  }
     third_party_settings: {  }
-    weight: 19
+    weight: 20
     region: content
   extra_field_number_of_episodes:
     settings: {  }
@@ -80,22 +80,22 @@ content:
   extra_field_overview:
     settings: {  }
     third_party_settings: {  }
-    weight: 15
+    weight: 16
     region: content
   extra_field_production_companies:
     settings: {  }
     third_party_settings: {  }
-    weight: 14
+    weight: 15
     region: content
   extra_field_seasons:
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 17
     region: content
   extra_field_site:
     settings: {  }
     third_party_settings: {  }
-    weight: 12
+    weight: 13
     region: content
   extra_field_tabs:
     settings: {  }
@@ -111,6 +111,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 8
+    region: content
+  extra_field_tv_runtime:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 11
     region: content
   field_poster:
     type: tmdb_image_compact

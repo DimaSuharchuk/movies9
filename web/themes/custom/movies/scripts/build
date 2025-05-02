@@ -1,2 +1,0 @@
-#node-sass ../scss/style.scss ../css/style.min.css --output-style compressed
-sass ../scss/style.scss:../css/style.min.css --style=compressed --no-source-map

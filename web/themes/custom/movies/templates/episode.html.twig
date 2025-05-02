@@ -18,9 +18,10 @@
 
     <div class="properties">
       <div class="field field-air-date">{{ air_date }}</div>
-      <div class="field imdb-rating-wrapper">
-        {{ imdb_rating }}
-      </div>
+      {% if runtime %}
+          <div class="field runtime">{{ runtime }}</div>
+      {% endif %}
+      <div class="field imdb-rating-wrapper">{{ imdb_rating }}</div>
     </div>
 
     <div class="field field-overview">{{ overview }}</div>

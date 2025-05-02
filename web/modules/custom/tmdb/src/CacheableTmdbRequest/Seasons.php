@@ -59,6 +59,7 @@ class Seasons extends CacheableTmdbRequest {
       'name',
       'overview',
       'still_path',
+      'runtime',
     ];
     $season['episodes'] = $this->allowedFieldsFilter(
       $data['episodes'],

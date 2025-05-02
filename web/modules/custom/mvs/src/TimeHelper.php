@@ -20,6 +20,7 @@ class TimeHelper {
    */
   public function formatTimeFromMinutes(int $minutes): string {
     $x = $this->separateMinutes($minutes);
+
     return $this->formatTime($x['h'], $x['m']);
   }
 

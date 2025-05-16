@@ -85,7 +85,7 @@ abstract class ExtraTmdbFieldDisplayBase extends ExtraFieldDisplayBase implement
   }
 
   /**
-   * Get value of some common TMDb Person's field.
+   * Get the value of some common TMDb Person's field.
    *
    * @param string $field
    *   Name of common field in TMDbLocalStorage (some fields key rewrote with

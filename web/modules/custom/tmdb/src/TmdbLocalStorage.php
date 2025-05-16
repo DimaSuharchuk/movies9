@@ -33,7 +33,7 @@ class TmdbLocalStorage {
   }
 
   /**
-   * Load data from a file path if file exists.
+   * Load data from a file path if a file exists.
    *
    * @param TmdbLocalStorageFilePath $file_path
    *   Path to file for a load.

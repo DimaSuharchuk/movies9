@@ -110,7 +110,7 @@ class FullRequest extends CacheableTmdbRequest {
       'runtime' => $data['runtime'],
       'title' => $data['title'],
     ];
-    // Check and add collection ID if movie belongs to some.
+    // Check and add collection ID if the movie belongs to some.
     if ($data['belongs_to_collection']) {
       $filtered['collection_id'] = $data['belongs_to_collection']['id'];
     }

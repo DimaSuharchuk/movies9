@@ -84,7 +84,7 @@ class SeasonBuilder {
    * @param int $seasons_count
    *   Number of seasons in TV.
    * @param int $current_tab
-   *   Number of current tab for add css class "active" for it.
+   *   Number of current tab for add CSS class "active" for it.
    *
    * @return array
    */
@@ -133,7 +133,7 @@ class SeasonBuilder {
   }
 
   /**
-   * Build episodes list.
+   * Build episodes' list.
    *
    * @param int $tv_tmdb_id
    * @param int $season_number

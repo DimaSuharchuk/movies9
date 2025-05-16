@@ -34,7 +34,7 @@ class TmdbApiAdapter {
       ($common = $this->getCommonFieldsByTmdbId(NodeBundle::movie, $movie_tmdb_id, $lang))
       && isset($common['collection_id'])
     ) {
-      return (new MovieCollection())
+      return new MovieCollection()
         ->setMovieTmdbId($common['collection_id'])
         ->setLanguage($lang)
         ->response();
@@ -44,7 +44,7 @@ class TmdbApiAdapter {
   }
 
   /**
-   * Get TouTube videos for movie or TV show.
+   * Get YouTube videos for movie or TV show.
    *
    * @param NodeBundle $bundle
    * @param int $tmdb_id
@@ -94,7 +94,7 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getRecommendations(NodeBundle $bundle, int $tmdb_id, Language $lang, int $page): ?array {
-    return (new Recommendations())
+    return new Recommendations()
       ->setBundle($bundle)
       ->setTmdbId($tmdb_id)
       ->setLanguage($lang)
@@ -116,7 +116,7 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getSimilar(NodeBundle $bundle, int $tmdb_id, Language $lang, int $page): ?array {
-    return (new Similar())
+    return new Similar()
       ->setBundle($bundle)
       ->setTmdbId($tmdb_id)
       ->setLanguage($lang)
@@ -133,9 +133,7 @@ class TmdbApiAdapter {
    *   [NodeBundle, int].
    */
   public function getTmdbIdByImdbId(string $imdb_id): ?array {
-    return (new FindByImdbId())
-      ->setImdbId($imdb_id)
-      ->response();
+    return new FindByImdbId()->setImdbId($imdb_id)->response();
   }
 
   /**
@@ -197,7 +195,7 @@ class TmdbApiAdapter {
   }
 
   /**
-   * Get all Movie or Tv info from TMDb API.
+   * Get all Movie or TV info from TMDb API.
    *
    * @param NodeBundle $bundle
    * @param int $tmdb_id
@@ -215,7 +213,7 @@ class TmdbApiAdapter {
     if (is_null($data)) {
       $data = [];
 
-      $query = (new FullRequest())
+      $query = new FullRequest()
         ->setBundle($bundle)
         ->setTmdbId($tmdb_id)
         ->setLanguage($lang);
@@ -241,7 +239,7 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getSeason(int $tv_tmdb_id, int $season_number, Language $lang, bool $only_cached = FALSE): ?array {
-    $query = (new Seasons())
+    $query = new Seasons()
       ->setTvTmdbId($tv_tmdb_id)
       ->setSeasonNumber($season_number)
       ->setLanguage($lang);
@@ -266,7 +264,7 @@ class TmdbApiAdapter {
    * @return string|null
    */
   public function getEpisodeImdbId(int $tv_tmdb_id, int $season_number, int $episode_number, bool $only_cached = FALSE): ?string {
-    $query = (new EpisodeImdbId())
+    $query = new EpisodeImdbId()
       ->setTvTmdbId($tv_tmdb_id)
       ->setSeasonNumber($season_number)
       ->setEpisodeNumber($episode_number);
@@ -287,7 +285,7 @@ class TmdbApiAdapter {
    * @return array
    */
   public function getMovieGenres(Language $lang): array {
-    return (new Genres())
+    return new Genres()
       ->setBundle(NodeBundle::movie)
       ->setLanguage($lang)
       ->response();
@@ -302,7 +300,7 @@ class TmdbApiAdapter {
    * @return array
    */
   public function getTvGenres(Language $lang): array {
-    return (new Genres())
+    return new Genres()
       ->setBundle(NodeBundle::tv)
       ->setLanguage($lang)
       ->response();
@@ -318,10 +316,7 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getPerson(int $tmdb_id, Language $lang): ?array {
-    return (new Person())
-      ->setTmdbId($tmdb_id)
-      ->setLanguage($lang)
-      ->response();
+    return new Person()->setTmdbId($tmdb_id)->setLanguage($lang)->response();
   }
 
   /**
@@ -336,7 +331,7 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function search(string $search_string, TmdbSearchType $search_type, Language $lang, int $page = 1): ?array {
-    return (new Search($search_type, $lang, $search_string, $page))->response();
+    return new Search($search_type, $lang, $search_string, $page)->response();
   }
 
 }

@@ -137,7 +137,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
         '#content' => $this->imdb_rating->getRating($imdb_id),
       ];
     }
-    // Else prepare html for update IMDb rating later via JS.
+    // Else prepare HTML for update IMDb rating later via JS.
     return [
       '#theme_wrappers' => [
         'container' => [
@@ -175,7 +175,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
         '#css_class' => 'original_title',
       ];
     }
-    // Else prepare html for update IMDb rating later via JS.
+    // Else prepare HTML for update IMDb rating later via JS.
     return [
       '#theme_wrappers' => [
         'container' => [
@@ -213,7 +213,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
         '#css_class' => 'original_title',
       ];
     }
-    // Else prepare html for update IMDb rating later via JS.
+    // Else prepare HTML for update IMDb rating later via JS.
     return [
       '#theme_wrappers' => [
         'container' => [
@@ -251,7 +251,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
         '#content' => $this->imdb_rating->getRating($imdb_id),
       ];
     }
-    // Else prepare html for update IMDb rating later via JS.
+    // Else prepare HTML for update IMDb rating later via JS.
     return [
       '#theme_wrappers' => [
         'container' => [
@@ -297,7 +297,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
 
       return NULL;
     }
-    // Else prepare html for update IMDb rating later via JS.
+    // Else prepare HTML for update IMDb rating later via JS.
     return [
       '#theme_wrappers' => [
         'container' => [

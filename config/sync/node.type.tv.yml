@@ -1,13 +1,7 @@
 uuid: 9c71c383-e9be-4b0c-bd9e-9fd6f89a8305
 langcode: en
 status: true
-dependencies:
-  module:
-    - menu_ui
-third_party_settings:
-  menu_ui:
-    available_menus: {  }
-    parent: ''
+dependencies: {  }
 name: TV
 type: tv
 description: null

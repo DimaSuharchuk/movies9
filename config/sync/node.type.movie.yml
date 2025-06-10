@@ -1,13 +1,7 @@
 uuid: 5a5448ec-b326-4cb0-9d44-86265e49dae2
 langcode: en
 status: true
-dependencies:
-  module:
-    - menu_ui
-third_party_settings:
-  menu_ui:
-    available_menus: {  }
-    parent: ''
+dependencies: {  }
 name: Movie
 type: movie
 description: null

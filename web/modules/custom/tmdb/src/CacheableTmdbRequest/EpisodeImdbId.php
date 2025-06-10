@@ -6,28 +6,16 @@ use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class EpisodeImdbId extends CacheableTmdbRequest {
 
-  private int $tv_tmdb_id;
-
-  private int $season_number;
-
-  private int $episode_number;
-
-  public function setTvTmdbId(int $tv_tmdb_id): self {
-    $this->tv_tmdb_id = $tv_tmdb_id;
-
-    return $this;
-  }
-
-  public function setSeasonNumber(int $season_number): self {
-    $this->season_number = $season_number;
-
-    return $this;
-  }
-
-  public function setEpisodeNumber(int $episode_number): self {
-    $this->episode_number = $episode_number;
-
-    return $this;
+  /**
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   * @param int $episode_number
+   */
+  public function __construct(
+    private readonly int $tv_tmdb_id,
+    private readonly int $season_number,
+    private readonly int $episode_number,
+  ) {
   }
 
   /**
@@ -52,7 +40,7 @@ class EpisodeImdbId extends CacheableTmdbRequest {
   protected function getStorageFilePath(): TmdbLocalStorageFilePath {
     return new TmdbLocalStorageFilePath(
       'episode_imdb_ids',
-      "{$this->tv_tmdb_id}_{$this->season_number}_{$this->episode_number}"
+      "{$this->tv_tmdb_id}_{$this->season_number}_$this->episode_number"
     );
   }
 

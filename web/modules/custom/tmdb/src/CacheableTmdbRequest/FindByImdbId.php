@@ -8,12 +8,10 @@ use Tmdb\Exception\TmdbApiException;
 
 class FindByImdbId extends CacheableTmdbRequest {
 
-  private string $imdb_id;
-
-  public function setImdbId(string $imdb_id): self {
-    $this->imdb_id = $imdb_id;
-
-    return $this;
+  /**
+   * @param string $imdb_id
+   */
+  public function __construct(private readonly string $imdb_id) {
   }
 
   /**

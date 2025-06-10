@@ -217,6 +217,7 @@ abstract class CacheableTmdbRequest {
       'poster_path',
       'title',
       'original_title',
+      'vote_average',
     ];
 
     $purged = [];

@@ -8,20 +8,14 @@ use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class Genres extends CacheableTmdbRequest {
 
-  private NodeBundle $bundle;
-
-  private Language $lang;
-
-  public function setBundle(NodeBundle $bundle): self {
-    $this->bundle = $bundle;
-
-    return $this;
-  }
-
-  public function setLanguage(Language $lang): self {
-    $this->lang = $lang;
-
-    return $this;
+  /**
+   * @param \Drupal\mvs\enum\NodeBundle $bundle
+   * @param \Drupal\mvs\enum\Language $lang
+   */
+  public function __construct(
+    private readonly NodeBundle $bundle,
+    private readonly Language $lang,
+  ) {
   }
 
   /**

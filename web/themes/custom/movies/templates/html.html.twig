@@ -35,8 +35,7 @@
   <js-placeholder token="{{ placeholder_token }}">
 </head>
 <body{{ attributes }}>
-<script>localStorage.getItem("dark-theme")===null&&localStorage.setItem("dark-theme",window.matchMedia("(prefers-color-scheme: dark)").matches?"1":"0")</script>
-<script>"1"===localStorage.getItem("dark-theme")&&(document.body.dataset.theme="dark")</script>
+<script>localStorage.getItem("dark-theme")===null&&localStorage.setItem("dark-theme",window.matchMedia("(prefers-color-scheme: dark)").matches?"1":"0");"1"===localStorage.getItem("dark-theme")&&(document.body.dataset.theme="dark")</script>
 {{ page_top }}
 {{ page }}
 {{ page_bottom }}

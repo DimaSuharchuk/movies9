@@ -8,20 +8,14 @@ use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class Person extends CacheableTmdbRequest {
 
-  private int $tmdb_id;
-
-  private Language $lang;
-
-  public function setTmdbId(int $tmdb_id): self {
-    $this->tmdb_id = $tmdb_id;
-
-    return $this;
-  }
-
-  public function setLanguage(Language $lang): self {
-    $this->lang = $lang;
-
-    return $this;
+  /**
+   * @param int $tmdb_id
+   * @param \Drupal\mvs\enum\Language $lang
+   */
+  public function __construct(
+    private readonly int $tmdb_id,
+    private readonly Language $lang,
+  ) {
   }
 
   /**
@@ -58,6 +52,7 @@ class Person extends CacheableTmdbRequest {
       'name',
       'original_name',
       'poster_path',
+      'vote_average',
     ];
 
     $filtered = [
@@ -72,12 +67,12 @@ class Person extends CacheableTmdbRequest {
       'known_for_department' => $data['known_for_department'],
       'place_of_birth' => $data['place_of_birth'],
       'movie_credits' => [
-        'cast' => $this->massageTeasers(NodeBundle::movie, $this->allowedFieldsFilter($data['movie_credits']['cast'], $allowed_teaser_fields)),
-        'crew' => $this->massageTeasers(NodeBundle::movie, $this->allowedFieldsFilter($data['movie_credits']['crew'], $allowed_teaser_fields)),
+        'cast' => $this->massageTeasers($this->allowedFieldsFilter($data['movie_credits']['cast'], $allowed_teaser_fields)),
+        'crew' => $this->massageTeasers($this->allowedFieldsFilter($data['movie_credits']['crew'], $allowed_teaser_fields)),
       ],
       'tv_credits' => [
-        'cast' => $this->massageTeasers(NodeBundle::tv, $this->allowedFieldsFilter($data['tv_credits']['cast'], $allowed_teaser_fields)),
-        'crew' => $this->massageTeasers(NodeBundle::tv, $this->allowedFieldsFilter($data['tv_credits']['crew'], $allowed_teaser_fields)),
+        'cast' => $this->massageTeasers($this->allowedFieldsFilter($data['tv_credits']['cast'], $allowed_teaser_fields)),
+        'crew' => $this->massageTeasers($this->allowedFieldsFilter($data['tv_credits']['crew'], $allowed_teaser_fields)),
       ],
     ];
 
@@ -103,9 +98,9 @@ class Person extends CacheableTmdbRequest {
    *
    * @see Person::massageTeaserFields()
    */
-  private function massageTeasers(NodeBundle $bundle, array $a): array {
+  private function massageTeasers(array $a): array {
     foreach ($a as &$teaser) {
-      $this->massageTeaserFields($bundle, $teaser);
+      $this->massageTeaserFields($teaser);
     }
 
     return $a;
@@ -118,7 +113,7 @@ class Person extends CacheableTmdbRequest {
    * @param array $teaser
    *   Array of Movie/TV fields raw data from TMDb API.
    */
-  private function massageTeaserFields(NodeBundle $bundle, array &$teaser): void {
+  private function massageTeaserFields(array &$teaser): void {
     // Bundle "TV" use keys "name". We reduce everything to one form, i.e. "title".
     $teaser['title'] = $teaser['title'] ?: $teaser['name'];
     unset($teaser['name']);
@@ -135,13 +130,13 @@ class Person extends CacheableTmdbRequest {
    *
    * @param array $movie_credits
    *   An array of credits for movies. Expected to contain "cast" and "crew"
-   *   sub-arrays.
+   *   subarrays.
    * @param array $tv_credits
    *   An array of credits for TV shows. Expected to contain "cast" and "crew"
-   *   sub-arrays.
+   *   subarrays.
    *
    * @return array
-   *   An associative array containing "cast" and "crew" sub-arrays with
+   *   An associative array containing "cast" and "crew" subarrays with
    *   combined credits. The keys are the credit IDs, and the values are the
    *   credit data, with an additional "bundle" key to distinguish between
    *   movie and TV credits.

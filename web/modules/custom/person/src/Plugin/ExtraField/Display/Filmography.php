@@ -92,7 +92,7 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
       $build['movies'] = [
         '#theme' => 'tmdb_items_list',
         '#title' => $this->t('Movies', [], ['context' => 'Field label']),
-        '#items' => $this->tmdb_teaser->buildTmdbTeasers($movies, NodeBundle::movie, $lang),
+        '#items' => $this->tmdb_teaser->buildTmdbTeasers($movies, NodeBundle::movie, $lang, TRUE),
         '#use_container' => FALSE,
       ];
     }
@@ -100,7 +100,7 @@ class Filmography extends ExtraTmdbFieldDisplayBase {
       $build['tvs'] = [
         '#theme' => 'tmdb_items_list',
         '#title' => $this->t('TVs', [], ['context' => 'Field label']),
-        '#items' => $this->tmdb_teaser->buildTmdbTeasers($tvs, NodeBundle::tv, $lang),
+        '#items' => $this->tmdb_teaser->buildTmdbTeasers($tvs, NodeBundle::tv, $lang, TRUE),
         '#use_container' => FALSE,
       ];
     }

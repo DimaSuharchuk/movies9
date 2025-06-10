@@ -12,13 +12,10 @@ class TmdbTeaser {
 
   use StringTranslationTrait;
 
-  private TmdbApiAdapter $adapter;
-
-  private TmdbFieldLazyBuilder $tmdb_lazy;
-
-  public function __construct(TmdbApiAdapter $adapter, TmdbFieldLazyBuilder $tmdb_lazy) {
-    $this->adapter = $adapter;
-    $this->tmdb_lazy = $tmdb_lazy;
+  public function __construct(
+    private readonly TmdbApiAdapter $adapter,
+    private readonly TmdbFieldLazyBuilder $tmdb_lazy,
+  ) {
   }
 
   /**
@@ -67,7 +64,7 @@ class TmdbTeaser {
   public function buildAttachableTmdbTeasers(TmdbLocalStorageType $storage_type, int $node_id, array $teasers, NodeBundle $bundle, Language $lang, int $page, bool $more_button = FALSE): array {
     $render = [
       '#theme' => 'tmdb_attachable_teasers',
-      '#items' => $this->buildTmdbTeasers($teasers, $bundle, $lang),
+      '#items' => $this->buildTmdbTeasers($teasers, $bundle, $lang, TRUE),
       '#page' => $page,
     ];
 
@@ -95,22 +92,25 @@ class TmdbTeaser {
    * @param array $teasers
    * @param NodeBundle $bundle
    * @param Language $lang
+   * @param bool $sort_by_rating
    *
    * @return array
    */
-  public function buildTmdbTeasers(array $teasers, NodeBundle $bundle, Language $lang): array {
+  public function buildTmdbTeasers(array $teasers, NodeBundle $bundle, Language $lang, bool $sort_by_rating): array {
     $render = [];
 
-    foreach ($teasers as $teaser) {
-      $render[] = [
-        '#theme' => 'tmdb_teaser',
-        '#bundle' => $bundle->name,
-        '#tmdb_id' => $teaser['id'],
-        '#poster' => $teaser['poster_path'] ?: NULL,
-        '#imdb_rating' => $this->tmdb_lazy->generateNodeImdbRatingPlaceholder($bundle, $teaser['id']),
-        '#title' => $teaser['title'],
-        '#original_title' => $lang !== Language::en ? $this->tmdb_lazy->generateNodeOriginalTitlePlaceholder($bundle, $teaser['id']) : NULL,
-      ];
+    foreach ($teasers as $key => $teaser) {
+      $render[$key] = $this->tmdb_lazy->generateTeaserPlaceholder($bundle, $lang, $teaser);
+
+      if ($sort_by_rating) {
+        $render[$key]['#rating'] = $teaser['vote_average'];
+      }
+    }
+
+    if ($sort_by_rating) {
+      usort($render, fn($a, $b) => $b['#rating'] <=> $a['#rating']);
+
+      $render = array_map(fn($item) => array_diff_key($item, ['#rating' => TRUE]), $render);
     }
 
     return $render;

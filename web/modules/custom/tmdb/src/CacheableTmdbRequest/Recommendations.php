@@ -9,36 +9,18 @@ use Tmdb\Exception\TmdbApiException;
 
 class Recommendations extends CacheableTmdbRequest {
 
-  private NodeBundle $bundle;
-
-  private int $tmdb_id;
-
-  private Language $lang;
-
-  private int $page = 1;
-
-  public function setBundle(NodeBundle $bundle): self {
-    $this->bundle = $bundle;
-
-    return $this;
-  }
-
-  public function setTmdbId(int $tmdb_id): self {
-    $this->tmdb_id = $tmdb_id;
-
-    return $this;
-  }
-
-  public function setLanguage(Language $lang): self {
-    $this->lang = $lang;
-
-    return $this;
-  }
-
-  public function setPage(int $page): self {
-    $this->page = $page;
-
-    return $this;
+  /**
+   * @param \Drupal\mvs\enum\NodeBundle $bundle
+   * @param int $tmdb_id
+   * @param \Drupal\mvs\enum\Language $lang
+   * @param int $page
+   */
+  public function __construct(
+    private readonly NodeBundle $bundle,
+    private readonly int $tmdb_id,
+    private readonly Language $lang,
+    private readonly int $page = 1,
+  ) {
   }
 
   /**
@@ -48,13 +30,7 @@ class Recommendations extends CacheableTmdbRequest {
     // The first page usually cached already or recommendations better cache
     // with other fields for performance.
     if ($this->page === 1) {
-      if (
-        $response = (new FullRequest())
-          ->setBundle($this->bundle)
-          ->setTmdbId($this->tmdb_id)
-          ->setLanguage($this->lang)
-          ->response()
-      ) {
+      if ($response = new FullRequest($this->bundle, $this->tmdb_id, $this->lang)->response()) {
         return $response['recommendations'];
       }
 
@@ -91,7 +67,7 @@ class Recommendations extends CacheableTmdbRequest {
   protected function getStorageFilePath(): TmdbLocalStorageFilePath {
     return new TmdbLocalStorageFilePath(
       'recommendations',
-      "{$this->tmdb_id}_{$this->page}",
+      "{$this->tmdb_id}_$this->page",
       [
         $this->lang->name,
         $this->bundle->name,

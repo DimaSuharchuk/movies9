@@ -38,9 +38,9 @@ class ImdbRating {
       return $rating;
     }
 
-    // Get rating from file.
+    // Get rating from a file.
     $rating = $this->file_manager->get($imdb_id);
-    // Save rating from file into DB.
+    // Save rating from a file into DB.
     $this->db_manager->set($imdb_id, $rating);
 
     return $rating;

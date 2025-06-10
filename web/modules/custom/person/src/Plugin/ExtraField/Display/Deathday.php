@@ -43,8 +43,7 @@ class Deathday extends ExtraTmdbFieldDisplayBase {
       // Calculate person's years.
       $birthday = $this->getPersonCommonField('birthday');
       $date_from = DateTime::createFromFormat('Y-m-d', $birthday);
-      $deathday = $this->getPersonCommonField('deathday');
-      $date_to = $deathday ? DateTime::createFromFormat('Y-m-d', $deathday) : new DateTime();
+      $date_to = DateTime::createFromFormat('Y-m-d', $deathday);
 
       if ($person_years_now = $this->date_helper->getYearsDiff($date_from, $date_to)) {
         $person_years_now_t = $this->formatPlural($person_years_now, '@count year', '@count years', [], ['context' => 'Person years']);

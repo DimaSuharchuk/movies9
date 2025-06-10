@@ -40,7 +40,7 @@ class ImdbRating extends ExtraTmdbFieldDisplayBase {
       $build = [
         '#theme' => 'field_with_label',
         '#label' => 'imdb',
-        '#content' => $rating,
+        '#content' => round($rating, 1),
       ];
     }
 

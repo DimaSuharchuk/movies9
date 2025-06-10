@@ -7,20 +7,14 @@ use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class MovieCollection extends CacheableTmdbRequest {
 
-  private int $movie_tmdb_id;
-
-  private Language $lang;
-
-  public function setMovieTmdbId(int $movie_tmdb_id): self {
-    $this->movie_tmdb_id = $movie_tmdb_id;
-
-    return $this;
-  }
-
-  public function setLanguage(Language $lang): self {
-    $this->lang = $lang;
-
-    return $this;
+  /**
+   * @param int $movie_tmdb_id
+   * @param \Drupal\mvs\enum\Language $lang
+   */
+  public function __construct(
+    private readonly int $movie_tmdb_id,
+    private readonly Language $lang,
+  ) {
   }
 
   /**
@@ -51,6 +45,7 @@ class MovieCollection extends CacheableTmdbRequest {
       'title',
       'original_title',
       'poster_path',
+      'vote_average',
     ];
     $filtered['teasers'] = $this->allowedFieldsFilter($data['parts'], $allowed_fields);
 

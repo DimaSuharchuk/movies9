@@ -34,10 +34,7 @@ class TmdbApiAdapter {
       ($common = $this->getCommonFieldsByTmdbId(NodeBundle::movie, $movie_tmdb_id, $lang))
       && isset($common['collection_id'])
     ) {
-      return new MovieCollection()
-        ->setMovieTmdbId($common['collection_id'])
-        ->setLanguage($lang)
-        ->response();
+      return new MovieCollection($common['collection_id'], $lang)->response();
     }
 
     return NULL;
@@ -94,12 +91,14 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getRecommendations(NodeBundle $bundle, int $tmdb_id, Language $lang, int $page): ?array {
-    return new Recommendations()
-      ->setBundle($bundle)
-      ->setTmdbId($tmdb_id)
-      ->setLanguage($lang)
-      ->setPage($page)
-      ->response();
+    if (
+      $page === 1
+      && $full_info = $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang, TRUE)
+    ) {
+      return $full_info['recommendations'] ?? [];
+    }
+
+    return new Recommendations($bundle, $tmdb_id, $lang, $page)->response();
   }
 
   /**
@@ -116,12 +115,14 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getSimilar(NodeBundle $bundle, int $tmdb_id, Language $lang, int $page): ?array {
-    return new Similar()
-      ->setBundle($bundle)
-      ->setTmdbId($tmdb_id)
-      ->setLanguage($lang)
-      ->setPage($page)
-      ->response();
+    if (
+      $page === 1
+      && $full_info = $this->getFullInfoByTmdbId($bundle, $tmdb_id, $lang, TRUE)
+    ) {
+      return $full_info['similar'] ?? [];
+    }
+
+    return new Similar($bundle, $tmdb_id, $lang, $page)->response();
   }
 
   /**
@@ -133,7 +134,7 @@ class TmdbApiAdapter {
    *   [NodeBundle, int].
    */
   public function getTmdbIdByImdbId(string $imdb_id): ?array {
-    return new FindByImdbId()->setImdbId($imdb_id)->response();
+    return new FindByImdbId($imdb_id)->response();
   }
 
   /**
@@ -212,11 +213,7 @@ class TmdbApiAdapter {
 
     if (is_null($data)) {
       $data = [];
-
-      $query = new FullRequest()
-        ->setBundle($bundle)
-        ->setTmdbId($tmdb_id)
-        ->setLanguage($lang);
+      $query = new FullRequest($bundle, $tmdb_id, $lang);
 
       if (!$only_cached || $query->hasCache()) {
         $data = $query->response();
@@ -239,10 +236,7 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getSeason(int $tv_tmdb_id, int $season_number, Language $lang, bool $only_cached = FALSE): ?array {
-    $query = new Seasons()
-      ->setTvTmdbId($tv_tmdb_id)
-      ->setSeasonNumber($season_number)
-      ->setLanguage($lang);
+    $query = new Seasons($tv_tmdb_id, $season_number, $lang);
 
     if (!$only_cached || $query->hasCache()) {
       return $query->response();
@@ -264,10 +258,7 @@ class TmdbApiAdapter {
    * @return string|null
    */
   public function getEpisodeImdbId(int $tv_tmdb_id, int $season_number, int $episode_number, bool $only_cached = FALSE): ?string {
-    $query = new EpisodeImdbId()
-      ->setTvTmdbId($tv_tmdb_id)
-      ->setSeasonNumber($season_number)
-      ->setEpisodeNumber($episode_number);
+    $query = new EpisodeImdbId($tv_tmdb_id, $season_number, $episode_number);
 
     if (!$only_cached || $query->hasCache()) {
       return $query->response()['imdb_id'];
@@ -285,10 +276,7 @@ class TmdbApiAdapter {
    * @return array
    */
   public function getMovieGenres(Language $lang): array {
-    return new Genres()
-      ->setBundle(NodeBundle::movie)
-      ->setLanguage($lang)
-      ->response();
+    return new Genres(NodeBundle::movie, $lang)->response();
   }
 
   /**
@@ -300,10 +288,7 @@ class TmdbApiAdapter {
    * @return array
    */
   public function getTvGenres(Language $lang): array {
-    return new Genres()
-      ->setBundle(NodeBundle::tv)
-      ->setLanguage($lang)
-      ->response();
+    return new Genres(NodeBundle::tv, $lang)->response();
   }
 
   /**
@@ -316,7 +301,7 @@ class TmdbApiAdapter {
    * @return array|null
    */
   public function getPerson(int $tmdb_id, Language $lang): ?array {
-    return new Person()->setTmdbId($tmdb_id)->setLanguage($lang)->response();
+    return new Person($tmdb_id, $lang)->response();
   }
 
   /**

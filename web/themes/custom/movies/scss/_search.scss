@@ -53,6 +53,7 @@
     border: none;
     transition-duration: 500ms;
     cursor: context-menu;
+    z-index: 2;
 
     &.active {
       right: 40px;

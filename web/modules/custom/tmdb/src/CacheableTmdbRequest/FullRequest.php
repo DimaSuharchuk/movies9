@@ -9,28 +9,16 @@ use Tmdb\Exception\TmdbApiException;
 
 class FullRequest extends CacheableTmdbRequest {
 
-  private NodeBundle $bundle;
-
-  private int $tmdb_id;
-
-  private Language $lang;
-
-  public function setBundle(NodeBundle $bundle): self {
-    $this->bundle = $bundle;
-
-    return $this;
-  }
-
-  public function setTmdbId(int $tmdb_id): self {
-    $this->tmdb_id = $tmdb_id;
-
-    return $this;
-  }
-
-  public function setLanguage(Language $lang): self {
-    $this->lang = $lang;
-
-    return $this;
+  /**
+   * @param \Drupal\mvs\enum\NodeBundle $bundle
+   * @param int $tmdb_id
+   * @param \Drupal\mvs\enum\Language $lang
+   */
+  public function __construct(
+    private readonly NodeBundle $bundle,
+    private readonly int $tmdb_id,
+    private readonly Language $lang,
+  ) {
   }
 
   /**
@@ -109,6 +97,7 @@ class FullRequest extends CacheableTmdbRequest {
       'release_date' => $data['release_date'],
       'runtime' => $data['runtime'],
       'title' => $data['title'],
+      'vote_average' => $data['vote_average'],
     ];
     // Check and add collection ID if the movie belongs to some.
     if ($data['belongs_to_collection']) {
@@ -154,6 +143,7 @@ class FullRequest extends CacheableTmdbRequest {
         'name',
       ]),
       'imdb_id' => $data['external_ids']['imdb_id'],
+      'vote_average' => $data['vote_average'],
     ];
     // Collect only genres' IDs.
     $filtered['genres_ids'] = array_column($data['genres'], 'id');
@@ -181,6 +171,7 @@ class FullRequest extends CacheableTmdbRequest {
       'id',
       'name',
       'profile_path',
+      'popularity',
     ];
 
     return $this->allowedFieldsFilter($data['credits']['cast'], $allowed_fields);
@@ -201,6 +192,7 @@ class FullRequest extends CacheableTmdbRequest {
       'job',
       'name',
       'profile_path',
+      'popularity',
     ];
 
     return $this->allowedFieldsFilter($data['credits']['crew'], $allowed_fields);

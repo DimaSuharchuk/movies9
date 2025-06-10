@@ -143,6 +143,37 @@ abstract class BaseRepository implements BaseRepositoryInterface {
   }
 
   /**
+   * Upsert multiple values in a single query.
+   *
+   * @param string $key
+   * @param array $fields
+   * @param array $data
+   *
+   * @return void
+   * @throws \Exception
+   */
+  protected function upsert(string $key, array $fields, array $data): void {
+    if (
+      !$this->validateFields([$key])
+      || !$this->validateFields($fields)
+    ) {
+      throw new Exception('Incorrect keys for the table.');
+    }
+
+    $query = $this->database->upsert($this::getTable())
+      ->key($key)
+      ->fields($fields);
+
+    foreach ($data as $array) {
+      if ($values = array_filter($array, fn($name) => array_key_exists($name, $fields), ARRAY_FILTER_USE_KEY)) {
+        $query->values($values);
+      }
+    }
+
+    $query->execute();
+  }
+
+  /**
    * Validate fields.
    *
    * @param array $data

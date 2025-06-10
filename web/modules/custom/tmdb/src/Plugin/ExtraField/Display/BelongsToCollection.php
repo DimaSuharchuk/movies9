@@ -62,7 +62,8 @@ class BelongsToCollection extends ExtraTmdbFieldDisplayBase {
         '#items' => $this->tmdb_teaser->buildTmdbTeasers(
           $collection['teasers'],
           NodeBundle::movie,
-          Language::from($entity->language()->getId())
+          Language::from($entity->language()->getId()),
+          FALSE,
         ),
       ];
       // If a collection has a poster.

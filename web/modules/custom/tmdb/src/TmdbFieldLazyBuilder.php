@@ -2,6 +2,7 @@
 
 namespace Drupal\tmdb;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\imdb\ImdbRating;
 use Drupal\mvs\enum\Language;
@@ -112,6 +113,32 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
       '#lazy_builder' => [
         'tmdb.tmdb_field_lazy_builder:renderEpisodeOriginalTitleField',
         [$tv_tmdb_id, $season_number, $episode_number],
+      ],
+      '#create_placeholder' => TRUE,
+    ];
+  }
+
+  /**
+   * Generate lazy builder placeholder for movie/tv teaser.
+   *
+   * @param \Drupal\mvs\enum\NodeBundle $bundle
+   * @param \Drupal\mvs\enum\Language $lang
+   * @param array $teaser
+   *
+   * @return array
+   * @see \Drupal\tmdb\TmdbFieldLazyBuilder::renderTeaser()
+   */
+  public function generateTeaserPlaceholder(NodeBundle $bundle, Language $lang, array $teaser): array {
+    return [
+      '#lazy_builder' => [
+        'tmdb.tmdb_field_lazy_builder:renderTeaser',
+        [
+          $bundle->name,
+          $lang->name,
+          $teaser['id'],
+          $teaser['title'],
+          $teaser['poster_path'] ?: NULL,
+        ],
       ],
       '#create_placeholder' => TRUE,
     ];
@@ -316,6 +343,37 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
   }
 
   /**
+   * Build movie/tv teaser with cache.
+   *
+   * @param string $bundle_name
+   * @param string $lang_name
+   * @param int $tmdb_id
+   * @param string $teaser_title
+   * @param string|null $poster_path
+   *
+   * @return array
+   */
+  public function renderTeaser(string $bundle_name, string $lang_name, int $tmdb_id, string $teaser_title, ?string $poster_path): array {
+    $bundle = NodeBundle::from($bundle_name);
+    $lang = Language::from($lang_name);
+
+    return [
+      '#theme' => 'tmdb_teaser',
+      '#bundle' => $bundle_name,
+      '#tmdb_id' => $tmdb_id,
+      '#poster' => $poster_path,
+      '#imdb_rating' => $this->generateNodeImdbRatingPlaceholder($bundle, $tmdb_id),
+      '#title' => $teaser_title,
+      '#original_title' => $lang !== Language::en ? $this->generateNodeOriginalTitlePlaceholder($bundle, $tmdb_id) : NULL,
+      '#cache' => [
+        'keys' => ['tmdb', 'teaser', $tmdb_id, $bundle_name, $lang_name],
+        'contexts' => ['languages'],
+        'max-age' => Cache::PERMANENT,
+      ],
+    ];
+  }
+
+  /**
    * {@inheritDoc}
    */
   public static function trustedCallbacks(): array {
@@ -325,6 +383,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
       'renderSeasonOriginalTitleField',
       'renderEpisodeImdbRatingField',
       'renderEpisodeOriginalTitleField',
+      'renderTeaser',
     ];
   }
 

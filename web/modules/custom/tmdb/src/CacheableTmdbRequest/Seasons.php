@@ -7,28 +7,16 @@ use Drupal\tmdb\TmdbLocalStorageFilePath;
 
 class Seasons extends CacheableTmdbRequest {
 
-  private int $tv_tmdb_id;
-
-  private int $season_number;
-
-  private Language $lang;
-
-  public function setTvTmdbId(int $tv_tmdb_id): self {
-    $this->tv_tmdb_id = $tv_tmdb_id;
-
-    return $this;
-  }
-
-  public function setSeasonNumber(int $season_number): self {
-    $this->season_number = $season_number;
-
-    return $this;
-  }
-
-  public function setLanguage(Language $lang): self {
-    $this->lang = $lang;
-
-    return $this;
+  /**
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   * @param \Drupal\mvs\enum\Language $lang
+   */
+  public function __construct(
+    private readonly int $tv_tmdb_id,
+    private readonly int $season_number,
+    private readonly Language $lang,
+  ) {
   }
 
   /**

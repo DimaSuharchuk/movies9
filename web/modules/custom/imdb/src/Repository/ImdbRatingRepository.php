@@ -6,11 +6,13 @@ use Drupal\mvs\Repository\BaseRepository;
 
 class ImdbRatingRepository extends BaseRepository {
 
+  const string IMDB_RATING_TABLE = 'imdb_rating';
+
   /**
    * {@inheritdoc}
    */
   public static function getTable(): string {
-    return 'imdb_rating';
+    return self::IMDB_RATING_TABLE;
   }
 
   /**
@@ -30,7 +32,7 @@ class ImdbRatingRepository extends BaseRepository {
    *   Ratings if ID exists in table.
    */
   public function get(array $imdb_ids): array {
-    return $this->database->select($this::getTable(), 't')
+    return $this->database->select(self::IMDB_RATING_TABLE, 't')
       ->fields('t', ['imdb_id', 'rating'])
       ->condition('imdb_id', $imdb_ids, 'IN')
       ->execute()

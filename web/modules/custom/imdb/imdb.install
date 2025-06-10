@@ -14,7 +14,7 @@ use Drupal\mvs\Constant;
 function imdb_schema(): array {
   $schema = [];
 
-  $schema[ImdbRatingRepository::getTable()] = [
+  $schema[ImdbRatingRepository::IMDB_RATING_TABLE] = [
     'description' => 'Contains movies rating from IMDB.',
     'fields' => [
       'imdb_id' => [
@@ -84,7 +84,7 @@ function imdb_update_9301() {
  * Add table for IMDB rating.
  */
 function imdb_update_9401() {
-  $table = ImdbRatingRepository::getTable();
+  $table = ImdbRatingRepository::IMDB_RATING_TABLE;
   $spec = imdb_schema()[$table];
   $schema = Drupal::database()->schema();
 

@@ -29,7 +29,6 @@
         "drupal/better_exposed_filters": "^7",
         "drupal/core-composer-scaffold": "^11",
         "drupal/core-recommended": "^11",
-        "drupal/standwithukraine": "^3",
         "drupal/views_infinite_scroll": "^2",
         "drush/drush": "^13",
         "php-tmdb/api": "^4"

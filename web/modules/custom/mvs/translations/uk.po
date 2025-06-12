@@ -12,6 +12,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
 
+# Metatags.
+msgid "Find the best movies"
+msgstr "Пошук найкращих фільмів"
+
+msgid "Information about each movie - looking for a description, actors or genre? We have it all!"
+msgstr "Інформація про кожен фільм — шукаєш опис, акторів або жанр? У нас є все!"
+
 # Theme switcher.
 msgctxt "Theme switcher"
 msgid "Day"

@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityMalformedException;
+use Drupal\Core\Url;
 use Drupal\mvs\Constant;
 use Drupal\mvs\enum\Language;
 use Drupal\mvs\enum\NodeBundle;
@@ -34,144 +35,117 @@ function mvs_theme($existing, $type, $theme, $path): array {
  * Implements hook_page_attachments().
  */
 function mvs_page_attachments(array &$attachments): void {
-  if (Drupal::routeMatch()->getRouteName() == 'entity.node.canonical') {
-    /** @var \Drupal\node\Entity\Node $node */
-    $node = Drupal::routeMatch()->getParameter('node');
-    $adapter = Drupal::service('tmdb.adapter');
-    $date_helper = Drupal::service('date_helper');
-    $language_manager = Drupal::languageManager();
-    $current = $language_manager->getCurrentLanguage()->getId();
-    $languages = $language_manager->getLanguages();
-    $title = '';
-    $current_lang_node_title = $node->getTitle();
-    $dates = $years = [];
+  $route = Drupal::routeMatch()->getRouteName();
+  $language_manager = Drupal::languageManager();
+  $current = $language_manager->getCurrentLanguage()->getId();
 
-    switch (NodeBundle::from($node->bundle())) {
-      case NodeBundle::movie:
-        if ($date = $adapter->getCommonFieldValue($node, 'release_date')) {
-          $dates[] = $date;
-        }
-        break;
+  switch ($route) {
+    case 'entity.node.canonical':
+      /** @var \Drupal\node\Entity\Node $node */
+      $node = Drupal::routeMatch()->getParameter('node');
+      $adapter = Drupal::service('tmdb.adapter');
+      $date_helper = Drupal::service('date_helper');
+      $title = '';
+      $current_lang_node_title = $node->getTitle();
+      $dates = $years = [];
 
-      case NodeBundle::tv:
-        if ($start_date = $adapter->getCommonFieldValue($node, 'first_air_date')) {
-          $dates[] = $start_date;
-
-          $end_date = '';
-          if ($adapter->getCommonFieldValue($node, 'in_production') === FALSE) {
-            $end_date = $adapter->getCommonFieldValue($node, 'last_air_date');
+      switch (NodeBundle::from($node->bundle())) {
+        case NodeBundle::movie:
+          if ($date = $adapter->getCommonFieldValue($node, 'release_date')) {
+            $dates[] = $date;
           }
-          $dates[] = $end_date;
-        }
+          break;
+
+        case NodeBundle::tv:
+          if ($start_date = $adapter->getCommonFieldValue($node, 'first_air_date')) {
+            $dates[] = $start_date;
+
+            $end_date = '';
+            if ($adapter->getCommonFieldValue($node, 'in_production') === FALSE) {
+              $end_date = $adapter->getCommonFieldValue($node, 'last_air_date');
+            }
+            $dates[] = $end_date;
+          }
+          break;
+      }
+
+      foreach ($dates as $date) {
+        $years[] = $date ? $date_helper->dateStringToYear($date) : '';
+      }
+
+      $year = implode('–', $years);
+
+      switch (Language::from($current)) {
+        case Language::en:
+          $title = $year ? sprintf('%s (%s)', $current_lang_node_title, $year) : sprintf('%s', $current_lang_node_title);
+          break;
+
+        case Language::uk:
+          $en_title = $node->getTranslation(Language::en->name)->getTitle();
+          $title = $year ? sprintf('%s (%s, %s)', $current_lang_node_title, $year, $en_title) : sprintf('%s (%s)', $current_lang_node_title, $en_title);
+          break;
+      }
+
+      mvs_attach_meta_tag($attachments, 'title', $title);
+      mvs_attach_meta_tag($attachments, 'type', NodeBundle::from($node->bundle()) == NodeBundle::movie ? 'video.movie' : 'video.tv_show');
+      mvs_attach_meta_tag($attachments, 'image', Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w780->name . $node->{'field_poster'}->value);
+
+      try {
+        $node_url = $node->toUrl('canonical', ['absolute' => TRUE])->toString();
+        mvs_attach_meta_tag($attachments, 'url', $node_url);
+      }
+      catch (EntityMalformedException) {
+      }
+
+      mvs_attach_meta_tag($attachments, 'description', $adapter->getCommonFieldValue($node, 'overview') ?? '');
+      break;
+
+    default:
+      if (str_starts_with($route, 'entity.')) {
         break;
-    }
+      }
 
-    foreach ($dates as $date) {
-      $years[] = $date ? $date_helper->dateStringToYear($date) : '';
-    }
+      // Site name.
+      mvs_attach_meta_tag($attachments, 'site_name', 'Movies');
+      // Image.
+      $theme_path = Drupal::theme()->getActiveTheme()->getPath();
+      $image_path = "base:/$theme_path/logo-big.png";
+      $absolute_url = Url::fromUri($image_path, ['absolute' => TRUE]);
+      mvs_attach_meta_tag($attachments, 'image', $absolute_url->toString());
+      // Title.
+      mvs_attach_meta_tag($attachments, 'title', t('Find the best movies'));
+      // Description.
+      mvs_attach_meta_tag($attachments, 'description', t('Information about each movie - looking for a description, actors or genre? We have it all!'));
+      // Type.
+      mvs_attach_meta_tag($attachments, 'type', 'website');
+      // Url.
+      try {
+        $url = Url::fromRoute($route, [], ['absolute' => TRUE])->toString();
+        mvs_attach_meta_tag($attachments, 'url', $url);
+      }
+      catch (Exception) {
+      }
+      break;
+  }
 
-    $year = implode('–', $years);
+  // For any route.
+  mvs_attach_meta_tag($attachments, 'locale', _get_locale_code_ISO8859_1($current));
 
-    switch (Language::from($current)) {
-      case Language::en:
-        $title = $year ? sprintf('%s (%s)', $current_lang_node_title, $year) : sprintf('%s', $current_lang_node_title);
-        break;
+  foreach ($language_manager->getLanguages() as $language) {
+    $language = $language->getId();
 
-      case Language::uk:
-        $en_title = $node->getTranslation(Language::en->name)->getTitle();
-        $title = $year ? sprintf('%s (%s, %s)', $current_lang_node_title, $year, $en_title) : sprintf('%s (%s)', $current_lang_node_title, $en_title);
-        break;
-    }
-
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:title',
-          'content' => $title,
-        ],
-      ],
-      'og-title',
-    ];
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:type',
-          'content' => NodeBundle::from($node->bundle()) == NodeBundle::movie ? 'video.movie' : 'video.tv_show',
-        ],
-      ],
-      'og-type',
-    ];
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:image',
-          'content' => Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w780->name . $node->{'field_poster'}->value,
-        ],
-      ],
-      'og-image',
-    ];
-    try {
+    if ($language != $current) {
       $attachments['#attached']['html_head'][] = [
         [
           '#type' => 'html_tag',
           '#tag' => 'meta',
           '#attributes' => [
-            'property' => 'og:url',
-            'content' => $node->toUrl('canonical', ['absolute' => TRUE])
-              ->toString(),
+            'property' => 'og:locale:alternate',
+            'content' => _get_locale_code_ISO8859_1($language),
           ],
         ],
-        'og-url',
+        "og-locale-alternate-$language",
       ];
-    }
-    catch (EntityMalformedException) {
-    }
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:description',
-          'content' => $adapter->getCommonFieldValue($node, 'overview') ?? '',
-        ],
-      ],
-      'og-description',
-    ];
-
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:locale',
-          'content' => _get_locale_code_ISO8859_1($current),
-        ],
-      ],
-      'og-locale',
-    ];
-
-    foreach ($languages as $language) {
-      $language = $language->getId();
-
-      if ($language != $current) {
-        $attachments['#attached']['html_head'][] = [
-          [
-            '#type' => 'html_tag',
-            '#tag' => 'meta',
-            '#attributes' => [
-              'property' => 'og:locale:alternate',
-              'content' => _get_locale_code_ISO8859_1($language),
-            ],
-          ],
-          "og-locale-alternate-$language",
-        ];
-      }
     }
   }
 }
@@ -267,4 +241,30 @@ function _get_locale_code_ISO8859_1(string $langcode): string {
     Language::en->name => 'en_US',
     Language::uk->name => 'uk_UA',
   };
+}
+
+/**
+ * Attaches an Open Graph meta-tag to the HTML head attachments array.
+ *
+ * @param array $attachments
+ *   A renderable array with a '#attached' property to modify by reference.
+ * @param string $name
+ *   The Open Graph meta-tag name (e.g., 'title', 'description').
+ * @param string $content
+ *   The content value for the meta-tag.
+ *
+ * @return void
+ */
+function mvs_attach_meta_tag(array &$attachments, string $name, string $content): void {
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'meta',
+      '#attributes' => [
+        'property' => "og:$name",
+        'content' => $content,
+      ],
+    ],
+    "og-$name",
+  ];
 }

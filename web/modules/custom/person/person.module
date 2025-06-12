@@ -72,35 +72,14 @@ function person_page_attachments(array &$attachments): void {
   if ($matcher->getRouteName() == 'entity.person.canonical') {
     $language_manager = Drupal::languageManager();
     $current = $language_manager->getCurrentLanguage()->getId();
-    $languages = $language_manager->getLanguages();
 
     $entity = $matcher->getParameter('person');
     $tmdb_id = $entity->get('tmdb_id')->value;
     $adapter = Drupal::service('tmdb.adapter');
     $person = $adapter->getPerson($tmdb_id, Language::from($current));
 
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:title',
-          'content' => $person['name'],
-        ],
-      ],
-      'og-title',
-    ];
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:type',
-          'content' => 'profile',
-        ],
-      ],
-      'og-type',
-    ];
+    mvs_attach_meta_tag($attachments, 'title', $person['name']);
+    mvs_attach_meta_tag($attachments, 'type', 'profile');
 
     $gender = match ($person['gender']) {
       Constant::GENDER_MAN => 'male',
@@ -109,90 +88,20 @@ function person_page_attachments(array &$attachments): void {
     };
 
     if ($gender) {
-      $attachments['#attached']['html_head'][] = [
-        [
-          '#type' => 'html_tag',
-          '#tag' => 'meta',
-          '#attributes' => [
-            'property' => 'profile:gender',
-            'content' => $gender,
-          ],
-        ],
-        'og-gender',
-      ];
+      mvs_attach_meta_tag($attachments, 'gender', $gender);
     }
 
     if (!empty($person['profile_path'])) {
-      $attachments['#attached']['html_head'][] = [
-        [
-          '#type' => 'html_tag',
-          '#tag' => 'meta',
-          '#attributes' => [
-            'property' => 'og:image',
-            'content' => Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w780->name . $person['profile_path'],
-          ],
-        ],
-        'og-image',
-      ];
+      mvs_attach_meta_tag($attachments, 'image', Constant::TMDB_IMAGE_BASE_URL . TmdbImageFormat::w780->name . $person['profile_path']);
     }
 
     try {
-      $attachments['#attached']['html_head'][] = [
-        [
-          '#type' => 'html_tag',
-          '#tag' => 'meta',
-          '#attributes' => [
-            'property' => 'og:url',
-            'content' => $entity->toUrl('canonical', ['absolute' => TRUE])
-              ->toString(),
-          ],
-        ],
-        'og-url',
-      ];
+      $url = $entity->toUrl('canonical', ['absolute' => TRUE])->toString();
+      mvs_attach_meta_tag($attachments, 'url', $url);
     }
     catch (EntityMalformedException) {
     }
 
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:description',
-          'content' => $person['biography'] ?? '',
-        ],
-      ],
-      'og-description',
-    ];
-
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => [
-          'property' => 'og:locale',
-          'content' => _get_locale_code_ISO8859_1($current),
-        ],
-      ],
-      'og-locale',
-    ];
-
-    foreach ($languages as $language) {
-      $language = $language->getId();
-
-      if ($language != $current) {
-        $attachments['#attached']['html_head'][] = [
-          [
-            '#type' => 'html_tag',
-            '#tag' => 'meta',
-            '#attributes' => [
-              'property' => 'og:locale:alternate',
-              'content' => _get_locale_code_ISO8859_1($language),
-            ],
-          ],
-          "og-locale-alternate-$language",
-        ];
-      }
-    }
+    mvs_attach_meta_tag($attachments, 'description', $person['biography'] ?? '');
   }
 }

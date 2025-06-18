@@ -34,11 +34,7 @@ function imdb_rating_insert_batch($imdb_ids, &$context) {
   $manager_file = Drupal::service('imdb.rating.manager.file');
   $manager_db = Drupal::service('imdb.rating.manager.db');
 
-  $ratings = $manager_file->getMultiple($imdb_ids);
-
-  foreach ($ratings as $imdb_id => $rating) {
-    $manager_db->set($imdb_id, $rating);
-  }
+  $manager_db->setMultiple($manager_file->getMultiple($imdb_ids));
 }
 
 /**
@@ -86,7 +82,7 @@ function imdb_nodes_insert_batch($imdb_id, &$context) {
   // Create movie or TV on all languages.
   if (!Drupal::service('entity_helper')->prepareNode($bundle, $tmdb_id, TRUE)) {
     throw new Exception(t('%type has not been created with TMDb ID %tmdb_id.', [
-      '%type' => $bundle->value(),
+      '%type' => $bundle->value,
       '%tmdb_id' => $tmdb_id,
     ]));
   }

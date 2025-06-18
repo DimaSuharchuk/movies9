@@ -137,9 +137,7 @@ class EntityFinder {
 
       if ($bundle_key) {
         // Convert "Entity Bundle"s to strings.
-        array_walk($bundles, function (&$value) {
-          $value = $value->name;
-        });
+        $bundles = array_column($bundles, 'name');
         // Set bundles.
         $this->search_values[$bundle_key] = $bundles;
       }

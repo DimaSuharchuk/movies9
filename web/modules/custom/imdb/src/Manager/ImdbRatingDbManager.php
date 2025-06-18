@@ -65,6 +65,18 @@ class ImdbRatingDbManager {
   }
 
   /**
+   * Save many ratings in 1 request to DB.
+   *
+   * @param array $ratings
+   *   [IMDb ID => IMDb rating].
+   *
+   * @return void
+   */
+  public function setMultiple(array $ratings): void {
+    $this->repository->setMultiple($ratings);
+  }
+
+  /**
    * Clear table with IMDb ratings.
    *
    * @return void

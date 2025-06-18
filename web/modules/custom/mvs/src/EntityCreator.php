@@ -273,11 +273,11 @@ class EntityCreator {
   private function createEntity(
     EntityType   $type,
     Language     $lang,
-    EntityBundle $bundle = NULL,
+    ?EntityBundle $bundle = NULL,
     array        $properties_data = [],
     array        $fields_data = [],
     string       $unique_field_name = '',
-    string       $unique_field_value = ''
+    string       $unique_field_value = '',
   ): ?ContentEntityInterface {
     $type_value = $type->value;
     $lang_value = $lang->name;

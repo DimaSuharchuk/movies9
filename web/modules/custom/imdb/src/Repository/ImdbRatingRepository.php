@@ -39,4 +39,24 @@ class ImdbRatingRepository extends BaseRepository {
       ->fetchAllKeyed();
   }
 
+  /**
+   * Save ratings to DB multiple.
+   *
+   * @param array $ratings
+   *
+   * @return void
+   */
+  public function setMultiple(array $ratings): void {
+    $data = [];
+
+    foreach ($ratings as $imdb_id => $rating) {
+      $data[] = [
+        'imdb_id' => $imdb_id,
+        'rating' => $rating,
+      ];
+    }
+
+    $this->upsert('imdb_id', ['imdb_id', 'rating'], $data);
+  }
+
 }

@@ -49,15 +49,6 @@ class FindByImdbId extends CacheableTmdbRequest {
   /**
    * {@inheritDoc}
    */
-  protected function massageBeforeSave(array $data): array {
-    $data['type'] = $data['type']->name;
-
-    return $data;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   protected function massageAfterLoad(array &$data): void {
     $data['type'] = NodeBundle::tryFrom($data['type']);
   }

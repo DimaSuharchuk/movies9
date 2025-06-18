@@ -2,6 +2,7 @@
 
 namespace Drupal\imdb\Manager;
 
+use Drupal\Core\File\FileSystem;
 use Exception;
 use function array_flip;
 use function explode;
@@ -17,6 +18,15 @@ class ImdbRatingFileManager {
    * @var string
    */
   private string $filepath = '../private/title.ratings.tsv';
+
+  /**
+   * @var string
+   */
+  private string $tmp_dir;
+
+  public function __construct(FileSystem $file_system) {
+    $this->tmp_dir = $file_system->getTempDirectory();
+  }
 
   /**
    * Get IMDb rating by IMDb ID.
@@ -43,10 +53,24 @@ class ImdbRatingFileManager {
    *   Ratings from IMDb.
    */
   public function getMultiple(array $imdb_ids): array {
-    $ratings = [];
-    $ids = implode('\|', $imdb_ids);
+    if (!$imdb_ids) {
+      return [];
+    }
 
-    if ($grep = shell_exec("grep \"$ids\" $this->filepath")) {
+    $ratings = [];
+    $temp_file = tempnam($this->tmp_dir, 'imdb_');
+
+    file_put_contents($temp_file, implode("\n", $imdb_ids));
+
+    $escaped_ids_file = escapeshellarg($temp_file);
+    $escaped_tsv = escapeshellarg($this->filepath);
+
+    $cmd = "grep -F --file=$escaped_ids_file $escaped_tsv | cut -f1,2";
+    $grep = shell_exec($cmd);
+
+    unlink($temp_file);
+
+    if ($grep) {
       $lines = explode("\n", $grep);
 
       foreach ($lines as $line) {

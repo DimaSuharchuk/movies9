@@ -19,3 +19,5 @@ services:
       - '@date.formatter'
   time_helper:
     class: Drupal\mvs\TimeHelper
+    arguments:
+      - '@string_translation'

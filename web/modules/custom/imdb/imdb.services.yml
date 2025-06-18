@@ -15,3 +15,5 @@ services:
       - '@imdb.rating.repository'
   imdb.rating.manager.file:
     class: Drupal\imdb\Manager\ImdbRatingFileManager
+    arguments:
+      - '@file_system'

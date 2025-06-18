@@ -154,8 +154,8 @@ abstract class BaseRepository implements BaseRepositoryInterface {
    */
   protected function upsert(string $key, array $fields, array $data): void {
     if (
-      !$this->validateFields([$key])
-      || !$this->validateFields($fields)
+      !$this->validateFields([$key => NULL])
+      || !$this->validateFields(array_flip($fields))
     ) {
       throw new Exception('Incorrect keys for the table.');
     }
@@ -165,7 +165,7 @@ abstract class BaseRepository implements BaseRepositoryInterface {
       ->fields($fields);
 
     foreach ($data as $array) {
-      if ($values = array_filter($array, fn($name) => array_key_exists($name, $fields), ARRAY_FILTER_USE_KEY)) {
+      if ($values = array_filter($array, fn($name) => in_array($name, $fields), ARRAY_FILTER_USE_KEY)) {
         $query->values($values);
       }
     }

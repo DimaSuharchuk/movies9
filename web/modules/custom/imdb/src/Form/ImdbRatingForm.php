@@ -103,7 +103,8 @@ class ImdbRatingForm extends FormBase {
       ->execute()
       ->fetchCol();
 
-    foreach (array_chunk($imdb_ids, 500) as $chunk) {
+    foreach (array_chunk($imdb_ids, 10000) as $chunk) {
+      /** @see \imdb_rating_insert_batch() */
       $operations[] = ['imdb_rating_insert_batch', [$chunk]];
     }
 

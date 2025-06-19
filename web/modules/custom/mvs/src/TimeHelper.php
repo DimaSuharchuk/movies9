@@ -2,21 +2,23 @@
 
 namespace Drupal\mvs;
 
-use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslationManager;
 
-class TimeHelper {
+readonly class TimeHelper {
 
-  use StringTranslationTrait;
+  public function __construct(
+    protected TranslationManager $translationManager,
+  ) {
+  }
 
   /**
-   * Simply connect the two methods work for easier using in client code.
+   * Connect the two methods work for easier using in client code.
    *
    * @param int $minutes
    *
    * @return string
    *
-   * @see TimeHelper::separateMinutes()
-   * @see TimeHelper::formatTime()
+   * @see TimeHelperKernelTest::testFormatTimeFromMinutes()
    */
   public function formatTimeFromMinutes(int $minutes): string {
     $x = $this->separateMinutes($minutes);
@@ -31,18 +33,21 @@ class TimeHelper {
    * @param int $minutes
    *
    * @return string
+   *
+   * @see TimeHelperKernelTest::testFormatTime()
+   * @internal
    */
   public function formatTime(int $hours, int $minutes): string {
-    $output = '';
+    $output = [];
 
     if ($hours > 0) {
-      $output = $this->formatPlural($hours, '1 hour', '@count hours') . ' ';
+      $output[] = $this->translationManager->formatPlural($hours, '1 hour', '@count hours');
     }
     if ($minutes > 0) {
-      $output .= $this->formatPlural($minutes, '1 minute', '@count minutes');
+      $output[] = $this->translationManager->formatPlural($minutes, '1 minute', '@count minutes');
     }
 
-    return $output;
+    return implode(' ', $output);
   }
 
   /**
@@ -52,6 +57,9 @@ class TimeHelper {
    * @param int $minutes
    *
    * @return array
+   *
+   * @see \Drupal\Tests\mvs\Unit\TimeHelperTest::testSeparateMinutes()
+   * @internal
    */
   public function separateMinutes(int $minutes): array {
     return [

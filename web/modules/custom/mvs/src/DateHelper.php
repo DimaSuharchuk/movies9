@@ -3,15 +3,15 @@
 namespace Drupal\mvs;
 
 use DateTime;
+use DateTimeInterface;
 use Drupal\Core\Datetime\DateFormatter;
 use Exception;
 
-class DateHelper {
+readonly class DateHelper {
 
-  private DateFormatter $date_formatter;
-
-  public function __construct(DateFormatter $formatter) {
-    $this->date_formatter = $formatter;
+  public function __construct(
+    private DateFormatter $formatter,
+  ) {
   }
 
   /**
@@ -20,11 +20,18 @@ class DateHelper {
    * @param string|null $s
    *   Date string in any PHP correct format.
    *
-   * @return string|null
+   * @return int|null
    *   4-digit year.
+   *
+   * @see \Drupal\Tests\mvs\Kernel\DateHelperKernelTest::testDateStringToYear()
+   * @see \Drupal\Tests\mvs\Kernel\DateHelperKernelTest::testDateStringToYearNegative()
    */
-  public function dateStringToYear(?string $s): ?string {
-    return $s ? $this->dateStringToFormat($s, 'Y') : NULL;
+  public function dateStringToYear(?string $s): ?int {
+    if (!$s) {
+      return NULL;
+    }
+
+    return $this->dateStringToFormat($s, 'Y') ?: NULL;
   }
 
   /**
@@ -34,6 +41,9 @@ class DateHelper {
    *   Date string in any PHP correct format.
    *
    * @return string|null
+   *
+   * @see \Drupal\Tests\mvs\Kernel\DateHelperKernelTest::testDateStringToReleaseDateFormat()
+   * @see \Drupal\Tests\mvs\Kernel\DateHelperKernelTest::testDateStringToReleaseDateFormatNegative()
    */
   public function dateStringToReleaseDateFormat(?string $s): ?string {
     return $s ? $this->dateStringToFormat($s, 'd F Y') : NULL;
@@ -49,13 +59,14 @@ class DateHelper {
    *
    * @return string
    *   Converted date.
+   *
+   * @see \Drupal\Tests\mvs\Kernel\DateHelperKernelTest::testDateStringToFormat()
+   * @see \Drupal\Tests\mvs\Kernel\DateHelperKernelTest::testDateStringToFormatNegative()
    */
   public function dateStringToFormat(string $s, string $format): string {
-    return $this->date_formatter->format(
-      $this->dateStringToTimestamp($s),
-      'custom',
-      $format
-    );
+    $timestamp = $this->dateStringToTimestamp($s);
+
+    return $timestamp ? $this->formatter->format($timestamp, 'custom', $format) : '';
   }
 
   /**
@@ -66,10 +77,13 @@ class DateHelper {
    *
    * @return int|null
    *   Converted date.
+   *
+   * @see \Drupal\Tests\mvs\Unit\DateHelperUnitTest::testDateStringToTimestamp()
+   * @see \Drupal\Tests\mvs\Unit\DateHelperUnitTest::testDateStringToTimestampWithInvalidString()
    */
   public function dateStringToTimestamp(string $s): ?int {
     try {
-      return (new DateTime($s))->getTimestamp();
+      return new DateTime($s)->getTimestamp();
     }
     catch (Exception) {
       return NULL;
@@ -79,15 +93,17 @@ class DateHelper {
   /**
    * Calculates number of years between the dates.
    *
-   * @param DateTime $date_from
+   * @param DateTimeInterface $date_from
    *   Represents the initial point from which the difference is calculated.
-   * @param DateTime $date_to
+   * @param DateTimeInterface $date_to
    *   Represents the point up to which the difference is calculated.
    *
    * @return int|null
    *   Number of years if argument is the correct date.
+   *
+   * @see \Drupal\Tests\mvs\Unit\DateHelperUnitTest::testGetYearsDiff()
    */
-  public function getYearsDiff(DateTime $date_from, DateTime $date_to): ?int {
+  public function getYearsDiff(DateTimeInterface $date_from, DateTimeInterface $date_to): ?int {
     return $date_to->diff($date_from)->y;
   }
 

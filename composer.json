@@ -24,7 +24,6 @@
         "ext-pdo": "*",
         "ext-zlib": "*",
         "composer/installers": "^2",
-        "cweagans/composer-patches": "^1.7",
         "dimasuharchuk/country-access-filter": "^1.0",
         "drupal/better_exposed_filters": "^7",
         "drupal/core-composer-scaffold": "^11",
@@ -42,9 +41,7 @@
         "sort-packages": true,
         "allow-plugins": {
             "composer/installers": true,
-            "drupal/core-composer-scaffold": true,
-            "php-http/discovery": true,
-            "cweagans/composer-patches": true
+            "drupal/core-composer-scaffold": true
         }
     },
     "extra": {
@@ -63,5 +60,19 @@
             "web/modules/custom/{$name}": ["type:drupal-custom-module"],
             "web/themes/custom/{$name}": ["type:drupal-custom-theme"]
         }
+    },
+    "autoload": {
+        "psr-4": {
+            "Drupal\\mvs\\": "web/modules/custom/mvs/src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Drupal\\Tests\\mvs\\Unit\\": "web/modules/custom/mvs/tests/src/Unit",
+            "Drupal\\Tests\\mvs\\Kernel\\": "web/modules/custom/mvs/tests/src/Kernel"
+        }
+    },
+    "require-dev": {
+        "drupal/core-dev": "^11"
     }
 }

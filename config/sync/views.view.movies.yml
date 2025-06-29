@@ -15,6 +15,7 @@ dependencies:
     - taxonomy
     - user
     - views_infinite_scroll
+    - views_random_seed
 id: movies
 label: Movies
 module: views
@@ -116,12 +117,12 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
-              autosubmit_textfield_minimum_length: 3
             filter:
               field_genres_target_id:
                 plugin_id: bef
@@ -146,19 +147,24 @@ display:
         options: {  }
       empty: {  }
       sorts:
-        random:
-          id: random
+        random_seed:
+          id: random_seed
           table: views
-          field: random
+          field: random_seed
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: random
+          plugin_id: views_random_seed_random
           order: ASC
           expose:
             label: ''
-            field_identifier: random
+            field_identifier: ''
           exposed: false
+          user_seed_type: diff_per_user
+          anonymous_session: false
+          reset_seed_int: 0
+          reset_seed_custom: 30
+          reuse_seed: ''
       arguments: {  }
       filters:
         status:
@@ -285,12 +291,13 @@ display:
       footer: {  }
       display_extenders: {  }
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -467,12 +474,13 @@ display:
         parent: ''
         context: '0'
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -486,12 +494,13 @@ display:
       display_extenders: {  }
       path: home
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -710,12 +719,13 @@ display:
         parent: ''
         context: '0'
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -934,12 +944,13 @@ display:
         parent: ''
         context: '0'
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }

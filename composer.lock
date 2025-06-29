@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d38b9f8362beff4cac4955be1ce7a10",
+    "content-hash": "068644c4b669969ad3d8537a65b9f9ca",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1603,6 +1603,50 @@
             "homepage": "https://www.drupal.org/project/views_infinite_scroll",
             "support": {
                 "source": "https://git.drupalcode.org/project/views_infinite_scroll"
+            }
+        },
+        {
+            "name": "drupal/views_random_seed",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_random_seed.git",
+                "reference": "8.x-1.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_random_seed-8.x-1.3.zip",
+                "reference": "8.x-1.3",
+                "shasum": "e03876f4e5b2282eba3891783307335d91c48821"
+            },
+            "require": {
+                "drupal/core": "^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.3",
+                    "datestamp": "1722720448",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "swentel",
+                    "homepage": "https://www.drupal.org/user/107403"
+                }
+            ],
+            "description": "Adds a random order handler with seed so random order listings with paging works.",
+            "homepage": "https://www.drupal.org/project/views_random_seed",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views_random_seed"
             }
         },
         {

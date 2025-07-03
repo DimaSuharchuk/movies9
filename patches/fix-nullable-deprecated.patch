@@ -1,0 +1,48 @@
+diff --git a/lib/Tmdb/Event/Listener/Request/UserAgentRequestListener.php b/lib/Tmdb/Event/Listener/Request/UserAgentRequestListener.php
+index 1b25178..0190003 100644
+--- a/lib/Tmdb/Event/Listener/Request/UserAgentRequestListener.php
++++ b/lib/Tmdb/Event/Listener/Request/UserAgentRequestListener.php
+@@ -28,7 +28,7 @@ class UserAgentRequestListener
+      * UserAgentRequestListener constructor.
+      * @param string|null $userAgent
+      */
+-    public function __construct(string $userAgent = null)
++    public function __construct(?string $userAgent = null)
+     {
+         $this->userAgent = $userAgent ?? sprintf('php-tmdb/api/%s', Client::VERSION);
+     }
+diff --git a/lib/Tmdb/Event/RequestEvent.php b/lib/Tmdb/Event/RequestEvent.php
+index b7473cc..28f8fa1 100644
+--- a/lib/Tmdb/Event/RequestEvent.php
++++ b/lib/Tmdb/Event/RequestEvent.php
+@@ -45,7 +45,7 @@ class RequestEvent extends StoppableEvent implements LoggableHttpEventInterface
+      * @param RequestInterface $request
+      * @param SessionToken|null $sessionToken
+      */
+-    public function __construct(RequestInterface $request, SessionToken $sessionToken = null)
++    public function __construct(RequestInterface $request, ?SessionToken $sessionToken = null)
+     {
+         $this->request = $request;
+         $this->sessionToken = $sessionToken;
+@@ -109,7 +109,7 @@ class RequestEvent extends StoppableEvent implements LoggableHttpEventInterface
+      * @param SessionToken|null $sessionToken
+      * @return self
+      */
+-    public function setSessionToken(SessionToken $sessionToken = null): RequestEvent
++    public function setSessionToken(?SessionToken $sessionToken = null): RequestEvent
+     {
+         $this->sessionToken = $sessionToken;
+ 
+diff --git a/lib/Tmdb/HttpClient/HttpClient.php b/lib/Tmdb/HttpClient/HttpClient.php
+index 5b752b9..bc845d3 100644
+--- a/lib/Tmdb/HttpClient/HttpClient.php
++++ b/lib/Tmdb/HttpClient/HttpClient.php
+@@ -199,7 +199,7 @@ class HttpClient
+      * @param string|null $key
+      * @return array|mixed
+      */
+-    public function getOptions(string $key = null)
++    public function getOptions(?string $key = null)
+     {
+         if ($key) {
+             return isset($this->options[$key]) ? $this->options[$key] : null;

@@ -40,6 +40,12 @@ class LanguageSwitcher extends BlockBase implements ContainerFactoryPluginInterf
    * @inheritDoc
    */
   public function build(): array {
+    $route_name = $this->routeMatch->getRouteName();
+
+    if (!$route_name) {
+      return [];
+    }
+
     $links = $this->language_manager->getLanguageSwitchLinks(LanguageInterface::TYPE_INTERFACE, Url::fromRouteMatch($this->routeMatch))->links;
 
     $current_language = $this->language_manager->getCurrentLanguage();

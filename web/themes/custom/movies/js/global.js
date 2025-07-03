@@ -26,32 +26,6 @@
     },
   };
 
-  D.behaviors.themeSwitcher = {
-    attach: context => {
-      const themeSwitchers = once('button--theme-switcher', '.theme-switcher', context)
-
-      if (themeSwitchers.length) {
-        themeSwitchers.forEach(themeSwitcher => {
-          themeSwitcher.addEventListener("click", () => {
-            if (localStorage.getItem("dark-theme") !== "1") {
-              Drupal.behaviors.themeSwitcher.setDark();
-            } else {
-              Drupal.behaviors.themeSwitcher.setLight();
-            }
-          });
-        })
-      }
-    },
-    setDark: () => {
-      document.body.dataset.theme = "dark";
-      localStorage.setItem("dark-theme", "1");
-    },
-    setLight: () => {
-      document.body.dataset.theme = "";
-      localStorage.setItem("dark-theme", "0");
-    },
-  };
-
   D.behaviors.redirects = {
     attach: () => {
       once('teaser-redirect', '[data-redirect]').forEach(article => article.addEventListener('mousedown', evt => {

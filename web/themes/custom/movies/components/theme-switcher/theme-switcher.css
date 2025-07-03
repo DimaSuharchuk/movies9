@@ -1,0 +1,77 @@
+:root {
+    /* Light theme. */
+    --text-color-main: #818e9b;
+    --bg-color-light-gray: #f2f2f2;
+
+    /* Dark theme. */
+    --dk_text-color-main: #f2f2f2;
+    --dk_bg-color-white: #212936;
+
+    /* Fonts. */
+    --font-weight-bold: 500;
+}
+
+.theme-switcher {
+    grid-area: theme-switcher;
+    position: relative;
+    width: 100px;
+    height: 40px;
+    display: grid;
+    grid-template-columns: 62px 32px 62px;
+    place-items: center;
+    border: 2px solid var(--bg-color-light-gray);
+    border-radius: 20px;
+    background-color: var(--bg-color-light-gray);
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+}
+
+.theme-switcher .text {
+    height: 36px;
+    display: grid;
+    place-content: center;
+    font-size: 9px;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-color-main);
+    transition: transform .3s;
+}
+
+.theme-switcher .icon {
+    width: 32px;
+    height: 32px;
+    background-image: url("./assets/sun.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
+    border-radius: 100%;
+    transition: transform .3s;
+}
+
+/**
+ * DARK THEME.
+ */
+[data-theme='dark'] .theme-switcher {
+    background-color: var(--dk_bg-color-white);
+}
+
+[data-theme='dark'] .theme-switcher .text,
+[data-theme='dark'] .theme-switcher .icon {
+    transform: translateX(-60px);
+}
+
+[data-theme='dark'] .theme-switcher .text {
+    color: var(--bg-color-light-gray);
+}
+
+[data-theme='dark'] .theme-switcher .icon {
+    background-image: url('./assets/moon.svg');
+    background-color: var(--bg-color-light-gray);
+}
+
+/**
+ * Mobile.
+ */
+.mobile-nav .theme-switcher {
+    margin: 15px auto;
+}

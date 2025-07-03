@@ -65,11 +65,7 @@
 
         <div class="switchers-wrapper mobile-hide">
           {{ page.header.language_switcher }}
-          <div class="theme-switcher">
-            <span class="text light">{{ "Day"|t({},{"context":"Theme switcher"}) }}</span>
-            <span class="icon"></span>
-            <span class="text dark">{{ "Night"|t({},{"context":"Theme switcher"}) }}</span>
-          </div>
+          {{ include('movies:theme-switcher') }}
         </div>
 
         <div class="mobile-nav desktop-hide">
@@ -84,13 +80,7 @@
               {{ page.header.movies_main_navigation }}
             </nav>
             {{ page.header.language_switcher_mobile }}
-            <div id="theme-switcher-mobile">
-              <div class="theme-switcher">
-                <span class="text light">{{ "Day"|t({},{"context":"Theme switcher"}) }}</span>
-                <span class="icon"></span>
-                <span class="text dark">{{ "Night"|t({},{"context":"Theme switcher"}) }}</span>
-              </div>
-            </div>
+            {{ include('movies:theme-switcher') }}
           </div>
         </div>
 

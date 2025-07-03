@@ -174,11 +174,13 @@
         @media (max-width: 376px) {
           top: 120px;
         }
+
+        > *:not(:last-child) {
+          border-bottom: 1px solid $text-color-main;
+        }
       }
 
       .main-menu {
-        border-bottom: 1px solid $text-color-main;
-
         ul {
           li {
             display: grid;
@@ -230,59 +232,6 @@
   font-size: 1.5em;
 }
 
-/**
- * Theme switcher.
- */
-.theme-switcher {
-  grid-area: theme-switcher;
-  position: relative;
-  width: 100px;
-  height: 40px;
-  display: grid;
-  grid-template-columns: 62px 32px 62px;
-  place-items: center;
-  border: 2px solid $bg-color-light-gray;
-  border-radius: 20px;
-  background: {
-    color: $bg-color-light-gray;
-  };
-  overflow: hidden;
-  cursor: pointer;
-  user-select: none;
-
-  .text {
-    height: 36px;
-    display: grid;
-    place-content: center;
-    font: {
-      size: 9px;
-      weight: $font-weight-bold;
-    };
-    color: $text-color-main;
-    transition: transform .3s;
-  }
-
-  .icon {
-    width: 32px;
-    height: 32px;
-    background: {
-      image: url("../assets/sun.svg");
-      color: #fff;
-      repeat: no-repeat;
-      position: center;
-    };
-    border-radius: 100%;
-    transition: transform .3s;
-  }
-}
-
-#theme-switcher-mobile {
-  display: flex;
-  justify-content: center;
-  border-top: 1px solid $text-color-main;
-  padding: 15px;
-}
-
 
 /**
  * DARK THEME.
@@ -325,47 +274,20 @@
     }
 
     .mobile-nav {
-      // .menus-wrapper
-      .open {
+      .menus-wrapper.open {
         background-color: $dk_bg-color-white;
+
+        > *:not(:last-child) {
+          border-bottom: 1px solid $dk_text-color-main;
+        }
       }
 
       .main-menu {
-        border-bottom: 1px solid $dk_text-color-main;
-
         // a
         .is-active {
           color: $dk_text-color-main;
         }
       }
     }
-  }
-
-
-  /**
-   * Theme switcher.
-   */
-  .theme-switcher {
-    background-color: $dk_bg-color-white;
-
-    .text,
-    .icon {
-      transform: translateX(-60px);
-    }
-
-    .text {
-      color: $bg-color-light-gray;
-    }
-
-    .icon {
-      background: {
-        image: url("../assets/moon.svg");
-        color: $bg-color-light-gray;
-      };
-    }
-  }
-
-  #theme-switcher-mobile {
-    border-top: 1px solid $dk_text-color-main;
   }
 }

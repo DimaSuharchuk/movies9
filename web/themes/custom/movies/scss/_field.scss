@@ -167,7 +167,7 @@
 .field-noname-club {
   a {
     display: block;
-    background: url(../assets/nnm.webp) no-repeat;
+    background: url(/themes/custom/movies/assets/nnm.webp) no-repeat;
     background-size: contain;
     width: 30px;
     height: 30px;
@@ -178,7 +178,7 @@
 .field-noname-sheet {
   a {
     display: block;
-    background: url(../assets/sheet.svg) no-repeat center;
+    background: url(/themes/custom/movies/assets/sheet.svg) no-repeat center;
     background-size: contain;
     width: 30px;
     height: 30px;
@@ -254,11 +254,11 @@ a[data-topic-id] {
   height: 30px;
 
   &.file {
-    background-image: url(../assets/torrent.svg);
+    background-image: url(/themes/custom/movies/assets/torrent.svg);
   }
 
   &.magnet {
-    background-image: url(../assets/magnet.svg);
+    background-image: url(/themes/custom/movies/assets/magnet.svg);
   }
 }
 
@@ -268,7 +268,7 @@ a[data-topic-id] {
 .field-copy-movie-admin-info {
   input {
     display: block;
-    background: url(../assets/copy.svg) no-repeat;
+    background: url(/themes/custom/movies/assets/copy.svg) no-repeat;
     background-size: contain;
     width: 30px;
     height: 30px;

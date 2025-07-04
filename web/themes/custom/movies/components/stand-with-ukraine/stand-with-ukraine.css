@@ -1,0 +1,10 @@
+#stand-with-ukraine {
+    background: linear-gradient(0, #ffd500 50%, #005BBBFF 50%);
+    font-weight: 500;
+    letter-spacing: .1rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    text-shadow: 0 0 .5em black;
+    font-size: 1.5em;
+}

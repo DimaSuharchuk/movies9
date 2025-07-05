@@ -936,16 +936,16 @@
         },
         {
             "name": "dimasuharchuk/country-access-filter",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DimaSuharchuk/Country-Access-Filter.git",
-                "reference": "e189e83431146df6a8f2e8a2aeae1c46d5652fc4"
+                "reference": "72521eeb8c2809b4a2c1e9b36f826d51f7334ee3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DimaSuharchuk/Country-Access-Filter/zipball/e189e83431146df6a8f2e8a2aeae1c46d5652fc4",
-                "reference": "e189e83431146df6a8f2e8a2aeae1c46d5652fc4",
+                "url": "https://api.github.com/repos/DimaSuharchuk/Country-Access-Filter/zipball/72521eeb8c2809b4a2c1e9b36f826d51f7334ee3",
+                "reference": "72521eeb8c2809b4a2c1e9b36f826d51f7334ee3",
                 "shasum": ""
             },
             "require": {
@@ -967,10 +967,10 @@
             ],
             "description": "A custom Drupal module for country-based access filtering.",
             "support": {
-                "source": "https://github.com/DimaSuharchuk/Country-Access-Filter/tree/v1.1.0",
+                "source": "https://github.com/DimaSuharchuk/Country-Access-Filter/tree/v1.1.1",
                 "issues": "https://github.com/DimaSuharchuk/Country-Access-Filter/issues"
             },
-            "time": "2025-07-05T07:47:38+00:00"
+            "time": "2025-07-05T09:21:53+00:00"
         },
         {
             "name": "doctrine/annotations",

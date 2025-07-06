@@ -936,16 +936,16 @@
         },
         {
             "name": "dimasuharchuk/country-access-filter",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DimaSuharchuk/Country-Access-Filter.git",
-                "reference": "72521eeb8c2809b4a2c1e9b36f826d51f7334ee3"
+                "reference": "97480166114a79a6d66f15444a7b71364b661abd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DimaSuharchuk/Country-Access-Filter/zipball/72521eeb8c2809b4a2c1e9b36f826d51f7334ee3",
-                "reference": "72521eeb8c2809b4a2c1e9b36f826d51f7334ee3",
+                "url": "https://api.github.com/repos/DimaSuharchuk/Country-Access-Filter/zipball/97480166114a79a6d66f15444a7b71364b661abd",
+                "reference": "97480166114a79a6d66f15444a7b71364b661abd",
                 "shasum": ""
             },
             "require": {
@@ -967,10 +967,10 @@
             ],
             "description": "A custom Drupal module for country-based access filtering.",
             "support": {
-                "source": "https://github.com/DimaSuharchuk/Country-Access-Filter/tree/v1.1.1",
+                "source": "https://github.com/DimaSuharchuk/Country-Access-Filter/tree/v1.1.2",
                 "issues": "https://github.com/DimaSuharchuk/Country-Access-Filter/issues"
             },
-            "time": "2025-07-05T09:21:53+00:00"
+            "time": "2025-07-06T00:43:14+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -8322,16 +8322,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.13.2",
+            "version": "1.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "d25e62e636b0a9b01e3bdebb7823b474876dd829"
+                "reference": "faed855a7b5f4d4637717c2b3863e277116beb36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/d25e62e636b0a9b01e3bdebb7823b474876dd829",
-                "reference": "d25e62e636b0a9b01e3bdebb7823b474876dd829",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/faed855a7b5f4d4637717c2b3863e277116beb36",
+                "reference": "faed855a7b5f4d4637717c2b3863e277116beb36",
                 "shasum": ""
             },
             "require": {
@@ -8370,7 +8370,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.2"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.3"
             },
             "funding": [
                 {
@@ -8378,7 +8378,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-04T14:07:32+00:00"
+            "time": "2025-07-05T12:25:42+00:00"
         },
         {
             "name": "nyholm/psr7-server",

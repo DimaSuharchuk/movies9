@@ -231,7 +231,7 @@ abstract class CacheableTmdbRequest {
           $purged[$i]['original_title'] = $teaser['original_name'];
         }
         else {
-          $purged[$i][$field] = $teaser[$field];
+          $purged[$i][$field] = $teaser[$field] ?? NULL;
         }
       }
     }

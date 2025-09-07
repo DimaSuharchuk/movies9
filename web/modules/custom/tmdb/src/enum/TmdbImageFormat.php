@@ -22,17 +22,17 @@ enum TmdbImageFormat: string {
    * @return array
    */
   public static function getCompactFormats(): array {
-    return array_filter(self::cases(), fn($format) => $format !== self::original);
+    static $formats = NULL;
+
+    return $formats ??= array_column(array_filter(self::cases(), fn(self $f) => str_starts_with($f->name, 'w')), NULL, 'name');
   }
 
-  public static function tryFromKey(int|string $key): ?static {
-    foreach (self::cases() as $case) {
-      if ($case->name === $key) {
-        return $case;
-      }
-    }
+  public static function tryFromKey(string $key): ?TmdbImageFormat {
+    static $result = NULL;
 
-    return NULL;
+    $result ??= array_column(self::cases(), NULL, 'name');
+
+    return $result[$key] ?? NULL;
   }
 
 }

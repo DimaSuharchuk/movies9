@@ -28,15 +28,10 @@ class TmdbImageCompact extends FormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state): array {
     $elements = parent::settingsForm($form, $form_state);
 
-    $formats = TmdbImageFormat::getCompactFormats();
-    array_walk($formats, function (&$format) {
-      // Get number from format values and attach "px" to number.
-      $format = $this->formatToPx($format);
-    });
-
     $elements['width'] = [
       '#type' => 'select',
-      '#options' => $formats,
+      // Get number from format values and attach "px" to number.
+      '#options' => array_map(fn($format) => $this->formatToPx($format), TmdbImageFormat::getCompactFormats()),
       '#default_value' => $this->getSetting('width'),
     ];
 

@@ -23,17 +23,25 @@
 
   const isMobile = () => window.innerWidth < 768;
 
-  // Налаштування (можеш крутити)
+  // Налаштування
   const cfg = {
     zIndex: 9999,
     maxDpr: 2,               // не даємо малювати 3x/4x на Retina
     fpsMobile: 30,
     fpsDesktop: 60,
     density: 8500,           // чим БІЛЬШЕ число — тим МЕНШЕ сніжинок
-    maxFlakesMobile: 45,
-    maxFlakesDesktop: 140,
+    maxFlakesMobile: 55,
+    maxFlakesDesktop: 170,
     windBase: 6,             // горизонтальний дрейф
     windGust: 10,            // додаткова "поривчастість"
+    // Паралакс
+    parallax: {
+      enabled: true,
+      strengthX: 18,  // px
+      strengthY: 10,  // px
+      smooth: 0.08,   // 0..1 (менше = плавніше)
+      minFactor: 0.15, // 0..1 (навіть "далекі" трохи рухаються)
+    },
   };
 
   // Canvas layer
@@ -68,6 +76,39 @@
   }
 
   // Кеш "картинок" сніжинок (offscreen) щоб не робити fillText складно кожен кадр
+  // ==== Parallax state + handlers ====
+  let pTargetX = 0, pTargetY = 0; // бажаний зсув
+  let pX = 0, pY = 0;             // поточний (плавний)
+
+  function setParallaxFromClient(clientX, clientY) {
+    if (!cfg.parallax.enabled || !W || !H) {
+      return;
+    }
+
+    const nx = (clientX / W) * 2 - 1; // -1..1
+    const ny = (clientY / H) * 2 - 1; // -1..1
+
+    pTargetX = nx * cfg.parallax.strengthX;
+    pTargetY = ny * cfg.parallax.strengthY;
+  }
+
+  window.addEventListener('mousemove', (e) => {
+    setParallaxFromClient(e.clientX, e.clientY);
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    const t = e.touches && e.touches[0];
+    if (t) {
+      setParallaxFromClient(t.clientX, t.clientY);
+    }
+  }, { passive: true });
+
+  window.addEventListener('mouseleave', () => {
+    pTargetX = 0;
+    pTargetY = 0;
+  }, { passive: true });
+
+  // ==== Glyph cache (offscreen) ====
   const glyphCache = new Map();
 
   function getGlyph(sizePx, color) {
@@ -112,19 +153,29 @@
 
   function makeFlake(spawnTop = true) {
     const mobile = isMobile();
-    const size = mobile ? rand(4, 10) : rand(6, 18);
-    const speedY = (mobile ? rand(18, 45) : rand(22, 70)) * (size / 10); // px/sec
-    const baseWind = (mobile ? rand(-8, 8) : rand(-10, 10));
+    const depth = Math.random(); // 0 = далеко, 1 = близько
+
+    const baseSize = mobile ? rand(4, 10) : rand(6, 18);
+    const size = baseSize * (0.55 + depth * 0.75);
+
+    const speedY = (mobile ? rand(18, 45) : rand(22, 70))
+      * (0.55 + depth * 1.0)
+      * (size / 10);
+
+    const baseWind = mobile ? rand(-8, 8) : rand(-10, 10);
+
+    const opacity = rand(0.55, 0.95) * (0.55 + depth * 0.6);
 
     return {
       x: rand(0, W),
       y: spawnTop ? rand(-H, 0) : rand(0, H),
+      depth,
       size,
       speedY,
       wind: baseWind,
       phase: rand(0, Math.PI * 2),
       wobble: rand(0.4, 1.2),
-      opacity: rand(0.55, 0.95),
+      opacity,
       color: pick(blueShades),
       rot: rand(0, Math.PI * 2),
       rotSpeed: rand(-0.8, 0.8),
@@ -173,6 +224,7 @@
     if (acc < frameMs) {
       return;
     }
+
     const dt = Math.min(acc / 1000, 0.05); // clamp (сек)
     acc = 0;
 
@@ -180,6 +232,15 @@
 
     // легкий "порив" вітру від часу
     const wind = cfg.windBase + Math.sin(now * 0.00035) * cfg.windGust;
+
+    // плавний паралакс
+    if (cfg.parallax.enabled) {
+      pX += (pTargetX - pX) * cfg.parallax.smooth;
+      pY += (pTargetY - pY) * cfg.parallax.smooth;
+    } else {
+      pX = 0;
+      pY = 0;
+    }
 
     for (let i = 0; i < flakes.length; i++) {
       const f = flakes[i];
@@ -216,9 +277,15 @@
       // малювання (через кеш)
       const glyph = getGlyph(Math.round(f.size), f.color);
 
+      // depth factor для паралаксу
+      const factor = cfg.parallax.minFactor + f.depth * (1 - cfg.parallax.minFactor);
+
       ctx.save();
       ctx.globalAlpha = alpha;
-      ctx.translate(f.x, f.y);
+      ctx.translate(
+        f.x + pX * factor,
+        f.y + pY * factor,
+      );
       ctx.rotate(f.rot);
       ctx.drawImage(glyph, -glyph.width / 2, -glyph.height / 2);
       ctx.restore();

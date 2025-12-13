@@ -18,3 +18,7 @@ custom-colorbox:
       css/custom-colorbox.css: { }
   js:
     js/custom-colorbox.js: { }
+
+snow:
+  js:
+    js/snow.js: { }

@@ -159,7 +159,7 @@
     const size = baseSize * (0.55 + depth * 0.75);
 
     const speedY = (mobile ? rand(18, 45) : rand(22, 70))
-      * (0.55 + depth * 1.0)
+      * (0.55 + depth)
       * (size / 10);
 
     const baseWind = mobile ? rand(-8, 8) : rand(-10, 10);

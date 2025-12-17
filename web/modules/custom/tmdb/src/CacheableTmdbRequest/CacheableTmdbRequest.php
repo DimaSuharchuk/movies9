@@ -57,7 +57,9 @@ abstract class CacheableTmdbRequest {
         'http' => [
           'client' => NULL,
         ],
+        'hydration' => [],
       ]);
+
       /**
        * Required event listeners and events to be registered with the PSR-14 Event Dispatcher.
        */
@@ -129,8 +131,7 @@ abstract class CacheableTmdbRequest {
    * @param array $data
    *   Data from the cache file for possible changes.
    */
-  protected function massageAfterLoad(array &$data) {
-  }
+  protected function massageAfterLoad(array &$data) {}
 
   /**
    * OPTIONAL: Prepare and clear raw data from junk to save to a file.

@@ -58,10 +58,7 @@ class ImdbRatingDbManager {
    * @return void
    */
   public function set(string $imdb_id, float $rating): void {
-    $this->repository->create([
-      'imdb_id' => $imdb_id,
-      'rating' => $rating,
-    ]);
+    $this->repository->set($imdb_id, $rating);
   }
 
   /**

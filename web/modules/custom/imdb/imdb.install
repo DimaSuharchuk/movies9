@@ -21,7 +21,6 @@ function imdb_schema(): array {
         'type' => 'varchar',
         'length' => 10,
         'not null' => TRUE,
-        'default' => 0,
         'description' => "Movie's IMDB ID.",
       ],
       'rating' => [
@@ -109,11 +108,7 @@ function imdb_update_9402() {
     ->execute()
     ->fetchCol();
 
-  $ratings = $manager_file->getMultiple($imdb_ids);
-
-  foreach ($ratings as $imdb_id => $rating) {
-    $manager_db->set($imdb_id, $rating);
-  }
+  $manager_db->setMultiple($manager_file->getMultiple($imdb_ids));
 
   Drupal::state()
     ->set('imdb.rating.last_update', Drupal::time()->getRequestTime());

@@ -40,6 +40,20 @@ class ImdbRatingRepository extends BaseRepository {
   }
 
   /**
+   * Save a rating into DB.
+   *
+   * @param string $imdb_id
+   *   IMDb ID.
+   * @param float $rating
+   *   Movie IMDb rating.
+   *
+   * @return void
+   */
+  public function set(string $imdb_id, float $rating): void {
+    $this->setMultiple([$imdb_id => $rating]);
+  }
+
+  /**
    * Save ratings to DB multiple.
    *
    * @param array $ratings

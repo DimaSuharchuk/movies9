@@ -15,7 +15,7 @@
     height: 40px;
     border: none;
     border-radius: 20px;
-    padding: 0 100px 0 10px;
+    padding: 0 85px 0 10px;
     background-color: transparent;
     color: variables.$text-color-main;
     @include mixins.media-breakpoint-up(lg) {
@@ -48,7 +48,7 @@
 
   select {
     position: absolute;
-    top: 50%;
+    top: 48%;
     transform: translateY(-50%);
     right: 10px;
     background-color: transparent;

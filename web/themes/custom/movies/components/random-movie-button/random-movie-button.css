@@ -1,0 +1,17 @@
+#random-movie-button {
+  grid-area: random-movie;
+
+  svg {
+    height: 40px;
+    width: 40px;
+  }
+}
+
+/**
+ * DARK THEME.
+ */
+[data-theme='dark'] #random-movie-button {
+  svg {
+    filter: invert(0.2);
+  }
+}

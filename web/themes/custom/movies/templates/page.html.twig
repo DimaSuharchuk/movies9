@@ -53,6 +53,10 @@
       <div class="header-inner-wrapper">
         {{ page.header.logo }}
 
+        <div id="random-movie-button" class="desktop-hide">
+          {{ include('movies:random-movie-button') }}
+        </div>
+
         <div class="desktop-nav mobile-hide">
           <nav class="main-menu" role="navigation">
             {{ page.header.movies_main_navigation }}

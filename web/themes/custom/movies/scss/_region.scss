@@ -25,11 +25,11 @@
  */
 .header-inner-wrapper {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-areas: "logo search mobile-nav";
+  grid-template-columns: auto auto 1fr auto;
+  grid-template-areas: "logo random-movie search mobile-nav";
   grid-column-gap: 20px;
   @include mixins.media-breakpoint-up(sm) {
-    grid-column-gap: 50px;
+    grid-column-gap: 40px;
   }
   @include mixins.media-breakpoint-up(lg) {
     grid-column-gap: 20px;

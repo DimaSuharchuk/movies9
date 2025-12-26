@@ -1,3 +1,6 @@
+@use "mixins";
+@use "variables";
+
 /**
  * Views: Home, Movies, TV Shows, Animations.
  */
@@ -24,13 +27,13 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 15px 30px;
-    @include media-breakpoint-up(sm) {
+    @include mixins.media-breakpoint-up(sm) {
       grid-template-columns: repeat(3, 1fr);
     }
-    @include media-breakpoint-up(md) {
+    @include mixins.media-breakpoint-up(md) {
       grid-template-columns: repeat(4, 1fr);
     }
-    @include media-breakpoint-up(lg) {
+    @include mixins.media-breakpoint-up(lg) {
       grid-template-columns: repeat(6, 1fr);
     }
   }
@@ -42,7 +45,7 @@
       + label {
         grid-template-columns: 1fr 30px;
         place-items: center;
-        background-color: $bg-color-filter-checkbox;
+        background-color: variables.$bg-color-filter-checkbox;
         color: #fff;
 
         &:after {
@@ -59,8 +62,8 @@
   .option {
     display: grid;
     text-align: center;
-    background-color: $bg-color-white;
-    color: $text-color-main;
+    background-color: variables.$bg-color-white;
+    color: variables.$text-color-main;
     box-shadow: 0 0 15px rgba(0, 0, 0, .07);
     border-radius: 6px;
     line-height: 1;
@@ -89,8 +92,8 @@
    */
   .view-id-movies {
     .option {
-      background-color: $dk_bg-option;
-      color: $dk_text-option;
+      background-color: variables.$dk_bg-option;
+      color: variables.$dk_text-option;
     }
   }
 }

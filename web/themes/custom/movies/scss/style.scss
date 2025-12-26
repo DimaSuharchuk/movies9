@@ -3,20 +3,20 @@
  * sass scss/style.scss:css/style.min.css --style=compressed --watch
  */
 
-@import "fonts";
-@import "variables";
-@import "mixins";
-@import "bootstrap";
-@import "global";
-@import "region";
-@import "search";
-@import "views";
-@import "node";
-@import "seasons";
-@import "iterable-field";
-@import "field";
-@import "extra-tabs";
-@import "misc";
-@import "maintenance";
-@import "error_page";
-@import "login_page";
+@use "fonts";
+@use "variables";
+@use "mixins";
+@use "bootstrap";
+@use "global";
+@use "region";
+@use "search";
+@use "views";
+@use "node";
+@use "seasons";
+@use "iterable-field";
+@use "field";
+@use "extra-tabs";
+@use "misc";
+@use "maintenance";
+@use "error_page";
+@use "login_page";

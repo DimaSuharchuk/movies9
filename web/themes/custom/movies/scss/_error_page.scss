@@ -1,3 +1,5 @@
+@use "variables";
+
 #error-page {
   display: grid;
   place-content: center;
@@ -7,16 +9,16 @@
   .error-code {
     font-size: 10rem;
     text-align: center;
-    color: $text-color-main;
+    color: variables.$text-color-main;
   }
 
   .link-to-homepage {
     display: grid;
     place-content: center;
-    background-color: $dk_bg-option;
-    color: $dk_text-option;
+    background-color: variables.$dk_bg-option;
+    color: variables.$dk_text-option;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.07);
-    border-radius: $movies-border-radius-big;
+    border-radius: variables.$movies-border-radius-big;
     padding: 10px 30px;
     margin: auto;
   }
@@ -28,7 +30,7 @@
 [data-theme=dark] {
   #error-page {
     .error-code {
-      color: $dk_text-color-main;
+      color: variables.$dk_text-color-main;
     }
   }
 }

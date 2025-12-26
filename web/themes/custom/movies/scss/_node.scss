@@ -1,3 +1,6 @@
+@use "mixins";
+@use "variables";
+
 /**
  * Node.
  */
@@ -21,7 +24,7 @@ article {
   grid-template-areas:
     "poster"
     "content";
-  @include media-breakpoint-up(md) {
+  @include mixins.media-breakpoint-up(md) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: "poster content content";
     grid-column-gap: 30px;
@@ -51,11 +54,11 @@ article {
     padding-bottom: 150%;
     margin-bottom: 0;
     overflow-y: hidden;
-    border-radius: $movies-border-radius-default;
+    border-radius: variables.$movies-border-radius-default;
 
     .field-poster {
       img {
-        border-radius: $movies-border-radius-default;
+        border-radius: variables.$movies-border-radius-default;
       }
     }
 
@@ -65,12 +68,12 @@ article {
 
       .field-with-label {
         display: flex;
-        background-color: $bg-color-white;
+        background-color: variables.$bg-color-white;
         padding: 5px 15px 5px 5px;
         font-size: .7em;
-        color: $text-color-main;
-        border-top-right-radius: $movies-border-radius-default;
-        border-bottom-right-radius: $movies-border-radius-default;
+        color: variables.$text-color-main;
+        border-top-right-radius: variables.$movies-border-radius-default;
+        border-bottom-right-radius: variables.$movies-border-radius-default;
 
         .label {
           margin-right: 5px;
@@ -88,7 +91,7 @@ article {
       margin-bottom: 0;
       font-size: 1em;
       line-height: 1.2;
-      color: $text-color-main;
+      color: variables.$text-color-main;
     }
 
     .field-original-title {
@@ -110,13 +113,13 @@ article {
   .node-teaser {
     .imdb-rating-wrapper {
       .field-with-label {
-        background-color: $dk_bg-color-white;
-        color: $dk_text-color-main;
+        background-color: variables.$dk_bg-color-white;
+        color: variables.$dk_text-color-main;
       }
     }
 
     .field-title {
-      color: $dk_text-color-main;
+      color: variables.$dk_text-color-main;
     }
   }
 }

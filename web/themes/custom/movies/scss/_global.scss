@@ -1,3 +1,6 @@
+@use "mixins";
+@use "variables";
+
 *,
 :before,
 :after {
@@ -9,11 +12,11 @@
 
 body {
   font: {
-    family: $font-family;
+    family: variables.$font-family;
     size: 15px;
-    weight: $font-weight-normal;
+    weight: variables.$font-weight-normal;
   };
-  color: $text-color-main;
+  color: variables.$text-color-main;
 }
 
 img {
@@ -24,20 +27,20 @@ img {
 
 a,
 a:hover {
-  color: $text-color-second;
+  color: variables.$text-color-second;
   text-decoration: none;
 }
 
 .label {
-  font-weight: $font-weight-bold;
+  font-weight: variables.$font-weight-bold;
 }
 
 .bg-white {
-  background-color: $bg-color-white;
+  background-color: variables.$bg-color-white;
 }
 
 .bg-light-gray {
-  background-color: $bg-color-light-gray;
+  background-color: variables.$bg-color-light-gray;
 }
 
 .ajax-progress-throbber {
@@ -49,13 +52,13 @@ a:hover {
 }
 
 .desktop-hide {
-  @include media-breakpoint-up(lg) {
+  @include mixins.media-breakpoint-up(lg) {
     display: none !important;
   }
 }
 
 .mobile-hide {
-  @include media-breakpoint-down(md) {
+  @include mixins.media-breakpoint-down(md) {
     display: none !important;
   }
 }
@@ -65,19 +68,19 @@ a:hover {
  * DARK THEME.
  */
 [data-theme=dark] {
-  background-color: $dk_bg-color-white;
-  color: $dk_text-color-main;
+  background-color: variables.$dk_bg-color-white;
+  color: variables.$dk_text-color-main;
 
   a,
   a:hover {
-    color: $dk_text-color-second;
+    color: variables.$dk_text-color-second;
   }
 
   .bg-white {
-    background-color: $dk_bg-color-white;
+    background-color: variables.$dk_bg-color-white;
   }
 
   .bg-light-gray {
-    background-color: $dk_bg-color-light-gray;
+    background-color: variables.$dk_bg-color-light-gray;
   }
 }

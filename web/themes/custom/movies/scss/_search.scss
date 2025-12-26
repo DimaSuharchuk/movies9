@@ -1,9 +1,12 @@
+@use "mixins";
+@use "variables";
+
 #search-wrapper {
   display: flex;
   align-items: center;
-  background-color: $bg-search;
+  background-color: variables.$bg-search;
   border-radius: 20px;
-  @include media-breakpoint-up(md) {
+  @include mixins.media-breakpoint-up(md) {
     position: relative;
   }
 
@@ -14,11 +17,11 @@
     border-radius: 20px;
     padding: 0 100px 0 10px;
     background-color: transparent;
-    color: $text-color-main;
-    @include media-breakpoint-up(lg) {
+    color: variables.$text-color-main;
+    @include mixins.media-breakpoint-up(lg) {
       max-width: 270px;
     }
-    @include media-breakpoint-up(xl) {
+    @include mixins.media-breakpoint-up(xl) {
       max-width: 310px;
     }
 
@@ -49,7 +52,7 @@
     transform: translateY(-50%);
     right: 10px;
     background-color: transparent;
-    color: $text-color-main;
+    color: variables.$text-color-main;
     border: none;
     transition-duration: 500ms;
     cursor: context-menu;
@@ -60,7 +63,7 @@
     }
 
     option {
-      background-color: $bg_color-white;
+      background-color: variables.$bg_color-white;
     }
   }
 }
@@ -95,9 +98,9 @@
   width: 100%;
   top: 45px;
   padding-right: 5px;
-  background-color: $bg-search;
-  border-radius: $movies-border-radius-big;
-  @include media-breakpoint-down(sm) {
+  background-color: variables.$bg-search;
+  border-radius: variables.$movies-border-radius-big;
+  @include mixins.media-breakpoint-down(sm) {
     top: 75px;
     left: 15px;
     right: 15px;
@@ -121,7 +124,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: $dk_bg-color-white;
+      background-color: variables.$dk_bg-color-white;
     }
   }
 
@@ -131,9 +134,9 @@
     display: grid;
     place-content: center;
     font: {
-      weight: $font-weight-bold;
+      weight: variables.$font-weight-bold;
     };
-    border-top: 1px solid $dk_bg-color-white;
+    border-top: 1px solid variables.$dk_bg-color-white;
     margin-right: -5px;
     user-select: none;
   }
@@ -165,7 +168,7 @@
 
   .left {
     img {
-      border-radius: $movies-border-radius-default;
+      border-radius: variables.$movies-border-radius-default;
     }
   }
 
@@ -182,7 +185,7 @@
   .title,
   .name {
     font: {
-      weight: $font-weight-bold;
+      weight: variables.$font-weight-bold;
     };
     word-break: break-word;
   }
@@ -193,7 +196,7 @@
     font: {
       size: .8em;
     }
-    color: $text-color-main;
+    color: variables.$text-color-main;
   }
 }
 
@@ -215,21 +218,21 @@
  */
 [data-theme="dark"] {
   #search-wrapper {
-    background-color: $dk_bg-search;
+    background-color: variables.$dk_bg-search;
 
     input {
-      color: $dk_text-color-main;
+      color: variables.$dk_text-color-main;
     }
 
     select {
       option {
-        background-color: $dk_bg-color-white;
+        background-color: variables.$dk_bg-color-white;
       }
     }
   }
 
   #search-results {
-    background-color: $dk_bg-search;
+    background-color: variables.$dk_bg-search;
   }
 }
 
@@ -240,7 +243,7 @@
   #search-results:not(:empty) {
     position: relative;
 
-    @include media-breakpoint-down(sm) {
+    @include mixins.media-breakpoint-down(sm) {
       top: 0;
       left: 0;
       right: 0;

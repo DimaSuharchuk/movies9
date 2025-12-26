@@ -1,3 +1,6 @@
+@use "mixins";
+@use "variables";
+
 /**
  * Node field "extra-tabs".
  */
@@ -10,7 +13,7 @@
   a {
     margin-right: 30px;
     margin-bottom: 10px;
-    color: $text-color-main;
+    color: variables.$text-color-main;
     padding-bottom: 6px;
     border-bottom: 1px solid transparent;
     user-select: none;
@@ -20,13 +23,13 @@
     }
 
     &:hover {
-      border-bottom: 1px solid $text-color-second;
+      border-bottom: 1px solid variables.$text-color-second;
     }
 
     &.active {
       pointer-events: none;
-      border-bottom: 1px solid $text-color-second;
-      font-weight: $font-weight-bold;
+      border-bottom: 1px solid variables.$text-color-second;
+      font-weight: variables.$font-weight-bold;
     }
   }
 }
@@ -39,13 +42,13 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px 30px;
   margin: 0;
-  @include media-breakpoint-up(sm) {
+  @include mixins.media-breakpoint-up(sm) {
     grid-template-columns: repeat(5, 1fr);
   }
-  @include media-breakpoint-up(md) {
+  @include mixins.media-breakpoint-up(md) {
     grid-template-columns: repeat(6, 1fr);
   }
-  @include media-breakpoint-up(lg) {
+  @include mixins.media-breakpoint-up(lg) {
     grid-template-columns: repeat(8, 1fr);
   }
 
@@ -65,11 +68,11 @@
   .field-tabs,
   .seasons-tabs {
     a {
-      color: $dk_text-color-main;
+      color: variables.$dk_text-color-main;
 
       &:hover,
       &.active {
-        border-bottom: 1px solid $dk_text-color-second;
+        border-bottom: 1px solid variables.$dk_text-color-second;
       }
     }
   }

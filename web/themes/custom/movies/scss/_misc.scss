@@ -1,3 +1,5 @@
+@use "variables";
+
 .more-button-wrapper {
   position: relative;
   padding-top: 150%;
@@ -14,8 +16,8 @@
     place-content: center;
     place-items: center;
     grid-row-gap: 30px;
-    border-radius: $movies-border-radius-default;
-    color: $text-color-main;
+    border-radius: variables.$movies-border-radius-default;
+    color: variables.$text-color-main;
     background-color: #e2e2e2;
 
     &:before {
@@ -43,7 +45,7 @@
     position: absolute;
     height: 3px;
     width: 100%;
-    background-color: $text-color-main;
+    background-color: variables.$text-color-main;
     transition: .25s ease-in-out;
     left: 0;
 
@@ -88,9 +90,9 @@
 [data-theme=dark] {
   .more-button-wrapper {
     a {
-      background-color: $dk_bg-color-white;
-      color: $dk_text-color-main;
-      border: 2px solid $dk_text-color-main;
+      background-color: variables.$dk_bg-color-white;
+      color: variables.$dk_text-color-main;
+      border: 2px solid variables.$dk_text-color-main;
 
       &:before {
         background-image: url(/themes/custom/movies/assets/dk_refresh.svg);
@@ -103,7 +105,7 @@
    */
   .hamburger {
     span {
-      background-color: $text-color-main;
+      background-color: variables.$text-color-main;
     }
   }
 }

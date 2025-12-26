@@ -1,3 +1,6 @@
+@use "mixins";
+@use "variables";
+
 /**
  * Seasons.
  */
@@ -10,7 +13,7 @@
     "poster"
     "season-info";
   grid-gap: 30px;
-  @include media-breakpoint-up(sm) {
+  @include mixins.media-breakpoint-up(sm) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
     "title title title"
@@ -21,7 +24,7 @@
   .seasons-block-title {
     grid-area: title;
     font-size: 1.2em;
-    font-weight: $font-weight-bold;
+    font-weight: variables.$font-weight-bold;
   }
 
   /* Season tabs in _extra-tabs.scss file. */
@@ -33,7 +36,7 @@
     grid-area: poster;
 
     img {
-      border-radius: $movies-border-radius-big;
+      border-radius: variables.$movies-border-radius-big;
     }
   }
 
@@ -63,7 +66,7 @@
 .episodes-block-title {
   font: {
     size: 1.2em;
-    weight: $font-weight-bold;
+    weight: variables.$font-weight-bold;
   };
   margin-bottom: 50px;
 }
@@ -82,7 +85,7 @@
         "info"
         "stars-wrapper";
   grid-gap: 30px;
-  @include media-breakpoint-up(md) {
+  @include mixins.media-breakpoint-up(md) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
           "image info info"
@@ -94,7 +97,7 @@
   grid-area: image;
 
   img {
-    border-radius: $movies-border-radius-default;
+    border-radius: variables.$movies-border-radius-default;
   }
 }
 
@@ -109,7 +112,7 @@
 
     .field-episode-number {
       font-size: .8em;
-      font-weight: $font-weight-bold;
+      font-weight: variables.$font-weight-bold;
       letter-spacing: .5px;
     }
   }
@@ -135,7 +138,7 @@
             "action-label"
             "stars";
   grid-column-gap: 30px;
-  @include media-breakpoint-up(md) {
+  @include mixins.media-breakpoint-up(md) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
             ". action-label action-label"
@@ -145,7 +148,7 @@
 
 .guest-stars-label {
   grid-area: action-label;
-  color: $text-color-second;
+  color: variables.$text-color-second;
   cursor: pointer;
   user-select: none;
 
@@ -181,6 +184,6 @@
  */
 [data-theme=dark] {
   .guest-stars-label {
-    color: $dk_text-color-second;
+    color: variables.$dk_text-color-second;
   }
 }

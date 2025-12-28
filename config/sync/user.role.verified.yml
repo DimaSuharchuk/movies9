@@ -11,4 +11,3 @@ weight: 2
 is_admin: null
 permissions:
   - 'delete own files'
-  - 'view nnm'

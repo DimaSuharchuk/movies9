@@ -52,16 +52,6 @@ content:
     third_party_settings: {  }
     weight: 14
     region: content
-  extra_field_noname_club:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 19
-    region: content
-  extra_field_noname_sheet:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 20
-    region: content
   extra_field_number_of_episodes:
     settings: {  }
     third_party_settings: {  }
@@ -128,6 +118,8 @@ content:
 hidden:
   extra_field_cast: true
   extra_field_crew: true
+  extra_field_noname_club: true
+  extra_field_noname_sheet: true
   extra_field_poster: true
   extra_field_recommendations: true
   extra_field_similar: true

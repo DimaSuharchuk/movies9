@@ -47,16 +47,6 @@ content:
     third_party_settings: {  }
     weight: 8
     region: content
-  extra_field_noname_club:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 15
-    region: content
-  extra_field_noname_sheet:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 16
-    region: content
   extra_field_original_title:
     settings: {  }
     third_party_settings: {  }
@@ -109,6 +99,8 @@ hidden:
   extra_field_belongs_to_collection: true
   extra_field_cast: true
   extra_field_crew: true
+  extra_field_noname_club: true
+  extra_field_noname_sheet: true
   extra_field_poster: true
   extra_field_recommendations: true
   extra_field_similar: true

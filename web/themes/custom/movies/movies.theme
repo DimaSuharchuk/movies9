@@ -25,8 +25,7 @@ function movies_preprocess_node(&$variables) {
 
       $fields = [
         'extra_field_copy_movie_admin_info',
-        'extra_field_noname_club',
-        'extra_field_noname_sheet',
+        'extra_field_uakino',
       ];
 
       foreach ($fields as $field) {

@@ -107,6 +107,11 @@ content:
     third_party_settings: {  }
     weight: 11
     region: content
+  extra_field_uakino:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 19
+    region: content
   field_poster:
     type: tmdb_image_compact
     label: hidden

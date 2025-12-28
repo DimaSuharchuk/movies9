@@ -288,6 +288,18 @@ a[data-topic-id] {
 }
 
 /**
+ * Field "UA kino".
+ */
+.uakino-icon {
+  display: block;
+  background: url(/themes/custom/movies/assets/uakino.webp) no-repeat;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  font-size: 0;
+}
+
+/**
  * Field "Gallery".
  */
 .field-gallery {

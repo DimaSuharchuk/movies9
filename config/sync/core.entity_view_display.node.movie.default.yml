@@ -82,6 +82,11 @@ content:
     third_party_settings: {  }
     weight: 5
     region: content
+  extra_field_uakino:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 15
+    region: content
   extra_field_videos:
     settings: {  }
     third_party_settings: {  }

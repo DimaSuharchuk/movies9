@@ -46,6 +46,11 @@ final class UaKino extends ExtraTmdbFieldDisplayBase {
       $node = $entity->getTranslation(Language::en->name);
 
       // https://uakino.best/index.php?do=search&subaction=search&from_page=0&story=bee+movie
+      // Replace some characters to a space.
+      $search = str_replace(["'", '/'], ' ', $node->getTitle());
+      // Remove all characters except allowed.
+      $search = preg_replace('/[^a-z\d\s-]/iu', '', $search);
+
       $build = [
         '#type' => 'link',
         '#title' => 'torrent',
@@ -54,7 +59,7 @@ final class UaKino extends ExtraTmdbFieldDisplayBase {
           [
             'query' => [
               'do' => 'search',
-              'story' => preg_replace('/[^a-z\d\s-]/iu', '', $node->getTitle()),
+              'story' => $search,
             ],
           ]
         ),

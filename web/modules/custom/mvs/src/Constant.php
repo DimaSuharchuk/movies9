@@ -16,6 +16,8 @@ final class Constant {
 
   const UNDEFINED_PERSON_IMAGE = '/themes/custom/movies/assets/undefined-person.svg';
 
+  const int GENRE_ID_ANIMATION = 86;
+
   const EXCLUDED_GENRES_TMDB_IDS = [
     10763, // News
     10764, // Reality
@@ -140,7 +142,6 @@ final class Constant {
    */
   const VIDEOS = 'videos';
 
-  final private function __construct() {
-  }
+  final private function __construct() {}
 
 }

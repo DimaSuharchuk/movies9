@@ -27,6 +27,10 @@ class EntityFinder {
 
   private bool $load = FALSE;
 
+  private array $order = [];
+
+  private bool $random = FALSE;
+
   public function __construct(EntityTypeManagerInterface $entity_type_manager) {
     $this->entity_type_manager = $entity_type_manager;
   }
@@ -139,7 +143,10 @@ class EntityFinder {
         // Convert "Entity Bundle"s to strings.
         $bundles = array_column($bundles, 'name');
         // Set bundles.
-        $this->search_values[$bundle_key] = $bundles;
+        $this->search_values[$bundle_key] = [
+          'value' => $bundles,
+          'operator' => 'IN',
+        ];
       }
     }
     catch (PluginNotFoundException) {
@@ -217,8 +224,41 @@ class EntityFinder {
    *
    * @return $this
    */
-  public function addCondition(string $property, $value): self {
-    $this->search_values[$property] = $value;
+  public function addCondition(string $property, $value, ?string $operator = NULL): self {
+    $this->search_values[$property] = [
+      'value' => $value,
+      'operator' => $operator,
+    ];
+
+    return $this;
+  }
+
+  /**
+   * Add sorting criteria to the query.
+   *
+   * @param string $property
+   *   The property by which to sort.
+   * @param bool $asc_direction
+   *   TRUE sorts in ascending order, FALSE sorts in descending order.
+   *
+   * @return $this
+   */
+  public function addOrderBy(string $property, bool $asc_direction): self {
+    $this->order[$property] = $asc_direction ? 'ASC' : 'DESC';
+
+    return $this;
+  }
+
+  /**
+   * Adds random sorting.
+   *
+   * Does not work together with sorting by criteria.
+   *
+   * @return $this
+   */
+  public function randomOrder(): self {
+    $this->random = TRUE;
+
     return $this;
   }
 
@@ -276,7 +316,7 @@ class EntityFinder {
    * @return EntityInterface|EntityInterface[]|int|mixed
    */
   public function execute(): mixed {
-    $return = $ids = $this->findByProperties($this->search_values);
+    $return = $ids = $this->findByProperties();
 
     if ($this->count) {
       $return = count($ids);
@@ -292,6 +332,8 @@ class EntityFinder {
 
     $this->storage = NULL;
     $this->search_values = [];
+    $this->order = [];
+    $this->random = FALSE;
     $this->limit = 0;
     $this->reduce = FALSE;
     $this->count = FALSE;
@@ -340,14 +382,18 @@ class EntityFinder {
    *
    * @param QueryInterface $entity_query
    *   EntityQuery instance.
-   * @param array $values
-   *   An associative array of entity properties, where the keys are the
-   *   property names and the values are the values those properties must have.
    */
-  private function buildPropertyQuery(QueryInterface $entity_query, array $values): void {
-    foreach ($values as $name => $value) {
-      // Cast scalars to array, so we can consistently use an IN condition.
-      $entity_query->condition($name, (array) $value, 'IN');
+  private function buildPropertyQuery(QueryInterface $entity_query): void {
+    foreach ($this->search_values as $name => $item) {
+      if (!isset($item['value'])) {
+        continue;
+      }
+
+      if (empty($item['operator'])) {
+        $item['operator'] = is_array($item['value']) ? 'IN' : '=';
+      }
+
+      $entity_query->condition($name, $item['value'], $item['operator']);
     }
   }
 
@@ -356,16 +402,16 @@ class EntityFinder {
    * added limit to query, and we don't load Drupal entities in this method
    * unnecessarily if the query should return only IDs.
    *
-   * @param array $values
-   *   Search terms. See self::addCondition().
-   *
    * @return EntityInterface[]
    *
    * @see EntityFinder::addCondition()
    *
    * @see EntityStorageInterface::loadByProperties()
+   * @see self::addCondition()
+   * @see self::addOrderBy()
+   * @see self::randomOrder()
    */
-  private function findByProperties(array $values = []): array {
+  private function findByProperties(): array {
     if ($this->storage) {
       // Build a query to fetch the entity IDs.
       $entity_query = $this->storage->getQuery();
@@ -375,7 +421,16 @@ class EntityFinder {
         $entity_query->range(0, $this->limit);
       }
 
-      $this->buildPropertyQuery($entity_query, $values);
+      if ($this->order) {
+        foreach ($this->order as $property => $direction) {
+          $entity_query->sort($property, $direction);
+        }
+      }
+      elseif ($this->random) {
+        $entity_query->addTag('random_sort');
+      }
+
+      $this->buildPropertyQuery($entity_query);
       $result = $entity_query->execute();
 
       return $result ?: [];

@@ -91,16 +91,17 @@ class NodeController implements ContainerInjectionInterface {
    * @return RedirectResponse
    */
   public function random(): RedirectResponse {
-    // Get all approved nodes.
-    $node_ids = $this->finder
+    // Get one approved random node.
+    $node_id = $this->finder
       ->findNodes()
       ->addCondition('field_approved', TRUE)
+      ->reduce()
+      ->randomOrder()
       ->execute();
-    // Get one random node.
-    $random = array_rand($node_ids);
+
     // Redirect to it.
     return new RedirectResponse(
-      Url::fromRoute('entity.node.canonical', ['node' => $random])->toString()
+      Url::fromRoute('entity.node.canonical', ['node' => $node_id])->toString()
     );
   }
 

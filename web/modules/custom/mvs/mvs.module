@@ -32,6 +32,13 @@ function mvs_theme($existing, $type, $theme, $path): array {
 }
 
 /**
+ * Implements hook_query_TAG_alter().
+ */
+function mvs_query_random_sort_alter(Drupal\Core\Database\Query\AlterableInterface $query): void {
+  $query->orderRandom();
+}
+
+/**
  * Implements hook_page_attachments().
  */
 function mvs_page_attachments(array &$attachments): void {
@@ -190,7 +197,6 @@ function mvs_form_views_exposed_form_alter(&$form) {
     case 'views-exposed-form-movies-animation':
       $bundle = ['movie', 'tv'];
       break;
-
   }
 
   if ($bundle) {
@@ -208,23 +214,10 @@ function mvs_form_views_exposed_form_alter(&$form) {
     asort($genres);
 
     // Remove "Animation" filter from some view.
-    if ($remove_animation_filter && $tid = _get_animation_term_id()) {
-      unset($genres[$tid]);
+    if ($remove_animation_filter) {
+      unset($genres[Constant::GENRE_ID_ANIMATION]);
     }
   }
-}
-
-/**
- * Helper function returns ID of term "Animation".
- *
- * @return int|null
- */
-function _get_animation_term_id(): ?int {
-  return Drupal::service('entity_finder')
-    ->findTermsGenres()
-    ->addCondition('name', 'Animation')
-    ->reduce()
-    ->execute();
 }
 
 /**

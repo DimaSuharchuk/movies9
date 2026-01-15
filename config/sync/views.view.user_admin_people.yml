@@ -553,7 +553,7 @@ display:
           exposed: true
           expose:
             operator_id: combine_op
-            label: "Ім'я чи електронна адреса містять"
+            label: "Ім'я або адреса електронної пошти містить"
             description: ''
             use_operator: false
             operator: combine_op

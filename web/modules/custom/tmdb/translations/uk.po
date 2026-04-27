@@ -128,16 +128,6 @@ msgctxt "Search"
 msgid "See all results"
 msgstr "Дивитись усі результати"
 
-msgctxt "Search"
-msgid "Movie"
-msgstr "Фільм"
-msgctxt "Search"
-msgid "TV series"
-msgstr "Серіал"
-msgctxt "Search"
-msgid "Person"
-msgstr "Персона"
-
 # NNM.
 msgid "Info about torrents from NNM-Club"
 msgstr "Інформація про торренти з NNM-Club"

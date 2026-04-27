@@ -1,0 +1,47 @@
+[data-drupal-messages] {
+  .messages__wrapper {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(360px, 50%, 700px);
+    display: grid;
+    grid-gap: 1rem;
+    z-index: 50;
+
+    .messages {
+      line-height: 1.5;
+      padding: 1rem 40px 1rem 2rem;
+      border-radius: 6px;
+      position: relative;
+
+      &.messages--status {
+        background: green;
+        color: black;
+      }
+
+      &.messages--warning {
+        background: orange;
+        color: black;
+      }
+
+      &.messages--error {
+        background: red;
+        color: white;
+      }
+
+      &:after {
+        content: "";
+        background: url(/themes/custom/movies/assets/x.svg) no-repeat;
+        background-size: contain;
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+    }
+  }
+}

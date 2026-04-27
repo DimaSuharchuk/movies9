@@ -1,0 +1,65 @@
+@use "mixins";
+
+#mvs-random-form {
+  padding-bottom: 50px;
+
+  fieldset {
+    border: none;
+
+    legend {
+      display: none;
+    }
+  }
+
+  .form-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+    @include mixins.media-breakpoint-up(sm) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include mixins.media-breakpoint-up(md) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @include mixins.media-breakpoint-up(lg) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+}
+
+.mvs-page-filters-enabled {
+
+}
+
+#mvs-page-filters {
+  //margin-top: 30px;
+  //-webkit-animation: fadeIn 1s;
+  //animation: fadeIn 1s;
+}
+
+//@-webkit-keyframes fadeIn {
+//  from {
+//    opacity: 0;
+//  }
+//  to {
+//    opacity: 1;
+//  }
+//}
+//
+//@keyframes fadeIn {
+//  from {
+//    opacity: 0;
+//  }
+//  to {
+//    opacity: 1;
+//  }
+//}
+
+//.mvs-page-filter-actions {
+//  margin-top: 15px;
+//}
+
+#mvs-genres-wrapper {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}

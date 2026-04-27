@@ -26,11 +26,9 @@ mvs.tmdb_node_redirect:
 mvs.random:
   path: '/random'
   defaults:
-    _controller: '\Drupal\mvs\Controller\NodeController::random'
+    _form: '\Drupal\mvs\Form\RandomForm'
   requirements:
     _permission: 'access content'
-  options:
-    no_cache: TRUE
 mvs.node_tabs_ajax_handler:
   path: '/node/{node_id}/{tab}'
   defaults:

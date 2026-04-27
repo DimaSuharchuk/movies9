@@ -61,6 +61,10 @@ class Videos extends ExtraTmdbFieldDisplayBase {
     // Sort videos by size.
     $this->sortBySize($videos);
 
+    foreach ($videos as &$video) {
+      $video['language'] = $lang;
+    }
+
     return $videos;
   }
 
@@ -80,6 +84,7 @@ class Videos extends ExtraTmdbFieldDisplayBase {
         '#name' => $video['name'],
         '#size' => $video['size'],
         '#key' => $video['key'],
+        '#video_language' => $video['language']->name,
         '#language' => $lang->name,
       ];
     }

@@ -5,6 +5,9 @@
             allowfullscreen>
     </iframe>
   </div>
+  {% if video_language == 'uk' %}
+    {{ include('movies:ukraine-flag') }}
+  {% endif %}
   <div class="name">{{ name }}</div>
   <div class="size">{{ size }}</div>
 </div>

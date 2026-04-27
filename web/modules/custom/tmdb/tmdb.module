@@ -92,6 +92,7 @@ function tmdb_theme($existing, $type, $theme, $path): array {
         'name' => NULL,
         'size' => NULL,
         'key' => NULL,
+        'video_language' => NULL,
         'language' => NULL,
       ],
     ],

@@ -47,3 +47,7 @@ $movies-border-radius-big: 10px;
 $font-family: Inter, sans-serif;
 $font-weight-normal: 300;
 $font-weight-bold: 500;
+
+:root {
+  --ukraine-background: linear-gradient(0, #ffd500 50%, #005BBBFF 50%);
+}

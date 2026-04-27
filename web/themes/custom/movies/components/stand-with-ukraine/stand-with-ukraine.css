@@ -1,5 +1,5 @@
 #stand-with-ukraine {
-    background: linear-gradient(0, #ffd500 50%, #005BBBFF 50%);
+    background: var(--ukraine-background);
     font-weight: 500;
     letter-spacing: .1rem;
     text-align: center;

@@ -1,0 +1,21 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: YouTube preview
+status: stable
+
+props:
+  type: object
+  properties:
+    video_id:
+      type: string
+      title: Video ID
+    language:
+      type: string
+      title: Language
+    title:
+      type: string
+      title: Title
+
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

@@ -191,16 +191,18 @@
     grid-row-gap: 10px;
 
     .video-player-wrapper {
-      position: relative;
-      padding-top: 56.25%;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: variables.$movies-border-radius-big;
 
-      iframe {
-        position: absolute;
-        top: 0;
+      iframe,
+      .youtube-preview {
+        display: block;
         width: 100%;
         height: 100%;
         border: none;
-        border-radius: variables.$movies-border-radius-big;
+        border-radius: inherit;
       }
     }
 

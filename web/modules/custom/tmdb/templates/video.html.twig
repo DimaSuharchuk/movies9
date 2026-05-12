@@ -1,9 +1,10 @@
 <div class="video">
   <div class="video-player-wrapper">
-    <iframe width="1280" height="720"
-            src="https://www.youtube-nocookie.com/embed/{{ key }}?rel=0&controls=2&color=white&showinfo=0&iv_load_policy=3&hl={{ language }}"
-            allowfullscreen>
-    </iframe>
+    {{ include('movies:youtube-preview', {
+      video_id: key,
+      language: language,
+      title: name
+    }, with_context = false) }}
   </div>
   {% if video_language == 'uk' %}
     {{ include('movies:ukraine-flag') }}

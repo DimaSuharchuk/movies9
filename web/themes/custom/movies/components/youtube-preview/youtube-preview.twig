@@ -1,0 +1,25 @@
+{% set id = video_id|e('html_attr') %}
+{% set language = language|default('uk') %}
+{% set title = title|default('YouTube video'|t) %}
+
+<button
+  type="button"
+  class="youtube-preview"
+  data-video-id="{{ id }}"
+  data-language="{{ language|e('html_attr') }}"
+  aria-label="{{ 'Play video: @title'|t({'@title': title}) }}"
+>
+  <img
+    class="youtube-preview__image"
+    src="https://i.ytimg.com/vi/{{ id }}/hqdefault.jpg"
+    alt="{{ title|e }}"
+    loading="lazy"
+    decoding="async"
+    width="480"
+    height="360"
+  >
+
+  <span class="youtube-preview__overlay" aria-hidden="true">
+    <span class="youtube-preview__play"></span>
+  </span>
+</button>

@@ -102,6 +102,7 @@ function tmdb_theme($existing, $type, $theme, $path): array {
         'poster_path' => NULL,
         'original_title' => NULL,
         'title' => NULL,
+        'imdb_rating' => NULL,
         'episodes_count' => NULL,
         'runtime' => NULL,
         'overview' => NULL,

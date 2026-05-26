@@ -4,7 +4,6 @@ namespace Drupal\imdb;
 
 use Drupal\imdb\Manager\ImdbRatingDbManager;
 use Drupal\imdb\Manager\ImdbRatingFileManager;
-use function is_null;
 
 class ImdbRating {
 
@@ -32,18 +31,34 @@ class ImdbRating {
    * @return float
    */
   public function getRating(string $imdb_id): float {
-    $rating = $this->db_manager->get($imdb_id);
+    return $this->getRatingMultiple([$imdb_id])[$imdb_id];
+  }
 
-    if (!is_null($rating)) {
-      return $rating;
+  /**
+   * Get array of ratings by IMDb IDs.
+   *
+   * @param string[] $imdb_ids
+   *   IMDb IDs.
+   *
+   * @return array<string, float>
+   *   IMDb ratings keyed by IMDb IDs.
+   */
+  public function getRatingMultiple(array $imdb_ids): array {
+    $imdb_ids = array_combine($imdb_ids, $imdb_ids);
+    $ratings = $this->db_manager->getMultiple($imdb_ids);
+
+    if ($imdb_ids_to_load = array_diff_key($imdb_ids, $ratings)) {
+      // Get rating from a file.
+      // The file manager's getMultiple() method ensures that all requested IDs
+      // are returned.
+      $ratings_from_file = $this->file_manager->getMultiple($imdb_ids_to_load);
+      // Save ratings from a file into DB.
+      $this->db_manager->setMultiple($ratings_from_file);
+
+      $ratings += $ratings_from_file;
     }
 
-    // Get rating from a file.
-    $rating = $this->file_manager->get($imdb_id);
-    // Save rating from a file into DB.
-    $this->db_manager->set($imdb_id, $rating);
-
-    return $rating;
+    return array_map('floatval', $ratings);
   }
 
 }

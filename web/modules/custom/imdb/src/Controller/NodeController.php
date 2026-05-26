@@ -5,6 +5,7 @@ namespace Drupal\imdb\Controller;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\imdb\ImdbRating;
+use Drupal\mvs\enum\Language;
 use Drupal\mvs\enum\NodeBundle;
 use Drupal\tmdb\TmdbApiAdapter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -41,6 +42,28 @@ class NodeController implements ContainerInjectionInterface {
     return ($node_bundle && ($imdb_id = $this->adapter->getImdbId($node_bundle, $tmdb_id)))
       ? new AjaxResponse($this->imdb_rating->getRating($imdb_id))
       : new AjaxResponse();
+  }
+
+  /**
+   * Returns average IMDb rating of the season.
+   *
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   */
+  public function seasonImdbRating(int $tv_tmdb_id, int $season_number): AjaxResponse {
+    $season = $this->adapter->getSeason($tv_tmdb_id, $season_number, Language::en);
+    $imdb_ids = [];
+
+    foreach ($season['episodes'] as $episode) {
+      $imdb_ids[] = $this->adapter->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode['episode_number']);
+    }
+
+    $ratings = $this->imdb_rating->getRatingMultiple($imdb_ids);
+    $count = count($ratings);
+
+    return new AjaxResponse($count ? round(array_sum($ratings) / $count, 2) : 0);
   }
 
   /**

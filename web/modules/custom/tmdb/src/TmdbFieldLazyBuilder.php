@@ -79,6 +79,25 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
   }
 
   /**
+   * Generate lazy builder placeholder for "IMDb Rating" field of a season.
+   *
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   *
+   * @return array
+   * @see TmdbFieldLazyBuilder::renderSeasonImdbRatingField()
+   */
+  public function generateSeasonImdbRatingPlaceholder(int $tv_tmdb_id, int $season_number): array {
+    return [
+      '#lazy_builder' => [
+        'tmdb.tmdb_field_lazy_builder:renderSeasonImdbRatingField',
+        [$tv_tmdb_id, $season_number],
+      ],
+      '#create_placeholder' => TRUE,
+    ];
+  }
+
+  /**
    * Generate lazy builder placeholder for "IMDb Rating" field of an episode.
    *
    * @param int $tv_tmdb_id
@@ -258,6 +277,33 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
   }
 
   /**
+   * Build lazy builder placeholder for field "IMDb Rating" of a season.
+   *
+   * @param int $tv_tmdb_id
+   * @param int $season_number
+   *
+   * @return array
+   */
+  public function renderSeasonImdbRatingField(int $tv_tmdb_id, int $season_number): array {
+    // @todo Add cache.
+    // Prepare HTML for update IMDb rating later via JS.
+    return [
+      '#theme_wrappers' => [
+        'container' => [
+          '#attributes' => [
+            'class' => ['js--season-imdb-rating-placeholder'],
+            'data-tmdb_id' => $tv_tmdb_id,
+            'data-season' => $season_number,
+          ],
+        ],
+      ],
+      '#attached' => [
+        'library' => ['tmdb/tmdb_field_post_update'],
+      ],
+    ];
+  }
+
+  /**
    * Build renderable array for field "IMDb Rating" of episode or custom
    * placeholder like lazy builder for further processing via JS.
    *
@@ -381,6 +427,7 @@ class TmdbFieldLazyBuilder implements TrustedCallbackInterface {
       'renderNodeImdbRatingField',
       'renderNodeOriginalTitleField',
       'renderSeasonOriginalTitleField',
+      'renderSeasonImdbRatingField',
       'renderEpisodeImdbRatingField',
       'renderEpisodeOriginalTitleField',
       'renderTeaser',

@@ -61,6 +61,7 @@ class SeasonBuilder {
       '#poster_path' => $season['poster_path'],
       '#original_title' => $lang !== Language::en ? $this->tmdb_lazy->generateSeasonOriginalTitlePlaceholder($tmdb_id, $season_number) : NULL,
       '#title' => $season['title'],
+      '#imdb_rating' => $this->tmdb_lazy->generateSeasonImdbRatingPlaceholder($tmdb_id, $season_number),
       '#episodes_count' => [
         '#theme' => 'field_with_label',
         '#label' => $this->t('number of episodes', [], ['context' => 'Field label']),

@@ -48,6 +48,30 @@
       }
     }
   };
+  Drupal.behaviors.seasonImdbRatingUpdate = {
+    attach: context => {
+      const prepareAndReplace = placeholder => {
+        const tv_tmdb_id = placeholder.getAttribute('data-tmdb_id');
+        const season = placeholder.getAttribute('data-season');
+
+        const url = `/field/imdb-rating/season/${tv_tmdb_id}/${season}`;
+        // AJAX replace.
+        ajaxReplaceImdbRatingPlaceholder(placeholder, url);
+      };
+
+      const placeholderClass = 'js--season-imdb-rating-placeholder';
+      // If context = element.
+      if (context.classList && context.classList.contains(placeholderClass)) {
+        prepareAndReplace(context);
+      }
+      // If context = array of elements (after AJAX call).
+      else {
+        context.querySelectorAll(`.${placeholderClass}`).forEach(
+          placeholder => prepareAndReplace(placeholder),
+        );
+      }
+    },
+  };
 
   Drupal.behaviors.episodeImdbRatingUpdate = {
     attach: context => {
@@ -117,6 +141,9 @@
         if (isNumeric(this.response) && this.response !== "0") {
           // Replace placeholder with IMDb rating.
           placeholder.replaceWith(buildImdbRatingFieldHtml(this.response));
+        }
+        else {
+          placeholder.replaceWith(buildImdbRatingFieldHtml('–'));
         }
       }
     };

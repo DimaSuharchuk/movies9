@@ -57,7 +57,11 @@ class NodeController implements ContainerInjectionInterface {
     $imdb_ids = [];
 
     foreach ($season['episodes'] as $episode) {
-      $imdb_ids[] = $this->adapter->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode['episode_number']);
+      $episode_imdb_id = $this->adapter->getEpisodeImdbId($tv_tmdb_id, $season_number, $episode['episode_number']);
+
+      if (is_string($episode_imdb_id) && is_imdb_id($episode_imdb_id)) {
+        $imdb_ids[] = $episode_imdb_id;
+      }
     }
 
     $ratings = $this->imdb_rating->getRatingMultiple($imdb_ids);

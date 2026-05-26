@@ -31,6 +31,10 @@ class ImdbRating {
    * @return float
    */
   public function getRating(string $imdb_id): float {
+    if (!is_imdb_id($imdb_id)) {
+      return 0;
+    }
+
     return $this->getRatingMultiple([$imdb_id])[$imdb_id];
   }
 
@@ -44,6 +48,10 @@ class ImdbRating {
    *   IMDb ratings keyed by IMDb IDs.
    */
   public function getRatingMultiple(array $imdb_ids): array {
+    if (!$imdb_ids) {
+      return [];
+    }
+
     $imdb_ids = array_combine($imdb_ids, $imdb_ids);
     $ratings = $this->db_manager->getMultiple($imdb_ids);
 

@@ -32,11 +32,11 @@ class ImdbRatingRepository extends BaseRepository {
    *   Ratings if ID exists in table.
    */
   public function get(array $imdb_ids): array {
-    return $this->database->select(self::IMDB_RATING_TABLE, 't')
+    return $imdb_ids ? $this->database->select(self::IMDB_RATING_TABLE, 't')
       ->fields('t', ['imdb_id', 'rating'])
       ->condition('imdb_id', $imdb_ids, 'IN')
       ->execute()
-      ->fetchAllKeyed();
+      ->fetchAllKeyed() : [];
   }
 
   /**
@@ -61,6 +61,10 @@ class ImdbRatingRepository extends BaseRepository {
    * @return void
    */
   public function setMultiple(array $ratings): void {
+    if (!$ratings) {
+      return;
+    }
+
     $data = [];
 
     foreach ($ratings as $imdb_id => $rating) {

@@ -67,11 +67,7 @@
             "web/modules/custom/{$name}": ["type:drupal-custom-module"],
             "web/themes/custom/{$name}": ["type:drupal-custom-theme"]
         },
-        "patches": {
-            "php-tmdb/api": {
-                "Fix deprecated nullable params for PHP 8.3+": "patches/fix-nullable-deprecated.patch"
-            }
-        }
+        "patches": {}
     },
     "autoload": {
         "psr-4": {

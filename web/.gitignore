@@ -1,0 +1,14 @@
+/autoload_runtime.php
+
+# Ignore configuration files that may contain sensitive information.
+sites/*/*settings*.php
+!sites/*/default.settings.php
+sites/*/*services*.yml
+!sites/*/default.services.yml
+
+# Ignore paths that contain user-generated content.
+sites/*/files
+sites/*/private
+
+# Ignore multi-site test environment.
+sites/simpletest

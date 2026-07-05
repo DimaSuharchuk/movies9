@@ -19,12 +19,12 @@
         }
     ],
     "require": {
-        "php": ">=8.4.6",
+        "php": "^8.5",
         "ext-igbinary": "*",
         "ext-pdo": "*",
         "ext-zlib": "*",
         "composer/installers": "^2",
-        "cweagans/composer-patches": "^1.7",
+        "cweagans/composer-patches": "^2.0",
         "dimasuharchuk/country-access-filter": "^1.0",
         "drupal/better_exposed_filters": "^7",
         "drupal/core-composer-scaffold": "^11",

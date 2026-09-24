@@ -1,0 +1,16 @@
+micro_toolbar_test.custom:
+  title: Custom icon
+  parent: system.admin
+  route_name: system.modules_list
+  options:
+    icon:
+      pack_id: micro_toolbar_test
+      icon_id: custom
+micro_toolbar_test.missing:
+  title: Missing icon
+  parent: system.admin
+  route_name: system.modules_list
+  options:
+    icon:
+      pack_id: missing_pack
+      icon_id: missing_icon

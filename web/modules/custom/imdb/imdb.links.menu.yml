@@ -4,3 +4,7 @@ imdb.admin_imdb:
   parent: system.admin
   route_name: imdb.statistics
   weight: 10
+  options:
+    icon:
+      pack_id: imdb
+      icon_id: movie

@@ -1,0 +1,4 @@
+access micro toolbar:
+  title: 'Access Micro Toolbar'
+  description: 'Display the administration toolbar on every page.'
+  restrict access: true

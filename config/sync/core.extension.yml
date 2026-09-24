@@ -4,7 +4,6 @@ module:
   better_exposed_filters: 0
   big_pipe: 0
   block: 0
-  breakpoint: 0
   config: 0
   country_access_filter: 0
   dblog: 0
@@ -19,6 +18,7 @@ module:
   link: 0
   locale: 0
   menu_link_content: 0
+  micro_toolbar: 0
   mvs: 0
   mvs_extra_field: 0
   mysql: 0
@@ -30,7 +30,6 @@ module:
   taxonomy: 0
   text: 0
   tmdb: 0
-  toolbar: 0
   update: 0
   user: 0
   views_infinite_scroll: 0

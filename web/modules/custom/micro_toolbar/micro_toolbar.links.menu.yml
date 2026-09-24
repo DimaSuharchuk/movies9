@@ -1,0 +1,5 @@
+micro_toolbar.settings:
+  title: 'Micro Toolbar'
+  description: 'Choose how administration toolbar links are displayed.'
+  route_name: micro_toolbar.settings
+  parent: system.admin_config_ui

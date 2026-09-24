@@ -1,0 +1,97 @@
+.micro-toolbar {
+  position: sticky;
+  top: 0;
+  /* Core sticky table headers use 500; match the core toolbar tray layer. */
+  z-index: 502;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  color: #f3f4f6;
+  background: #18212f;
+  box-shadow: 0 1px 4px #0003;
+  font: 500 0.875rem/1.25 system-ui, sans-serif;
+  text-align: left;
+}
+
+.micro-toolbar .micro-toolbar__items {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 0.125rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  list-style: none;
+}
+
+.micro-toolbar .micro-toolbar__item {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.micro-toolbar .micro-toolbar__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  box-sizing: border-box;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 0.25rem;
+  color: #f3f4f6;
+  background: transparent;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.micro-toolbar .micro-toolbar__link:hover,
+.micro-toolbar .micro-toolbar__link:focus-visible {
+  color: #fff;
+  background: #344155;
+}
+
+.micro-toolbar .micro-toolbar__link:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: -2px;
+}
+
+.micro-toolbar__icon {
+  flex: 0 0 auto;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.micro-toolbar__icon > svg,
+.micro-toolbar__icon > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.micro-toolbar .micro-toolbar__logout {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.micro-toolbar--icons-only .micro-toolbar__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media print {
+  .micro-toolbar {
+    display: none;
+  }
+}

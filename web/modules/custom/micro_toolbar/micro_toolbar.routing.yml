@@ -1,0 +1,7 @@
+micro_toolbar.settings:
+  path: '/admin/config/user-interface/micro-toolbar'
+  defaults:
+    _form: '\Drupal\micro_toolbar\Form\SettingsForm'
+    _title: 'Micro Toolbar'
+  requirements:
+    _permission: 'administer site configuration'

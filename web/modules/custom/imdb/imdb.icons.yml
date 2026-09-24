@@ -1,0 +1,14 @@
+imdb:
+  label: IMDb
+  extractor: svg
+  config:
+    sources:
+      - icons/movie.svg
+  template: >-
+    <svg {{ attributes
+      .setAttribute('viewBox', '0 0 1000 1000')
+      .setAttribute('width', 18)
+      .setAttribute('height', 18)
+      .setAttribute('aria-hidden', 'true')
+      .setAttribute('focusable', 'false')
+    }}>{{ content }}</svg>

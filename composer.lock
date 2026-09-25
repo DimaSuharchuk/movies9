@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31feeab0c0ef1cea9a2cec2698a2af52",
+    "content-hash": "47038c3da58b757dd336ff4a29985a0e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1042,6 +1042,37 @@
                 "issues": "https://github.com/DimaSuharchuk/Country-Access-Filter/issues"
             },
             "time": "2026-07-20T03:12:52+00:00"
+        },
+        {
+            "name": "dimasuharchuk/micro-toolbar",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DimaSuharchuk/Micro-toolbar.git",
+                "reference": "e43f837f80972952295c862ed80ec5c1e90a3504"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DimaSuharchuk/Micro-toolbar/zipball/e43f837f80972952295c862ed80ec5c1e90a3504",
+                "reference": "e43f837f80972952295c862ed80ec5c1e90a3504",
+                "shasum": ""
+            },
+            "require": {
+                "drupal/core": "^11.1 || ^12"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "installer-name": "micro_toolbar"
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A lightweight Drupal administration toolbar with optional icon-only display.",
+            "support": {
+                "source": "https://github.com/DimaSuharchuk/Micro-toolbar/tree/v1.0.0",
+                "issues": "https://github.com/DimaSuharchuk/Micro-toolbar/issues"
+            },
+            "time": "2026-09-25T19:32:20+00:00"
         },
         {
             "name": "doctrine/lexer",

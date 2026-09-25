@@ -1,5 +1,0 @@
-name: Micro Toolbar test
-type: module
-package: Testing
-core_version_requirement: ^11.1 || ^12
-description: 'Fixtures for toolbar icon integration tests.'

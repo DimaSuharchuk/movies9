@@ -10,6 +10,11 @@
     },
     "repositories": [
         {
+            "name": "micro-toolbar",
+            "type": "vcs",
+            "url": "https://github.com/DimaSuharchuk/Micro-toolbar"
+        },
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
@@ -26,6 +31,7 @@
         "composer/installers": "^2",
         "cweagans/composer-patches": "^2.0",
         "dimasuharchuk/country-access-filter": "^1.0",
+        "dimasuharchuk/micro-toolbar": "^1.0",
         "drupal/better_exposed_filters": "^7",
         "drupal/core-composer-scaffold": "^11",
         "drupal/core-recommended": "^11",

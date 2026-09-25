@@ -1,9 +1,0 @@
-name: Micro Toolbar
-type: module
-description: 'A lightweight administration toolbar with optional icon-only display.'
-package: Custom
-core_version_requirement: ^11.1 || ^12
-configure: micro_toolbar.settings
-dependencies:
-  - drupal:system
-  - drupal:user

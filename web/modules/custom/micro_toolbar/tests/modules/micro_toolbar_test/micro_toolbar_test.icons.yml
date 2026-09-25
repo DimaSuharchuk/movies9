@@ -1,7 +1,0 @@
-micro_toolbar_test:
-  extractor: svg
-  config:
-    sources:
-      - custom.svg
-  library: micro_toolbar_test/icon
-  template: '<svg data-test-icon="custom" viewBox="0 0 24 24" aria-hidden="true">{{ content }}</svg>'

@@ -30,7 +30,7 @@
         "ext-zlib": "*",
         "composer/installers": "^2",
         "cweagans/composer-patches": "^2.0",
-        "dimasuharchuk/country-access-filter": "^1.0",
+        "dimasuharchuk/country-access-filter": "^2.0",
         "dimasuharchuk/micro-toolbar": "^1.0",
         "drupal/better_exposed_filters": "^7",
         "drupal/core-composer-scaffold": "^11",

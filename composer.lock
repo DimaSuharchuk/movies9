@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47038c3da58b757dd336ff4a29985a0e",
+    "content-hash": "584ce7b7d840ce0c3ab71a53ee4825e3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1007,16 +1007,16 @@
         },
         {
             "name": "dimasuharchuk/country-access-filter",
-            "version": "v1.2.3",
+            "version": "v2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DimaSuharchuk/Country-Access-Filter.git",
-                "reference": "8a450f8b93e8ef882f4f24cea979b9218645374b"
+                "reference": "1f61b7f619ca0c1bb88847472a1fccaf2c2a6815"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DimaSuharchuk/Country-Access-Filter/zipball/8a450f8b93e8ef882f4f24cea979b9218645374b",
-                "reference": "8a450f8b93e8ef882f4f24cea979b9218645374b",
+                "url": "https://api.github.com/repos/DimaSuharchuk/Country-Access-Filter/zipball/1f61b7f619ca0c1bb88847472a1fccaf2c2a6815",
+                "reference": "1f61b7f619ca0c1bb88847472a1fccaf2c2a6815",
                 "shasum": ""
             },
             "require": {
@@ -1038,10 +1038,10 @@
             ],
             "description": "A custom Drupal module for country-based access filtering.",
             "support": {
-                "source": "https://github.com/DimaSuharchuk/Country-Access-Filter/tree/v1.2.3",
+                "source": "https://github.com/DimaSuharchuk/Country-Access-Filter/tree/v2.3.4",
                 "issues": "https://github.com/DimaSuharchuk/Country-Access-Filter/issues"
             },
-            "time": "2026-07-20T03:12:52+00:00"
+            "time": "2026-09-25T19:12:43+00:00"
         },
         {
             "name": "dimasuharchuk/micro-toolbar",
